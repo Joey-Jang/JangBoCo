@@ -11,6 +11,11 @@ public class DBApiDaoCls implements DBApiDaoIF {
 	
 	@Autowired
 	SqlSession sqlSession;
+	
+	@Override
+	public int disctDuplctCheck(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.selectOne("DBApi.disctDuplctCheck", params);
+	}
 
 	@Override
 	public int addDisctData(HashMap<String, Object> params) throws Throwable {

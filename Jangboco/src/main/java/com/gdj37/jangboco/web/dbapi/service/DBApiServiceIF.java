@@ -3,6 +3,8 @@ package com.gdj37.jangboco.web.dbapi.service;
 import java.util.HashMap;
 
 public interface DBApiServiceIF {
+	
+	public int disctDuplctCheck(HashMap<String, Object> params) throws Throwable;
 
 	public int addDisctData(HashMap<String, Object> params) throws Throwable;
 	

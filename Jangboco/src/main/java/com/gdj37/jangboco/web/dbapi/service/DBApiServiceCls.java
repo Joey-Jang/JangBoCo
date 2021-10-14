@@ -13,6 +13,11 @@ public class DBApiServiceCls implements DBApiServiceIF {
 	DBApiDaoIF DBApiDao;
 	
 	@Override
+	public int disctDuplctCheck(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.disctDuplctCheck(params);
+	}
+	
+	@Override
 	public int addDisctData(HashMap<String, Object> params) throws Throwable {
 		return DBApiDao.addDisctData(params);
 	}
