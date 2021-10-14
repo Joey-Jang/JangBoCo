@@ -17,7 +17,7 @@
 <main>
     <div class="conContnr">
         <div class="con">
-			여기에 작성해주세요 ㅇ.&lt;
+			홈페이지입니다.
         </div>
     </div>
     <div class="bottomContnr"></div>
