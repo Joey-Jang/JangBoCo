@@ -4,7 +4,7 @@
 
 	<insert id="addApiData" parameterType="hashmap">
 		INSERT INTO PRICES
-		VALUES (#{pricesNo}, #{yearMonthDay}, #{marketNo}, #{itemsNo}, #{sellStd}, #{price}, #{note})
+		VALUES (#{pricesNo}, #{updateDate}, #{marketNo}, #{itemsNo}, #{sellStd}, #{price}, #{note})
 	</insert>
 	
 	<select id="getMaxPricesNo" resultType="Integer">
