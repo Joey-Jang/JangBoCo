@@ -33,8 +33,8 @@ public class DBApiController {
 		
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		
-		int start = 1;
-		int end = 1000;
+		int start = 197001;
+		int end = 198000;
 		while(true) {
 			try {
 				req = new URL("http://openapi.seoul.go.kr:8088/74715463716a6a6f3436415553696d/json/ListNecessariesPricesService/"
@@ -52,7 +52,12 @@ public class DBApiController {
 					params.put("disctName", data.get("M_GU_NAME"));
 					int disctDuplctCheck = DBApiService.disctDuplctCheck(params);
 					if(disctDuplctCheck==0) {
-						int cnt = DBApiService.addDisctData(params);
+						try {
+							int cnt = DBApiService.addDisctData(params);
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						}
 					}
 					
 					params.put("marketNo", data.get("M_SEQ"));
@@ -60,14 +65,24 @@ public class DBApiController {
 					params.put("marketName", data.get("M_NAME"));
 					int marketDuplctCheck = DBApiService.marketDuplctCheck(params);
 					if(marketDuplctCheck==0) {
-						int cnt = DBApiService.addMarketData(params);
+						try {
+							int cnt = DBApiService.addMarketData(params);
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						}
 					}
 					
 					params.put("itemsNo", data.get("A_SEQ"));
 					params.put("itemsName", data.get("A_NAME"));
 					int itemsDuplctCheck = DBApiService.itemsDuplctCheck(params);
 					if(itemsDuplctCheck==0) {
-						int cnt = DBApiService.addItemsData(params);
+						try {
+							int cnt = DBApiService.addItemsData(params);
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						}
 					}
 					
 					params.put("pricesNo", data.get("P_SEQ"));
@@ -77,7 +92,13 @@ public class DBApiController {
 					params.put("sellStd", data.get("A_UNIT"));
 					params.put("price", data.get("A_PRICE"));
 					params.put("note", data.get("ADD_COL"));
-					int cnt = DBApiService.addPricesData(params);
+					System.out.println(start + i);
+					try {
+						int cnt = DBApiService.addPricesData(params);
+					} catch (Exception e) {
+						e.printStackTrace();
+						continue;
+					}
 				}
 				
 				if(end==maxCount) {
