@@ -30,9 +30,9 @@
 		WHERE ITEMS_NO = #{itemsNo}
 	</select>
 	
-	<insert id="additemsData" parameterType="hashmap">
+	<insert id="addItemsData" parameterType="hashmap">
 		INSERT INTO ITEMS
-		VALUES (#{itemsNo}, #{itemsName}, '')
+		VALUES (#{itemsNo}, #{itemsName}, NULL)
 	</insert>
 	
 	<insert id="addPricesData" parameterType="hashmap">
