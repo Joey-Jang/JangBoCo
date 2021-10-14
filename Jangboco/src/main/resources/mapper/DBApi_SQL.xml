@@ -32,7 +32,7 @@
 	
 	<insert id="additemsData" parameterType="hashmap">
 		INSERT INTO ITEMS
-		VALUES (#{itemsNo}, #{itemsName}, #{itemsName})
+		VALUES (#{itemsNo}, #{itemsName}, '')
 	</insert>
 	
 	<insert id="addPricesData" parameterType="hashmap">
