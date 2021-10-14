@@ -2,7 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="DBApi">
 
-	<insert id="addApiData" parameterType="hashmap">
+	<insert id="addDisctData" parameterType="hashmap">
+		INSERT INTO DISCT
+		VALUES (#{disctNo}, #{disctName})
+	</insert>
+	
+	<select id="marketDuplctCheck" resultType="Integer">
+		SELECT COUNT(MARKET_NO)
+		FROM MARKET
+		WHERE MARKET_NO = #{marketNo}
+	</select>
+	
+	<insert id="addMarketData" parameterType="hashmap">
+		INSERT INTO MARKET
+		VALUES (#{marketNo}, #{disctNo}, #{typeNo}, #{marketName})
+	</insert>
+	
+	<select id="itemsDuplctCheck" resultType="Integer">
+		SELECT COUNT(ITEMS_NO)
+		FROM ITEMS
+		WHERE ITEMS_NO = #{itemsNo}
+	</select>
+	
+	<insert id="additemsData" parameterType="hashmap">
+		INSERT INTO ITEMS
+		VALUES (#{itemsNo}, #{itemsName}, "")
+	</insert>
+	
+	<insert id="addPricesData" parameterType="hashmap">
 		INSERT INTO PRICES
 		VALUES (#{pricesNo}, #{updateDate}, #{marketNo}, #{itemsNo}, #{sellStd}, #{price}, #{note})
 	</insert>

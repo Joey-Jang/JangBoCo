@@ -13,8 +13,33 @@ public class DBApiDaoCls implements DBApiDaoIF {
 	SqlSession sqlSession;
 
 	@Override
-	public int addApiData(HashMap<String, Object> params) throws Throwable {
-		return sqlSession.insert("DBApi.addApiData", params);
+	public int addDisctData(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.insert("DBApi.addDisctData", params);
+	}
+	
+	@Override
+	public int marketDuplctCheck(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.selectOne("DBApi.marketDuplctCheck", params);
+	}
+	
+	@Override
+	public int addMarketData(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.insert("DBApi.addMarketData", params);
+	}
+	
+	@Override
+	public int itemsDuplctCheck(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.selectOne("DBApi.itemsDuplctCheck", params);
+	}
+	
+	@Override
+	public int addItemsData(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.insert("DBApi.addItemsData", params);
+	}
+	
+	@Override
+	public int addPricesData(HashMap<String, Object> params) throws Throwable {
+		return sqlSession.insert("DBApi.addPricesData", params);
 	}
 
 	@Override

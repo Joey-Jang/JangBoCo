@@ -48,6 +48,25 @@ public class DBApiController {
 				
 				for(int i=0; i<list.size(); i++) {
 					JSONObject data = (JSONObject) list.get(i);
+					params.put("disctNo", data.get("M_GU_CODE"));
+					params.put("disctName", data.get("M_GU_NAME"));
+					int cnt = DBApiService.addDisctData(params);
+					
+					params.put("marketNo", data.get("M_SEQ"));
+					params.put("typeNo", data.get("M_TYPE_CODE"));
+					params.put("marketName", data.get("M_NAME"));
+					int marketDuplctCheck = DBApiService.marketDuplctCheck(params);
+					if(marketDuplctCheck==0) {
+						cnt = DBApiService.addMarketData(params);
+					}
+					
+					params.put("itemsNo", data.get("A_SEQ"));
+					params.put("itemsName", data.get("A_NAME"));
+					int itemsDuplctCheck = DBApiService.itemsDuplctCheck(params);
+					if(itemsDuplctCheck==0) {
+						cnt = DBApiService.addItemsData(params);
+					}
+					
 					params.put("pricesNo", data.get("P_SEQ"));
 					params.put("updateDate", data.get("P_DATE"));
 					params.put("marketNo", data.get("M_SEQ"));
@@ -55,8 +74,7 @@ public class DBApiController {
 					params.put("sellStd", data.get("A_UNIT"));
 					params.put("price", data.get("A_PRICE"));
 					params.put("note", data.get("ADD_COL"));
-					
-				DBApiService.addApiData(params);
+					cnt = DBApiService.addPricesData(params);
 				}
 				
 				if(end==maxCount) {
@@ -111,7 +129,7 @@ public class DBApiController {
 					params.put("price", data.get("A_PRICE"));
 					params.put("note", data.get("ADD_COL"));
 					
-					DBApiService.addApiData(params);
+					int cnt = DBApiService.addPricesData(params);
 				}
 				if(flag) {
 					break;

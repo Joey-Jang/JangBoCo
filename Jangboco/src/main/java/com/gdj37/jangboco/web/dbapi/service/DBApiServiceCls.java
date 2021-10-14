@@ -13,8 +13,33 @@ public class DBApiServiceCls implements DBApiServiceIF {
 	DBApiDaoIF DBApiDao;
 	
 	@Override
-	public int addApiData(HashMap<String, Object> params) throws Throwable {
-		return DBApiDao.addApiData(params);
+	public int addDisctData(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.addDisctData(params);
+	}
+	
+	@Override
+	public int marketDuplctCheck(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.marketDuplctCheck(params);
+	}
+	
+	@Override
+	public int addMarketData(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.addMarketData(params);
+	}
+	
+	@Override
+	public int itemsDuplctCheck(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.itemsDuplctCheck(params);
+	}
+	
+	@Override
+	public int addItemsData(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.addItemsData(params);
+	}
+	
+	@Override
+	public int addPricesData(HashMap<String, Object> params) throws Throwable {
+		return DBApiDao.addPricesData(params);
 	}
 
 	@Override
