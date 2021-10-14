@@ -22,7 +22,7 @@ public class DBApiController {
 	DBApiServiceIF DBApiService;
 	
 	@RequestMapping(value = "/presetApiData")
-	public ModelAndView apiDataPreset(ModelAndView mav) throws Throwable {
+	public ModelAndView presetApiData(ModelAndView mav) throws Throwable {
 		URL req = new URL("http://openapi.seoul.go.kr:8088/74715463716a6a6f3436415553696d/json/ListNecessariesPricesService/1/1");
 		HttpURLConnection con = (HttpURLConnection)req.openConnection();
 		Object obj = JSONValue.parse(new InputStreamReader(con.getInputStream()));
@@ -54,8 +54,8 @@ public class DBApiController {
 					if(disctDuplctCheck==0) {
 						try {
 							int cnt = DBApiService.addDisctData(params);
-						} catch (Exception e) {
-							e.printStackTrace();
+						} catch (Exception e2) {
+							e2.printStackTrace();
 							continue;
 						}
 					}
@@ -67,8 +67,8 @@ public class DBApiController {
 					if(marketDuplctCheck==0) {
 						try {
 							int cnt = DBApiService.addMarketData(params);
-						} catch (Exception e) {
-							e.printStackTrace();
+						} catch (Exception e2) {
+							e2.printStackTrace();
 							continue;
 						}
 					}
@@ -79,8 +79,8 @@ public class DBApiController {
 					if(itemsDuplctCheck==0) {
 						try {
 							int cnt = DBApiService.addItemsData(params);
-						} catch (Exception e) {
-							e.printStackTrace();
+						} catch (Exception e2) {
+							e2.printStackTrace();
 							continue;
 						}
 					}
@@ -95,8 +95,8 @@ public class DBApiController {
 					System.out.println(start + i);
 					try {
 						int cnt = DBApiService.addPricesData(params);
-					} catch (Exception e) {
-						e.printStackTrace();
+					} catch (Exception e2) {
+						e2.printStackTrace();
 						continue;
 					}
 				}
@@ -120,7 +120,7 @@ public class DBApiController {
 	}
 	
 	@RequestMapping(value = "/updateApiData")
-	public ModelAndView apiDataUpdate(ModelAndView mav) throws Throwable {
+	public ModelAndView updateApiData(ModelAndView mav) throws Throwable {
 		int oldMaxPricesNo = DBApiService.getMaxPricesNo();
 	
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -152,8 +152,12 @@ public class DBApiController {
 					params.put("sellStd", data.get("A_UNIT"));
 					params.put("price", data.get("A_PRICE"));
 					params.put("note", data.get("ADD_COL"));
-					
-					int cnt = DBApiService.addPricesData(params);
+					try {
+						int cnt = DBApiService.addPricesData(params);
+					} catch (Exception e2) {
+						e2.printStackTrace();
+						continue;
+					}
 				}
 				if(flag) {
 					break;
