@@ -14,12 +14,12 @@ public class DBApiDaoCls implements DBApiDaoIF {
 
 	@Override
 	public int addApiData(HashMap<String, Object> params) throws Throwable {
-		return sqlSession.insert("Api.addApiData", params);
+		return sqlSession.insert("DBApi.addApiData", params);
 	}
 
 	@Override
 	public int getMaxPricesNo() throws Throwable {
-		return sqlSession.selectOne("Api.getMaxPricesNo");
+		return sqlSession.selectOne("DBApi.getMaxPricesNo");
 	}
 
 }
