@@ -78,10 +78,10 @@ main {
     min-width: 180px;
     min-height: 32px;
     margin-left: 20px;
-    background: left / contain no-repeat url("../images/layout/homeLogo2.svg");
+    background: left / contain no-repeat url("../../images/layout/homeLogo2.svg");
 }
 .home_logo:hover {
-    background: left / contain no-repeat url("../images/layout/homeLogoHover2.svg");
+    background: left / contain no-repeat url("../../images/layout/homeLogoHover2.svg");
     cursor: pointer;
 }
 /* 위치 설정 */
@@ -104,7 +104,7 @@ main {
     min-width: 19.2px;
     min-height: 100%;
     margin-right: 10px;
-    background: center / contain no-repeat url("../images/layout/locIcon.svg");
+    background: center / contain no-repeat url("../../images/layout/locIcon.svg");
 }
 .loc_addrs {
     height: 100%;
@@ -121,14 +121,14 @@ main {
     min-width: 16px;
     min-height: 100%;
     margin-top: 18px;
-    background: center / contain no-repeat url("../images/layout/chevron-down.svg");
+    background: center / contain no-repeat url("../../images/layout/chevron-down.svg");
 }
 .loc_expand_btn_hover {
     display: none;
     min-width: 16px;
     min-height: 100%;
     margin-top: 18px;
-    background: center / contain no-repeat url("../images/layout/chevron-down-hover.svg");
+    background: center / contain no-repeat url("../../images/layout/chevron-down-hover.svg");
 }
 
 
@@ -219,54 +219,54 @@ main {
     min-height: 24px;
 }
 .login_menu > li:nth-child(1) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/log-in.svg");
+    background: center / cover no-repeat url("../../images/layout/log-in.svg");
 }
 .login_menu > li:nth-child(1) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/log-in-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/log-in-hover.svg");
 }
 .login_menu > li:nth-child(2) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/user-plus.svg");
+    background: center / cover no-repeat url("../../images/layout/user-plus.svg");
 }
 .login_menu > li:nth-child(2) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/user-plus-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/user-plus-hover.svg");
 }
 .logout_menu > li:nth-child(1) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/user.svg");
+    background: center / cover no-repeat url("../../images/layout/user.svg");
 }
 .logout_menu > li:nth-child(1) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/user-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/user-hover.svg");
 }
 .logout_menu > li:nth-child(2) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/log-out.svg");
+    background: center / cover no-repeat url("../../images/layout/log-out.svg");
 }
 .logout_menu > li:nth-child(2) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/log-out-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/log-out-hover.svg");
 }
 .main_menu > li:nth-child(1) > div[class="menu_icon"] {
     display: none;
-    background: center / cover no-repeat url("../images/layout/map.svg");
+    background: center / cover no-repeat url("../../images/layout/map.svg");
 }
 .main_menu > li:nth-child(1) > div[class="menu_icon_hover"] {
     display: block;
-    background: center / cover no-repeat url("../images/layout/map-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/map-hover.svg");
 }
 .main_menu > li:nth-child(2) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/image.svg");
+    background: center / cover no-repeat url("../../images/layout/image.svg");
 }
 .main_menu > li:nth-child(2) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/image-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/image-hover.svg");
 }
 .main_menu > li:nth-child(3) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/book-open.svg");
+    background: center / cover no-repeat url("../../images/layout/book-open.svg");
 }
 .main_menu > li:nth-child(3) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/book-open-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/book-open-hover.svg");
 }
 .main_menu > li:nth-child(4) > div[class="menu_icon"] {
-    background: center / cover no-repeat url("../images/layout/info.svg");
+    background: center / cover no-repeat url("../../images/layout/info.svg");
 }
 .main_menu > li:nth-child(4) > div[class="menu_icon_hover"] {
-    background: center / cover no-repeat url("../images/layout/info-hover.svg");
+    background: center / cover no-repeat url("../../images/layout/info-hover.svg");
 }
 /* 하위 메뉴 */
 .sub_menu_contnr {
