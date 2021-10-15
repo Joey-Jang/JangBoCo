@@ -15,12 +15,12 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-    <div class="conContnr">
+    <div class="con_contnr">
         <div class="con">
-			홈페이지입니다.
+            홈페이지입니다.
         </div>
     </div>
-    <div class="bottomContnr"></div>
+    <div class="bottom_contnr"></div>
 </main>
 </body>
 </html>

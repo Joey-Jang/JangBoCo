@@ -15,12 +15,12 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-    <div class="conContnr">
+    <div class="con_contnr">
         <div class="con">
-			여기에 작성해주세요 ㅇ.&lt;
+            여기에 작성해주세요 ㅇ.&lt;
         </div>
     </div>
-    <div class="bottomContnr"></div>
+    <div class="bottom_contnr"></div>
 </main>
 </body>
 </html>
