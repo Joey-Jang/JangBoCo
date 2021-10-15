@@ -21,6 +21,7 @@ public class DBApiController {
 	@Autowired
 	DBApiServiceIF DBApiService;
 	
+	// Presetting API data complete 21.10.14
 //	@RequestMapping(value = "/presetApiData")
 //	public ModelAndView presetApiData(ModelAndView mav) throws Throwable {
 //		URL req = new URL("http://openapi.seoul.go.kr:8088/74715463716a6a6f3436415553696d/json/ListNecessariesPricesService/1/1");
@@ -119,6 +120,7 @@ public class DBApiController {
 //		return mav;
 //	}
 	
+	// Updating API data everyday midnight add to batch program 21.10.14
 //	@RequestMapping(value = "/updateApiData")
 //	public ModelAndView updateApiData(ModelAndView mav) throws Throwable {
 //		int oldMaxPricesNo = DBApiService.getMaxPricesNo();
