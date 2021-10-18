@@ -62,9 +62,6 @@ main {
 }
 .con {
     display: flex;
-    flex-flow: row wrap;
-	justify-content: space-between;
-    align-items: flex-start;
     width: 100%;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 11pt;
