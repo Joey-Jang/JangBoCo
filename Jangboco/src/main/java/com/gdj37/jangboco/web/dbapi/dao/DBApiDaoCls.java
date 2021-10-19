@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class DBApiDaoCls implements DBApiDaoIF {
 	
 	@Autowired
-	SqlSession sqlSession;
+	public SqlSession sqlSession;
 	
 	@Override
 	public int disctDuplctCheck(HashMap<String, Object> params) throws Throwable {

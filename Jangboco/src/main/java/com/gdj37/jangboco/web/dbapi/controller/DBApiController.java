@@ -19,7 +19,7 @@ import com.gdj37.jangboco.web.dbapi.service.DBApiServiceIF;
 public class DBApiController {
 	
 	@Autowired
-	DBApiServiceIF DBApiService;
+	public DBApiServiceIF DBApiService;
 	
 	// Presetting API data complete 21.10.14
 //	@RequestMapping(value = "/presetApiData")

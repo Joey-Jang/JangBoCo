@@ -10,7 +10,7 @@ import com.gdj37.jangboco.web.dbapi.dao.DBApiDaoIF;
 public class DBApiServiceCls implements DBApiServiceIF {
 
 	@Autowired
-	DBApiDaoIF DBApiDao;
+	public DBApiDaoIF DBApiDao;
 	
 	@Override
 	public int disctDuplctCheck(HashMap<String, Object> params) throws Throwable {
