@@ -253,6 +253,9 @@ $(document).ready(function() {
 			data: params,
 			success: function(result) {
 				if(result.msg=="SUCCESS") {
+					if($("#recent_loc_no").val()==$("#del_recent_loc_no").val()) {
+						$("#recent_loc_no").val("");
+					}
 					reloadRecentLocList();
 				} else if(result.msg=="FAILED") {
 					alert("최근 위치 삭제에 실패하였습니다.");
