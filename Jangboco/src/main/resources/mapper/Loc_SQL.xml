@@ -35,6 +35,6 @@
 	
 	<delete id="delRecentLocData" parameterType="hashmap">
 		DELETE FROM RECENT_LOC
-		WHERE RECENT_LOC_NO = #{del_loc_no}
+		WHERE RECENT_LOC_NO = #{del_recent_loc_no}
 	</delete>
 </mapper>

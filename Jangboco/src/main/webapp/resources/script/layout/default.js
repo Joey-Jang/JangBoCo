@@ -242,7 +242,7 @@ $(document).ready(function() {
     
     // 최근 위치 삭제 버튼 클릭 이벤트
     $("#recent_loc_list").on("click", ".del_recent_loc_btn", function() {
-    	$("#del_loc_no").val($(this).parent().attr("no"));
+    	$("#del_recent_loc_no").val($(this).parent().attr("no"));
     	
     	var params = $("#actionForm").serialize();
 		
