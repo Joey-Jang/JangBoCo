@@ -105,11 +105,11 @@ $(document).ready(function() {
 	}
 	
 	// 최근 위치 목록 갱신
-	function redrawRecentLocList(recentLocList) {
+	function reloadRecentLocList(recentLocList) {
 		var params = $("#actionForm").serialize();
 		
 		$.ajax({
-			url: "redrawRecentLocListAjax",
+			url: "reloadRecentLocListAjax",
 			type: "post",
 			dataType: "json",
 			data: params,
@@ -253,7 +253,7 @@ $(document).ready(function() {
 			data: params,
 			success: function(result) {
 				if(result.msg=="SUCCESS") {
-					redrawRecentLocList();
+					reloadRecentLocList();
 				} else if(result.msg=="FAILED") {
 					alert("최근 위치 삭제에 실패하였습니다.");
 				} else {

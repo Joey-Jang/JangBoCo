@@ -28,17 +28,17 @@ public class LayoutController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/home")
+	@RequestMapping(value = {"/", "/home"})
 	public ModelAndView layoutConBlank(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
 		mav.setViewName("jangboco/home");
 		
 		return mav;
 	}
 
-	@RequestMapping(value = {"/reloadPageAjax", "/redrawRecentLocListAjax"}, method = RequestMethod.POST,
+	@RequestMapping(value = {"/reloadPageAjax", "/reloadRecentLocListAjax"}, method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String reloadPageAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String reloadMainAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -69,8 +69,6 @@ public class LayoutController {
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String setLocAjax(@RequestParam HashMap<String, String> params) throws Throwable {
-		System.out.println("최근 위치 번호 : " + params.get("recent_loc_no"));
-		
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -79,10 +77,10 @@ public class LayoutController {
 		try {
 			int cnt = 0;
 			
-			if("".equals(params.get("recent_loc_no")) || params.get("recent_loc_no")==null) {
-				cnt = locService.addRecentLocData(params);
-			} else {
+			if(!"".equals(params.get("recent_loc_no")) && params.get("recent_loc_no")!=null) {
 				cnt = locService.updateRecentLocData(params);
+			} else {
+				cnt = locService.addRecentLocData(params);
 			}
 			
 			if(cnt > 0) {
@@ -100,43 +98,43 @@ public class LayoutController {
 	}
 	
 	@RequestMapping(value = "/delRecentLocDataAjax", method = RequestMethod.POST,
-			produces = "text/json;charset=UTF-8")
+					produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delRecentLocDataAjax(@RequestParam HashMap<String, String> params) throws Throwable {
-	ObjectMapper mapper = new ObjectMapper();
-	
-	Map<String, Object> modelMap = new HashMap<String, Object>();
-	
-//	System.out.println("*** CHECK parms ***");
-//	Set<Map.Entry<String, String>> entrySet = params.entrySet();
-//	Iterator<Map.Entry<String, String>> entryIterator = entrySet.iterator();
-//	while(entryIterator.hasNext()) {
-//		Map.Entry<String, String> entry = entryIterator.next();
-//		String key = entry.getKey();
-//		String value = entry.getValue();
-//		System.out.print("key: " + key);
-//		System.out.print("value: " + value);
-//		System.out.println();
-//	}
-	
-	String msg = "FAILED";
-	try {
-		int cnt = 0;
+		ObjectMapper mapper = new ObjectMapper();
 		
-		cnt = locService.delRecentLocData(params);
+		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-		if(cnt > 0) {
-			msg = "SUCCESS";
+//		System.out.println("*** CHECK parms ***");
+//		Set<Map.Entry<String, String>> entrySet = params.entrySet();
+//		Iterator<Map.Entry<String, String>> entryIterator = entrySet.iterator();
+//		while(entryIterator.hasNext()) {
+//			Map.Entry<String, String> entry = entryIterator.next();
+//			String key = entry.getKey();
+//			String value = entry.getValue();
+//			System.out.print("key: " + key);
+//			System.out.print("value: " + value);
+//			System.out.println();
+//		}
+		
+		String msg = "FAILED";
+		try {
+			int cnt = 0;
+			
+			cnt = locService.delRecentLocData(params);
+			
+			if(cnt > 0) {
+				msg = "SUCCESS";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
 		}
-	} catch (Exception e) {
-		e.printStackTrace();
 		
-		msg = "ERROR";
-	}
-	
-	modelMap.put("msg", msg);
-	
-	return mapper.writeValueAsString(modelMap);
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
 	}
 
 }
