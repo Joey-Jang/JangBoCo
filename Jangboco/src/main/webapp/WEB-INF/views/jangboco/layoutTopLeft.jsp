@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<form action="#" id="actionForm" method="post">
+	<input type="hidden" name="member_no" value="1">
+</form>
 <header>
     <div class="home_logo"></div>
     <div class="loc_contnr" id="loc_contnr">
@@ -7,6 +10,21 @@
         <span class="loc_addrs">은평구 백련산로2길 19</span>
         <div class="loc_expand_btn" id="loc_expand_btn"></div>
         <div class="loc_expand_btn_hover" id="loc_expand_btn_hover"></div>
+    </div>
+    <div class="set_loc_contnr">
+    	<div id="loc_info" class="loc_info">
+	    	<input type="text" id="zipcd" class="zipcd" placeholder="우편번호" readonly>
+			<input type="button" id="search_addrs_map_btn" class="search_addrs_map_btn" value="주소검색">
+	    	<input type="text" id="addrs" class="addrs" placeholder="주소" readonly>
+	    	<input type="text" id="dtl_addrs" class="dtl_addrs" placeholder="상세주소">
+			<div id="loc_map" class="loc_map"></div>
+			<input type="button" id="set_loc_btn" class="set_loc_btn" value="이 주소로 위치 설정">
+    	</div>
+		<div class="recent_loc_contnr">
+			<div class="recent_loc_title">최근 위치</div>
+			<ul class="recent_loc_list">
+			</ul>
+		</div>
     </div>
 </header>
 <aside>
