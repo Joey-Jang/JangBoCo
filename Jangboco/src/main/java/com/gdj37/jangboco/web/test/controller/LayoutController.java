@@ -76,7 +76,6 @@ public class LayoutController {
 		String msg = "FAILED";
 		try {
 			int cnt = 0;
-			
 			if(!"".equals(params.get("recent_loc_no")) && params.get("recent_loc_no")!=null) {
 				cnt = locService.updateRecentLocData(params);
 			} else {
@@ -120,7 +119,6 @@ public class LayoutController {
 		String msg = "FAILED";
 		try {
 			int cnt = 0;
-			
 			cnt = locService.delRecentLocData(params);
 			
 			if(cnt > 0) {

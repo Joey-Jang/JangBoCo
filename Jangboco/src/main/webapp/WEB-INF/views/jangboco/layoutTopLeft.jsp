@@ -19,7 +19,8 @@
 			<input type="button" id="search_addrs_map_btn" class="search_addrs_map_btn" value="주소검색">
 	    	<input type="text" id="addrs" name="addrs" class="addrs" placeholder="주소" readonly>
 	    	<input type="text" id="dtl_addrs" name="dtl_addrs" class="dtl_addrs" placeholder="상세주소">
-			<div id="loc_map" class="loc_map"></div>
+			<div id="loc_map" class="loc_map">
+			</div>
 			<input type="button" id="set_loc_btn" class="set_loc_btn" value="이 주소로 위치 설정">
     	</div>
 		<div class="recent_loc_contnr">
