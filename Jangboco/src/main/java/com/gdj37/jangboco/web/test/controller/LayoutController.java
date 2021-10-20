@@ -35,19 +35,108 @@ public class LayoutController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/reloadPageAjax", method = RequestMethod.POST,
+	@RequestMapping(value = {"/reloadPageAjax", "/redrawRecentLocListAjax"}, method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String testAMCUDAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String reloadPageAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-		params.put("memberNo", "1"); // 임시세팅 회원번호 1번
-		List<HashMap<String, Object>> list = locService.getRecentLocList(params);
+		String memberNo = "2"; // 임시 회원번호
+		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
+			memberNo = params.get("member_no");
+		}
+		params.put("member_no", memberNo);
 		
-		modelMap.put("list", list);
+		if(!"".equals(memberNo) && memberNo!=null) {
+			modelMap.put("memberNo", memberNo);
+			
+			Map<String, String> memberAddrs = locService.getMemberAddrs(params);
+			modelMap.put("memberAddrs", memberAddrs);
+		}
+		
+		int cntRecentLoc = locService.cntRecentLoc(params);
+		modelMap.put("cntRecentLoc", cntRecentLoc);
+		
+		List<HashMap<String, Object>> recentLocList = locService.getRecentLocList(params);
+		modelMap.put("recentLocList", recentLocList);
 		
 		return mapper.writeValueAsString(modelMap);
 	}
+	
+	@RequestMapping(value = "/setLocAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String setLocAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		System.out.println("최근 위치 번호 : " + params.get("recent_loc_no"));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "FAILED";
+		try {
+			int cnt = 0;
+			
+			if("".equals(params.get("recent_loc_no")) || params.get("recent_loc_no")==null) {
+				cnt = locService.addRecentLocData(params);
+			} else {
+				cnt = locService.updateRecentLocData(params);
+			}
+			
+			if(cnt > 0) {
+				msg = "SUCCESS";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/delRecentLocDataAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String delRecentLocDataAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap = new HashMap<String, Object>();
+	
+//	System.out.println("*** CHECK parms ***");
+//	Set<Map.Entry<String, String>> entrySet = params.entrySet();
+//	Iterator<Map.Entry<String, String>> entryIterator = entrySet.iterator();
+//	while(entryIterator.hasNext()) {
+//		Map.Entry<String, String> entry = entryIterator.next();
+//		String key = entry.getKey();
+//		String value = entry.getValue();
+//		System.out.print("key: " + key);
+//		System.out.print("value: " + value);
+//		System.out.println();
+//	}
+	
+	String msg = "FAILED";
+	try {
+		int cnt = 0;
+		
+		cnt = locService.delRecentLocData(params);
+		
+		if(cnt > 0) {
+			msg = "SUCCESS";
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		
+		msg = "ERROR";
+	}
+	
+	modelMap.put("msg", msg);
+	
+	return mapper.writeValueAsString(modelMap);
+	}
+
 }

@@ -1,34 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<form action="#" id="actionForm" method="post">
-	<input type="hidden" name="member_no" value="1">
-</form>
 <header>
-    <div class="home_logo"></div>
-    <div class="loc_contnr" id="loc_contnr">
+    <div id="home_logo" class="home_logo"></div>
+    <div id="main_loc_contnr" class="main_loc_contnr">
         <div class="loc_icon"></div>
-        <span class="loc_addrs">은평구 백련산로2길 19</span>
-        <div class="loc_expand_btn" id="loc_expand_btn"></div>
-        <div class="loc_expand_btn_hover" id="loc_expand_btn_hover"></div>
+        <span id="main_loc_addrs" class="main_loc_addrs"></span>
+        <div id="loc_expand_btn" class="loc_expand_btn"></div>
+        <div id="loc_expand_btn_hover" class="loc_expand_btn_hover"></div>
     </div>
-    <div class="set_loc_contnr">
+</header>
+<form action="#" id="actionForm" method="post">
+    <div id="set_loc_contnr" class="set_loc_contnr">
     	<div id="loc_info" class="loc_info">
-	    	<input type="text" id="zipcd" class="zipcd" placeholder="우편번호" readonly>
+			<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+    		<input type="hidden" id="recent_loc_no" name="recent_loc_no">
+    		<input type="hidden" id="del_loc_no" name="del_loc_no">
+	    	<input type="text" id="zipcd" name="zipcd" class="zipcd" placeholder="우편번호" readonly>
 			<input type="button" id="search_addrs_map_btn" class="search_addrs_map_btn" value="주소검색">
-	    	<input type="text" id="addrs" class="addrs" placeholder="주소" readonly>
-	    	<input type="text" id="dtl_addrs" class="dtl_addrs" placeholder="상세주소">
+	    	<input type="text" id="addrs" name="addrs" class="addrs" placeholder="주소" readonly>
+	    	<input type="text" id="dtl_addrs" name="dtl_addrs" class="dtl_addrs" placeholder="상세주소">
 			<div id="loc_map" class="loc_map"></div>
 			<input type="button" id="set_loc_btn" class="set_loc_btn" value="이 주소로 위치 설정">
     	</div>
 		<div class="recent_loc_contnr">
 			<div class="recent_loc_title">최근 위치</div>
-			<ul class="recent_loc_list">
+			<ul id="recent_loc_list" class="recent_loc_list">
 			</ul>
 		</div>
     </div>
-</header>
+</form>
 <aside>
-    <div class="login_logout_menu">
+    <div id="login_logout_menu" class="login_logout_menu">
         <ul class="login_menu">
             <li>
                 <div class="menu_icon"></div>
@@ -55,8 +57,8 @@
         </ul>
     </div>
     <div class="side_menu_contnr">
-        <div class="main_menu_contnr">
-            <ul class="main_menu">
+        <div id="main_menu_contnr" class="main_menu_contnr">
+            <ul id="main_menu" class="main_menu">
                 <li class="active">
                     <div class="menu_icon"></div>
                     <div class="menu_icon_hover"></div>
@@ -79,7 +81,7 @@
                 </li>
             </ul>
         </div>
-        <div class="sub_menu_contnr">
+        <div id="sub_menu_contnr" class="sub_menu_contnr">
             <ul class="sub_menu map">
                 <li class="active">
                     <span class="sub_menu_text">가격비교</span>
