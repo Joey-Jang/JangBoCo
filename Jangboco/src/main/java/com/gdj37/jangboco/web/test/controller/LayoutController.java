@@ -35,10 +35,10 @@ public class LayoutController {
 		return mav;
 	}
 
-	@RequestMapping(value = {"/reloadPageAjax", "/reloadRecentLocListAjax"}, method = RequestMethod.POST,
+	@RequestMapping(value = "/reloadPageAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String reloadMainAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String reloadPageAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -52,12 +52,35 @@ public class LayoutController {
 		if(!"".equals(memberNo) && memberNo!=null) {
 			modelMap.put("memberNo", memberNo);
 			
-			Map<String, String> memberAddrs = locService.getMemberAddrs(params);
+			HashMap<String, Object> memberAddrs = locService.getMemberAddrs(params);
 			modelMap.put("memberAddrs", memberAddrs);
 		}
 		
 		int cntRecentLoc = locService.cntRecentLoc(params);
 		modelMap.put("cntRecentLoc", cntRecentLoc);
+		
+		HashMap<String, Object> latestLocData = locService.getLatestLocData(params);
+		modelMap.put("latestLocData", latestLocData);
+		
+		List<HashMap<String, Object>> recentLocList = locService.getRecentLocList(params);
+		modelMap.put("recentLocList", recentLocList);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+
+	@RequestMapping(value = "/reloadRecentLocListAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String reloadRecentLocListAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String memberNo = "2"; // 임시 회원번호
+		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
+			memberNo = params.get("member_no");
+		}
+		params.put("member_no", memberNo);
 		
 		List<HashMap<String, Object>> recentLocList = locService.getRecentLocList(params);
 		modelMap.put("recentLocList", recentLocList);

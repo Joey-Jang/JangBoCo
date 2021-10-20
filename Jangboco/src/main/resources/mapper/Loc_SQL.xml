@@ -12,29 +12,41 @@
 		FROM RECENT_LOC
 		WHERE MEMBER_NO = #{member_no}
 	</select>
+	
+	<select id="getLatestLocData" parameterType="hashmap" resultType="hashmap">
+		SELECT RECENT_LOC_NO, ZIPCD, ADDRS, DTL_ADDRS
+		FROM (
+		        SELECT RECENT_LOC_NO, ZIPCD, ADDRS, DTL_ADDRS, ROW_NUMBER() OVER(ORDER BY REGST_DATE DESC) AS RNUM
+		        FROM RECENT_LOC
+		        WHERE MEMBER_NO = #{member_no}
+		     )
+		WHERE RNUM = 1
+	</select>
 
 	<select id="getRecentLocList" parameterType="hashmap" resultType="hashmap">
 		SELECT RECENT_LOC_NO, ZIPCD, ADDRS, DTL_ADDRS
 		FROM (
-		        SELECT RECENT_LOC_NO, ZIPCD, ADDRS, DTL_ADDRS, ROW_NUMBER() OVER( ORDER BY REGST_DATE DESC ) AS RNUM
+		        SELECT RECENT_LOC_NO, ZIPCD, ADDRS, DTL_ADDRS, ROW_NUMBER() OVER(ORDER BY REGST_DATE DESC) AS RNUM
 		        FROM RECENT_LOC
 		        WHERE MEMBER_NO = #{member_no}
+		        AND DEL_FLAG = 0
 		     )
 		WHERE RNUM <![CDATA[<=]]> 3
 	</select>
 	
 	<insert id="addRecentLocData" parameterType="hashmap">
-		INSERT INTO RECENT_LOC
-		VALUES (RECENT_LOC_SEQ.NEXTVAL, #{member_no}, #{zipcd}, #{addrs}, #{dtl_addrs}, SYSDATE)
+		INSERT INTO RECENT_LOC (RECENT_LOC_NO, MEMBER_NO, ZIPCD, ADDRS, DTL_ADDRS)
+		VALUES (RECENT_LOC_SEQ.NEXTVAL, #{member_no}, #{zipcd}, #{addrs}, #{dtl_addrs})
 	</insert>
 	
 	<update id="updateRecentLocData" parameterType="hashmap">
-		UPDATE RECENT_LOC SET REGST_DATE = SYSDATE
+		UPDATE RECENT_LOC SET REGST_DATE = SYSDATE,
+							  DEL_FLAG = 0
 		WHERE RECENT_LOC_NO = #{recent_loc_no}
 	</update>
 	
-	<delete id="delRecentLocData" parameterType="hashmap">
-		DELETE FROM RECENT_LOC
+	<update id="delRecentLocData" parameterType="hashmap">
+		UPDATE RECENT_LOC SET DEL_FLAG = 1
 		WHERE RECENT_LOC_NO = #{del_recent_loc_no}
-	</delete>
+	</update>
 </mapper>

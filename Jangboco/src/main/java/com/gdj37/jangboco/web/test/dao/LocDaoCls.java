@@ -15,13 +15,18 @@ public class LocDaoCls implements LocDaoIF {
 	public SqlSession sqlSession;
 	
 	@Override
-	public Map<String, String> getMemberAddrs(HashMap<String, String> params) throws Throwable {
+	public HashMap<String, Object> getMemberAddrs(HashMap<String, String> params) throws Throwable {
 		return sqlSession.selectOne("Loc.getMemberAddrs", params);
 	}
 	
 	@Override
 	public int cntRecentLoc(HashMap<String, String> params) throws Throwable {
 		return sqlSession.selectOne("Loc.cntRecentLoc", params);
+	}
+	
+	@Override
+	public HashMap<String, Object> getLatestLocData(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Loc.getLatestLocData", params);
 	}
 
 	@Override

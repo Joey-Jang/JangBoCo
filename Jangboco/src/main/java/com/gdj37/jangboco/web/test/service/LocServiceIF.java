@@ -6,9 +6,11 @@ import java.util.Map;
 
 public interface LocServiceIF {
 
-	public Map<String, String> getMemberAddrs(HashMap<String, String> params) throws Throwable;
+	public HashMap<String, Object> getMemberAddrs(HashMap<String, String> params) throws Throwable;
 	
 	public int cntRecentLoc(HashMap<String, String> params) throws Throwable;
+	
+	public HashMap<String, Object> getLatestLocData(HashMap<String, String> params) throws Throwable;
 	
 	public List<HashMap<String, Object>> getRecentLocList(HashMap<String, String> params) throws Throwable;
 

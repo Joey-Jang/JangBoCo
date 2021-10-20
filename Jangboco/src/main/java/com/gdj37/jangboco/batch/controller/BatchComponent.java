@@ -58,11 +58,50 @@ public class BatchComponent {
 				
 				for(int i=0; i<list.size(); i++) {
 					JSONObject data = (JSONObject) list.get(i);
-					params.put("pricesNo", data.get("P_SEQ"));
+					
 					if(((Double) data.get("P_SEQ")).intValue()==oldMaxPricesNo) {
 						flag = true;
 						break;
 					}
+					
+					params.put("disctNo", data.get("M_GU_CODE"));
+					params.put("disctName", data.get("M_GU_NAME"));
+					int disctDuplctCheck = DBApiService.disctDuplctCheck(params);
+					if(disctDuplctCheck==0) {
+						try {
+							int cnt = DBApiService.addDisctData(params);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+							continue;
+						}
+					}
+					
+					params.put("marketNo", data.get("M_SEQ"));
+					params.put("typeNo", data.get("M_TYPE_CODE"));
+					params.put("marketName", data.get("M_NAME"));
+					int marketDuplctCheck = DBApiService.marketDuplctCheck(params);
+					if(marketDuplctCheck==0) {
+						try {
+							int cnt = DBApiService.addMarketData(params);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+							continue;
+						}
+					}
+					
+					params.put("itemsNo", data.get("A_SEQ"));
+					params.put("itemsName", data.get("A_NAME"));
+					int itemsDuplctCheck = DBApiService.itemsDuplctCheck(params);
+					if(itemsDuplctCheck==0) {
+						try {
+							int cnt = DBApiService.addItemsData(params);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+							continue;
+						}
+					}
+					
+					params.put("pricesNo", data.get("P_SEQ"));
 					params.put("updateDate", data.get("P_DATE"));
 					params.put("marketNo", data.get("M_SEQ"));
 					params.put("itemsNo", data.get("A_SEQ"));

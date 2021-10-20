@@ -95,7 +95,7 @@ $(document).ready(function() {
 			dataType: "json",
 			data: params,
 			success: function(result) {
-				setMainLoc(result.memberNo, result.cntRecentLoc, result.recentLocList, result.memberAddrs);
+				setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs);
 				drawRecentLocList(result.recentLocList);
 			},
 			error: function(request, status, error) {
@@ -170,15 +170,15 @@ $(document).ready(function() {
 	});
 	
 	// 메인 위치 설정
-	function setMainLoc(memberNo, cntRecentLoc, recentLocList, memberAddrs) {
+	function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
 		if(memberNo!=null) {
 			$("#member_no").val(memberNo);
 			if(cntRecentLoc > 0) {
-				$("#main_loc_addrs").html(recentLocList[0].ADDRS);
-				$("#recent_loc_no").val(recentLocList[0].RECENT_LOC_NO);
-		    	$("#zipcd").val(recentLocList[0].ZIPCD);
-		    	$("#addrs").val(recentLocList[0].ADDRS);
-		    	$("#dtl_addrs").val(recentLocList[0].DTL_ADDRS);
+				$("#main_loc_addrs").html(latestLocData.ADDRS);
+				$("#recent_loc_no").val(latestLocData.RECENT_LOC_NO);
+		    	$("#zipcd").val(latestLocData.ZIPCD);
+		    	$("#addrs").val(latestLocData.ADDRS);
+		    	$("#dtl_addrs").val(latestLocData.DTL_ADDRS);
 			} else {
 				$("#main_loc_addrs").html(memberAddrs.ADDRS);
 				$("#recent_loc_no").val("");
@@ -253,9 +253,6 @@ $(document).ready(function() {
 			data: params,
 			success: function(result) {
 				if(result.msg=="SUCCESS") {
-					if($("#recent_loc_no").val()==$("#del_recent_loc_no").val()) {
-						$("#recent_loc_no").val("");
-					}
 					reloadRecentLocList();
 				} else if(result.msg=="FAILED") {
 					alert("최근 위치 삭제에 실패하였습니다.");

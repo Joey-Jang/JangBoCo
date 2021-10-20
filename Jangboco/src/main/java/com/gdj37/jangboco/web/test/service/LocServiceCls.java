@@ -16,13 +16,18 @@ public class LocServiceCls implements LocServiceIF {
 	public LocDaoIF locDao;
 	
 	@Override
-	public Map<String, String> getMemberAddrs(HashMap<String, String> params) throws Throwable {
+	public HashMap<String, Object> getMemberAddrs(HashMap<String, String> params) throws Throwable {
 		return locDao.getMemberAddrs(params);
 	}
 	
 	@Override
 	public int cntRecentLoc(HashMap<String, String> params) throws Throwable {
 		return locDao.cntRecentLoc(params);
+	}
+	
+	@Override
+	public HashMap<String, Object> getLatestLocData(HashMap<String, String> params) throws Throwable {
+		return locDao.getLatestLocData(params);
 	}
 	
 	@Override

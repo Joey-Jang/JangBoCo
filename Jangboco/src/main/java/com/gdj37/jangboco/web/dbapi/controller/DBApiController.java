@@ -49,6 +49,7 @@ public class DBApiController {
 //				
 //				for(int i=0; i<list.size(); i++) {
 //					JSONObject data = (JSONObject) list.get(i);
+//					
 //					params.put("disctNo", data.get("M_GU_CODE"));
 //					params.put("disctName", data.get("M_GU_NAME"));
 //					int disctDuplctCheck = DBApiService.disctDuplctCheck(params);
@@ -93,7 +94,6 @@ public class DBApiController {
 //					params.put("sellStd", data.get("A_UNIT"));
 //					params.put("price", data.get("A_PRICE"));
 //					params.put("note", data.get("ADD_COL"));
-//					System.out.println(start + i);
 //					try {
 //						int cnt = DBApiService.addPricesData(params);
 //					} catch (Exception e2) {
@@ -120,7 +120,7 @@ public class DBApiController {
 //		return mav;
 //	}
 	
-	// Updating API data everyday midnight add to batch program 21.10.14
+	// Updating API data everyday midnight => add to batch program 21.10.14
 //	@RequestMapping(value = "/updateApiData")
 //	public ModelAndView updateApiData(ModelAndView mav) throws Throwable {
 //		int oldMaxPricesNo = DBApiService.getMaxPricesNo();
