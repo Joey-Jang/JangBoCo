@@ -42,7 +42,7 @@
 	<update id="updateRecentLocData" parameterType="hashmap">
 		UPDATE RECENT_LOC SET REGST_DATE = SYSDATE,
 							  DEL_FLAG = 0
-		WHERE RECENT_LOC_NO = #{recent_loc_no}
+		WHERE RECENT_LOC_NO = #{latest_loc_no}
 	</update>
 	
 	<update id="delRecentLocData" parameterType="hashmap">

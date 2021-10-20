@@ -360,6 +360,7 @@ main {
 	background-color: #03A64A;
 	border-color: #F0F0F0 #038C3E #038C3E #F0F0F0;
 	color: #FFFFFF;
+	cursor: pointer;
 }
 .addrs {
 	width: 100%;
@@ -388,6 +389,7 @@ main {
 	background-color: #03A64A;
 	border-color: #F0F0F0 #038C3E #038C3E #F0F0F0;
 	color: #FFFFFF;
+	cursor: pointer;
 }
 
 /* 최근 위치 */
@@ -425,7 +427,7 @@ main {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: flex-start;
-	width: 191px;
+	width: 186px;
 	border-left: 1px solid #E0E0E0;
 	text-indent: 5px;
 }
@@ -435,12 +437,8 @@ main {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.recent_loc_action_btn {
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: space-between;
-	align-items: center;
-	width: 30px;
+.recent_addrs_contnr > div {
+	cursor: pointer;
 }
 .del_recent_loc_btn {
 	width: 35px;
@@ -460,4 +458,5 @@ main {
 	background-color: #03A64A;
 	border-color: #F0F0F0 #038C3E #038C3E #F0F0F0;
 	color: #FFFFFF;
+	cursor: pointer;
 }

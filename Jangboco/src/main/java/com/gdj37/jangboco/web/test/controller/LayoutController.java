@@ -35,10 +35,10 @@ public class LayoutController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/reloadPageAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/reloadMainLocAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String reloadPageAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String reloadMainLocAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -99,7 +99,7 @@ public class LayoutController {
 		String msg = "FAILED";
 		try {
 			int cnt = 0;
-			if(!"".equals(params.get("recent_loc_no")) && params.get("recent_loc_no")!=null) {
+			if(!"".equals(params.get("latest_loc_no")) && params.get("latest_loc_no")!=null) {
 				cnt = locService.updateRecentLocData(params);
 			} else {
 				cnt = locService.addRecentLocData(params);

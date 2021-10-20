@@ -13,7 +13,7 @@
     <div id="set_loc_contnr" class="set_loc_contnr">
     	<div id="loc_info" class="loc_info">
 			<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
-    		<input type="hidden" id="recent_loc_no" name="recent_loc_no">
+    		<input type="hidden" id="latest_loc_no" name="latest_loc_no">
     		<input type="hidden" id="del_recent_loc_no" name="del_recent_loc_no">
 	    	<input type="text" id="zipcd" name="zipcd" class="zipcd" placeholder="우편번호" readonly>
 			<input type="button" id="search_addrs_map_btn" class="search_addrs_map_btn" value="주소검색">
