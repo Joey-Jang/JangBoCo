@@ -231,7 +231,7 @@ $(document).ready(function() {
     }
 
     // 최근 위치 선택 이벤트
-    $(".recent_addrs_contnr").on("click", "div", function() {
+    $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > div", function() {
     	$("#latest_loc_no").val($(this).parent().parent().attr("no"));
     	$("#zipcd").val($(this).parent().parent().find(".recent_zipcd").attr("value"));
     	$("#addrs").val($(this).parent().parent().find(".recent_addrs").attr("value"));
