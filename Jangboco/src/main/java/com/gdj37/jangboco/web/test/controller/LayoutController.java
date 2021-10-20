@@ -28,7 +28,7 @@ public class LayoutController {
 		return mav;
 	}
 	
-	@RequestMapping(value = {"/", "/home"})
+	@RequestMapping(value = "/home")
 	public ModelAndView layoutConBlank(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
 		mav.setViewName("jangboco/home");
 		
