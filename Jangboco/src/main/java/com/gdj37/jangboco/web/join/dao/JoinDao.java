@@ -65,5 +65,11 @@ public class JoinDao implements IJoinDao{
 		// TODO Auto-generated method stub
 		return sqlSession.insert("Member.addMarketMember",params);
 	}
+
+	@Override
+	public int checkSocialEmail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Member.checkSocialEmail",email);
+	}
 	
 }

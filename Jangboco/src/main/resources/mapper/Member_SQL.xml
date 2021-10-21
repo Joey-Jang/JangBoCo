@@ -6,6 +6,7 @@
 		VALUES (MEMBER_SEQ.NEXTVAL, #{email},#{name},#{nicnm},#{pw},#{zipcd},#{addrs},#{dtl_addrs},#{member_type})
 	</insert>
 	
+	
 	<select id="validEmail" parameterType="String" resultType="Integer"> 
 		SELECT COUNT(EMAIL)
 		FROM MEMBER 
@@ -50,4 +51,7 @@
 		    VALUES (MEMBER_SEQ.CURRVAL, #{market_no},#{regnum},#{phone_num},#{start_time},#{end_time},#{branch_name})
 		SELECT * FROM DUAL
 	</insert>
+	
+	<select id="checkSocialEmail" parameterType="String">
+	</select>
 </mapper>

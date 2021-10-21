@@ -22,6 +22,8 @@ public interface IJoinService {
 	public int checkBranchName(HashMap<String, String> params) throws Exception;
 
 	public int addMarketMember(HashMap<String, String> params) throws Exception;
+
+	public int checkSocialEmail(String email) throws Exception;
 	
 	
 }

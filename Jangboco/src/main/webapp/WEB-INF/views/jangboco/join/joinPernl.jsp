@@ -17,6 +17,7 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
+
     <div class="con_contnr">
         <div class="con">
             <div class="join_contnr">
