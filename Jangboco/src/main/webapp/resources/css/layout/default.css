@@ -9,7 +9,6 @@ html {
 body {
     margin: 0;
     height: 100%;
-    min-height: 580px;
     font-size: 0pt;
 }
 header {
@@ -48,20 +47,23 @@ main {
     width: 100%;
     min-width: 910px;
 	height: 100%;
-    min-height: 480px;
+    min-height: 580px;
     padding-top: 100px;
     padding-left: 200px;
     background-color: #FFFFFF;
 }
 .con_contnr {
-    width: auto;
+    width: calc(100% - 50px);
+    min-width: calc(100% - 50px);
     height: auto;
     min-height: calc(100% - 20px);
-    margin-right: 50px;
-    margin-bottom: 20px;
     padding: 28px;
     border: 2px solid #03A64A;
     border-radius: 20px;
+}
+.bottom_contnr {
+	width: calc(100% - 50px);
+	height: 20px;
 }
 .con {
     width: 100%;
