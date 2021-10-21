@@ -32,7 +32,7 @@ $(document).ready(function() {
 	                    // 해당 주소에 대한 좌표를 받아서
 	                    var coords = new daum.maps.LatLng(result.y, result.x);
 	                    // 지도를 보여준다.
-						document.getElementById("loc_info").style.height = "441px";
+						document.getElementById("loc_info").style.height = "416px";
 	                    mapContainer.style.display = "block";
 	                    map.relayout();
 	                    // 지도 중심을 변경한다.
