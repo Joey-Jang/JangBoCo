@@ -77,10 +77,10 @@ main {
     min-width: 180px;
     min-height: 32px;
     margin-left: 20px;
-    background: left / contain no-repeat url("../../images/layout/homeLogo2.svg");
+    background: left / contain no-repeat url("../../images/layout/homeLogo.svg");
 }
 .home_logo:hover {
-    background: left / contain no-repeat url("../../images/layout/homeLogoHover2.svg");
+    background: left / contain no-repeat url("../../images/layout/homeLogoHover.svg");
     cursor: pointer;
 }
 /* 위치 설정 */
