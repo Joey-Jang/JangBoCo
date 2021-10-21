@@ -125,17 +125,15 @@ $(document).ready(function() {
         
     // window 크기 변화 시 위치 설정 창 숨기기
     var timerHandler;
-    function setAddrsHideEvent() {
+    $(window).on("resize", function() {
         clearTimeout(timerHandler);
 
         timerHandler = setTimeout(function() {
-            if($(window).width() < 530) {
+            if($(window).width() < 500) {
                 $("#set_loc_contnr").hide();
-                $(this).off();
             }
         }, 300);
-    };
-    $(window).on("resize.setAddrsHideEvent", setAddrsHideEvent);
+    });
 
 	// 메인 위치 클릭 이벤트 => 위치 설정 창
     $("#main_loc_contnr").on("click", function() {
@@ -143,34 +141,17 @@ $(document).ready(function() {
 		$("#loc_info").css("height", "136px");
 		$("#loc_map").hide();
 		
-        if($(window).width() >= 530) {
+        if($(window).width() >= 500) {
             $("#set_loc_contnr").toggle();
-            if($._data($(window)[0], "events")==undefined || $._data($(window)[0], "events")==null) {
-                $(window).on("resize.setAddrsHideEvent", setAddrsHideEvent);
-            } else {
-                var eventEntries = Object.entries($._data($(window)[0], "events"));
-                for(var i=0; i<eventEntries.length; i++) {
-                    var eventCatagory = eventEntries[i];
-                    if(eventCatagory[0]=="resize") {
-                        var eventList = eventCatagory[1];
-                        for(var j=0; j<eventList.length; i++) {
-                            var event = eventList[i];
-                            if(event.namespace=="setAddrsHideEvent") {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                $(window).on("resize.setAddrsHideEvent", setAddrsHideEvent);
-            }
         }
     });
     
     // 위치 설정 창 외부 클릭 이벤트
-    $("#set_loc_contnr").on("click", function() {
-    	return false;
-    });
-	$(document).on("click", function(e) {
+	$(document).on("click", function(event) {
+		if($(event.target).is("#set_loc_contnr, #set_loc_contnr *, #main_loc_contnr, #main_loc_contnr *")) {
+			return false;
+		}
+		
 		$("#set_loc_contnr").hide();
 	});
 	
