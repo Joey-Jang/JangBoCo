@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* 대지 기본 설정 */
-html, body, header, main, footer, aside, section, article, div, span, p, ul, li, label, nav, a, form, input {
+html, body, header, main, footer, aside, section, article, div, span, p, ul, li, label, nav, a, form, input, textarea {
 	box-sizing: border-box;
 }
 html {
