@@ -43,6 +43,7 @@ public class LayoutController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
+		// 추후에 세션 sMNo로 대체
 		String memberNo = "2"; // 임시 회원번호
 		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
 			memberNo = params.get("member_no");
@@ -76,6 +77,7 @@ public class LayoutController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
+		// 회원이 아니면 최근 위치 출력하지 않음 => AOP로 추후에 구현
 		String memberNo = "2"; // 임시 회원번호
 		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
 			memberNo = params.get("member_no");
@@ -96,6 +98,7 @@ public class LayoutController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
+		// 회원이 아니면 최근 위치 저장하지 않음 => AOP로 추후에 구현
 		String msg = "FAILED";
 		try {
 			int cnt = 0;
@@ -139,6 +142,7 @@ public class LayoutController {
 //			System.out.println();
 //		}
 		
+		// 회원이 아니면 최근 위치 삭제하지 않음 => AOP로 추후에 구현
 		String msg = "FAILED";
 		try {
 			int cnt = 0;

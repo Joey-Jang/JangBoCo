@@ -89,7 +89,7 @@ $(document).ready(function() {
 
     // 메인 위치 갱신
     function reloadMainLoc() {
-		var params = $("#actionForm").serialize();
+		var params = $("#locForm").serialize();
 		
 		$.ajax({
 			url: "reloadMainLocAjax",
@@ -107,7 +107,7 @@ $(document).ready(function() {
 	
 	// 최근 위치 목록 갱신
 	function reloadRecentLocList() {
-		var params = $("#actionForm").serialize();
+		var params = $("#locForm").serialize();
 		
 		$.ajax({
 			url: "reloadRecentLocListAjax",
@@ -249,7 +249,7 @@ $(document).ready(function() {
     $("#recent_loc_list").on("click", ".del_recent_loc_btn", function() {
     	$("#del_recent_loc_no").val($(this).parent().attr("no"));
     	
-    	var params = $("#actionForm").serialize();
+    	var params = $("#locForm").serialize();
 		
 		$.ajax({
 			url: "delRecentLocDataAjax",
@@ -276,7 +276,7 @@ $(document).ready(function() {
     	if($("#zipcd").val()=="" || $("#addrs").val()=="") {
     		alert("주소를 입력해주세요.");
     	} else {
-	    	var params = $("#actionForm").serialize();
+	    	var params = $("#locForm").serialize();
 			
 			$.ajax({
 				url: "setLocAjax",
