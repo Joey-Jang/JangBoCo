@@ -1,0 +1,262 @@
+@charset "UTF-8";
+/* 대지 기본 설정 */
+
+.con_contnr {
+	display: flex;
+	align-items: center;
+}
+
+.con {
+	justify-content: center;
+} 
+
+
+.con_contnr {
+    display: flex;
+    align-items: normal;
+}
+
+.join_con {
+	width: 100%;
+	height: 600px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+.join_header {
+	width: 200px;
+	height: 200px;
+	font-size: 15px;
+	text-align: center;
+	line-height: 200px;
+}
+.join_form_header {
+	width: 800px;
+	height: 100px;
+	background-color: white;
+	color: black;
+	text-align: center;
+	line-height: 100px;
+	margin-top: -20px;
+	font-size:30px;
+}
+.join_form_body {
+	width: 800px;
+	height: 700px;
+	overflow: scroll;
+	overflow-x: hidden;
+	font-size:15px;
+	display: flex;
+	justify-content:center;
+}
+.join_form {
+	width: 100%;
+	height:700px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.form_input_val > input {
+	width: 500px;
+	height: 50px;
+	border-radius: 5px;
+	border: 0px;
+	background-color: #EDF2F7
+}
+
+.form_input {
+	margin: 20px;
+}
+
+.form_input_text {
+	text-align: left;
+	margin-left: 120px;
+	margin-bottom: 5px;
+}
+
+.email_input {
+	display:flex;
+	justify-content: center;
+
+}
+
+.email_input input {
+	width: 400px;
+}
+
+.email_input input[type="button"] {
+	width: 80px;
+	margin-left: 20px;
+	height:52px;
+	border-radius: 5px;
+	background-color: #C4C4C4;
+	border: #C4C4C4;
+}
+
+
+.joinBtn > input[type="button"]{
+	width: 150px;
+	height: 50px;
+	border: #C4C4C4;
+}
+
+.agrnt_input {
+	display: flex;
+	justify-content: center;
+}
+
+.hidden {
+	display: none !important; 
+}
+
+.form_zipcd input[name="zipcd"]{
+	width: 360px;
+}
+
+.form_zipcd {
+	display:flex;
+	justify-content: center;
+}
+
+.zipcd_btn {
+	width: 120px;
+	margin-left: 20px;
+	height:52px;
+	border-radius: 5px;
+	background-color: #C4C4C4;
+	border: #C4C4C4;
+}
+
+.email_warn {
+	color: red;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.market_modal {
+    width: 78%;
+    height: 78%;
+    position: absolute;
+/*     top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; */
+/*     background-color: #BDBDBD;
+    opacity: 0.3; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.market_contnr{
+	width: 400px;
+	height: 500px;
+	background-color: #FAF4C0;
+	border: 2px solid #BCE55C;
+	border-radius: 3px;
+	font-size: 15px;
+}
+
+table {
+	border: 1px solid black;
+	width: 290px;
+	height: 100px;
+}
+
+.market_contnr_top {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 200px;
+    margin-bottom: 60px;
+}
+
+.market_contnr_top_header {
+	margin: auto 5px 0 auto;
+}
+
+th, td {
+    border-bottom: 1px solid #444444;
+}
+
+.market_contnr_bottom {
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.market_list {
+    overflow: scroll;
+    overflow-x: unset;
+    height: 100px;
+}
+
+.market_branch_list {
+	overflow: scroll;
+    overflow-x: unset;
+    height: 100px;
+}
+
+.market_info {
+	margin: auto auto auto 50px; 
+}
+
+.market_branch_info {
+	margin: auto auto auto 50px; 
+}
+
+.market_input_contnr {
+	margin: 50px auto auto 50px;
+}
+
+.market_input {
+	width: 250px;
+}
+
+.close_market_btn {
+	border: none;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+#market_member_name {
+	width: 400px !important;
+	
+}
+
+.market_name_input {
+	display: flex;
+    justify-content: center;
+}
+
+.market_name_input input[type="button"]{
+	width: 80px !important;
+    margin-left: 20px !important;
+    height: 52px !important;
+    border-radius: 5px !important;
+    background-color: #C4C4C4 !important;
+    border: #C4C4C4 !important;
+}
+
+#regnum {
+	width: 400px !important;
+	
+}
+
+.regnum_input {
+	display: flex;
+    justify-content: center;
+}
+
+.regnum_input input[type="button"]{
+	width: 80px !important;
+    margin-left: 20px !important;
+    height: 52px !important;
+    border-radius: 5px !important;
+    background-color: #C4C4C4 !important;
+    border: #C4C4C4 !important;
+}

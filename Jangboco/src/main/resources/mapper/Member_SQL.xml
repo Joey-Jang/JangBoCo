@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	<insert id="addMember" parameterType="hashmap">
+		INSERT INTO MEMBER(MEMBER_NO, EMAIL, NAME, NICNM, PW, ZIPCD, ADDRS, DTL_ADDRS, MEMBER_TYPE) 
+		VALUES (MEMBER_SEQ.NEXTVAL, #{email},#{name},#{nicnm},#{pw},#{zipcd},#{addrs},#{dtl_addrs},#{member_type})
+	</insert>
+	
+	<select id="validEmail" parameterType="String" resultType="Integer"> 
+		SELECT COUNT(EMAIL)
+		FROM MEMBER 
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<select id="getDisct" resultType="hashmap">
+		SELECT DISCT_NO, DISCT_NAME FROM DISCT
+	</select>
+	
+	<select id="getMarkets" parameterType="hashmap" resultType="hashmap">
+		SELECT MARKET_NO, DISCT_NO, MARKET_NAME 
+		FROM MARKET WHERE MARKET_NAME LIKE '%' || #{marketName} || '%'
+		AND DISCT_NO = #{disct}
+	</select>
+	
+	<select id="getBranches" parameterType="hashmap" resultType="hashmap">
+		SELECT * FROM MARKET_MEMBER WHERE MARKET_NO = #{marketNo}
+	</select>
+	
+	<select id="checkRegnum" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) FROM MARKET_MEMBER WHERE REGNUM = #{regnum}
+	</select>
+	
+	<select id="checkAddMarket" parameterType="hashmap" resultType="hashmap">
+		SELECT COUNT1,COUNT2 FROM (SELECT COUNT(*) AS COUNT1 FROM MARKET_MEMBER
+		WHERE BRANCH_NAME IS NULL AND MARKET_NO = #{market_no}) A,
+		(SELECT COUNT(*) AS COUNT2 FROM MARKET_MEMBER
+		    WHERE BRANCH_NAME IS NOT NULL AND MARKET_NO = #{market_no}) B
+	</select>
+	
+	<select id="checkBranchName" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) FROM MARKET_MEMBER
+		WHERE MARKET_NO = #{market_no} AND BRANCH_NAME = #{branch_name}
+	</select>
+	
+	<insert id="addMarketMember" parameterType="hashmap">
+		INSERT ALL 
+		    INTO MEMBER (MEMBER_NO, EMAIL, NAME,PW, ZIPCD, ADDRS, DTL_ADDRS,MEMBER_TYPE)
+		    VALUES (MEMBER_SEQ.NEXTVAL, #{email},#{name},#{pw},#{zipcd},#{addrs},#{dtl_addrs},2)
+		    INTO MARKET_MEMBER (MARKET_MEMBER_NO, MARKET_NO, REGNUM, PHONE_NUM, START_TIME, END_TIME, BRANCH_NAME)
+		    VALUES (MEMBER_SEQ.CURRVAL, #{market_no},#{regnum},#{phone_num},#{start_time},#{end_time},#{branch_name})
+		SELECT * FROM DUAL
+	</insert>
+</mapper>
