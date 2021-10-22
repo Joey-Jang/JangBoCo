@@ -52,7 +52,7 @@ $(document).ready(function() {
 
             $(".sub_menu").css("display", "none");
             $(".sub_menu").eq(index).css("display", "block");
-            $("#sub_menu_contnr").css("display", "flex");
+            $("#sub_menu_contnr").css("display", "block");
         }
     })
     
