@@ -26,8 +26,7 @@
 		</form>
 		<div class="recent_loc_contnr">
 			<div class="recent_loc_title">최근 위치</div>
-			<ul id="recent_loc_list" class="recent_loc_list">
-			</ul>
+			<ul id="recent_loc_list" class="recent_loc_list"></ul>
 		</div>
     </div>
 <aside>
@@ -121,7 +120,7 @@
                     <span class="sub_menu_text">공지</span>
                 </li>
                 <li>
-                    <span class="sub_menu_text">Q&A</span>
+                    <span class="sub_menu_text">Q&amp;A</span>
                 </li>
             </ul>
         </div>
