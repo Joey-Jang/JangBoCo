@@ -71,6 +71,9 @@ main {
     font-size: 11pt;
     font-weight: 400;
 }
+.hidden_btn {
+	display: none;
+}
 
 
 /* top */
