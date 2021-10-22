@@ -1,3 +1,4 @@
+/joinMarketForm.jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,9 +13,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/join/join.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
-<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
-<script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript">
 // 이메일 인증번호
 var emailNum;
@@ -100,7 +99,7 @@ $(document).ready(function(){
       } else if ($("#pw").val() != $("#pw_check").val()){
          alert("비밀번호 확인이 일치하지 않습니다");
       } else if (checkVal("#market_no")) {
-    	 alert("기업명을 다시 검색해주세요");
+        alert("기업명을 다시 검색해주세요");
       } else if (emailFlag==false){
          alert("인증번호를 확인해주세요");
       } else if (checkVal("#zipcd_other")){
@@ -113,19 +112,19 @@ $(document).ready(function(){
          alert("상세주소를 입력해주세요");
          $("#dtl_addrs").focus();
       } else if(checkVal("#regdate")){
-    	 alert("사업자 등록일을 입력해주세요");
-    	 $("#regdate").focus();
+        alert("사업자 등록일을 입력해주세요");
+        $("#regdate").focus();
       } else if (!RegnumResult){
-    	  alert("사업자 등록번호를 확인해주세요");
+         alert("사업자 등록번호를 확인해주세요");
       } else if (checkVal("#phone_num")){
-    	  alert("전화번호를 입력해주세요");
-    	  $("#phone_num").focus();
+         alert("전화번호를 입력해주세요");
+         $("#phone_num").focus();
       } else if (checkVal("#start_time")){
-    	  alert("영업시작시간을 입력해주세요");
-    	  $("#start_time").focus();
+         alert("영업시작시간을 입력해주세요");
+         $("#start_time").focus();
       } else if (checkVal("#end_time")){
-    	  alert("영업마감시간을 입력해주세요");
-    	  $("#end_time").focus();
+         alert("영업마감시간을 입력해주세요");
+         $("#end_time").focus();
       }else if ($("#agrnt_box").prop("checked") == false){
          alert("약관동의를 확인해주세요");
       } else {
@@ -228,19 +227,19 @@ $(document).ready(function(){
    $("#market_input_btn").on("click",function(){
       //해당 지점있는지 한번더 확인하고 닫기 ajax
       if(marketNo==""){
-    	  alert("마켓을 선택해주세요");
+         alert("마켓을 선택해주세요");
       } else {
-	    var result = false;
-	    if(checkVal("#market_input")==true){
-	       result = confirm("지점입력없이 등록하시겠습니까?");
-	       if(result==true){
-	          //지점없이 등록
-	          checkAddMarket();
-	       }
-	    } else {
-	       //내용있을때 그냥 등록
-	    	checkAddMarket();
-	    }      
+       var result = false;
+       if(checkVal("#market_input")==true){
+          result = confirm("지점입력없이 등록하시겠습니까?");
+          if(result==true){
+             //지점없이 등록
+             checkAddMarket();
+          }
+       } else {
+          //내용있을때 그냥 등록
+          checkAddMarket();
+       }      
       }
    });
    
@@ -276,8 +275,8 @@ $(document).ready(function(){
    //지점명은 클릭해도 아무것도 생기지 않음
    
    $("#close_market_btn").on("click",function(){
-	   marketNo = "";
-	   $("#market_modal").addClass("hidden");
+      marketNo = "";
+      $("#market_modal").addClass("hidden");
       
    });
    
@@ -293,41 +292,41 @@ $(document).ready(function(){
          $("#regnum_warn").text("정상적인 사업자 등록번호입니다");
          RegnumResult = true;
       } else {
-    	  RegnumResult = false;
+         RegnumResult = false;
           $("#regnum_warn").text("비정상적인 사업자 등록번호입니다");
           $("#regnum_warn").css("color","red");
       }
       
       //사업자 등록번호가 등록되어있는지 확인
       if(RegnumResult==true){
-    	  $.ajax({
-    		  url:"checkRegnum",
-    		  type: "post",
-    		  dataType: "json",
-    		  data: {
-    			  "regnum":$("#regnum").val()
-    		  },
-    		  success: function(res){
-    			  console.log(res);
-    			  if(res.result==0){
-        			  RegnumResult = true;
-        	          $("#regnum_warn").text("가입가능한 사업자 등록번호입니다");
-        	          $("#regnum_warn").css("color","green");
-        	          toDisabled("#name");
-        	          toDisabled("#regdate");
-        	          toDisabled("#regnum");
-        	          toDisabled("#regnum_check_btn");
-    			  } else {
-        			  RegnumResult = false;
-        	          $("#regnum_warn").text("이미 가입된 사업자 등록번호입니다");
-        	          $("#regnum_warn").css("color","red");
-    			  }
-    		  },
-    		  error: function(error){
-    			  RegnumResult = false;
-    			  console.log(error);
-    		  }
-    	  })
+         $.ajax({
+            url:"checkRegnum",
+            type: "post",
+            dataType: "json",
+            data: {
+               "regnum":$("#regnum").val()
+            },
+            success: function(res){
+               console.log(res);
+               if(res.result==0){
+                   RegnumResult = true;
+                     $("#regnum_warn").text("가입가능한 사업자 등록번호입니다");
+                     $("#regnum_warn").css("color","green");
+                     toDisabled("#name");
+                     toDisabled("#regdate");
+                     toDisabled("#regnum");
+                     toDisabled("#regnum_check_btn");
+               } else {
+                   RegnumResult = false;
+                     $("#regnum_warn").text("이미 가입된 사업자 등록번호입니다");
+                     $("#regnum_warn").css("color","red");
+               }
+            },
+            error: function(error){
+               RegnumResult = false;
+               console.log(error);
+            }
+         })
       }
       
    });
@@ -402,88 +401,88 @@ function toDisabled(sel){
 
 function checkAddMarket(){
  /* ajax로 있는 기업인지 확인하기 
-   	input 내용이 없을시에는 지점이 없는 경우
-   	등록된 마켓이 있는지 확인한다 (첫번째 컬럼은 널인값, 두번째 값은 널이 아닌값) 
- 	이미 등록된 지점인지(널이 1개이상) or 지점이 있는 경우(널이 아닌값이 존재)인지 리턴
- 	둘다 널인경우 그냥 등록가능
-	브랜치지점이 있는경우에는 똑같은 지점이 있는지만 다시 확인해주기
-	SELECT COUNT1,COUNT2 FROM (SELECT COUNT(*) AS COUNT1 FROM MARKET_MEMBER
-			WHERE BRANCH_NAME IS NULL AND MARKET_NO = '100002') A,
-			(SELECT COUNT(*) AS COUNT2 FROM MARKET_MEMBER
-			    WHERE BRANCH_NAME IS NOT NULL AND MARKET_NO = '100002') B
-	
- */	
+      input 내용이 없을시에는 지점이 없는 경우
+      등록된 마켓이 있는지 확인한다 (첫번째 컬럼은 널인값, 두번째 값은 널이 아닌값) 
+    이미 등록된 지점인지(널이 1개이상) or 지점이 있는 경우(널이 아닌값이 존재)인지 리턴
+    둘다 널인경우 그냥 등록가능
+   브랜치지점이 있는경우에는 똑같은 지점이 있는지만 다시 확인해주기
+   SELECT COUNT1,COUNT2 FROM (SELECT COUNT(*) AS COUNT1 FROM MARKET_MEMBER
+         WHERE BRANCH_NAME IS NULL AND MARKET_NO = '100002') A,
+         (SELECT COUNT(*) AS COUNT2 FROM MARKET_MEMBER
+             WHERE BRANCH_NAME IS NOT NULL AND MARKET_NO = '100002') B
+   
+ */   
 
- 	$.ajax({
- 		url:"checkAddMarket",
-  		data: {
- 			"market_no":marketNo		
- 		}, 
- 		type: "post",
- 		success: function(res){
- 			var count1 = res.result['COUNT1'];
- 			var count2 = res.result['COUNT2'];
+    $.ajax({
+       url:"checkAddMarket",
+        data: {
+          "market_no":marketNo      
+       }, 
+       type: "post",
+       success: function(res){
+          var count1 = res.result['COUNT1'];
+          var count2 = res.result['COUNT2'];
 
- 				if(count1==0&&count2==0){
- 					alert("등록합니다");
- 					addFormBranch();
- 				} else if (count1>0){
- 					alert("이미 등록된 마켓입니다");
- 				}
- 				if(count2>0){
- 					//지점이 여러개 있는경우 무조건 지점을 입력받아야함 
- 					if($("#market_input").val()!=""){
-	 					var result = checkBranchName(marketNo, $("#market_input").val());
-	 					if(result){
-	 						alert("새로 등록합니다");
-	 						addFormBranch();
-	 					} else {
-	 						alert("이미 있는 지점입니다");
-	 					}
- 					} else {
- 						alert("지점 입력이 필수인 마켓입니다");
- 					}
- 				}
- 		},
- 		error: function(error){
- 			console.log(error);
- 		}
- 	});
+             if(count1==0&&count2==0){
+                alert("등록합니다");
+                addFormBranch();
+             } else if (count1>0){
+                alert("이미 등록된 마켓입니다");
+             }
+             if(count2>0){
+                //지점이 여러개 있는경우 무조건 지점을 입력받아야함 
+                if($("#market_input").val()!=""){
+                   var result = checkBranchName(marketNo, $("#market_input").val());
+                   if(result){
+                      alert("새로 등록합니다");
+                      addFormBranch();
+                   } else {
+                      alert("이미 있는 지점입니다");
+                   }
+                } else {
+                   alert("지점 입력이 필수인 마켓입니다");
+                }
+             }
+       },
+       error: function(error){
+          console.log(error);
+       }
+    });
 
 }
 
 function checkBranchName(marketNo, branchName){
-	var result = false;
-	$.ajax({
- 		url:"checkBranchName",
-  		data: {
- 			"market_no":marketNo,
- 			"branch_name":branchName
- 		}, 
- 		async: false,
- 		type: "post",
- 		success: function(res){
- 			if(res.result == 0){
- 				//지점없음
- 				result = true;
- 			} else {
- 				result = false;
- 			}
- 		},
- 		error: function(error){
- 			console.log(error);
- 		}
- 	});
-	return result;
-	
+   var result = false;
+   $.ajax({
+       url:"checkBranchName",
+        data: {
+          "market_no":marketNo,
+          "branch_name":branchName
+       }, 
+       async: false,
+       type: "post",
+       success: function(res){
+          if(res.result == 0){
+             //지점없음
+             result = true;
+          } else {
+             result = false;
+          }
+       },
+       error: function(error){
+          console.log(error);
+       }
+    });
+   return result;
+   
 }
 
 function addFormBranch(){
-	branchName = $("#market_input").val();
-	   $("#market_no").val(marketNo);
-	   $("#branch_name").val(branchName);
-	   $("#market_member_name").val(marketName+" "+branchName);
-	   $("#market_modal").addClass("hidden");
+   branchName = $("#market_input").val();
+      $("#market_no").val(marketNo);
+      $("#branch_name").val(branchName);
+      $("#market_member_name").val(marketName+" "+branchName);
+      $("#market_modal").addClass("hidden");
 }
 
 function checkRegnum(b_no, start_dt, p_nm){
@@ -733,4 +732,4 @@ function checkRegnum(b_no, start_dt, p_nm){
     <div class="bottom_contnr"></div>
 </main>
 </body>
-</html>
+</html> 
