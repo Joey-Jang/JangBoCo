@@ -40,7 +40,7 @@ $(document).ready(function() {
 	                    // 마커를 결과값으로 받은 위치로 옮긴다.
 	                    marker.setPosition(coords)
 	                    
-	                    $("#recent_loc_no").val("");
+	                    $("#latest_loc_no").val("");
 	                    $("#dtl_addrs").val("");
 		            	document.getElementById("dtl_addrs").focus();
 	                }
