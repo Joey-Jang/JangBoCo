@@ -20,8 +20,8 @@
     <div class="con_contnr">
         <div class="con">
             <div class="join_contnr">
-            	<a href="joinPernl"><div class="join_btn">개인회원가입</div></a>
-            	<div class="join_btn">마켓회원가입</div>
+            	<div class="join_pernl_btn" onClick="location.href='joinPernl'">개인회원가입</div>
+            	<div class="join_market_btn" onClick="location.href='joinMarketForm'">마켓회원가입</div>
             </div>
         </div>
     </div>

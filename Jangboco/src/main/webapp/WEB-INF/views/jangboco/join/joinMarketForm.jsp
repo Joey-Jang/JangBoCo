@@ -560,7 +560,7 @@ function checkRegnum(b_no, start_dt, p_nm){
            </div>
            <div class="join_form_body">
               <div class="join_form">
-                 <form action="joinMarketSuccess" id="market_join_form" method="post" onsubmit="emailEnabled()">
+                 <form action="joinMarketMember" id="market_join_form" method="post" onsubmit="emailEnabled()">
                       <div class="form_input">
                          <div class="form_input_text">
                             대표자 이름

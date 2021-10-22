@@ -180,7 +180,7 @@ function toDisabled(sel){
         	</div>
         	<div class="join_form_body">
         		<div class="join_form">
-        			<form action="joinSuccess" id="join_form" method="post" onsubmit="emailEnabled()">
+        			<form action="joinPernlMember" id="join_form" method="post" onsubmit="emailEnabled()">
 		       			<div class="form_input">
 		       				<div class="form_input_text">
 		       					이름
