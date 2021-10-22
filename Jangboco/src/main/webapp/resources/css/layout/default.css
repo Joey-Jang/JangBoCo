@@ -3,6 +3,9 @@
 html, body, header, main, footer, aside, section, article, div, span, p, ul, li, label, nav, a, form, input, textarea {
 	box-sizing: border-box;
 }
+input[type="button"]:hover {
+	cursor: pointer;
+}
 html {
     height: 100%;
 }
@@ -47,16 +50,14 @@ main {
     width: 100%;
     min-width: 910px;
 	height: 100%;
-    min-height: 580px;
+    min-height: 660px;
     padding-top: 100px;
     padding-left: 200px;
     background-color: #FFFFFF;
 }
 .con_contnr {
     width: calc(100% - 50px);
-    min-width: calc(100% - 50px);
-    height: auto;
-    min-height: calc(100% - 20px);
+    height: calc(100% - 20px);
     padding: 28px;
     border: 2px solid #03A64A;
     border-radius: 20px;
@@ -74,6 +75,7 @@ main {
 .hidden_tag {
 	display: none;
 }
+
 
 
 /* top */
@@ -301,10 +303,12 @@ main {
 .sub_menu > li:hover {
     background-color: #038C3E;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 
-/* 위치설정 */
+/* loc */
+/* 위치 설정 */
 .set_loc_contnr {
     position: fixed;
     top: 60px;
@@ -334,10 +338,6 @@ main {
 }
 .loc_info input {
 	height: 25px;
-	margin: 0;
-	padding: 0;
-	box-shadow: inset 2px 2px 3px #E0E0E0;
-	border-radius: 5px;
 	font-family: 'Noto Sans KR', sans-serif;
     font-size: 10pt;
     font-weight: 400;
@@ -354,15 +354,6 @@ main {
 }
 .search_addrs_map_btn {
 	width: 70px;
-	background-color: #03A64A20;
-	border: 1px solid #F0F0F0;
-	border-color: #F0F0F0 #03A64A #03A64A #F0F0F0;
-}
-.search_addrs_map_btn:hover {
-	background-color: #03A64A;
-	border-color: #F0F0F0 #038C3E #038C3E #F0F0F0;
-	color: #FFFFFF;
-	cursor: pointer;
 }
 .addrs {
 	width: 100%;
@@ -383,17 +374,7 @@ main {
 }
 .set_loc_btn {
 	width: 100%;
-	background-color: #03A64A20;
-	border: 1px solid #F0F0F0;
-	border-color: #F0F0F0 #03A64A #03A64A #F0F0F0;
 }
-.set_loc_btn:hover {
-	background-color: #03A64A;
-	border-color: #F0F0F0 #038C3E #038C3E #F0F0F0;
-	color: #FFFFFF;
-	cursor: pointer;
-}
-
 /* 최근 위치 */
 .recent_loc_contnr {
 	width: 100%;
@@ -420,7 +401,7 @@ main {
 	height: 50px;
 }
 .recent_zipcd {
-	width: 55px;
+	width: 45px;
 	text-indent: 5px;
 	font-size: 9pt;
 }
@@ -429,7 +410,7 @@ main {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: flex-start;
-	width: 186px;
+	width: 191px;
 	border-left: 1px solid #E0E0E0;
 	text-indent: 5px;
 }
@@ -443,22 +424,9 @@ main {
 	cursor: pointer;
 }
 .del_recent_loc_btn {
-	width: 35px;
+	width: 40px;
 	height: 25px;
-	margin: 0;
-	padding: 0;
-	background-color: #03A64A20;
-	border: 1px solid #F0F0F0;
-	border-color: #F0F0F0 #03A64A #03A64A #F0F0F0;
-	box-shadow: inset 2px 2px 3px #E0E0E0;
-	border-radius: 5px;
 	font-family: 'Noto Sans KR', sans-serif;
     font-size: 9pt;
     font-weight: 400;
-}
-.del_recent_loc_btn:hover {
-	background-color: #03A64A;
-	border-color: #F0F0F0 #038C3E #038C3E #F0F0F0;
-	color: #FFFFFF;
-	cursor: pointer;
 }
