@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Member">
 	<insert id="addMember" parameterType="hashmap">
-		INSERT INTO MEMBER(MEMBER_NO, EMAIL, NAME, NICNM, PW, ZIPCD, ADDRS, DTL_ADDRS, MEMBER_TYPE) 
-		VALUES (MEMBER_SEQ.NEXTVAL, #{email},#{name},#{nicnm},#{pw},#{zipcd},#{addrs},#{dtl_addrs},#{member_type})
+		INSERT INTO MEMBER(MEMBER_NO, EMAIL, NAME, NICNM, PW, ZIPCD, ADDRS, DTL_ADDRS, MEMBER_TYPE, SOCIAL_TYPE) 
+		VALUES (MEMBER_SEQ.NEXTVAL, #{email},#{name},#{nicnm},#{pw},#{zipcd},#{addrs},#{dtl_addrs},#{member_type},#{social_type})
 	</insert>
 	
 	
@@ -54,4 +54,6 @@
 	
 	<select id="checkSocialEmail" parameterType="String">
 	</select>
+	
+	
 </mapper>
