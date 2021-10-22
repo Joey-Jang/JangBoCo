@@ -48,6 +48,12 @@ public class JoinController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/loginMain")
+	public ModelAndView loginMain(ModelAndView mav) {
+		mav.setViewName("jangboco/join/loginMain");
+		return mav;
+	}
+	
 	@RequestMapping(value = "/joinPernl")
 	public ModelAndView joinPernl(ModelAndView mav) {
 		mav.setViewName("jangboco/join/joinPernl");
@@ -123,8 +129,8 @@ public class JoinController {
         return num;
     }
 	
-	@RequestMapping(value = "/joinSuccess", method=RequestMethod.POST)
-	public ModelAndView joinPernlSuccess (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
+	@RequestMapping(value = "/joinPernlMember", method=RequestMethod.POST)
+	public ModelAndView joinPernlMember(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
 		System.out.println(params);
 		params.put("member_type", "1");
 		params.put("social_type", "1");
@@ -133,19 +139,19 @@ public class JoinController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/joinSocialSuccess", method=RequestMethod.POST)
-	public ModelAndView joinSocialSuccess (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
-		System.out.println(params);
+	@RequestMapping(value = "/joinSocialMember", method=RequestMethod.POST)
+	public ModelAndView joinSocialMember (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
 		//social type 1 일반 2네이버 3카카오
 		params.put("member_type", "1");
 		params.put("social_type", "2");
+		params.put("pw","");
 		int cnt = iJoinService.addMember(params);
 		mav.setViewName("jangboco/join/joinSuccess");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/joinMarketSuccess", method=RequestMethod.POST)
-	public ModelAndView joinMarketSuccess (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
+	@RequestMapping(value = "/joinMarketMember", method=RequestMethod.POST)
+	public ModelAndView joinMarketMember (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
 		System.out.println(params);
 		int cnt = iJoinService.addMarketMember(params);
 		mav.setViewName("jangboco/join/joinSuccess");
@@ -281,6 +287,7 @@ public class JoinController {
 		    String clientSecret = "PQJLkkvB6N";//애플리케이션 클라이언트 시크릿값";
 		    String code = httpRequest.getParameter("code");
 		    String state = httpRequest.getParameter("state");
+		    System.out.println("tttttttttttttttttttttt"+httpRequest.getParameter("type"));
 		    String redirectURI = URLEncoder.encode("http://localhost:8181/Jangboco/naverCallback", "UTF-8");
 		    String apiURL;
 		    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
@@ -392,5 +399,9 @@ public class JoinController {
 		return email;
 	}
 	
-
+	//일반로그인폼 리턴
+	
+	//일반 로그인가능 기능
+	
+	//
 }

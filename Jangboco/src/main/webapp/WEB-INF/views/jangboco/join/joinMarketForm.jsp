@@ -12,7 +12,9 @@
 <link rel="stylesheet" type="text/css" href="resources/css/join/join.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
+<script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script type="text/javascript">
 // 이메일 인증번호
 var emailNum;
