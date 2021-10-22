@@ -85,7 +85,10 @@ $(document).ready(function(){
       if(checkVal("#name")){
          alert("대표자 이름을 입력해주세요");
          $("#name".focus());
-       } else if (checkVal("#email")){
+       } else if (checkVal("#dtl_addrs_other")){
+           alert("상세주소를 입력해주세요");
+           $("#dtl_addrs_other").focus();
+        } else if (checkVal("#email")){
           alert("이메일을 입력해주세요");
           $("#email").focus();
           email_re_check
@@ -110,9 +113,6 @@ $(document).ready(function(){
       } else if (checkVal("#addrs_other")){
          alert("주소를 입력해주세요");
          $("#addrs_other").focus();
-      } else if (checkVal("#dtl_addrs")){
-         alert("상세주소를 입력해주세요");
-         $("#dtl_addrs").focus();
       } else if(checkVal("#regdate")){
         alert("사업자 등록일을 입력해주세요");
         $("#regdate").focus();
@@ -685,7 +685,7 @@ function checkRegnum(b_no, start_dt, p_nm){
                             상세주소
                          </div>
                          <div class="form_input_val">
-                            <input id="dtl_addrs" name="dtl_addrs"/>
+                            <input id="dtl_addrs_other" name="dtl_addrs"/>
                          </div>
                       </div>
                        <div class="form_input">

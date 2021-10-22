@@ -267,7 +267,7 @@ public class JoinController {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
 	    String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
-	    String redirectURI = URLEncoder.encode("http://localhost:8181/Jangboco/naverCallback", "UTF-8");
+	    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback", "UTF-8");
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();
 	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
@@ -288,7 +288,7 @@ public class JoinController {
 		    String code = httpRequest.getParameter("code");
 		    String state = httpRequest.getParameter("state");
 		    System.out.println("tttttttttttttttttttttt"+httpRequest.getParameter("type"));
-		    String redirectURI = URLEncoder.encode("http://localhost:8181/Jangboco/naverCallback", "UTF-8");
+		    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback", "UTF-8");
 		    String apiURL;
 		    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 		    apiURL += "client_id=" + clientId;
