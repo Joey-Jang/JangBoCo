@@ -4,6 +4,9 @@ html, body, header, main, footer, aside, section, article, div, span, p, ul, li,
 	box-sizing: border-box;
 }
 input[type="button"] {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin: 0;
 	padding: 0;
 }
