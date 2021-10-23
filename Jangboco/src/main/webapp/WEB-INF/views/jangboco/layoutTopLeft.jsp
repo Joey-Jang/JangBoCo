@@ -9,26 +9,26 @@
         <div id="loc_expand_btn_hover" class="loc_expand_btn_hover"></div>
     </div>
 </header>
-    <div id="set_loc_contnr" class="set_loc_contnr">
-		<form action="#" id="locForm" method="post" >
-	    	<div id="loc_info" class="loc_info">
-				<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
-		   		<input type="hidden" id="latest_loc_no" name="latest_loc_no">
-		   		<input type="hidden" id="del_recent_loc_no" name="del_recent_loc_no">
-		    	<input type="text" id="zipcd" name="zipcd" class="zipcd" placeholder="우편번호" readonly>
-				<input type="button" id="search_addrs_map_btn" class="search_addrs_map_btn" value="주소검색">
-		    	<input type="text" id="addrs" name="addrs" class="addrs" placeholder="주소" readonly>
-		    	<input type="text" id="dtl_addrs" name="dtl_addrs" class="dtl_addrs" placeholder="상세주소">
-				<div id="loc_map" class="loc_map">
-				</div>
-				<input type="button" id="set_loc_btn" class="set_loc_btn" value="이 주소로 위치 설정">
-	    	</div>
-		</form>
-		<div class="recent_loc_contnr">
-			<div class="recent_loc_title">최근 위치</div>
-			<ul id="recent_loc_list" class="recent_loc_list"></ul>
-		</div>
-    </div>
+<div id="set_loc_contnr" class="set_loc_contnr">
+	<form action="#" id="locForm" method="post" >
+	   	<div id="loc_info" class="loc_info">
+			<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+	   		<input type="hidden" id="latest_loc_no" name="latest_loc_no">
+	   		<input type="hidden" id="del_recent_loc_no" name="del_recent_loc_no">
+	    	<input type="text" id="zipcd" name="zipcd" class="zipcd" placeholder="우편번호" readonly>
+			<input type="button" id="search_addrs_map_btn" class="search_addrs_map_btn" value="주소검색">
+	    	<input type="text" id="addrs" name="addrs" class="addrs" placeholder="주소" readonly>
+	    	<input type="text" id="dtl_addrs" name="dtl_addrs" class="dtl_addrs" placeholder="상세주소">
+			<div id="loc_map" class="loc_map">
+			</div>
+			<input type="button" id="set_loc_btn" class="set_loc_btn" value="이 주소로 위치 설정">
+	   	</div>
+	</form>
+	<div class="recent_loc_contnr">
+		<div class="recent_loc_title">최근 위치</div>
+		<ul id="recent_loc_list" class="recent_loc_list"></ul>
+	</div>
+</div>
 <aside>
     <div id="login_logout_menu" class="login_logout_menu">
         <ul class="login_menu">
