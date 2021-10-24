@@ -244,20 +244,20 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
 	if(memberNo!=null) {
 		$("#member_no").val(memberNo);
 		if(cntRecentLoc > 0) {
-			$("#main_loc_addrs").html(latestLocData.ADDRS);
+			$("#main_loc_addrs").text(latestLocData.ADDRS);
 			$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
 	    	$("#zipcd").val(latestLocData.ZIPCD);
 	    	$("#addrs").val(latestLocData.ADDRS);
 	    	$("#dtl_addrs").val(latestLocData.DTL_ADDRS);
 		} else {
-			$("#main_loc_addrs").html(memberAddrs.ADDRS);
+			$("#main_loc_addrs").text(memberAddrs.ADDRS);
 			$("#latest_loc_no").val("");
 	    	$("#zipcd").val(memberAddrs.ZIPCD);
 	    	$("#addrs").val(memberAddrs.ADDRS);
 	    	$("#dtl_addrs").val(memberAddrs.DTL_ADDRS);
 		}
 	} else {
-		$("#main_loc_addrs").html("비회원 주소");
+		$("#main_loc_addrs").text("비회원 주소");
 		$("#latest_loc_no").val("");
     	$("#zipcd").val("01234");
     	$("#addrs").val("비회원 주소");
