@@ -1,32 +1,30 @@
 $(document).ready(function() {
 	reloadMainLoc();
-	reloadRecentLocList();
 
     // 로고 클릭 이벤트
     $("#home_logo").click(function() {
-        reloadMainLoc();
-		reloadRecentLocList();
+    	//
     })
     
     // 메인 위치 설정 호버 이벤트
     $("#main_loc_contnr").hover(function() {
-        $("#loc_expand_btn").css("display", "none");
-        $("#loc_expand_btn_hover").css("display", "block");
+        $("#loc_expand_btn").hide();
+        $("#loc_expand_btn_hover").show();
     }, function() {
-        $("#loc_expand_btn").css("display", "block");
-        $("#loc_expand_btn_hover").css("display", "none");
+        $("#loc_expand_btn").show();
+        $("#loc_expand_btn_hover").hide();
     })
     
     // 사이드메뉴 호버 이벤트
     $("#login_logout_menu > ul > li, #main_menu > li").hover(function() {
-        $(this).children(".menu_icon").css("display", "none");
-        $(this).children(".menu_icon_hover").css("display", "block");
+        $(this).children(".menu_icon").hide();
+        $(this).children(".menu_icon_hover").show();
     }, function() {
         if($(this).hasClass("active")) {
             return false;
         }
-        $(this).children(".menu_icon").css("display", "block");
-        $(this).children(".menu_icon_hover").css("display", "none");
+        $(this).children(".menu_icon").show();
+        $(this).children(".menu_icon_hover").hide();
     });
     
     // 메인 메뉴 열기/닫기
@@ -35,40 +33,37 @@ $(document).ready(function() {
         
         if($(this).hasClass("close")) { // 메인 메뉴 열기
             $(this).removeClass("close");
-            $("#main_menu .menu_text").css("display", "block");
+            $("#main_menu .menu_text").show();
             $("#main_menu").css("width", "100%");
             $("#main_menu_contnr").css("width", "100%");
-            $("#main_menu_contnr").css("border-right", "");
 
-            $(".sub_menu").css("display", "none");
-            $("#sub_menu_contnr").css("display", "none");
+            $(".sub_menu").hide();
+            $("#sub_menu_contnr").hide();
         } else { // 닫기
             $("#main_menu > li").removeClass("close");
             $(this).addClass("close");
-            $("#main_menu .menu_text").css("display", "none");
+            $("#main_menu .menu_text").hide();
             $("#main_menu").css("width", "100%");
-            $("#main_menu_contnr").css("width", "56px");
-            $("#main_menu_contnr").css("border-right", "2px solid #F0F0F0");
+            $("#main_menu_contnr").css("width", "54px");
 
-            $(".sub_menu").css("display", "none");
-            $(".sub_menu").eq(index).css("display", "block");
-            $("#sub_menu_contnr").css("display", "block");
+            $(".sub_menu").hide();
+            $(".sub_menu").eq(index).show();
+            $("#sub_menu_contnr").show();
         }
     })
     
     // login_logout_menu 클릭 이벤트 - 메인 메뉴, 하위 메뉴 초기화
     $("#login_logout_menu").on('click', "li", function() {
-        $("#main_menu .menu_icon").css("display", "block");
-        $("#main_menu .menu_icon_hover").css("display", "none");
+        $("#main_menu .menu_icon").show();
+        $("#main_menu .menu_icon_hover").hide();
         $("#main_menu > li").attr("class", "");
-        $("#main_menu .menu_text").css("display", "block");
+        $("#main_menu .menu_text").show();
         $("#main_menu").css("width", "100%");
         $("#main_menu_contnr").css("width", "100%");
-        $("#main_menu_contnr").css("border-right", "");
 
         $(".sub_menu").children("li").attr("class", "");
-        $(".sub_menu").css("display", "none");
-        $("#sub_menu_contnr").css("display", "none");
+        $(".sub_menu").hide();
+        $("#sub_menu_contnr").hide();
     })
     
     // 서브 메뉴 클릭 이벤트
@@ -79,10 +74,10 @@ $(document).ready(function() {
         $(this).addClass("active");
         $("#main_menu > li").removeClass("active");
         $("#main_menu > li").eq(index).addClass("active");
-        $("#main_menu .menu_icon").css("display", "block");
-        $("#main_menu .menu_icon_hover").css("display", "none");
-        $("#main_menu > li").eq(index).children(".menu_icon").css("display", "none");
-        $("#main_menu > li").eq(index).children(".menu_icon_hover").css("display", "block");
+        $("#main_menu .menu_icon").show();
+        $("#main_menu .menu_icon_hover").hide();
+        $("#main_menu > li").eq(index).children(".menu_icon").hide();
+        $("#main_menu > li").eq(index).children(".menu_icon_hover").show();
     });
     
     // window 크기 변화 시 위치 설정 창 숨기기
@@ -100,11 +95,15 @@ $(document).ready(function() {
 	// 메인 위치 클릭 이벤트 => 위치 설정 창
     $("#main_loc_contnr").on("click", function() {
 		reloadMainLoc();
-		$("#loc_info").css("height", "136px");
-		$("#loc_map").hide();
 		
         if($(window).width() >= 500) {
-            $("#set_loc_contnr").toggle();
+        	if($("#set_loc_contnr").css("display")=="none") {
+				initLocMap();
+				reloadRecentLocList();
+	            $("#set_loc_contnr").show();
+        	} else {
+	            $("#set_loc_contnr").hide();
+        	}
         }
     });
     
@@ -118,13 +117,12 @@ $(document).ready(function() {
 	});
 	
     // 최근 위치 선택 이벤트
-    $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > div", function() {
+    $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > span", function() {
+    	initLocMap();
     	$("#latest_loc_no").val($(this).parent().parent().attr("no"));
-    	$("#zipcd").val($(this).parent().parent().find(".recent_zipcd").attr("value"));
-    	$("#addrs").val($(this).parent().parent().find(".recent_addrs").attr("value"));
-    	$("#dtl_addrs").val($(this).parent().parent().find(".recent_dtl_addrs").attr("value"));
-    	$("#loc_info").css("height", "136px");
-    	$("#loc_map").hide();
+    	$("#zipcd").val($(this).parent().parent().find(".recent_zipcd").text());
+    	$("#addrs").val($(this).parent().parent().find(".recent_addrs").text());
+    	$("#dtl_addrs").val($(this).parent().parent().find(".recent_dtl_addrs").text());
     });
     
     // 최근 위치 선택 후 상세 주소 수정 이벤트
@@ -173,11 +171,8 @@ $(document).ready(function() {
 				success: function(result) {
 					if(result.msg=="SUCCESS") {
 						alert("위치 설정 성공");
-						$("#loc_info").css("height", "136px");
-    					$("#loc_map").hide();
-						$("#set_loc_contnr").hide();
 						reloadMainLoc();
-						reloadRecentLocList();
+						$("#set_loc_contnr").hide();
 					} else if(result.msg=="FAILED") {
 						alert("위치 설정에 실패하였습니다.");
 					} else {
@@ -191,6 +186,14 @@ $(document).ready(function() {
     	}
     });
 });
+
+
+
+// loc_map 초기화
+function initLocMap() {
+	$("#loc_info").css("height", "136px");
+	$("#loc_map").hide();
+}
 
 // 메인 위치 갱신
 function reloadMainLoc() {
@@ -260,22 +263,16 @@ function drawRecentLocList(recentLocList) {
 	
 	for(var data of recentLocList) {
 		html += "<li no=\"" + data.RECENT_LOC_NO + "\">";
-		html += "	<div class=\"recent_zipcd\" value=\"" + data.ZIPCD + "\">" + data.ZIPCD + "</div>";
+		html += "	<span class=\"recent_zipcd\">" + data.ZIPCD + "</span>";
 		html += "	<div class=\"recent_addrs_contnr\">";
-		html += "		<div class=\"recent_addrs\" value=\"" + data.ADDRS +"\">" + data.ADDRS + "</div>";
-		html += "		<div class=\"recent_dtl_addrs\" value=\"";
+		html += "		<span class=\"recent_addrs\">" + data.ADDRS + "</span>";
+		html += "		<span class=\"recent_dtl_addrs\">";
 		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
 			html += data.DTL_ADDRS;
 		} else {
 			html += "";
 		}
-		html += "\">";
-		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
-			html += data.DTL_ADDRS;
-		} else {
-			html += "";
-		}
-		html += "</div>";
+		html += "		</span>";
 		html += "	</div>";
 		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">";
 		html += "</li>";

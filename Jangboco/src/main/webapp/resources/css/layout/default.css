@@ -97,7 +97,7 @@ main {
     background: left / contain no-repeat url("../../images/layout/homeLogoHover.svg");
     cursor: pointer;
 }
-/* 위치 설정 */
+/* 메인 위치 */
 .main_loc_contnr {
     display: flex;
     flex-flow: row nowrap;
@@ -284,6 +284,7 @@ main {
     width: 100%;
     height: 100%;
     background-color: #FFFFFF;
+    border-left: 2px solid #F0F0F0;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 11pt;
     font-weight: 400;
@@ -421,19 +422,19 @@ main {
 	border-left: 1px solid #E0E0E0;
 	text-indent: 5px;
 }
-.recent_addrs_contnr > div {
+.recent_addrs_contnr > span {
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.recent_addrs_contnr > div {
+.recent_addrs_contnr > span {
 	cursor: pointer;
 }
 .del_recent_loc_btn {
 	width: 40px;
 	height: 25px;
 	font-family: 'Noto Sans KR', sans-serif;
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: 400;
 }
