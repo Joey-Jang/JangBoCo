@@ -415,16 +415,17 @@ main {
 }
 .recent_addrs_contnr {
 	display: flex;
-	flex-flow: column nowrap;
-	justify-content: center;
-	align-items: flex-start;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+	align-items: center;
 	width: 186px;
 	height: 40px;
 	margin: 5px 0;
-	padding: 0 10px 0 5px;
+	padding-right: 10px;
 	border-left: 1px solid #E0E0E0;
 }
 .recent_addrs_contnr > .recent_addrs {
+	width: 170px;
     overflow: auto;
 }
 .recent_addrs_contnr > .recent_addrs:hover {

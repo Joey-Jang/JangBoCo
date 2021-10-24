@@ -116,6 +116,14 @@ $(document).ready(function() {
 		$("#set_loc_contnr").hide();
 	});
 	
+	// 최근 위치 호버 이벤트
+	$("#recent_loc_list").on("mouseover", ".recent_addrs", function() {
+		$(this).parent().css("border-left", "2px solid #03A64A");
+	});
+	$("#recent_loc_list").on("mouseout", ".recent_addrs", function() {
+		$(this).parent().css("border-left", "1px solid #E0E0E0");
+	});
+	
     // 최근 위치 선택 이벤트
     $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > .recent_addrs", function() {
     	initLocMap();
