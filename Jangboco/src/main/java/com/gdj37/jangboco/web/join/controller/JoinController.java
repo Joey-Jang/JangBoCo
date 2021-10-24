@@ -281,7 +281,33 @@ public class JoinController {
 		
 		return mapper.writeValueAsString(modelMap);
 	}
+	
+	//네이버 소셜로그인 callback url가져오기
+	@RequestMapping(value = "/naverLoginAjax2", method = RequestMethod.POST, 
+			produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String naverLoginAjax2(
+			@RequestParam HashMap<String, String> params, HttpSession session) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		System.out.println("tttteeeeeesssssss"+params.get("type"));
+	    String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
+	    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback2", "UTF-8");
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString();
+	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+	    apiURL += "&client_id=" + clientId;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&state=" + state;
+	    apiURL += "&type="+params.get("type");
+	    session.setAttribute("state", state);
+		modelMap.put("url", apiURL);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
 
+	//소셜 회원가입
+	//TODO: 소셜 공통 함수처리 합시다
 	//네이버 소셜 callback처리
 	@RequestMapping(value = {"/naverCallback"})
 	public ModelAndView naverCallback(ModelAndView mav, HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
@@ -360,58 +386,16 @@ public class JoinController {
 		    mav.setViewName("redirect:/jangboco/join/joinSuccess");
 		    return mav;
 	}
-	
-	//이용자 데이터 정보 받아오기 
-	public String getMemberEmail(String access_token) {
-        //String token = "YOUR_ACCESS_TOKEN";// 네아로 접근 토큰 값";
-		String email = "";
-        String header = "Bearer " + access_token; // Bearer 다음에 공백 추가
-        try {
-            String apiURL = "https://openapi.naver.com/v1/nid/me";
-            URL url = new URL(apiURL);
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("Authorization", header);
-            int responseCode = con.getResponseCode();
-            BufferedReader br;
-            if(responseCode==200) { // 정상 호출
-                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            } else {  // 에러 발생
-                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            }
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-            br.close();
-            System.out.println(response.toString());
-            JSONParser parsing = new JSONParser();
-    		Object obj = parsing.parse(response.toString());
-    		JSONObject jsonObj = (JSONObject)obj;
-    		JSONObject responseObj = (JSONObject)jsonObj.get("response");
-    		email = (String)responseObj.get("email");
-    		System.out.println(email);
-    		//email쿼리 날려서 있는지 없는지 확인하기 
-    		//없으면 세션에 담고 가입할준비 
-    		//있으면 바로 메인창으로 넘어가기 (로그인처리)
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-		return email;
-	}
-	
-	
-	
-	//일반로그인폼 리턴
-	
-	//일반 로그인가능 기능
+
 	
 	//소셜로그인
 	//네이버 소셜 callback처리
+	//아이디가 있으면 세션처리하는곳
+	//TODO: 소셜 공통 함수처리 합시다
 	@RequestMapping(value = {"/naverCallback2"})
-	public ModelAndView naverCallback2(ModelAndView mav, HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-		    String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
+	public ModelAndView naverCallback2(ModelAndView mav, HttpSession session, HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
+		    System.out.println("ttttttttttttteeeeeeeeeeeeeeeeeeeeeeelogin");
+			String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
 		    String clientSecret = "PQJLkkvB6N";//애플리케이션 클라이언트 시크릿값";
 		    String code = httpRequest.getParameter("code");
 		    String state = httpRequest.getParameter("state");
@@ -461,10 +445,14 @@ public class JoinController {
 	    			int cnt = iJoinService.validEmail(email);
 	    			if(cnt>0) {
 	    				//가입한 사람이있음
-	    				mav.setViewName("/jangboco/join/joinNotSuccess");
+	    				//세션에 담고 홈으로 이동
+	    				session.setAttribute("memberType", "1");
+	    				session.setAttribute("email", email);
+	    				System.out.println(session.getAttribute("email"));
+	    				mav.setViewName("redirect:/home");
 	    				return mav;
 	    			} else {
-	    				//가입한 사람 없음 가입 진행하고 파람에 담아둠 
+	    				//가입한 사람 없으니까 가입진행바로 함
 	    				mav.addObject("SocialEmail", email);
 	    				mav.setViewName("/jangboco/join/joinSocialForm");
 	    				return mav;
@@ -472,19 +460,61 @@ public class JoinController {
 	    		}
 	    		if(token_error !=null&& token_error!="") {
 	    			System.out.println("error");
-	    			mav.setViewName("redirect:/");
+	    			mav.setViewName("redirect:/home");
 	    			return mav;
 	    		}
 		      } else {
-		    	  mav.setViewName("redirect:/");
+		    	  mav.setViewName("redirect:/home");
 				    return mav;
 		      }
 		    } catch (Exception e) {
 		      System.out.println(e);
 		    }
-		    mav.setViewName("redirect:/jangboco/join/joinSuccess");
+		    mav.setViewName("redirect:/home");
 		    return mav;
 	}
+	
+	
+	//이용자 데이터 정보 받아오기 
+	public String getMemberEmail(String access_token) {
+        //String token = "YOUR_ACCESS_TOKEN";// 네아로 접근 토큰 값";
+		String email = "";
+        String header = "Bearer " + access_token; // Bearer 다음에 공백 추가
+        try {
+            String apiURL = "https://openapi.naver.com/v1/nid/me";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", header);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println(response.toString());
+            JSONParser parsing = new JSONParser();
+    		Object obj = parsing.parse(response.toString());
+    		JSONObject jsonObj = (JSONObject)obj;
+    		JSONObject responseObj = (JSONObject)jsonObj.get("response");
+    		email = (String)responseObj.get("email");
+    		System.out.println(email);
+    		//email쿼리 날려서 있는지 없는지 확인하기 
+    		//없으면 세션에 담고 가입할준비 
+    		//있으면 바로 메인창으로 넘어가기 (로그인처리)
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+		return email;
+	}
+	
 	
 	@RequestMapping(value="/loginPernl")
 	public ModelAndView loginPernl(ModelAndView mav) throws Throwable {
@@ -492,9 +522,9 @@ public class JoinController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/loginPernlForm")
-	public ModelAndView loginPernlForm(ModelAndView mav) throws Throwable {
-		mav.setViewName("jangboco/join/loginPernlForm");
+	@RequestMapping(value="/loginForm")
+	public ModelAndView loginForm(ModelAndView mav) throws Throwable {
+		mav.setViewName("jangboco/join/loginForm");
 		return mav;
 	}
 	

@@ -35,7 +35,7 @@
             <li>
                 <div class="menu_icon"></div>
                 <div class="menu_icon_hover"></div>
-                <span class="menu_text" onClick="location.href=''">로그인</span>
+                <span class="menu_text" onClick="location.href='loginMain'">로그인</span>
             </li>
             <li>
                 <div class="menu_icon"></div>

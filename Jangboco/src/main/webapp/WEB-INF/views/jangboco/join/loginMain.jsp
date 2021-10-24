@@ -24,7 +24,7 @@
         <div class="con">
             <div class="join_contnr">
             	<div class="join_pernl_btn" onClick="location.href='loginPernl'">개인로그인</div>
-            	<div class="join_market_btn" onClick="location.href='loginMarket'">마켓로그인</div>
+            	<div class="join_market_btn" onClick="location.href='loginForm'">마켓로그인</div>
             </div>
         </div>
     </div>

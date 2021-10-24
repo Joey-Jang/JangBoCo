@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,10 @@ public class LayoutController {
 	}
 	
 	@RequestMapping(value = "/home")
-	public ModelAndView layoutConBlank(ModelAndView mav) throws Throwable {
+	public ModelAndView layoutConBlank(ModelAndView mav, HttpSession session) throws Throwable {
+		System.out.println("home test");
+		System.out.println(session.getAttribute("email"));
+		
 		mav.setViewName("jangboco/home");
 		
 		return mav;

@@ -24,7 +24,7 @@ function getUrl(){
 }
 	$(document).ready(function(){
 		$.ajax({
-			url:"naverLoginAjax",
+			url:"naverLoginAjax2",
 			type:"post",
 			async: false,
 			success: function(res){
@@ -44,7 +44,7 @@ function getUrl(){
     <div class="con_contnr">
         <div class="con">
             <div class="login_contnr">
-            	<div class="login_btn" onClick="location.href='loginPernlForm'">일반로그인</div>
+            	<div class="login_btn" onClick="location.href='loginForm'">일반로그인</div>
             	<div class="login_naver" onClick="getUrl(); return false;">네이버로그인</div></a>
             </div>
         </div>
