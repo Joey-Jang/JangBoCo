@@ -23,7 +23,7 @@ public interface IJoinService {
 
 	public int addMarketMember(HashMap<String, String> params) throws Exception;
 
-	public int checkSocialEmail(String email) throws Exception;
+	public HashMap<String, Object> loginPernlCheck(HashMap<String, String> params) throws Exception;
 	
 	
 }

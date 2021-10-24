@@ -43,9 +43,9 @@ function getUrl(){
 
     <div class="con_contnr">
         <div class="con">
-            <div class="join_contnr">
-            	<div class="join_btn" onClick="location.href='joinPernlForm'">일반로그인</div>
-            	<div class="join_naver" onClick="getUrl(); return false;">네이버로그인</div></a>
+            <div class="login_contnr">
+            	<div class="login_btn" onClick="location.href='loginPernlForm'">일반로그인</div>
+            	<div class="login_naver" onClick="getUrl(); return false;">네이버로그인</div></a>
             </div>
         </div>
     </div>

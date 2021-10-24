@@ -26,7 +26,11 @@ function getUrl(){
 		$.ajax({
 			url:"naverLoginAjax",
 			type:"post",
-			async: false,
+			data: {
+				"type":"test"
+			},
+			dataType: "json",
+			//async: false,
 			success: function(res){
 				apiUrl = res['url'];
 			},

@@ -1,4 +1,3 @@
-joinPernl.jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,26 +20,21 @@ joinPernl.jsp
 var apiUrl = "";
 
 function getUrl(){
-   alert(apiUrl);
-   location.href = apiUrl;
+	location.href = apiUrl;
 }
-   $(document).ready(function(){
-      $.ajax({
-         url:"naverLoginAjax",
-         type:"post",
-         data: {
-        	 "type":"join"
-         },
-         dataType:"json",
-         async: false,
-         success: function(res){
-            apiUrl = res['url'];
-         },
-         error: function(error){
-            console.log(error);
-         }
-      })
-   });
+	$(document).ready(function(){
+		$.ajax({
+			url:"naverLoginAjax",
+			type:"post",
+			async: false,
+			success: function(res){
+				apiUrl = res['url'];
+			},
+			error: function(error){
+				console.log(error);
+			}
+		})
+	});
 </script>
 </head>
 <body>
@@ -50,8 +44,8 @@ function getUrl(){
     <div class="con_contnr">
         <div class="con">
             <div class="join_contnr">
-               <div class="join_btn" onClick="location.href='joinPernlForm'">일반가입</div></a>
-               <div class="join_naver" onClick="getUrl(); return false;">네이버로 가입</div>
+            	<div class="join_btn" onClick="location.href='joinPernlForm'">일반로그인</div>
+            	<div class="join_naver" onClick="getUrl(); return false;">네이버로그인</div></a>
             </div>
         </div>
     </div>

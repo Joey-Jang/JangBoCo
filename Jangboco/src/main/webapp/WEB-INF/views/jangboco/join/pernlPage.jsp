@@ -1,4 +1,3 @@
-joinPernl.jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,41 +16,14 @@ joinPernl.jsp
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
-<script>
-var apiUrl = "";
-
-function getUrl(){
-   alert(apiUrl);
-   location.href = apiUrl;
-}
-   $(document).ready(function(){
-      $.ajax({
-         url:"naverLoginAjax",
-         type:"post",
-         data: {
-        	 "type":"join"
-         },
-         dataType:"json",
-         async: false,
-         success: function(res){
-            apiUrl = res['url'];
-         },
-         error: function(error){
-            console.log(error);
-         }
-      })
-   });
-</script>
 </head>
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-
     <div class="con_contnr">
         <div class="con">
             <div class="join_contnr">
-               <div class="join_btn" onClick="location.href='joinPernlForm'">일반가입</div></a>
-               <div class="join_naver" onClick="getUrl(); return false;">네이버로 가입</div>
+            	로그인 성공시 일반회원 페이지입니다
             </div>
         </div>
     </div>

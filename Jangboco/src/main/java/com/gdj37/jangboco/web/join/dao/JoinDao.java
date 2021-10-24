@@ -66,10 +66,18 @@ public class JoinDao implements IJoinDao{
 		return sqlSession.insert("Member.addMarketMember",params);
 	}
 
+
+
 	@Override
-	public int checkSocialEmail(String email) throws Exception {
+	public HashMap<String, Object> loginPernlCheck(HashMap<String, String> params) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("Member.checkSocialEmail",email);
+		return sqlSession.selectOne("Member.loginPernlCheck",params);
+	}
+
+	@Override
+	public int checkSocialEmail(HashMap<String, String> params) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

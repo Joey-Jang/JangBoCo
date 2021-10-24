@@ -68,10 +68,11 @@ public class JoinService implements IJoinService{
 		return iJoinDao.addMarketMember(params);
 	}
 
+
 	@Override
-	public int checkSocialEmail(String email) throws Exception {
+	public HashMap<String, Object> loginPernlCheck(HashMap<String, String> params) throws Exception {
 		// TODO Auto-generated method stub
-		return iJoinDao.checkSocialEmail(email);
+		return iJoinDao.loginPernlCheck(params);
 	}
 
 }

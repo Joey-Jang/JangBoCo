@@ -52,7 +52,11 @@
 		SELECT * FROM DUAL
 	</insert>
 	
-	<select id="checkSocialEmail" parameterType="String">
+	<select id="loginPernlCheck" parameterType="hashmap" resultType="hashmap">
+		SELECT COUNT(*) AS CNT, MEMBER_TYPE 
+		FROM MEMBER
+		WHERE EMAIL =#{email} AND PW = #{pw} 
+		GROUP BY MEMBER_TYPE 
 	</select>
 	
 	
