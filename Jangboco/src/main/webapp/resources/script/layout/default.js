@@ -117,12 +117,12 @@ $(document).ready(function() {
 	});
 	
     // 최근 위치 선택 이벤트
-    $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > span", function() {
+    $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > .recent_addrs", function() {
     	initLocMap();
     	$("#latest_loc_no").val($(this).parent().parent().attr("no"));
-    	$("#zipcd").val($(this).parent().parent().find(".recent_zipcd").text());
-    	$("#addrs").val($(this).parent().parent().find(".recent_addrs").text());
-    	$("#dtl_addrs").val($(this).parent().parent().find(".recent_dtl_addrs").text());
+    	$("#zipcd").val($(this).parent().parent().find(".recent_zipcd").attr("zipcd"));
+    	$("#addrs").val($(this).attr("addrs"));
+    	$("#dtl_addrs").val($(this).attr("dtl_addrs"));
     });
     
     // 최근 위치 선택 후 상세 주소 수정 이벤트
@@ -263,16 +263,20 @@ function drawRecentLocList(recentLocList) {
 	
 	for(var data of recentLocList) {
 		html += "<li no=\"" + data.RECENT_LOC_NO + "\">";
-		html += "	<span class=\"recent_zipcd\">" + data.ZIPCD + "</span>";
+		html += "	<span class=\"recent_zipcd\" zipcd=\"" + data.ZIPCD + "\">" + data.ZIPCD + "</span>";
 		html += "	<div class=\"recent_addrs_contnr\">";
-		html += "		<span class=\"recent_addrs\">" + data.ADDRS + "</span>";
-		html += "		<span class=\"recent_dtl_addrs\">";
+		html += "		<span class=\"recent_addrs\" addrs=\"" + data.ADDRS + "\" dtl_addrs=\""
 		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
 			html += data.DTL_ADDRS;
 		} else {
 			html += "";
 		}
-		html += "		</span>";
+		html += "\">";
+		html += data.ADDRS;
+		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
+			html += ", " + data.DTL_ADDRS;
+		}
+		html += 		"</span>";
 		html += "	</div>";
 		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">";
 		html += "</li>";

@@ -358,7 +358,7 @@ main {
 .zipcd {
 	width: 65px;
 	border: 1px solid #F0F0F0;
-	text-indent: 10px;
+	padding: 0 10px;
 }
 .search_addrs_map_btn {
 	width: 70px;
@@ -366,12 +366,12 @@ main {
 .addrs {
 	width: 100%;
 	border: 1px solid #F0F0F0;
-	text-indent: 10px;
+	padding: 0 10px;
 }
 .dtl_addrs {
 	width: 100%;
 	border: 1px solid #F0F0F0;
-	text-indent: 10px;
+	padding: 0 10px;
 }
 .loc_map {
 	display: none;
@@ -410,7 +410,7 @@ main {
 }
 .recent_zipcd {
 	width: 45px;
-	text-indent: 5px;
+	padding: 0 5px;
 	font-size: 9pt;
 }
 .recent_addrs_contnr {
@@ -418,17 +418,16 @@ main {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: flex-start;
-	width: 191px;
+	width: 186px;
+	height: 40px;
+	margin: 5px 0;
+	padding: 0 10px 0 5px;
 	border-left: 1px solid #E0E0E0;
-	text-indent: 5px;
 }
-.recent_addrs_contnr > span {
-	max-width: 100%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+.recent_addrs_contnr > .recent_addrs {
+    overflow: auto;
 }
-.recent_addrs_contnr > span {
+.recent_addrs_contnr > .recent_addrs:hover {
 	cursor: pointer;
 }
 .del_recent_loc_btn {
