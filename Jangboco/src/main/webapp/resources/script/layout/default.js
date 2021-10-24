@@ -84,45 +84,7 @@ $(document).ready(function() {
         $("#main_menu > li").eq(index).children(".menu_icon").css("display", "none");
         $("#main_menu > li").eq(index).children(".menu_icon_hover").css("display", "block");
     });
-
-
-
-    // 메인 위치 갱신
-    function reloadMainLoc() {
-		var params = $("#locForm").serialize();
-		
-		$.ajax({
-			url: "reloadMainLocAjax",
-			type: "post",
-			dataType: "json",
-			data: params,
-			success: function(result) {
-				setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs);
-			},
-			error: function(request, status, error) {
-				console.log(error);
-			}
-		});
-	}
-	
-	// 최근 위치 목록 갱신
-	function reloadRecentLocList() {
-		var params = $("#locForm").serialize();
-		
-		$.ajax({
-			url: "reloadRecentLocListAjax",
-			type: "post",
-			dataType: "json",
-			data: params,
-			success: function(result) {
-				drawRecentLocList(result.recentLocList);
-			},
-			error: function(request, status, error) {
-				console.log(error);
-			}
-		});
-	}
-        
+    
     // window 크기 변화 시 위치 설정 창 숨기기
     var timerHandler;
     $(window).on("resize", function() {
@@ -155,62 +117,6 @@ $(document).ready(function() {
 		$("#set_loc_contnr").hide();
 	});
 	
-	// 메인 위치 설정
-	function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
-		if(memberNo!=null) {
-			$("#member_no").val(memberNo);
-			if(cntRecentLoc > 0) {
-				$("#main_loc_addrs").html(latestLocData.ADDRS);
-				$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
-		    	$("#zipcd").val(latestLocData.ZIPCD);
-		    	$("#addrs").val(latestLocData.ADDRS);
-		    	$("#dtl_addrs").val(latestLocData.DTL_ADDRS);
-			} else {
-				$("#main_loc_addrs").html(memberAddrs.ADDRS);
-				$("#latest_loc_no").val("");
-		    	$("#zipcd").val(memberAddrs.ZIPCD);
-		    	$("#addrs").val(memberAddrs.ADDRS);
-		    	$("#dtl_addrs").val(memberAddrs.DTL_ADDRS);
-			}
-		} else {
-			$("#main_loc_addrs").html("비회원 주소");
-			$("#latest_loc_no").val("");
-	    	$("#zipcd").val("01234");
-	    	$("#addrs").val("비회원 주소");
-	    	$("#dtl_addrs").val("비회원 상세주소");
-		}
-	}
-	
-    // 최근 위치 목록 그리기
-    function drawRecentLocList(recentLocList) {
-    	var html = "";
-    	
-    	for(var data of recentLocList) {
-    		html += "<li no=\"" + data.RECENT_LOC_NO + "\">";
-    		html += "	<div class=\"recent_zipcd\" value=\"" + data.ZIPCD + "\">" + data.ZIPCD + "</div>";
-    		html += "	<div class=\"recent_addrs_contnr\">";
-    		html += "		<div class=\"recent_addrs\" value=\"" + data.ADDRS +"\">" + data.ADDRS + "</div>";
-    		html += "		<div class=\"recent_dtl_addrs\" value=\"";
-    		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
-    			html += data.DTL_ADDRS;
-    		} else {
-    			html += "";
-    		}
-    		html += "\">";
-    		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
-    			html += data.DTL_ADDRS;
-    		} else {
-    			html += "";
-    		}
-    		html += "</div>";
-    		html += "	</div>";
-    		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">";
-    		html += "</li>";
-    	}
-    	
-    	$("#recent_loc_list").html(html);
-    }
-
     // 최근 위치 선택 이벤트
     $("#recent_loc_list").on("click", "li > .recent_addrs_contnr > div", function() {
     	$("#latest_loc_no").val($(this).parent().parent().attr("no"));
@@ -285,3 +191,95 @@ $(document).ready(function() {
     	}
     });
 });
+
+// 메인 위치 갱신
+function reloadMainLoc() {
+	var params = $("#locForm").serialize();
+	
+	$.ajax({
+		url: "reloadMainLocAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(result) {
+			setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs);
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});
+}
+
+// 최근 위치 목록 갱신
+function reloadRecentLocList() {
+	var params = $("#locForm").serialize();
+	
+	$.ajax({
+		url: "reloadRecentLocListAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(result) {
+			drawRecentLocList(result.recentLocList);
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});
+}
+
+// 메인 위치 설정
+function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
+	if(memberNo!=null) {
+		$("#member_no").val(memberNo);
+		if(cntRecentLoc > 0) {
+			$("#main_loc_addrs").html(latestLocData.ADDRS);
+			$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
+	    	$("#zipcd").val(latestLocData.ZIPCD);
+	    	$("#addrs").val(latestLocData.ADDRS);
+	    	$("#dtl_addrs").val(latestLocData.DTL_ADDRS);
+		} else {
+			$("#main_loc_addrs").html(memberAddrs.ADDRS);
+			$("#latest_loc_no").val("");
+	    	$("#zipcd").val(memberAddrs.ZIPCD);
+	    	$("#addrs").val(memberAddrs.ADDRS);
+	    	$("#dtl_addrs").val(memberAddrs.DTL_ADDRS);
+		}
+	} else {
+		$("#main_loc_addrs").html("비회원 주소");
+		$("#latest_loc_no").val("");
+    	$("#zipcd").val("01234");
+    	$("#addrs").val("비회원 주소");
+    	$("#dtl_addrs").val("비회원 상세주소");
+	}
+}
+
+// 최근 위치 목록 그리기
+function drawRecentLocList(recentLocList) {
+	var html = "";
+	
+	for(var data of recentLocList) {
+		html += "<li no=\"" + data.RECENT_LOC_NO + "\">";
+		html += "	<div class=\"recent_zipcd\" value=\"" + data.ZIPCD + "\">" + data.ZIPCD + "</div>";
+		html += "	<div class=\"recent_addrs_contnr\">";
+		html += "		<div class=\"recent_addrs\" value=\"" + data.ADDRS +"\">" + data.ADDRS + "</div>";
+		html += "		<div class=\"recent_dtl_addrs\" value=\"";
+		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
+			html += data.DTL_ADDRS;
+		} else {
+			html += "";
+		}
+		html += "\">";
+		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
+			html += data.DTL_ADDRS;
+		} else {
+			html += "";
+		}
+		html += "</div>";
+		html += "	</div>";
+		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">";
+		html += "</li>";
+	}
+	
+	$("#recent_loc_list").html(html);
+}
