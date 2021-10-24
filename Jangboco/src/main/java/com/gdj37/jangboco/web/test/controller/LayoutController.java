@@ -135,18 +135,6 @@ public class LayoutController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-//		System.out.println("*** CHECK parms ***");
-//		Set<Map.Entry<String, String>> entrySet = params.entrySet();
-//		Iterator<Map.Entry<String, String>> entryIterator = entrySet.iterator();
-//		while(entryIterator.hasNext()) {
-//			Map.Entry<String, String> entry = entryIterator.next();
-//			String key = entry.getKey();
-//			String value = entry.getValue();
-//			System.out.print("key: " + key);
-//			System.out.print("value: " + value);
-//			System.out.println();
-//		}
-		
 		// 회원이 아니면 최근 위치 삭제하지 않음 => AOP로 추후에 구현
 		String msg = "FAILED";
 		try {
