@@ -357,7 +357,7 @@ main {
 }
 .zipcd {
 	width: 60px;
-	border: 1px solid #F0F0F0;
+	border: 1px solid #E0E0E0;
 	padding: 0 10px;
 }
 .search_addrs_map_btn {
@@ -365,12 +365,12 @@ main {
 }
 .addrs {
 	width: 100%;
-	border: 1px solid #F0F0F0;
+	border: 1px solid #E0E0E0;
 	padding: 0 10px;
 }
 .dtl_addrs {
 	width: 100%;
-	border: 1px solid #F0F0F0;
+	border: 1px solid #E0E0E0;
 	padding: 0 10px;
 }
 .loc_map {
