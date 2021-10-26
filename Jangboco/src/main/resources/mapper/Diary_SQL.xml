@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Diary">
+	<select id="getDisctList" resultType="hashmap">
+		SELECT DISCT_NO, DISCT_NAME
+		FROM DISCT
+		ORDER BY DISCT_NAME
+	</select>
+	
+	<select id="getMarketList" parameterType="hashmap" resultType="hashmap">
+		SELECT MARKET_NO, MARKET_NAME
+		FROM MARKET
+		WHERE DISCT_NO = #{disctNo}
+		AND MARKET_NAME LIKE '%' || #{searchMarketName} ||'%'
+		ORDER BY MARKET_NAME
+	</select>
+	
+	<select id="getBranchList" parameterType="hashmap" resultType="hashmap">
+		SELECT BRANCH_NAME
+		FROM MARKET_MEMBER MM
+		WHERE MARKET_NO = #{marketNo}
+		ORDER BY BRANCH_NAME
+	</select>
+	
+	<select id="getItemsList" parameterType="hashmap" resultType="hashmap">
+		SELECT ITEMS_NO, ITEMS_NAME, IMG_URL
+		FROM (
+				SELECT I.ITEMS_NO, I.ITEMS_NAME, I.IMG_URL
+				FROM ITEMS I
+				JOIN (
+						SELECT ITEMS_NO
+						FROM PRICES
+						WHERE MARKET_NO = #{marketNo}
+						AND UPDATE_DATE = (
+											SELECT UPDATE_DATE
+											FROM (
+													SELECT UPDATE_DATE, MARKET_NO, ROW_NUMBER() OVER(ORDER BY UPDATE_DATE DESC) AS RNUM
+													FROM PRICES
+													WHERE MARKET_NO = #{marketNo}
+												 )
+											WHERE RNUM = 1
+										  )
+					 ) P
+				ON I.ITEMS_NO = P.ITEMS_NO
+			 )
+		WHERE ITEMS_NAME LIKE '%' || #{searchItemsName} ||'%'
+		ORDER BY ITEMS_NAME
+	</select>
+	
+	<update id="addDiaryData" parameterType="hashmap">
+		INSERT ALL
+		INTO DIARY (DIARY_NO, MEMBER_NO, CON)
+		VALUES (DIARY_SEQ.NEXTVAL, #{memberNo}, #{con})
+		<foreach collection="diaryImgList" item="diaryImgData" separator=" ">
+			INTO DIARY_IMG (IMG_NO, DIARY_NO, IMG_URL)
+			VALUES (GET_DIARY_IMG_SEQ_NEXTVAL, DIARY_SEQ.CURRVAL, #{diaryImgData.diaryImgUrl})
+			<foreach collection="diaryImgData.itemTaglist" item="itemTagData" separator=" ">
+				INTO ITEM_TAG
+				VALUES (GET_ITEM_TAG_SEQ_NEXTVAL, #{itemTagData.marketNo}, #{itemTagData.itemsNo}, GET_DIARY_IMG_SEQ_CURRVAL,
+						#{itemTagData.cost}, #{itemTagData.buyQnt}, #{itemTagData.marketName}, #{itemTagData.itemsName})
+				<if test="itemTagData.addToAccbkFlag eq 1">
+				INTO ACCBK (ACCBK_NO, MEMBER_NO, MARKET_NO, ITEMS_NO, COST, BUY_QNT, BUY_DATE, MARKET_NAME, ITEMS_NAME)
+				VALUES (GET_ACCBK_SEQ_NEXTVAL, #{memberNo}, #{itemTagData.marketNo}, #{itemTagData.itemsNo},
+						#{itemTagData.cost}, #{itemTagData.buyQnt}, #{itemTagData.buyDate}, #{itemTagData.marketName}, #{itemTagData.itemsName})
+				</if>
+			</foreach>
+		</foreach>
+		SELECT * FROM DUAL
+	</update>
+</mapper>
