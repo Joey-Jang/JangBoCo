@@ -162,6 +162,10 @@ main {
     align-items: center;
     height: 50px;
 }
+.login_logout_menu > ul > li[class="active"] {
+    font-weight: 500;
+    color: #03A64A;
+}
 .login_logout_menu > ul > li:hover {
     font-weight: 500;
     color: #03A64A;
