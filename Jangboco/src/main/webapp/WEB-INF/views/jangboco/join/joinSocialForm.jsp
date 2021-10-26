@@ -56,7 +56,7 @@ $(document).ready(function(){
 	});
 	
 	toDisabled("#zipcd_other");
-	toDisabled("#social_email");
+	toDisabled("#email");
 	
 });
 

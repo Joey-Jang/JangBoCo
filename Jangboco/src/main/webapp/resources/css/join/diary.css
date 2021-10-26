@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* 대지 기본 설정 */
+
+.diary_contnr {
+	width: 100%;
+    background: rebeccapurple;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.diary_contnr_con {
+	display: flex;
+    flex-wrap: wrap;
+}
+
+.diary_con {
+	width: 25%;
+    height: 250px;
+    background: yellow;
+}

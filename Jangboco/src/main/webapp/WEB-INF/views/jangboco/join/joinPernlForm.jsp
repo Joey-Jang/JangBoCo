@@ -11,8 +11,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <link rel="stylesheet" type="text/css" href="resources/css/join/join.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
-<script type="text/javascript" src="resources/script/layout/default.js"></script>
+<!-- <script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
+ --><script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
@@ -66,7 +66,7 @@ $(document).ready(function(){
    $("#join_btn").on("click",function(){
       if(checkVal("#name")){
          alert("이름을 입력해주세요");
-         $("#name".focus());
+         $("#name").focus();
        } else if (checkVal("#nicnm")){
          alert("닉네임을 입력해주세요");
          $("#nicnm").focus();
@@ -125,11 +125,13 @@ $(document).ready(function(){
                dataType:"json",
                data: {"email":$("#email").val()},
                success: function(res){
+            	  console.log(res);
+            	  console.log(res.result =="false");
                   if(res.result=="true"){
                      $("#email_warn").text("가입 가능한 이메일 주소입니다");
                      $("#email_warn").css("color","green");
                      toEnabled("#email_check_btn");
-                  } else if("false"){
+                  } else if(res.result =="false"){
                      $("#email_warn").text("이미 가입된 이메일입니다");
                      $("#email_warn").css("color","red");
                      toDisabled("#email_check_btn");
@@ -202,12 +204,11 @@ function toDisabled(sel){
                       </div>
                       <div class="form_input" >
                          <div class="form_input_text">
-                            이메일
+                            이메일 <span><div id="email_warn"></div></span>
                          </div>
                          <div class="email_input">
                             <div class="form_input_val">
                                <input type="email" id="email" name="email"/>
-                               <div class="email_warn"></div>
                             </div>
                             <div class="check_btn">
                                <input type="button" id="email_check_btn" value="전송"/>
@@ -283,7 +284,7 @@ function toDisabled(sel){
                          </div>                 
                       </div>
                  </form>
-                 <div class="joinBtn">
+                 <div id="joinBtn">
                     <input type="button" value="가입" id="join_btn">
                     <input type="button" value="취소" id="cancel_btn">
                  </div>
