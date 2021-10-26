@@ -121,10 +121,10 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/searchMarketAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/searchDiaryMarketAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String searchMarketAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String searchDiaryMarketAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -136,10 +136,10 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/searchBranchAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/searchDiaryBranchAjax", method = RequestMethod.POST,
 			produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String searchBranchAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String searchDiaryBranchAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -151,10 +151,10 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/searchItemsAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/searchDiaryItemsAjax", method = RequestMethod.POST,
 			produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String searchItemsAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String searchDiaryItemsAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();

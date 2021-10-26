@@ -215,7 +215,7 @@ $(document).ready(function() {
 					 };
 		
 		$.ajax({
-			url: "searchMarketAjax",
+			url: "searchDiaryMarketAjax",
 			type: "post",
 			dataType: "json",
 			data: params,
@@ -251,7 +251,7 @@ $(document).ready(function() {
 					 };
 		
 		$.ajax({
-			url: "searchBranchAjax",
+			url: "searchDiaryBranchAjax",
 			type: "post",
 			dataType: "json",
 			data: params,
@@ -318,7 +318,7 @@ $(document).ready(function() {
 					 };
 		
 		$.ajax({
-			url: "searchItemsAjax",
+			url: "searchDiaryItemsAjax",
 			type: "post",
 			dataType: "json",
 			data: params,
