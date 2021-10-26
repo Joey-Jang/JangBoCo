@@ -94,6 +94,8 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 
+	
+	
 	@Autowired
 	public DiaryServiceIF diaryService;
 	
