@@ -1,9 +1,11 @@
 $(document).ready(function() {
 	reloadMainLoc();
-
+	reloadMenu();
+	
     // 로고 클릭 이벤트
     $("#home_logo").click(function() {
-    	//
+    	$("#goForm").attr("action", "home");
+		$("#goForm").submit();
     })
     
     // 메인 위치 설정 호버 이벤트
@@ -15,7 +17,7 @@ $(document).ready(function() {
         $("#loc_expand_btn_hover").hide();
     })
     
-    // 사이드메뉴 호버 이벤트
+    // 사이드 메뉴 호버 이벤트
     $("#login_logout_menu > ul > li, #main_menu > li").hover(function() {
         $(this).children(".menu_icon").hide();
         $(this).children(".menu_icon_hover").show();
@@ -27,57 +29,38 @@ $(document).ready(function() {
         $(this).children(".menu_icon_hover").hide();
     });
     
-    // 메인 메뉴 열기/닫기
-    $("#main_menu").on('click', "li", function() {
-        var index = $(this).index();
+    // login_logout_menu 클릭 이벤트
+    $("#login_logout_menu").on('click', "li", function() {
+    	// 메뉴, 서브 메뉴 초기화
+        $("#home_flag").val("1");
+        $("#menu_idx").val("0");
+        $("#sub_menu_idx").val("0");
         
-        if($(this).hasClass("close")) { // 메인 메뉴 열기
-            $(this).removeClass("close");
-            $("#main_menu .menu_text").show();
-            $("#main_menu").css("width", "100%");
-            $("#main_menu_contnr").css("width", "100%");
-
-            $(".sub_menu").hide();
-            $("#sub_menu_contnr").hide();
-        } else { // 닫기
-            $("#main_menu > li").removeClass("close");
-            $(this).addClass("close");
-            $("#main_menu .menu_text").hide();
-            $("#main_menu").css("width", "100%");
-            $("#main_menu_contnr").css("width", "54px");
-
-            $(".sub_menu").hide();
-            $(".sub_menu").eq(index).show();
-            $("#sub_menu_contnr").show();
-        }
+        // 페이지 이동
+        goPage($(this));
     })
     
-    // login_logout_menu 클릭 이벤트 - 메인 메뉴, 하위 메뉴 초기화
-    $("#login_logout_menu").on('click', "li", function() {
-        $("#main_menu .menu_icon").show();
-        $("#main_menu .menu_icon_hover").hide();
-        $("#main_menu > li").attr("class", "");
-        $("#main_menu .menu_text").show();
-        $("#main_menu").css("width", "100%");
-        $("#main_menu_contnr").css("width", "100%");
-
-        $(".sub_menu").children("li").attr("class", "");
-        $(".sub_menu").hide();
-        $("#sub_menu_contnr").hide();
+    // 서브 메뉴 열기/닫기
+    $("#main_menu").on('click', "li", function() {
+        if($(this).hasClass("open")) {
+            closeSubMenu($(this));
+        } else {
+            openSubMenu($(this));
+        }
     })
     
     // 서브 메뉴 클릭 이벤트
     $(".sub_menu").on("click", "li", function() {
-        var index = $(this).parent().index();
-
-        $(".sub_menu").children("li").attr("class", "");
-        $(this).addClass("active");
-        $("#main_menu > li").removeClass("active");
-        $("#main_menu > li").eq(index).addClass("active");
-        $("#main_menu .menu_icon").show();
-        $("#main_menu .menu_icon_hover").hide();
-        $("#main_menu > li").eq(index).children(".menu_icon").hide();
-        $("#main_menu > li").eq(index).children(".menu_icon_hover").show();
+    	// 메뉴, 서브 메뉴 인덱스 설정
+    	var menuIdx = $(this).parent().index();
+        var subMenuIdx = $(this).index();
+        
+        $("#home_flag").val("0");
+        $("#menu_idx").val(menuIdx);
+        $("#sub_menu_idx").val(subMenuIdx);
+        
+        // 페이지 이동
+        goPage($(this));
     });
     
     // window 크기 변화 시 위치 설정 창 숨기기
@@ -291,4 +274,48 @@ function drawRecentLocList(recentLocList) {
 	}
 	
 	$("#recent_loc_list").html(html);
+}
+
+// 서브 메뉴 열기/닫기
+function openSubMenu(clickMenu) {
+	$("#main_menu > li").removeClass("open");
+    clickMenu.addClass("open");
+    $("#main_menu .menu_text").hide();
+    $("#main_menu").css("width", "100%");
+    $("#main_menu_contnr").css("width", "54px");
+
+    $(".sub_menu").hide();
+    $(".sub_menu").eq(clickMenu.index()).show();
+    $("#sub_menu_contnr").show();
+}
+function closeSubMenu(clickMenu) {
+    clickMenu.removeClass("open");
+    $("#main_menu .menu_text").show();
+    $("#main_menu").css("width", "100%");
+    $("#main_menu_contnr").css("width", "100%");
+
+    $(".sub_menu").hide();
+    $("#sub_menu_contnr").hide();
+}
+
+// 메뉴, 서브 메뉴 갱신
+function reloadMenu() {
+	// 메뉴 아이콘, 글자색(active)
+	$("#main_menu .menu_icon_hover").hide();
+	$("#main_menu .menu_icon").show();
+	$("#main_menu > li").eq($("#menu_idx").val()).children(".menu_icon").hide();
+	$("#main_menu > li").eq($("#menu_idx").val()).children(".menu_icon_hover").show();
+	$("#main_menu > li").eq($("#menu_idx").val()).addClass("active");
+	// 서브 메뉴 글자색(active)
+	$(".sub_menu").eq($("#menu_idx").val()).children("li").eq($("#sub_menu_idx").val()).addClass("active");
+	// 메뉴, 서브 메뉴 인덱스에 해당하는 메뉴 출력
+	if($("#home_flag").val()!=1) {
+		openSubMenu($("#main_menu > li").eq($("#menu_idx").val()));
+	}
+}
+
+// 페이지 이동
+function goPage(clickMenu) {
+    $("#goForm").attr("action", clickMenu.attr("action"));
+	$("#goForm").submit();
 }

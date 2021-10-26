@@ -12,7 +12,7 @@
 <div id="set_loc_contnr" class="set_loc_contnr">
 	<form action="#" id="locForm" method="post" >
 	   	<div id="loc_info" class="loc_info">
-			<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+			<input type="hidden" name="member_no" value="${memberNo}">
 	   		<input type="hidden" id="latest_loc_no" name="latest_loc_no">
 	   		<input type="hidden" id="del_recent_loc_no" name="del_recent_loc_no">
 	    	<input type="text" id="zipcd" name="zipcd" class="zipcd" placeholder="우편번호" readonly>
@@ -32,24 +32,24 @@
 <aside>
     <div id="login_logout_menu" class="login_logout_menu">
         <ul class="login_menu">
-            <li>
+            <li action="loginMain">
                 <div class="menu_icon"></div>
                 <div class="menu_icon_hover"></div>
-                <span class="menu_text" onClick="location.href='loginMain'">로그인</span>
+                <span class="menu_text">로그인</span>
             </li>
-            <li>
+            <li action="joinMain">
                 <div class="menu_icon"></div>
                 <div class="menu_icon_hover"></div>
-                <span class="menu_text" onClick="location.href='joinMain'">함께하기</span>
+                <span class="menu_text">함께하기</span>
             </li>
         </ul>
         <ul class="logout_menu">
-            <li>
+            <li action="">
                 <div class="menu_icon"></div>
                 <div class="menu_icon_hover"></div>
                 <span class="menu_text">회원이름</span>
             </li>
-            <li>
+            <li action="">
                 <div class="menu_icon"></div>
                 <div class="menu_icon_hover"></div>
                 <span class="menu_text">로그아웃</span>
@@ -59,7 +59,7 @@
     <div class="side_menu_contnr">
         <div id="main_menu_contnr" class="main_menu_contnr">
             <ul id="main_menu" class="main_menu">
-                <li class="active">
+                <li>
                     <div class="menu_icon"></div>
                     <div class="menu_icon_hover"></div>
                     <span class="menu_text">짠짠맵</span>
@@ -83,43 +83,46 @@
         </div>
         <div id="sub_menu_contnr" class="sub_menu_contnr">
             <ul class="sub_menu map">
-                <li class="active">
+                <li action="zzanMain">
                     <span class="sub_menu_text">가격비교</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">품목별 정보</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">차트</span>
                 </li>
             </ul>
             <ul class="sub_menu diary">
-                <li>
+                <li action="">
                     <span class="sub_menu_text">뉴스피드</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">보관함</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">마이페이지</span>
+                </li>
+                <li action="writeDiary">
+                    <span class="sub_menu_text"">일기 올리기</span>
                 </li>
             </ul>
             <ul class="sub_menu accbk">
-                <li>
+                <li action="">
                     <span class="sub_menu_text">메인</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">통계</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">지출내역</span>
                 </li>
             </ul>
             <ul class="sub_menu user_center">
-                <li>
+                <li action="">
                     <span class="sub_menu_text">공지</span>
                 </li>
-                <li>
+                <li action="">
                     <span class="sub_menu_text">Q&amp;A</span>
                 </li>
             </ul>

@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
@@ -19,6 +18,12 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
+	<form action="#" id="goForm" method="post">
+		<input type="hidden" name="member_no" value="${memberNo}">
+		<input type="hidden" id="home_flag" name="home_flag" value="1">
+		<input type="hidden" id="menu_idx" name="menu_idx" value="0">
+		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="0">
+	</form>
     <div class="con_contnr">
         <div class="con">
             홈페이지입니다.
