@@ -20,77 +20,99 @@
 var page = 1;
 
 $(document).ready(function() {
-	if("${param.searchGbn}" != "") {
-		$("#searchGbn").val("${param.searchGbn}");
-	}
-	reloadList();
+   if("${param.searchGbn}" != "") {
+      $("#searchGbn").val("${param.searchGbn}");
+   }
+   reloadList();
 
-	$("#searchBtn").on("click", function() {
-		$("#page").val("1");
-		$("#oldTxt").val($("#searchTxt").val());
-		reloadList();
-	});
-	
-	$("#addBtn").on("click", function() {
-		$("#searchTxt").val($("#oldTxt").val());
-		$("#actionForm").attr("action","testAMAdd");
-		$("#actionForm").submit();
-	});
-	
-	$("#pagingWrap").on("click", "span", function() {
-		$("#page").val($(this).attr("page"));
-		$("#searchTxt").val($("#oldTxt").val());
-		reloadList();
-	});
-	
-	$("tbody").on("click", "tr", function() {
-		$("#no").val($(this).attr("no"));
-		$("#searchTxt").val($("#oldTxt").val());
-		$("#actionForm").attr("action","testAM");
-		$("#actionForm").submit();
-	});
-	
+   $("#searchBtn").on("click", function() {
+      $("#page").val("1");
+      $("#oldTxt").val($("#searchTxt").val());
+      reloadList();
+   });
+   
+   $("#addBtn").on("click", function() {
+      $("#searchTxt").val($("#oldTxt").val());
+      $("#actionForm").attr("action","testAMAdd");
+      $("#actionForm").submit();
+   });
+   
+   $("#pagingWrap").on("click", "span", function() {
+      $("#page").val($(this).attr("page"));
+      $("#searchTxt").val($("#oldTxt").val());
+      reloadList();
+   });
+   
+   $("tbody").on("click", "tr", function() {
+      $("#no").val($(this).attr("no"));
+      $("#searchTxt").val($("#oldTxt").val());
+      $("#actionForm").attr("action","testAM");
+      $("#actionForm").submit();
+   });
+   
 });
 
 function reloadList() {
-	   var params = $("#actionForm").serialize(); //form의 데이터를 문자열로 변환
-	   
-	   $.ajax({ //jquery의 ajax함수 호출
-	      url: "diaryListAjax", //접속 주소
-	      type: "post", //전송 방식
-	      dataType: "json", // 받아올 데이터 형태
-	      data: params, //보낼 데이터(문자열 형태)
-	      success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
-	         console.log(res);
-	    	 drawList(res.list);
-	         drawPaging(res.pb);
-	      },
-	      error: function(request, status, error) {//실패 시 다음 함수 실행
-	         console.log(error);
-	      }
-	   });
-	}
-	
+      var params = $("#actionForm").serialize(); //form의 데이터를 문자열로 변환
+      
+      $.ajax({ //jquery의 ajax함수 호출
+         url: "diaryListAjax", //접속 주소
+         type: "post", //전송 방식
+         dataType: "json", // 받아올 데이터 형태
+         data: params, //보낼 데이터(문자열 형태)
+         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+            console.log(res);
+           drawList(res.list);
+            drawPaging(res.pb);
+         },
+         error: function(request, status, error) {//실패 시 다음 함수 실행
+            console.log(error);
+         }
+      });
+   }
+   
 function drawList(list){
-	var html = "";
-	for(var data of list){
-		html+="<tr no=\""+ data.M_NO+"\">";
-		html+="<td>";
-		html+= data.M_NO;
-/* 	    if(data.M_IMG != null){
-	    	  html += "<img id=\"att\" src=\"resources/images/attFile.png\">";
-	    } */
-	    if(data.LIKE_CNT != null){
-	    	html+= "<div>없음</div>";
-	    }
-		html+= "</td>   ";
-		html+="<td>"+data.M_ID+"</td>   ";
-		html+="<td>"+data.M_NM+"</td>   ";
-		html+="<td>"+data.M_PHONE+"</td>";
-		html+="</tr>                   ";
-	}
-	
-	$("tbody").html(html);
+   var html = "";
+
+   for(var data of list){
+/*       html += "<div class=\"diary_con\">";
+      html += "<div class=\"diary_con_nicnm\">"+data.NICNM+"</div>";
+      html += "<div class=\"diary_con_img\">"+data.IMG_URL+"</div>";
+      if(data.LIKE_CNT != null){
+          html+= "<div class=\"diary_con_like\">좋아요"+ data.LIKE_CNT+"</div>";
+       } else {
+          html+= "<div class=\"diary_con_like\">좋아요"+0+"</div>";
+       }
+      html += "<div class=\"diary_con_con\">"+data.CON+"</div>";
+      html += "</div>"; */
+      
+      html += "<div class=\"card\">";
+      html += "<div class=\"card-header\">";
+      html += "<div class=\"card-user\">";
+      html += "<div class=\"card-user-profile\">";
+      html += "<img class=\"full-img\" src=\"resources/images/diaryImages/profile.png\" alt=\"프로필\">";
+      html += "</div>";
+      html += "<p class=\"card-user-name\">"+data.NICNM+"</p>";
+      html += "</div>";
+      html += "<div class=\"card-like\">";
+      html += "<img src=\"resources/images/diaryImages/heart.png\" alt=\"좋아요\">";
+      if(data.LIKE_CNT != null){
+          html += "<span>"+data.LIKE_CNT+"</span>";
+       } else {
+          html += "<span>0</span>";
+       }
+      html += "</div>";
+      html += "</div>";
+      html += "<div class=\"card-thumbnail\">";
+      html += "<span class=\"card-thumbnail-views\">"+data.HIT_NUM+"</span>";
+      html += "<img class=\"full-img\" src=\"resources/images/diaryImages/1.jpg\" alt=\"썸네일\">";
+      html += "</div>";
+      html += "<div class=\"card-contents\">"+data.CON+" </div>";
+      html += "</div>";
+   }
+   
+   
+   $(".card-wrapper").html(html);
 }
 
 function drawPaging(pb) {
@@ -121,7 +143,7 @@ function drawPaging(pb) {
    html += "<span page=\"" + pb.maxPcount + "\">마지막</span>       " ;
    
    $("#pagingWrap").html(html);
-	   
+      
 }
 </script>
 </head>
@@ -130,31 +152,214 @@ function drawPaging(pb) {
 <main>
     <div class="con_contnr">
         <div class="con">
-			<div class="diary_contnr">
-				<form action="#" id="actionForm" method="post">
-					<input type="hidden" id="no" name="no" />
-					<input type="hidden" id="page" name="page" value="${page}" />
-					<input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
-					<input type="hidden" id="oldTxt" value="${param.searchTxt}" />
-					<input type="button" id="searchBtn" value="검색" />
-					<input type="button" id="addBtn" value="등록" />
-				</form>
-				<table>
-					<thead>
-						<tr>
-							<th>회원번호</th>
-							<th>아이디</th>
-							<th>이름</th>
-							<th>전화번호</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-				<div id="pagingWrap">
-				</div>
-	        </div>
-	    </div>
+         <div class="diary_contnr">
+<%--             <form action="#" id="actionForm" method="post">
+               <input type="hidden" id="no" name="no" />
+               <input type="hidden" id="page" name="page" value="${page}" />
+               <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
+               <input type="hidden" id="oldTxt" value="${param.searchTxt}" />
+               <input type="button" id="searchBtn" value="검색" />
+               <input type="button" id="addBtn" value="등록" />
+            </form> --%>
+             <div class="container">
+                <div class="header-container">
+                  <h3>장보코_다이어리</h3>
+                  <div class="header-container-nav">
+                    <div class="header-search">
+	                  <form action="#" id="actionForm" method="post">
+	                     <input type="hidden" id="no" name="no" />
+	                     <input type="hidden" id="page" name="page" value="${page}" />
+	                     <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
+	                     <input type="hidden" id="oldTxt" value="${param.searchTxt}" />
+	                     <input type="button" id="searchBtn" value="검색" />
+	                  </form>                    
+                    </div>
+                    <a href="#" class="write-button">
+                      <div class="plus-icon">
+                        <span></span>
+                        <span></span>  
+                      </div>
+                    </a>
+                    <a href="#" class="mypage-button">
+                      <img src="resources/images/diaryImages/profile.png" alt="마이페이지 바로가기">
+                    </a>
+                  </div>
+                </div>
+                <div class="card-wrapper">
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/1.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/2.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/3.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/1.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/2.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/3.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/1.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-user">
+                        <div class="card-user-profile">
+                          <img class="fill-img" src="resources/images/diaryImages/profile.png" alt="프로필">
+                        </div>
+                        <p class="card-user-name">오픈더캐비닛</p>
+                      </div>
+                      <div class="card-like">
+                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
+                        <span>2</span>
+                      </div>
+                    </div>
+                    <div class="card-thumbnail">
+                      <span class="card-thumbnail-views">조회수 120</span>
+                      <img class="fill-img" src="resources/images/diaryImages/2.jpg" alt="썸네일">
+                    </div>
+                    <div class="card-contents">
+                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div id="pagingWrap">
+            </div>
+           </div>
+       </div>
     </div>
     <div class="bottom_contnr"></div>
 </main>
