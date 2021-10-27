@@ -1,0 +1,138 @@
+@charset "UTF-8";
+/* 대지 기본 설정 */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.full-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.container {
+  font-size: 15px;
+  color: #444;
+  height: 100%;
+} 
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 40px);
+  margin: 0 20px;
+}
+.header-container-nav {
+  display: flex;
+  align-items: center;
+}
+.header-search {
+  position: relative;
+  width: 100px;
+}
+.header-search input {
+  width: 100%;
+  padding: 4px 5px;
+  border: 2px solid rgb(13, 160, 35);
+  border-radius: 5px;
+}
+.header-search input:focus {
+  outline: none;
+}
+.header-search span {
+  position: absolute;
+  right: 0;
+  padding: 5px 5px 5px 0;
+  font-weight: bold;
+  color: rgb(13, 160, 35);
+}
+.write-button {
+  margin: 0 10px;
+}
+.plus-icon {
+  width: 20px;
+}
+.plus-icon span{
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 4px;
+  background-color: rgb(13, 160, 35);
+}
+.plus-icon span:nth-of-type(2){
+  transform: rotate(90deg);
+}
+.mypage-button {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.card-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card {
+  width: 25%;
+  /* height: 50%; */
+  padding: 15px;
+  background: white;
+}
+.card-header {
+  height: 40px;
+  margin-bottom: 5px;
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-user {
+  display: flex;
+  align-items: center;
+}
+.card-user-profile {
+  width: 32px;
+  height: 32px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.card-like {
+  display: flex;
+  align-items: end;
+}
+.card-like img {
+  width: 25px;
+}
+.card-like span {
+  display: block;
+  margin-left: 5px;
+}
+.card-user-name {
+  margin-left: 5px;
+  font-weight: bold;
+}
+.card-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 70%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.card-thumbnail-views {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+  color: #fff;
+}
+.card-contents {
+  margin-top: 10px;
+  padding: 0 10px;
+  line-height: 1.2;
+}

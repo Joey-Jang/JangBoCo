@@ -1,0 +1,632 @@
+@charset "UTF-8";
+/* diaryWrite 기본 설정 */
+.writeDiaryForm {
+	height: 100%;
+}
+.con {
+    display: flex;
+    flex-flow: row nowrap;
+	justify-content: center;
+    align-items: stretch;
+    height: 100%;
+}
+.con input[type="button"], .con button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+
+/* thunl, diaryImg, item_tag */
+/* 썸네일 */
+.diary_thunl_list {
+	list-style-type: none;
+	width: 120px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.diary_thunl_list > li {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 95px;
+	margin-bottom: 20px;
+}
+.diary_thunl_list > li > .diary_thunl {
+	width: 60px;
+	height: 60px;
+	border-radius: 5px;
+}
+.del_diary_thunl_btn {
+	width: 25px;
+	height: 25px;
+}
+/* 다이어리 사진 */
+.diary_img_tag_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	width: 50%;
+	min-width: 300px;
+	max-width: 480px;
+	height: 100%;
+}
+.add_diary_img_btn {
+	width: 100%;
+	min-height: 25px;
+}
+.diary_img_list_contnr {
+	position: relative;
+	width: 100%;
+	margin: 5px 0;
+	padding-top: calc(75% - 2px);
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+	z-index: 50;
+}
+.diary_img_list {
+	list-style-type: none;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 50;
+}
+.diary_img_list > li {
+	width: 100%;
+}
+.diary_img {
+	width: 100%;
+	padding-top: calc(calc(100% + 2px) * 0.75 - 2px);
+	border-radius: 4px;
+}
+.no_diary_img_btn {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 25px;
+	height: 25px;
+    z-index: 60;
+}
+.previous_slide_btn {
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 30px;
+    z-index: 60;
+}
+.next_slide_btn {
+	position: absolute;
+	top: 50%;
+	right: 5px;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 30px;
+    z-index: 60;
+}
+.change_diary_img_btn {
+	position: absolute;
+	left: 5px;
+	bottom: 5px;
+	width: 25px;
+	height: 25px;
+	vertical-align: middle;
+    z-index: 60;
+}
+.del_diary_img_btn {
+	position: absolute;
+	left: 40px;
+	bottom: 5px;
+	width: 25px;
+	height: 25px;
+    z-index: 60;
+}
+.edit_item_tag_contnr {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	z-index: 60;
+}
+.edit_item_tag_btn {
+	width: 100px;
+	height: 25px;
+    z-index: 60;
+}
+
+
+/* 태그 설정창 */
+.set_item_tag_contnr {
+	position: absolute;
+	top: -5px;
+	left: 50%;
+	transform: translate(-50%, -100%);
+	display: none;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 270px;
+	height: 260px;
+	padding: 10px;
+	background-color: white;
+	border: 2px solid #03A64A;
+	border-radius: 5px;
+    font-size: 10pt;
+	z-index: 80;
+}
+.item_tag_info {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+}
+/* 마켓 검색 */
+.search_market_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+.disct_gbn {
+	width: 80px;
+	height: 25px;
+	border: 1px solid #E0E0E0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.search_market_name {
+	width: 86px;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #E0E0E0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.search_market_btn {
+	width: 70px;
+	height: 25px;
+}
+/* 마켓 지점 이름 */
+.market_branch_name_contnr {
+	width: 100%;
+	max-height: 80px;
+	margin: 5px 0;
+	overflow: auto;
+}
+.market_branch_name_contnr > ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.market_list > li {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: 20px;
+}
+.market_list > li > .marker {
+	width: 5px;
+	height: 15px;
+}
+.market_list > li > span:hover {
+	cursor: pointer;
+}
+.branch_list > li {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: 21px;
+}
+.branch_list > li > .marker {
+	width: 5px;
+	height: 15px;
+}
+.branch_list > li > span:hover {
+	cursor: pointer;
+}
+.select_market_branch_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #03A64A;
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+/* 품목 검색 */
+.search_items_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+.search_items_name {
+	width: 171px;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #E0E0E0;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.search_items_btn {
+	width: 70px;
+	height: 25px;
+}
+/* 품목 이름 */
+.items_name_contnr {
+	width: 100%;
+	max-height: 80px;
+	margin: 5px 0;
+	overflow: auto;
+}
+.items_list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.items_list > li {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: 20px;
+}
+.items_list > li > .marker {
+	width: 5px;
+	height: 15px;
+}
+.items_list > li > span:hover {
+	cursor: pointer;
+}
+.select_items_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #03A64A;
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+/* 구매량, 금액 */
+.buy_qnt_cost_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+}
+.buy_qnt_cost_contnr > input::placeholder {
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.buy_qnt {
+	width: 80px;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #E0E0E0;
+	text-align: right;
+}
+.cost_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 105px;
+	height: 25px;
+}
+.cost {
+	width: 80px;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #E0E0E0;
+	text-align: right;
+}
+.won {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+}
+/* 태그 설정창 버튼 */
+.item_tag_btn_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 100%;
+	height: 55px;
+}
+/* 전환 버튼 */
+.others_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+}
+.others_item_tag_btn {
+	width: 90px;
+	height: 25px;
+}
+/* 가계부 추가, 등록, 취소 버튼 */
+.accbk_add_cancel_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+}
+.accbk_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 130px;
+	height: 25px;	
+}
+.add_to_accbk_inactive {
+	width: 25px;
+	height: 25px;
+	background: center / cover no-repeat url("../../images/diary/check-circle.svg");
+	border-radius: 50%;
+}
+.add_to_accbk_active {
+	display: none;
+	width: 25px;
+	height: 25px;
+	background: center / cover no-repeat url("../../images/diary/check-circle-active.svg");
+	border-radius: 50%;
+}
+.add_to_accbk_btn {
+	width: 100px;
+	height: 25px;
+}
+.buy_date {
+	display: none;
+	width: 100px;
+	height: 25px;
+}
+.ui-datepicker {
+	font-size: 10pt !important;
+}
+.add_cancel_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 85px;
+	height: 25px;
+}
+.add_item_tag_btn {
+	width: 40px;
+	height: 25px;
+}
+.cancel_item_tag_btn {
+	width: 40px;
+	height: 25px;
+}
+/* 직접 입력 */
+.others_market_name_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 55px;
+	margin-bottom: 5px;
+}
+.others_market_name_contnr > span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 25px;
+}
+.market_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #E0E0E0;
+}
+.others_items_name_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 55px;
+	margin-bottom: 5px;
+}
+.others_items_name_contnr > span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 25px;
+}
+.items_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+	border: 1px solid #E0E0E0;
+}
+
+/* 아이템 태그 목록 */
+.item_tag_list_dtl_contnr {
+	flex-grow: 1;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.item_tag_list_contnr {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.item_tag_list {
+	list-style-type: none;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: center;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.item_tag_list > li {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	margin: 5px 5px 0px 5px;
+	border: 1px solid black;
+	border-radius: 50%;
+}
+.del_item_tag_btn {
+	position: absolute;
+	right: -1px;
+	bottom: -1px;
+	width: 16px;
+	height: 16px;
+}
+.item_tag_dtl_contnr {
+	position: absolute;
+	top: 0;
+	left: 5px;
+	transform: translate(-60px, -100%);
+	display: none;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	width: 180px;
+	height: 135px;
+	padding: 10px;
+	background-color: white;
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+	z-index: 70;
+	pointer-events: none;
+}
+.item_tag_dtl_contnr input {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.item_tag_dtl_market_branch_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+}
+.item_tag_dtl_items_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+}
+.item_tag_dtl_buy_qnt {
+	width: 100%;
+	height: 25px;
+	padding: 0 10px;
+	text-align: right;
+}
+.item_tag_dtl_cost_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+}
+.item_tag_dtl_cost {
+	width: 133px;
+	height: 25px;
+	padding: 0 10px;
+	text-align: right;
+}
+.item_tag_dtl_won {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+}
+
+
+/* diary_con */
+.diary_con_contnr {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	max-width: 480px;
+	margin-left: 30px;
+}
+.diary_con_hastg_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	max-height: 445px;;
+}
+.diary_con {
+	width: 100%;
+	min-height: 100px;
+	max-height: 390px;
+	margin-bottom: 10px;
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.hastg_list {
+	width: 100%;
+	height: 50px;
+	max-height: 100px;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+	overflow: auto;
+}
+.diary_btn_contnr {
+	align-self: flex-end;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 105px;
+}
+.write_diary_btn {
+	width: 60px;
+	height: 25px;
+}
+.cancel_diary_btn {
+	width: 40px;
+	height: 25px;
+}
