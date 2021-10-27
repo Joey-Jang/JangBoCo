@@ -83,19 +83,11 @@
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="#" id="goForm" method="post">
-<<<<<<< HEAD
-         <input type="hidden" name="member_no" value="${memberNo}">
-      <input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
-      <input type="hidden" id="menu_idx" name="menu_idx" value="${param.menu_idx}">
-      <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${param.sub_menu_idx}">
-   </form>
-=======
       	<input type="hidden" name="member_no" value="${memberNo}">
 		<input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${param.menu_idx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${param.sub_menu_idx}">
 	</form>
->>>>>>> branch 'main' of https://github.com/j0ngj0ng/JangBoCo.git
     <div class="con_contnr">
     	<div class="con">
     
