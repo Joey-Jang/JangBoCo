@@ -104,7 +104,7 @@
                     <span class="sub_menu_text">마이페이지</span>
                 </li>
                 <li action="writeDiary">
-                    <span class="sub_menu_text"">일기 올리기</span>
+                    <span class="sub_menu_text">일기 올리기</span>
                 </li>
             </ul>
             <ul class="sub_menu accbk">
