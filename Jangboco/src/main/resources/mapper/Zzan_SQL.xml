@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzan">
+	<select id="getMarketList" parameterType="hashmap" resultType="hashmap">
+		SELECT MARKET_NAME, DISCT_NO, DISCT_NAME
+		FROM MARKET NATURAL JOIN DISCT
+		WHERE MARKET_NO &lt; 1000
+	</select>
+</mapper>

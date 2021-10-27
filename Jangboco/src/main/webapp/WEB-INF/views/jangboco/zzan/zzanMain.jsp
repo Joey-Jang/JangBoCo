@@ -15,30 +15,150 @@
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
+
+<style>
+.con {
+    width: 100%;
+    height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 11pt;
+    font-weight: 400;
+}
+
+.zzan_head_contnr {
+	width: 100%;
+    height: 80px;
+    display: flex;
+}
+
+.zzan_title {
+	width: 200px;
+    height: 100%;
+    display: flex;
+}
+
+.zzan_event {
+	width: calc(100% - 202px);
+    height: 100%;
+    display: flex;
+}
+
+.zzan_main_contnr {
+	width: 100%;
+    height: calc(100% - 80px);
+    display: flex;
+}
+
+.zzan_side_contnr {
+	width: 200px;
+    height: calc(100% - 80px);
+    display: flex;
+    border: 2px solid #03A64A;
+    border-radius: 20px;
+}
+
+.zzan_search {
+	width: 50px;
+    height: 30px;
+    display: flex;
+}
+
+.zzan_list {
+	width: calc(100% - 50px);
+    height: 100%;
+    display: flex;
+}
+
+.zzan_map_contnr {
+	width: calc(100% - 200px);
+    height: calc(100% - 80px);
+    border: 2px solid #03A64A;
+    border-radius: 20px;
+    display: flex;
+}
+</style>
+
 </head>
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
+	<form action="#" id="goForm" method="post">
+         <input type="hidden" name="member_no" value="${memberNo}">
+      <input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
+      <input type="hidden" id="menu_idx" name="menu_idx" value="${param.menu_idx}">
+      <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${param.sub_menu_idx}">
+   </form>
     <div class="con_contnr">
-        <div class="con">
+    	<div class="con">
+    
+    
+    
+    <div class="zzan_head_contnr">
+    	<div class="zzan_title">
+    		<h3> 우리동네 가격비교 </h3>
+    	</div>
+    	
+    	<div class="zzan_event">
+    		<p>인기있는 행사 리스트...</p>
+   		</div>
+    </div>
+    
+    
+    
+    <div class="zzan_main_contnr">
+	    <div class="zzan_side_contnr">
+	    	<div class="zzan_search">
+	    
+	    	</div>
+	    	
+	    	<div class="zzan_list">
+	    		<p>리스트는 여기에</p>
+	   		</div>
+	    </div>
+	    
+	    <div class="zzan_map_contnr">
+	    	<div id="map" style="width:100%;height:100%;">
+			<p class="btn-init" onclick="setBounds()" style="position: absolute;right: 7px;bottom: 7px;
+			color: #666666;z-index: 10;font-size: 12px;font-weight: bold;background: white;box-shadow: 1px 1px 1px 1px #AAAAAA;padding: 0px 7px;border-radius: 4px;cursor: pointer;">초기화면으로</p>
+			<!-- 초기화면 버튼 클릭하면 바운드값 초기화 -->
+		
+			<button id="mapinfo" onclick="getInfo()" style="position: absolute;right: 100px;bottom: 15px; color: #666666;z-index :9999;">현재지도 정보얻기</button>
+			</div>
+    	</div>
+    </div>
+    
+    
+    
+    
+    
+     
+         
+         
            
-	<div id="map2" style="width:1730px;height:780px;">
-	<p class="btn-init" onclick="setBounds()" style="position: absolute;right: 7px;bottom: 7px;
-	color: #666666;z-index: 10;font-size: 12px;font-weight: bold;background: white;box-shadow: 1px 1px 1px 1px #AAAAAA;padding: 0px 7px;border-radius: 4px;cursor: pointer;">초기화면으로</p>
-	<!-- 초기화면 버튼 클릭하면 바운드값 초기화 -->
-	<button id="mapinfo" onclick="getInfo()" style="position: absolute;right: 100px;bottom: 15px; color: #666666;z-index :9999;">현재지도 정보얻기</button>
-	</div>
-	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61c8c8efc790452c5140ffc9ec95d67e&libraries=services"></script>
+	
 	<script>
+	
+	
+	
+	
+	
+	
 	<%--기본 지도 그리기--%>
 	
-	var mapContainer2 = document.getElementById('map2'), // 지도를 표시할 div
-	mapOption2 = {
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	mapOption = {
 	center: new kakao.maps.LatLng(33.850701, 126.870667), // 지도의 중심좌표
 	level: 3 // 지도의 확대 레벨
 	};
 	// 지도를 표시할 div와 지도 옵션으로 지도를 생성
-	var map2 = new kakao.maps.Map(mapContainer2, mapOption2);
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+	
+	
+	
+	
+	
+	
+	
 	
 	<%-- 키워드로 검색해서 장소id,좌표 얻어오기--%>
 	
@@ -91,7 +211,7 @@
 	
 	function displayMarker(place) {
 		var marker = new kakao.maps.Marker({
-			map: map2,
+			map: map,
 			position: new kakao.maps.LatLng(place.y, place.x),
 			image: markerImage //커스텀마커 이미지로
 		});
@@ -109,7 +229,7 @@
 			' </a>' +
 			'</div>';
 			var customOverlay = new kakao.maps.CustomOverlay({
-				map: map2,
+				map: map,
 				position: new kakao.maps.LatLng(place.y, place.x),
 				content: content,
 				yAnchor: 0.11  //머지???
@@ -118,8 +238,19 @@
 	}
 
 	function setBounds() {
-		map2.setBounds(bounds2, 90, 30, 10, 30);
+		map.setBounds(bounds2, 90, 30, 10, 30);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<%--주소로 좌표 가져오기--%>
@@ -137,7 +268,7 @@
 
 	        // 결과값으로 받은 위치를 마커로 표시합니다
 	        var marker3 = new kakao.maps.Marker({
-	            map: map2,
+	            map: map,
 	            position: coords
 	        });
 
@@ -145,27 +276,38 @@
 	        var infowindow = new kakao.maps.InfoWindow({
 	            content: '<div style="width:150px;text-align:center;padding:6px 0;">현재위치</div>'
 	        });
-	        infowindow.open(map2, marker3);
+	        infowindow.open(map, marker3);
 
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        //map2.setCenter(coords);//바운드때문에 안먹히는듯
+	        //map.setCenter(coords);//바운드때문에 안먹히는듯
 	    } 
 	}); 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<%--지도정보 가져오기(좌표가져오려고)--%>
 	
 	function getInfo() {
 	    // 지도의 현재 중심좌표를 얻어옵니다 
-	    var center = map2.getCenter(); 
+	    var center = map.getCenter(); 
 	    
 	    // 지도의 현재 레벨을 얻어옵니다
-	    var level = map2.getLevel();
+	    var level = map.getLevel();
 	    
 	    // 지도타입을 얻어옵니다
-	    var mapTypeId = map2.getMapTypeId(); 
+	    var mapTypeId = map.getMapTypeId(); 
 	    
 	    // 지도의 현재 영역을 얻어옵니다 
-	    var bounds3 = map2.getBounds();
+	    var bounds3 = map.getBounds();
 	    
 	    // 영역의 남서쪽 좌표를 얻어옵니다 
 	    var swLatLng = bounds3.getSouthWest(); 
@@ -189,11 +331,11 @@
 	    
 	    <%-- 마커로 잘 되는지 확인해보기
 	    var marker4 = new kakao.maps.Marker({
-	        map: map2,
+	        map: map,
 	        position: new kakao.maps.LatLng(swLatLng.getLat(), swLatLng.getLng())
 	    });
 	    var marker5 = new kakao.maps.Marker({
-	        map: map2,
+	        map: map,
 	        position: new kakao.maps.LatLng(neLatLng.getLat(), neLatLng.getLng())
 	    });
 
@@ -201,33 +343,58 @@
 	    var infowindow = new kakao.maps.InfoWindow({
 	        content: '<div style="width:150px;text-align:center;padding:6px 0;">지도의 남서쪽 좌표</div>'
 	    });
-	    infowindow.open(map2, marker4);
+	    infowindow.open(map, marker4);
 	    
 	    var infowindow2 = new kakao.maps.InfoWindow({
 	        content: '<div style="width:150px;text-align:center;padding:6px 0;">지도의 북동쪽 좌표</div>'
 	    });
-	    infowindow2.open(map2, marker5);
+	    infowindow2.open(map, marker5);
 	    --%>
 	}
 
 	getInfo();
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<%--지도 레벨 제한하기--%>
 	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 	var zoomControl = new kakao.maps.ZoomControl();
-	map2.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
 	// 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
-	kakao.maps.event.addListener(map2, 'zoom_changed', function() {        
+	kakao.maps.event.addListener(map, 'zoom_changed', function() {        
 	    
 	    // 지도의 현재 레벨을 얻어옵니다
-	    var level = map2.getLevel();
+	    var level = map.getLevel();
 	    
 	    if (level>9){
-	    	map2.setLevel(level - 1); //지도 레벨이 9보다 크면 레벨 1개 줄임
+	    	map.setLevel(level - 1); //지도 레벨이 9보다 크면 레벨 1개 줄임
 	    }
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<%--행정구역 구별하기--%>
 	
@@ -250,10 +417,7 @@
 		
 		$.each(coordinates[0],function(index, coordinate) {
 			//console.log(coordinates)를 확인해보면 [0]번째에 배열이 주로 저장이됨. 그래서 [0]번째 배열에서 꺼내줌.
-			if(name="동작구"){
-				console.log(name);
 				path.push(new daum.maps.LatLng(coordinate[1],coordinate[0]));
-			}
 		})
 		
 		// 지도에 표시할 다각형을 생성합니다
@@ -267,7 +431,7 @@
 		});
 
 		// 지도에 다각형을 표시합니다
-		polygon.setMap(map2);
+		polygon.setMap(map);
 	}
 	
 	
