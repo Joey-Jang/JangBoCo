@@ -535,6 +535,11 @@ $(document).ready(function() {
 		autosize($(this));
 	});
 	
+	// 내용 Byte 제한
+	$("#diary_con").on("keyup", function() {
+		checkByte($(this), 4000);
+	})
+	
 	// 일기 올리기 버튼 클릭 이벤트
 	$("#write_diary_btn").on("click", function() {
 		var params = {
@@ -704,4 +709,39 @@ function drawItemsList(itemsList) {
 	}
 	
 	$("#items_list").html(html);
+}
+
+function checkByte(con, maxByte) {
+	var conStr = con.val();
+	var conLength = conStr.length;
+	
+	var nowByte = 0;
+	var maxLength = 0;
+	
+	var eachChar = "";
+	var overflowConStr = "";
+	
+	for(var i=0; i<conLength; i++) {
+		eachChar = escape(conStr.charAt(i));
+
+		if(eachChar.length==1) {
+			nowByte++;
+		} else if(eachChar.indexOf("%u")!=-1) {
+			nowByte += 3;
+		} else if(eachChar.indexOf("%")!=-1) {
+			nowByte += eachChar.length / 3;
+		}
+		
+		if(nowByte <= maxByte) {
+			maxLength++;
+		}
+	}
+	
+	if(nowByte > maxByte) {
+		alert(maxByte + "Byte 초과");
+		overflowConStr = conStr.substr(0, maxLength);
+		con.val(overflowConStr);
+	}
+	
+	con.focus();
 }
