@@ -45,4 +45,24 @@ public class DiaryService implements IDiaryService{
 		return iDiaryDao.getSearchDiaryList(params);
 	}
 
+	@Override
+	public int getLikeDiaryCnt(int member_no) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getLikeDiaryCnt(member_no);
+	}
+
+	@Override
+	public int getMemberNo(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getMemberNo(email);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getLikeDiaryList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getLikeDiaryList(params);
+	}
+
+
+
 }

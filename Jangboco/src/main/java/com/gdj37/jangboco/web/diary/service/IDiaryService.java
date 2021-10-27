@@ -15,5 +15,11 @@ public interface IDiaryService {
 
 	public List<HashMap<String, String>> getSearchDiaryList(HashMap<String, String> params) throws Exception;
 
+	public int getLikeDiaryCnt(int member_no) throws Exception;
+
+	public int getMemberNo(String email) throws Exception;
+
+	public List<HashMap<String, String>> getLikeDiaryList(HashMap<String, Object> params) throws Exception;
+
 
 }

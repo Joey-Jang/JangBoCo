@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.jangboco.common.bean.PagingBean;
 import com.gdj37.jangboco.common.service.IPagingService;
 import com.gdj37.jangboco.web.diary.service.IDiaryService;
-import com.gdj37.jangboco.web.diaryjj.service.DiaryServiceIF;
 
 @Controller
 public class DiaryController {
@@ -37,12 +38,6 @@ public class DiaryController {
 	@RequestMapping(value = "/diaryMain")
 	public ModelAndView diaryMain(ModelAndView mav) {
 		mav.setViewName("jangboco/diary/main");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/diaryMain2")
-	public ModelAndView diaryMain2(ModelAndView mav) {
-		mav.setViewName("jangboco/diary/main2");
 		return mav;
 	}
 	
@@ -74,7 +69,6 @@ public class DiaryController {
 		}
 		//비었을때
 		//공통
-		System.out.println("testtttttttt"+cnt);
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 8, 3);
 		
 		System.out.println(pb);
@@ -90,8 +84,54 @@ public class DiaryController {
 			
 		modelMap.put("list", list);
 		modelMap.put("pb", pb);
-		System.out.println("ttttttteeeeeeeeessssssssttttttttttt"+cnt);
 		return mapper.writeValueAsString(modelMap);
 	}
 
+	
+	@RequestMapping(value = "/diaryLike")
+	public ModelAndView diaryLike(ModelAndView mav) {
+		mav.setViewName("jangboco/diary/diaryLike");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/diaryLikeListAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String diaryLikeListAjax(@RequestParam HashMap<String,Object> params, HttpSession session) throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		List<HashMap<String,String>> list  = new ArrayList();
+	
+		int page = 1;
+		int cnt = 0;
+		
+		// 넘어온 페이지 값이 있을 경우 페이지 값 셋팅
+		if(!params.get("page").equals("")&&params.get("page")!=null) {
+			page = Integer.parseInt((String) params.get("page"));
+			System.out.println(page);
+		}
+		
+		System.out.println("tttttttttteeeeeeessssssssst"+params);
+		String email = (String) session.getAttribute("email");
+		System.out.println("cntttttttttttttttttttttt2");
+		int member_no = iDiaryService.getMemberNo(email);
+		System.out.println("cntttttttttttttttttttttt3");
+		cnt = iDiaryService.getLikeDiaryCnt(member_no);
+		System.out.println("cntttttttttttttttttttttt4");
+		//비었을때
+		//공통
+		PagingBean pb = iPagingService.getPagingBean(page, cnt, 8, 3);
+		
+		params.put("startCnt", Integer.toString(pb.getStartCount()));
+		params.put("endCnt", Integer.toString(pb.getEndCount()));
+		params.put("member_no", member_no);
+		
+		list = iDiaryService.getLikeDiaryList(params);
+			
+		modelMap.put("list", list);
+		modelMap.put("pb", pb);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	
 }

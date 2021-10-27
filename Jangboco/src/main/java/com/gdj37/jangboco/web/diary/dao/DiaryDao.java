@@ -42,5 +42,22 @@ public class DiaryDao implements IDiaryDao{
 		return sqlSession.selectList("DiarySW.getSearchDiaryList",params);
 	}
 
+	@Override
+	public int getLikeDiaryCnt(int member_no) throws Exception {
+		return sqlSession.selectOne("DiarySW.getLikeDiaryCnt",member_no);
+	}
+
+	@Override
+	public int getMemberNo(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("DiarySW.getMemberNo",email);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getLikeDiaryList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("DiarySW.getLikeDiaryList", params);
+	}
+
 	
 }
