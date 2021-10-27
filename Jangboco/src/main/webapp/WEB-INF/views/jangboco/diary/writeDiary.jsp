@@ -124,7 +124,7 @@
 		       				       			<div id="add_to_accbk_active" class="add_to_accbk_active">
 											</div>
 		       				       			<input type="button" id="add_to_accbk_btn" class="add_to_accbk_btn" value="가계부에 추가">
-		       				       			<input type="text" id="buy_date" class="buy_date" placeholder="YYYY-MM-DD">
+		       				       			<input type="text" id="buy_date" class="buy_date" placeholder="YYYY-MM-DD" readonly>
 		       				       			<input type="hidden" id="add_to_accbk_flag" name="add_to_accbk_flag" value="0">
 	       				       			</div>
 	       				       			<div class="add_cancel_btn_contnr">
