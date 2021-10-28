@@ -18,7 +18,17 @@ public class ZzanController {
 	
 	@RequestMapping(value="/zzanMain")
 	public ModelAndView zzanMain(@RequestParam HashMap<String,String> params,
-			ModelAndView mav) {
+			ModelAndView mav) throws Throwable {
+		int homeFlag = 0;
+		int menuIdx = 0;
+		int subMenuIdx = 0;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		List<HashMap<String, String>> list = iZzanService.getMarketList(params);
+		
+		mav.addObject("list", list);
 		
 		mav.setViewName("jangboco/zzan/zzanMain");
 		
@@ -35,6 +45,19 @@ public class ZzanController {
 		mav.addObject("list", list);
 		
 		mav.setViewName("jangboco/zzan/zzanDataTest");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/zzanCluster")
+	public ModelAndView zzanCluster(@RequestParam HashMap<String,String> params,
+			ModelAndView mav) throws Throwable {
+		// 목록데이터 취득
+		List<HashMap<String, String>> list = iZzanService.getMarketList(params);
+				
+		mav.addObject("list", list);
+				
+		mav.setViewName("jangboco/zzan/zzanCluster");
 		
 		return mav;
 	}
