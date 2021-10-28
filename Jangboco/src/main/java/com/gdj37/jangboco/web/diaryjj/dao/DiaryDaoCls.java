@@ -1,4 +1,4 @@
-package com.gdj37.jangboco.web.diary.dao;
+package com.gdj37.jangboco.web.diaryjj.dao;
 
 import java.util.HashMap;
 import java.util.List;

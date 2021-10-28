@@ -1,4 +1,4 @@
-package com.gdj37.jangboco.web.diary.service;
+package com.gdj37.jangboco.web.diaryjj.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gdj37.jangboco.web.diary.dao.DiaryDaoIF;
+import com.gdj37.jangboco.web.diaryjj.dao.DiaryDaoIF;
 
 @Service
 public class DiaryServiceCls implements DiaryServiceIF {

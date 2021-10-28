@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,7 +24,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.jangboco.common.bean.PagingBean;
 import com.gdj37.jangboco.common.service.IPagingService;
-import com.gdj37.jangboco.web.diary.service.DiaryServiceIF;
 import com.gdj37.jangboco.web.diary.service.IDiaryService;
 
 @Controller
@@ -37,12 +38,6 @@ public class DiaryController {
 	@RequestMapping(value = "/diaryMain")
 	public ModelAndView diaryMain(ModelAndView mav) {
 		mav.setViewName("jangboco/diary/main");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/diaryMain2")
-	public ModelAndView diaryMain2(ModelAndView mav) {
-		mav.setViewName("jangboco/diary/main2");
 		return mav;
 	}
 	
@@ -74,7 +69,6 @@ public class DiaryController {
 		}
 		//비었을때
 		//공통
-		System.out.println("testtttttttt"+cnt);
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 8, 3);
 		
 		System.out.println(pb);
@@ -90,163 +84,54 @@ public class DiaryController {
 			
 		modelMap.put("list", list);
 		modelMap.put("pb", pb);
-		System.out.println("ttttttteeeeeeeeessssssssttttttttttt"+cnt);
 		return mapper.writeValueAsString(modelMap);
 	}
 
 	
-	
-	@Autowired
-	public DiaryServiceIF diaryService;
-	
-	@RequestMapping(value = "/writeDiary")
-	public ModelAndView writeDiary(ModelAndView mav) {
-		mav.setViewName("jangboco/diary/writeDiary");
-		
+	@RequestMapping(value = "/diaryLike")
+	public ModelAndView diaryLike(ModelAndView mav) {
+		mav.setViewName("jangboco/diary/diaryLike");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/getDisctListAjax", method = RequestMethod.POST,
-					produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/diaryLikeListAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
 	@ResponseBody
-	public String getDisctListAjax() throws Throwable {
+	public String diaryLikeListAjax(@RequestParam HashMap<String,Object> params, HttpSession session) throws Throwable{
 		ObjectMapper mapper = new ObjectMapper();
-		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		
-		List<HashMap<String, Object>> disctList = diaryService.getDisctList();
-		
-		modelMap.put("disctList", disctList);
-		
-		return mapper.writeValueAsString(modelMap);
-	}
+		List<HashMap<String,String>> list  = new ArrayList();
 	
-	@RequestMapping(value = "/searchMarketDiaryAjax", method = RequestMethod.POST,
-					produces = "text/json;charset=UTF-8")
-	@ResponseBody
-	public String searchMarketDiaryAjax(@RequestParam HashMap<String, String> params) throws Throwable {
-		ObjectMapper mapper = new ObjectMapper();
+		int page = 1;
+		int cnt = 0;
 		
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		
-		List<HashMap<String, Object>> marketList = diaryService.getMarketList(params);
-		
-		modelMap.put("marketList", marketList);
-		
-		return mapper.writeValueAsString(modelMap);
-	}
-	
-	@RequestMapping(value = "/searchBranchDiaryAjax", method = RequestMethod.POST,
-			produces = "text/json;charset=UTF-8")
-	@ResponseBody
-	public String searchBranchDiaryAjax(@RequestParam HashMap<String, String> params) throws Throwable {
-		ObjectMapper mapper = new ObjectMapper();
-		
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		
-		List<HashMap<String, Object>> branchList = diaryService.getBranchList(params);
-		
-		modelMap.put("branchList", branchList);
-		
-		return mapper.writeValueAsString(modelMap);
-	}
-	
-	@RequestMapping(value = "/searchItemsDiaryAjax", method = RequestMethod.POST,
-			produces = "text/json;charset=UTF-8")
-	@ResponseBody
-	public String searchItemsDiaryAjax(@RequestParam HashMap<String, String> params) throws Throwable {
-		ObjectMapper mapper = new ObjectMapper();
-		
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		
-		List<HashMap<String, Object>> itemsList = diaryService.getItemsList(params);
-		
-		modelMap.put("itemsList", itemsList);
-		
-		return mapper.writeValueAsString(modelMap);
-	}
-	
-	@RequestMapping(value = "/writeDiaryAjax", method = RequestMethod.POST,
-					produces = "text/json;charset=UTF-8")
-	@ResponseBody
-	@SuppressWarnings("unchecked")
-	public String writeDiaryAjax(@RequestParam HashMap<String, String> params) throws Throwable {
-		ObjectMapper mapper = new ObjectMapper();
-		
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		
-		String memberNo = params.get("memberNo");
-		String diaryImgJSONStr = params.get("diaryImgList");
-		String itemTagJSONStr = params.get("itemTagList");
-		String con = params.get("con");
-		
-		Map<String, Object> diaryParams = new HashMap<String, Object>();
-		
-		diaryParams.put("memberNo", memberNo);
-		diaryParams.put("con", con);
-		
-		JSONParser parser = new JSONParser();
-		JSONArray diaryImgListJSONArr = (JSONArray) parser.parse(diaryImgJSONStr);
-		JSONArray itemTagListsJSONArr = (JSONArray) parser.parse(itemTagJSONStr);
-		
-		String msg = "SUCCESS";
-		try {
-			List<Map<String, Object>> diaryImgList = new ArrayList<Map<String, Object>>();
-			
-			// i번째 일기 번호에 해당하는 사진, 태그들
-			for(int i=0; i<diaryImgListJSONArr.size(); i++) {
-				Map<String, Object> diaryImgData = new HashMap<String, Object>();
-				
-				// i번째 diaryImgData에 i번째 일기 사진 추가
-				diaryImgData.put("diaryImgUrl", (String) diaryImgListJSONArr.get(i));
-				
-				// i번째 일기 사진의 태그들 JOSNArray
-				JSONArray itemTagListJSONArr = (JSONArray) itemTagListsJSONArr.get(i);
-				// JSONArray<JSONObject>에서 ArrayList<HashMap>으로 변환
-				List<Map<String, Object>> itemTaglist = new ArrayList<Map<String, Object>>();
-				
-				if(itemTagListJSONArr != null) {
-					for(int j=0; j<itemTagListJSONArr.size(); j++) {
-						JSONObject itemTagDataJSONObj = (JSONObject) itemTagListJSONArr.get(j);
-						
-						Map<String, Object> itemTagData = null;
-						
-						try {
-							itemTagData = new ObjectMapper().readValue(itemTagDataJSONObj.toJSONString(), Map.class) ;
-				        } catch (JsonParseException jpe) {
-				            jpe.printStackTrace();
-				        } catch (JsonMappingException jme) {
-				            jme.printStackTrace();
-				        } catch (IOException ioe) {
-				            ioe.printStackTrace();
-				        }
-						
-						itemTaglist.add(itemTagData);
-					}
-				}
-				
-				// i번째 diaryImgData에 i번째 일기 사진의 태그들 추가
-				diaryImgData.put("itemTaglist", itemTaglist);
-				// diaryImgList에 i번째 diaryImgList 추가
-				diaryImgList.add(diaryImgData);
-			}
-			// diaryParams에 diaryImgList 추가
-			diaryParams.put("diaryImgList", diaryImgList);
-			
-			// 일기 등록
-			int cnt = diaryService.addDiaryData(diaryParams);
-			if(cnt==0) {
-				msg = "FAILED";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-			msg = "ERROR";
+		// 넘어온 페이지 값이 있을 경우 페이지 값 셋팅
+		if(!params.get("page").equals("")&&params.get("page")!=null) {
+			page = Integer.parseInt((String) params.get("page"));
+			System.out.println(page);
 		}
 		
-		modelMap.put("msg", msg);
+		System.out.println("tttttttttteeeeeeessssssssst"+params);
+		String email = (String) session.getAttribute("email");
+		System.out.println("cntttttttttttttttttttttt2");
+		int member_no = iDiaryService.getMemberNo(email);
+		System.out.println("cntttttttttttttttttttttt3");
+		cnt = iDiaryService.getLikeDiaryCnt(member_no);
+		System.out.println("cntttttttttttttttttttttt4");
+		//비었을때
+		//공통
+		PagingBean pb = iPagingService.getPagingBean(page, cnt, 8, 3);
 		
+		params.put("startCnt", Integer.toString(pb.getStartCount()));
+		params.put("endCnt", Integer.toString(pb.getEndCount()));
+		params.put("member_no", member_no);
+		
+		list = iDiaryService.getLikeDiaryList(params);
+			
+		modelMap.put("list", list);
+		modelMap.put("pb", pb);
 		return mapper.writeValueAsString(modelMap);
 	}
-
+	
+	
 }

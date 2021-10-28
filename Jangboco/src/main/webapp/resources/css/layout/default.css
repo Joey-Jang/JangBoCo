@@ -55,7 +55,7 @@ aside {
 }
 main {
     width: 100%;
-    min-width: 910px;
+    min-width: 1110px;
 	height: 100%;
     min-height: 660px;
     padding-top: 100px;
@@ -83,7 +83,6 @@ main {
 .hidden_tag {
 	display: none;
 }
-
 
 
 /* top */

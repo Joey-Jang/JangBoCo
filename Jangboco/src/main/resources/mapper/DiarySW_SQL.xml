@@ -97,6 +97,56 @@
 			WHERE D6.DIARY_NO = H1.DIARY_NO(+) AND H1.HASTG_NAME LIKE '%' ||#{searchTxt}||'%'
 			) D7
 		WHERE D7.RNUM BETWEEN #{startCnt} AND #{endCnt}
-		
+	</select>
+	
+	<select id="getLikeDiaryList" parameterType="hashmap" resultType="hashmap">
+   		SELECT DIARY_NO, MEMBER_NO, CON, HIT_NUM, CNT AS LIKE_CNT, IMG_URL, NICNM, RNUM
+		FROM(
+			SELECT D5.DIARY_NO, D5.MEMBER_NO, D5.CON, D5.HIT_NUM, D5.CNT, D5.IMG_URL, M.NICNM, ROW_NUMBER() OVER(ORDER BY D5.DIARY_NO DESC) AS RNUM
+			FROM (SELECT D3.DIARY_NO, D3.MEMBER_NO, D3.CON, D3.HIT_NUM, D3.CNT, D4.IMG_URL FROM 
+			(SELECT D.DIARY_NO, D.MEMBER_NO, D.CON, D.HIT_NUM, D2.CNT
+			FROM DIARY D , (       SELECT DIARY_NO, COUNT(*) AS CNT
+			FROM DIARY_LIKE WHERE DIARY_NO IN (SELECT DIARY_NO FROM DIARY_LIKE WHERE MEMBER_NO = #{member_no})
+			GROUP BY DIARY_NO
+               ) D2
+			WHERE D.DIARY_NO = D2.DIARY_NO) D3, 
+			
+			(SELECT D2.IMG_NO, D1.DIARY_NO, D2.IMG_URL, D2.RNUM FROM DIARY D1, 
+			(SELECT IMG_NO, DIARY_NO,IMG_URL, ROW_NUMBER() OVER (PARTITION BY DIARY_NO ORDER BY IMG_NO ASC) AS RNUM
+			FROM DIARY_IMG) D2 
+			WHERE D1.DIARY_NO = D2.DIARY_NO AND RNUM = 1) D4
+			
+			WHERE D3.DIARY_NO = D4.DIARY_NO(+)
+			) D5, MEMBER M
+			WHERE D5.MEMBER_NO = M.MEMBER_NO
+		) D6
+		WHERE D6.RNUM BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+	
+	<select id="getLikeDiaryCnt" parameterType="Integer" resultType="Integer">
+          SELECT COUNT(*)
+	         FROM(
+	            SELECT D5.DIARY_NO, D5.MEMBER_NO, D5.CON, D5.HIT_NUM, D5.CNT, D5.IMG_URL, M.NICNM, ROW_NUMBER() OVER(ORDER BY D5.DIARY_NO DESC) AS RNUM
+	            FROM (SELECT D3.DIARY_NO, D3.MEMBER_NO, D3.CON, D3.HIT_NUM, D3.CNT, D4.IMG_URL FROM 
+	            (SELECT D.DIARY_NO, D.MEMBER_NO, D.CON, D.HIT_NUM, D2.CNT
+	            FROM DIARY D , (       SELECT DIARY_NO, COUNT(*) AS CNT
+	            FROM DIARY_LIKE WHERE DIARY_NO IN (SELECT DIARY_NO FROM DIARY_LIKE WHERE MEMBER_NO = #{member_no})
+	            GROUP BY DIARY_NO
+	                ) D2
+	            WHERE D.DIARY_NO = D2.DIARY_NO) D3, 
+	            
+	            (SELECT D2.IMG_NO, D1.DIARY_NO, D2.IMG_URL, D2.RNUM FROM DIARY D1, 
+	            (SELECT IMG_NO, DIARY_NO,IMG_URL, ROW_NUMBER() OVER (PARTITION BY DIARY_NO ORDER BY IMG_NO ASC) AS RNUM
+	            FROM DIARY_IMG) D2 
+	            WHERE D1.DIARY_NO = D2.DIARY_NO AND RNUM = 1) D4
+	            
+	            WHERE D3.DIARY_NO = D4.DIARY_NO(+)
+	            ) D5, MEMBER M
+	            WHERE D5.MEMBER_NO = M.MEMBER_NO
+	         ) D6
+	</select>
+	
+	<select id="getMemberNo" parameterType="String" resultType="Integer">
+        SELECT MEMBER_NO FROM MEMBER WHERE EMAIL = #{0}
 	</select>
 </mapper>

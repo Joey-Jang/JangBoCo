@@ -1,10 +1,10 @@
-package com.gdj37.jangboco.web.diary.dao;
+package com.gdj37.jangboco.web.diaryjj.service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface DiaryDaoIF {
+public interface DiaryServiceIF {
 
 	public List<HashMap<String, Object>> getDisctList() throws Throwable;
 

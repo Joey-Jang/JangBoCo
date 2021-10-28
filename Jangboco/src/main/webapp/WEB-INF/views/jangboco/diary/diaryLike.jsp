@@ -43,9 +43,14 @@ $(document).ready(function() {
       reloadList();
    });
    
+/*    $(".card").on("click", function() {
+      $("#no").val($(this).attr("no"));
+   });
+ */   
    $(".card").on("click", function() {
 	     alert("test");
 	});
+ 
    
 });
 
@@ -57,7 +62,7 @@ function reloadList() {
       var params = $("#actionForm").serialize(); //form의 데이터를 문자열로 변환
       
       $.ajax({ //jquery의 ajax함수 호출
-         url: "diaryListAjax", //접속 주소
+         url: "diaryLikeListAjax", //접속 주소
          type: "post", //전송 방식
          dataType: "json", // 받아올 데이터 형태
          data: params, //보낼 데이터(문자열 형태)
@@ -76,7 +81,6 @@ function drawList(list){
    var html = "";
 
    for(var data of list){
-      
 	  html += "<div class=\"card\" onClick=\"diaryDtl("+data.DIARY_NO+")\">";
       html += "<div class=\"card-header\">";
       html += "<div class=\"card-user\">";
@@ -160,26 +164,15 @@ function drawPaging(pb) {
             </form> --%>
              <div class="container">
                 <div class="header-container">
-                  <h3>장보코_다이어리</h3>
+                  <h3>좋아요 보관함</h3>
                   <div class="header-container-nav">
                     <div class="header-search">
 	                  <form action="#" id="actionForm" method="post">
 	                     <input type="hidden" id="no" name="no" />
 	                     <input type="hidden" id="page" name="page" value="${page}" />
-	                     <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
-	                     <input type="hidden" id="oldTxt" value="${param.searchTxt}" />
-	                     <input type="button" id="searchBtn" value="검색" />
+	                     <input type="hidden" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
 	                  </form>                    
                     </div>
-                    <a href="#" class="write-button">
-                      <div class="plus-icon">
-                        <span></span>
-                        <span></span>  
-                      </div>
-                    </a>
-                    <a href="#" class="mypage-button">
-                      <img src="resources/images/diaryImages/profile.png" alt="마이페이지 바로가기">
-                    </a>
                   </div>
                 </div>
                 <div class="card-wrapper">

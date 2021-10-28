@@ -240,11 +240,11 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
 	    	$("#dtl_addrs").val(memberAddrs.DTL_ADDRS);
 		}
 	} else {
-		$("#main_loc_addrs").text("비회원 주소");
+		$("#main_loc_addrs").text("서울 동작구 서달로 10나길 6");
 		$("#latest_loc_no").val("");
-    	$("#zipcd").val("01234");
-    	$("#addrs").val("비회원 주소");
-    	$("#dtl_addrs").val("비회원 상세주소");
+    	$("#zipcd").val("06986");
+    	$("#addrs").val("서울 동작구 서달로 10나길 6");
+    	$("#dtl_addrs").val("");
 	}
 	
 	if(func != null) {
