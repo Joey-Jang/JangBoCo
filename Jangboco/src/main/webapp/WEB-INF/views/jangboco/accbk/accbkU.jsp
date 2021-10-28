@@ -7,9 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>가계부-작성</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
+<link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <link rel="stylesheet" href="resources/css/accbk/accbk.css" type="text/css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="resources/script/layout/default.js"></script>
+<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
+<script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#update_cancel_btn").on("click",function(){
@@ -117,45 +123,59 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<form action="#" id="update_form" method="post">
-<input type="hidden" name="accbk_no" value="${param.update_no}">
-<!--품목, 구매량,금액, 비고 +버튼 누르면 추가할 수 있게.  -->
-구입처 
-<div id="buy_market">
-	<c:set var="cnt" value="0"></c:set>
-	<c:forEach var="data" items="${list}">
-		<c:set var="cnt" value="${cnt+1}"></c:set>
- 		<input type="checkbox" name="market_no" class="market_no" value="${data.MARKET_NO}"><label>${data.MARKET_NAME}</label>
- 		<input type="hidden" name="market_name" value=""> 
- 		<c:if test="${cnt%5==0}">
-	 		<br>
-	 	</c:if>
- 	</c:forEach>
-	<input type="checkbox" name="market_no" class="market_no others" value=""><label>직접입력</label>
-	<input type="text" id="market_name" name="market_name" disabled="disabled"><br>
-</div>
-<br>
-품목
-<select id="items" name="items_no">
-	<c:forEach var="dt" items="${itemsList}">
-		<option value="${dt.ITEMS_NO}">${dt.ITEMS_NAME}</option>	
-	</c:forEach>
-	<option class="items_others" value="">직접입력</option>
-</select>
-<input type="text" id="items_name" name="items_name">
-
-<br>
-구매량
-<input type="text" id="buy_qnt" name="buy_qnt">	<br>
-금액
-<input type="text" id="cost" name="cost">원
-<br>
-비고 <input type="text" id="note" name="note"><br>
-구입 일자 <input type="date" id="buy_date" name="buy_date" >
-
-<br> 
-</form>
-<input type="button" value="수정" id="update_btn">
-<input type="button" value="취소" id="update_cancel_btn">
+<c:import url="/layoutTopLeft"></c:import>
+<main>
+	<form action="#" id="goForm" method="post">
+      	<input type="hidden" name="member_no" value="${memberNo}">
+		<input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
+		<input type="hidden" id="menu_idx" name="menu_idx" value="${param.menu_idx}">
+		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${param.sub_menu_idx}">
+	</form>
+    <div class="con_contnr">
+        <div class="con">
+			<form action="#" id="update_form" method="post">
+			<input type="hidden" name="accbk_no" value="${param.update_no}">
+			<!--품목, 구매량,금액, 비고 +버튼 누르면 추가할 수 있게.  -->
+			구입처 
+			<div id="buy_market">
+				<c:set var="cnt" value="0"></c:set>
+				<c:forEach var="data" items="${list}">
+					<c:set var="cnt" value="${cnt+1}"></c:set>
+			 		<input type="checkbox" name="market_no" class="market_no" value="${data.MARKET_NO}"><label>${data.MARKET_NAME}</label>
+			 		<input type="hidden" name="market_name" value=""> 
+			 		<c:if test="${cnt%5==0}">
+				 		<br>
+				 	</c:if>
+			 	</c:forEach>
+				<input type="checkbox" name="market_no" class="market_no others" value=""><label>직접입력</label>
+				<input type="text" id="market_name" name="market_name" disabled="disabled"><br>
+			</div>
+			<br>
+			품목
+			<select id="items" name="items_no">
+				<c:forEach var="dt" items="${itemsList}">
+					<option value="${dt.ITEMS_NO}">${dt.ITEMS_NAME}</option>	
+				</c:forEach>
+				<option class="items_others" value="">직접입력</option>
+			</select>
+			<input type="text" id="items_name" name="items_name">
+			
+			<br>
+			구매량
+			<input type="text" id="buy_qnt" name="buy_qnt">	<br>
+			금액
+			<input type="text" id="cost" name="cost">원
+			<br>
+			비고 <input type="text" id="note" name="note"><br>
+			구입 일자 <input type="date" id="buy_date" name="buy_date" >
+			
+			<br> 
+			</form>
+			<input type="button" value="수정" id="update_btn">
+			<input type="button" value="취소" id="update_cancel_btn">
+        </div>
+    </div>
+    <div class="bottom_contnr"></div>
+</main>
 </body>
 </html>

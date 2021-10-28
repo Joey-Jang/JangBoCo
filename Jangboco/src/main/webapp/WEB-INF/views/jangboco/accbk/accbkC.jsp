@@ -7,9 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>가계부-작성</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
+<link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <link rel="stylesheet" href="resources/css/accbk/accbk.css" type="text/css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="resources/script/layout/default.js"></script>
+<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
+<script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -274,80 +280,94 @@ function drawBranchList(branchList) {
 </script>
 </head>
 <body>
-<form action="#" id="write_form" method="post">
-<!--품목, 구매량,금액, 비고 +버튼 누르면 추가할 수 있게.  -->
-구입처 
-<%-- <div id="buy_market">
-	<c:set var="cnt" value="0"></c:set>
-	<c:forEach var="data" items="${list}">
-		<c:set var="cnt" value="${cnt+1}"></c:set>
- 		<input type="checkbox" name="market_no" class="market_no" value="${data.MARKET_NO}"><label>${data.MARKET_NAME}</label>
- 		 <!--  <input type="hidden" name="market_name"> -->
- 		<c:if test="${cnt%5==0}">
-	 		<br>
-	 	</c:if>
- 	</c:forEach>
-	<input type="checkbox" name="market_no" class="market_no others" value=""><label>직접입력</label>
-	<input type="text" id="market_name" name="market_name" disabled="disabled"><br>
-</div> --%>
-<div id="buy_market" class="buy_market">
-	<input type="hidden" id="market_no" name="market_no">
-	<div id="others_market_name_contnr" class="others_market_name_contnr">
-		<!-- <span>마켓 이름 직접 입력 </span> -->
-		<input type="text" id="market_name" name="market_name" class="market_name" placeholder="구입처 이름을 직접 입력해주세요">
-	</div>
-	
-	<div id="search_market_contnr" class="search_market_contnr">
-		<select id="disct_gbn" class="disct_gbn"></select>
-		<input type="text" id="search_market_name" name="search_market_name">
-		<input type="button" id="search_market_btn" class="search_market_btn" value="마켓 검색">
-		<input type="button" id="others_market_btn" class="others_market_btn" value="직접 입력">
-		
-	</div>
-	<div id="market_branch_name_contnr" class="market_branch_name_contnr">
-		<ul id="market_list" class="market_list"></ul>
-		<ul id="branch_list" class="branch_list"></ul>
-		<input type="text" id="select_market_branch_name" class="select_market_branch_name" disabled="disabled">
-	</div>
-</div>
-<br>
-품목
- <select id="items" name="items_no">
-	<c:forEach var="dt" items="${itemsList}">
-		<option value="${dt.ITEMS_NO}">${dt.ITEMS_NAME}</option>	
-	</c:forEach>
-	<option class="items_others" value="">직접입력</option>
-</select>
-<input type="text" id="items_name" name="items_name"> 
-
-<!-- <div id="buy_items_contnr">
-	<input type="hidden" id="items_no" name="items_no">
-	<div id="others_items_name_contnr" class="others_name_contnr">
-		<input type="text" id="items_name" name="items_name" class="items_name" placeholder="품목을 직접 입력해주세요">
-	</div>
-	
-	<div id="search_items_contnr" class="search_items_contnr">
-		<input type="text" id="search_items_name" name="search_items_name" class="search_items_name">
-		<input type="button" id="search_items_btn" class="search_items_btn" value="품목 검색"> 
-	</div>
-	
-	<div id="items_name_contnr" class="items_name_contnr">
-		<ul id="items_list" class="items_list"></ul>
-		<input type="text" id="select_items_name" class="select_items_name" disabled="disabled">
-	</div>
-</div> -->
-
-<br>
-구매량
-<input type="text" id="buy_qnt" name="buy_qnt">	<br>
-금액
-<input type="text" id="cost" name="cost">원
-<br>
-비고 <input type="text" id="note" name="note"><br>
-구입 일자 <input type="date" id="buy_date" name="buy_date">
-<br> 
-</form>
-<input type="button" value="작성" id="write_btn">
-<input type="button" value="취소" id="write_cancel_btn">
+<c:import url="/layoutTopLeft"></c:import>
+<main>
+	<form action="#" id="goForm" method="post">
+      	<input type="hidden" name="member_no" value="${memberNo}">
+		<input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
+		<input type="hidden" id="menu_idx" name="menu_idx" value="${param.menu_idx}">
+		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${param.sub_menu_idx}">
+	</form>
+    <div class="con_contnr">
+        <div class="con">
+			<form action="#" id="write_form" method="post">
+			<!--품목, 구매량,금액, 비고 +버튼 누르면 추가할 수 있게.  -->
+			구입처 
+			<%-- <div id="buy_market">
+				<c:set var="cnt" value="0"></c:set>
+				<c:forEach var="data" items="${list}">
+					<c:set var="cnt" value="${cnt+1}"></c:set>
+			 		<input type="checkbox" name="market_no" class="market_no" value="${data.MARKET_NO}"><label>${data.MARKET_NAME}</label>
+			 		 <!--  <input type="hidden" name="market_name"> -->
+			 		<c:if test="${cnt%5==0}">
+				 		<br>
+				 	</c:if>
+			 	</c:forEach>
+				<input type="checkbox" name="market_no" class="market_no others" value=""><label>직접입력</label>
+				<input type="text" id="market_name" name="market_name" disabled="disabled"><br>
+			</div> --%>
+			<div id="buy_market" class="buy_market">
+				<input type="hidden" id="market_no" name="market_no">
+				<div id="others_market_name_contnr" class="others_market_name_contnr">
+					<!-- <span>마켓 이름 직접 입력 </span> -->
+					<input type="text" id="market_name" name="market_name" class="market_name" placeholder="구입처 이름을 직접 입력해주세요">
+				</div>
+				
+				<div id="search_market_contnr" class="search_market_contnr">
+					<select id="disct_gbn" class="disct_gbn"></select>
+					<input type="text" id="search_market_name" name="search_market_name">
+					<input type="button" id="search_market_btn" class="search_market_btn" value="마켓 검색">
+					<input type="button" id="others_market_btn" class="others_market_btn" value="직접 입력">
+					
+				</div>
+				<div id="market_branch_name_contnr" class="market_branch_name_contnr">
+					<ul id="market_list" class="market_list"></ul>
+					<ul id="branch_list" class="branch_list"></ul>
+					<input type="text" id="select_market_branch_name" class="select_market_branch_name" disabled="disabled">
+				</div>
+			</div>
+			<br>
+			품목
+			 <select id="items" name="items_no">
+				<c:forEach var="dt" items="${itemsList}">
+					<option value="${dt.ITEMS_NO}">${dt.ITEMS_NAME}</option>	
+				</c:forEach>
+				<option class="items_others" value="">직접입력</option>
+			</select>
+			<input type="text" id="items_name" name="items_name"> 
+			
+			<!-- <div id="buy_items_contnr">
+				<input type="hidden" id="items_no" name="items_no">
+				<div id="others_items_name_contnr" class="others_name_contnr">
+					<input type="text" id="items_name" name="items_name" class="items_name" placeholder="품목을 직접 입력해주세요">
+				</div>
+				
+				<div id="search_items_contnr" class="search_items_contnr">
+					<input type="text" id="search_items_name" name="search_items_name" class="search_items_name">
+					<input type="button" id="search_items_btn" class="search_items_btn" value="품목 검색"> 
+				</div>
+				
+				<div id="items_name_contnr" class="items_name_contnr">
+					<ul id="items_list" class="items_list"></ul>
+					<input type="text" id="select_items_name" class="select_items_name" disabled="disabled">
+				</div>
+			</div> -->
+			
+			<br>
+			구매량
+			<input type="text" id="buy_qnt" name="buy_qnt">	<br>
+			금액
+			<input type="text" id="cost" name="cost">원
+			<br>
+			비고 <input type="text" id="note" name="note"><br>
+			구입 일자 <input type="date" id="buy_date" name="buy_date">
+			<br> 
+			</form>
+			<input type="button" value="작성" id="write_btn">
+			<input type="button" value="취소" id="write_cancel_btn">
+        </div>
+    </div>
+    <div class="bottom_contnr"></div>
+</main>
 </body>
 </html>
