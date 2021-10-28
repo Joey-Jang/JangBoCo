@@ -92,7 +92,7 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-	<form action="#" id="goForm" method="post">
+	<form action="#" id="go_form" method="post">
       	<input type="hidden" name="member_no" value="${memberNo}">
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
@@ -143,9 +143,9 @@
 	
 	<script>
 	
+	
 	$(document).ready(function() {
 		reloadMainLoc(locateUser);
-		
 		$.getJSON("resources/json/seoul.json",function(geojson){
 			var data = geojson.features;
 			var coordinates = []; //좌표 저장할 배열
@@ -208,11 +208,11 @@
 		    } 
 		}); 
 		
-		
-		
 	}
 	
-	
+	/* function drawMap(){
+		
+	} */
 	var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
         level : 9 // 지도의 확대 레벨 
