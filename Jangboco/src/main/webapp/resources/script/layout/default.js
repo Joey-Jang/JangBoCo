@@ -31,12 +31,6 @@ $(document).ready(function() {
     
     // login_logout_menu 클릭 이벤트
     $("#login_logout_menu").on('click', "li", function() {
-    	// 메뉴, 서브 메뉴 초기화
-        $("#home_flag").val("1");
-        $("#menu_idx").val("0");
-        $("#sub_menu_idx").val("0");
-        
-        // 페이지 이동
         goPage($(this));
     })
     
