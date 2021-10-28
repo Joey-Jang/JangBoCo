@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="intgrEvent">
+	<select id="getEventNormalList" parameterType="hashmap" resultType="hashmap">
+		 SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE,LIKE_CNT ,HIT_NUM ,RNUM 
+		 FROM (SELECT E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+		 			  TO_CHAR(E.START_DATE,'YY-MM-DD') AS START_DATE,TO_CHAR(E.END_DATE,'YY-MM-DD') AS END_DATE,
+       				  E.HIT_NUM, ROW_NUMBER() OVER(ORDER BY E.EVENT_NO DESC) AS RNUM,
+       				  (SELECT COUNT(*) 
+                       FROM EVENT_LIKE EL
+                      WHERE EL.EVENT_NO = E.EVENT_NO) AS LIKE_CNT
+		  	   FROM EVENT E JOIN MARKET_MEMBER MM
+             				ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
+             			    JOIN MARKET M
+             				ON( MM.MARKET_NO = M.MARKET_NO)
+		  	   WHERE DEL_FLAG = 0
+		  	   <if test="searchText != null and searchText != '' ">
+		  	   		<choose>
+		  	   			<when test="searchGbn eq 0">
+		  	   				AND E.EVENT_NAME LIKE '%' || #{searchText} || '%'
+		  	   			</when>
+		  	   			<when test="searchGbn eq 1">
+		  	   				AND M.MARKET_NAME LIKE '%' || #{searchText} || '%'
+		  	   			</when>
+		  	   		</choose>
+		  	   </if>		  	   
+		  	   ) E		  	   
+		 WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}		               			
+	</select>
+	
+	<select id="getEventCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS QNT
+		 FROM EVENT E JOIN MARKET_MEMBER MM
+             			ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
+             		  JOIN MARKET M
+             			ON( MM.MARKET_NO = M.MARKET_NO)
+		 WHERE DEL_FLAG = 0
+		 <if test="searchText != null and searchText != '' ">
+  	   		<choose>
+  	   			<when test="searchGbn eq 0">
+  	   				AND E.EVENT_NAME LIKE '%' || #{searchText} || '%'
+  	   			</when>
+  	   			<when test="searchGbn eq 1">
+  	   				AND M.MARKET_NAME LIKE '%' || #{searchText} || '%'
+  	   			</when>
+  	   		</choose>
+  	   	 </if>	      	
+	</select>
+	
+	<select id="getEventBestList" resultType="hashmap">
+		SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE, HIT_NUM, LIKE_CNT, BEST_STD,RNUM
+		FROM (SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE, HIT_NUM, LIKE_CNT, BEST_STD,
+		             ROW_NUMBER() OVER(ORDER BY BEST_STD DESC,HIT_NUM DESC) AS RNUM
+		      FROM (SELECT E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+		                   TO_CHAR(E.START_DATE,'YY-MM-DD') AS START_DATE,TO_CHAR(E.END_DATE,'YY-MM-DD') AS END_DATE,
+		                   E.HIT_NUM,
+		                   (SELECT COUNT(*) 
+		                   FROM EVENT_LIKE EL
+		                   WHERE EL.EVENT_NO = E.EVENT_NO) AS LIKE_CNT,
+		                   (SELECT COUNT(*) 
+		                   FROM EVENT_LIKE EL
+		                   WHERE EL.EVENT_NO = E.EVENT_NO AND EL.REGST_DATE BETWEEN (SYSDATE-4) AND SYSDATE) AS BEST_STD                                     
+		            FROM EVENT E JOIN MARKET_MEMBER MM
+		                         ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
+		                         JOIN MARKET M
+		                         ON( MM.MARKET_NO = M.MARKET_NO)
+		            WHERE DEL_FLAG = 0)
+		      ) E
+		WHERE RNUM BETWEEN 1 AND 3           
+	</select>
+	
+	<select id="getEventDtl" parameterType="hashmap" resultType="hashmap">
+		SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE, END_DATE, HIT_NUM,LIKE_CNT,
+			   EVENT_NO_NEXT, EVENT_NO_BEFORE	
+		FROM (SELECT E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+		  	   	     TO_CHAR(E.START_DATE,'YY-MM-DD') AS START_DATE,TO_CHAR(E.END_DATE,'YY-MM-DD') AS END_DATE,
+		  		     E.HIT_NUM,(SELECT COUNT(*) FROM EVENT_LIKE EL WHERE EL.EVENT_NO = E.EVENT_NO) AS LIKE_CNT,
+	       		     LAG(EVENT_NO,1,-1) OVER(ORDER BY EVENT_NO DESC ) AS EVENT_NO_NEXT,
+	       		     LEAD(EVENT_NO,1,-1) OVER(ORDER BY EVENT_NO DESC ) AS EVENT_NO_BEFORE
+			  FROM EVENT E JOIN MARKET_MEMBER MM
+				 		 ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
+				   		 JOIN MARKET M
+				 		 ON( MM.MARKET_NO = M.MARKET_NO)
+			  WHERE DEL_FLAG = 0)
+		WHERE EVENT_NO = #{eventNo}
+	</select>
+	
+	<update id="updateEventHit" parameterType="hashmap">
+		UPDATE EVENT SET HIT_NUM= HIT_NUM+1
+		WHERE EVENT_NO = #{eventNo}
+	</update>
+</mapper>
