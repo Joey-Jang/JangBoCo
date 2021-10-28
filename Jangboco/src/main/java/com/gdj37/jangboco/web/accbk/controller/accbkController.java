@@ -107,7 +107,7 @@ public class accbkController {
 		int cnt = accbkiService.getAccbkCnt(params);
 				
 		//페이징 정보 취득 
-		PagingBean pb = iPagingService.getPagingBean(page,cnt,5,2);
+		PagingBean pb = iPagingService.getPagingBean(page,cnt,10,5);
 		
 		//데이터 시작, 종료값 할당 
 		params.put("startCnt", Integer.toString(pb.getStartCount()));

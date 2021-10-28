@@ -75,4 +75,10 @@ public class JoinService implements IJoinService{
 		return iJoinDao.loginPernlCheck(params);
 	}
 
+	@Override
+	public int getMemberNo(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return iJoinDao.getMemberNo(email);
+	}
+
 }

@@ -165,6 +165,7 @@ public class JoinController {
 	public String validEmail(@RequestParam HashMap<String,String> params) throws Throwable{
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
+		System.out.println("ㅅ빌망ㅁ나움ㄴㅇㅁㄴㅇ"+params);
 		int cnt = iJoinService.validEmail(params.get("email"));
 		System.out.println(cnt);
 		if(cnt==0) {
@@ -568,7 +569,8 @@ public class JoinController {
 			session.setAttribute("memberType", memberType);
 			session.setAttribute("email", params.get("email"));
 		}
-		System.out.println(pageUrl);
+		int member_no = iJoinService.getMemberNo(params.get("email"));
+		session.setAttribute("member_no", member_no);
 		mav.setViewName(pageUrl);
 		return mav;
 	}

@@ -21,5 +21,9 @@ public interface IDiaryDao {
 
 	public List<HashMap<String, String>> getLikeDiaryList(HashMap<String, Object> params) throws Exception;
 
+	public int getDiaryPernlCnt(int member_no) throws Exception;
+
+	public List<HashMap<String, String>> getDiaryPernlList(HashMap<String, Object> params) throws Exception;
+
 
 }
