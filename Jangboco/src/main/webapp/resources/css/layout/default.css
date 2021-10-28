@@ -358,7 +358,7 @@ main {
 .zipcd {
 	width: 60px;
 	border: 1px solid #E0E0E0;
-	padding: 0 10px;
+	padding: 0 5px;
 }
 .search_addrs_map_btn {
 	width: 70px;
@@ -366,12 +366,12 @@ main {
 .addrs {
 	width: 100%;
 	border: 1px solid #E0E0E0;
-	padding: 0 10px;
+	padding: 0 5px;
 }
 .dtl_addrs {
 	width: 100%;
 	border: 1px solid #E0E0E0;
-	padding: 0 10px;
+	padding: 0 5px;
 }
 .loc_map {
 	display: none;
