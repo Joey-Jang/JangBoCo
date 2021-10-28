@@ -35,6 +35,10 @@ public class LayoutController {
 		System.out.println("home test");
 		System.out.println(session.getAttribute("email"));
 		
+		String memberNo = "2";
+		
+		mav.addObject("memberNo", memberNo);
+		
 		mav.setViewName("jangboco/home");
 		
 		return mav;
