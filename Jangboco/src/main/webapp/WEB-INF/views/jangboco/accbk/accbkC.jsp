@@ -64,7 +64,7 @@ $(document).ready(function(){
 		};
 		
 		$.ajax({
-			url:"searchMarketAjax",
+			url:"searchAccbkMarketAjax",
 			type:"post",
 			dataType:"json",
 			data:params,
@@ -100,7 +100,7 @@ $(document).ready(function(){
 		};
 		
 		$.ajax({
-			 url: "searchBranchAjax",
+			 url: "searchAccbkBranchAjax",
 	         type: "post",
 	         dataType: "json",
 	         data: params,
@@ -235,7 +235,7 @@ function drawDisctList(disctList) {
 	 
 	//select 지역구 option 불러오는 ajax
 		$.ajax({
-			url: "getDisctListAjax",
+			url: "getAccbkDisctListAjax",
 	        type: "post",
 	        dataType: "json",
 	        success: function(result) {
