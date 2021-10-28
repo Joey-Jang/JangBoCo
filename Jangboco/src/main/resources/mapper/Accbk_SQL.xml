@@ -152,6 +152,34 @@
 		WHERE ROWN = 1
    </select>
    
+   <select id="getMostSpendWeek" parameterType="hashmap" resultType="hashmap">
+	   SELECT COST,WK,WEEK
+		FROM (
+		        SELECT  SUM(COST) AS COST, TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW') AS WK ,
+		                ROW_NUMBER() OVER(ORDER BY SUM(COST) DESC) AS ROWN,
+		                ROW_NUMBER() OVER(ORDER BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW') ) AS WEEK
+		        FROM ACCBK
+		        WHERE DEL_FLAG = 0
+		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+		        GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW')
+		)
+		WHERE ROWN = 1
+   </select>
+   
+   <select id="getLeastSpendWeek" parameterType="hashmap" resultType="hashmap">
+	   SELECT COST,WK,WEEK
+		FROM (
+		        SELECT  SUM(COST) AS COST, TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW') AS WK ,
+		                ROW_NUMBER() OVER(ORDER BY SUM(COST)) AS ROWN,
+		                ROW_NUMBER() OVER(ORDER BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW') ) AS WEEK
+		        FROM ACCBK
+		        WHERE DEL_FLAG = 0
+		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+		        GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW')
+		)
+		WHERE ROWN = 1
+   </select>
+   
    <select id="getThisMonthSpend" parameterType="hashmap" resultType="hashmap">
 	   	SELECT SUM(COST) AS SUM
 		FROM ACCBK

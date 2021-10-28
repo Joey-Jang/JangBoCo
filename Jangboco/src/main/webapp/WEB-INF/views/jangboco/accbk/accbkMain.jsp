@@ -159,13 +159,14 @@ function getWeekAgo(){
 			<div class="accbk_main" id="accbk_summr_box">
 				<div class="summr_accbk msd" id="most_spend_day">
 					<a class="main_summr_title" id="">가장 많이 쓴 날</a><br>
-					<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE}일</span><br>
-					<span id="most_spend_day_cost">${getMostSpendDay.COST}원</span>
+					<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE} 일</span><br>
+					<span id="most_spend_day_cost">${getMostSpendDay.COST} 원</span>
 					
 				</div>
 				<div class="summr_accbk msw" id="most_spend_week">
-					<a class="main_summr_title">가장 많이 쓴 주</a>
-					<span></span>
+					<a class="main_summr_title">가장 많이 쓴 주</a><br>
+					<span id="most_spend_week_num">${getMostSpendWeek.WEEK}번째 주</span><br>
+					<span id="most_spend_week_cost">${getMostSpendWeek.COST} 원</span>
 				</div>
 				<div class="summr_accbk mvm" id="most_visit_market">
 					<a class="main_summr_title">단골 마켓</a><br>
@@ -175,16 +176,18 @@ function getWeekAgo(){
 				<br>
 				<div class="summr_accbk lsd" id="least_spend_day">
 					<a class="main_summr_title">가장 적게 쓴 날</a><br>
-					<span id="least_spend_day_num">${getLeastSpendDay.BUY_DATE}일</span><br>
-					<span id="least_spend_day_cost">${getLeastSpendDay.COST}원</span>
+					<span id="least_spend_day_num">${getLeastSpendDay.BUY_DATE} 일</span><br>
+					<span id="least_spend_day_cost">${getLeastSpendDay.COST} 원</span>
 				</div>
 				<div class="summr_accbk lsw" id="least_spend_week">
-					<a class="main_summr_title">가장 적게 쓴 주</a>
+					<a class="main_summr_title">가장 적게 쓴 주</a><br>
+					<span id="least_spend_week_num">${getLeastSpendWeek.WEEK}번째 주</span><br>
+					<span id="least_spend_week_cost">${getLeastSpendWeek.COST} 원</span>
 				</div>
 				<div class="summr_accbk msi" id="most_spend_items">
 					<a class="main_summr_title">최고 지출 품목</a><br>
 					<span id="most_spend_items_item">${getMostSpendItems.ITEMS_NAME}</span><br>
-					<span id="most_spend_items_cost">${getMostSpendItems.COST}원</span>
+					<span id="most_spend_items_cost">${getMostSpendItems.COST} 원</span>
 				</div>
 			</div>
         </div>

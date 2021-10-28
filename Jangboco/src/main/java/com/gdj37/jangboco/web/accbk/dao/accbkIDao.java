@@ -32,11 +32,16 @@ public interface accbkIDao {
 
 	public HashMap<String, String> getThisMonthSpend(HashMap<String, String> params)throws Throwable;
 
+	public HashMap<String, String> getMostSpendWeek(HashMap<String, String> params)throws Throwable;
+	
+	public HashMap<String, String> getLeastSpendWeek(HashMap<String, String> params)throws Throwable;
+	
 	public List<HashMap<String, Object>> getDisctList()throws Throwable;
 
 	public List<HashMap<String, String>> getBranchList(HashMap<String, String> params)throws Throwable;
 
 	public List<HashMap<String, String>> searchMarket(HashMap<String, String> params)throws Throwable;
+
 
 
 
