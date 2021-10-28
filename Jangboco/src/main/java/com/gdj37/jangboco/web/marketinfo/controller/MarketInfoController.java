@@ -62,7 +62,7 @@ public class MarketInfoController {
 		mav.addObject("marketInfo",marketInfo);
 		mav.addObject("page",page);
 		
-		mav.setViewName("/jangboco/pricecompr/marketInfo");		
+		mav.setViewName("jangboco/pricecompr/marketInfo");		
 		
 		return mav;
 	}

@@ -35,7 +35,7 @@ public class PricesChartController {
 	    mav.addObject("menuIdx", menuIdx);
 	    mav.addObject("subMenuIdx", subMenuIdx);
 	    
-	    mav.setViewName("/jangboco/priceschart/pricesChart");		
+	    mav.setViewName("jangboco/priceschart/pricesChart");		
 		
 	    return mav;
 	}		

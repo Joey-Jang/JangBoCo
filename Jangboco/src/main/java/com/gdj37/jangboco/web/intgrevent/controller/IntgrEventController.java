@@ -44,7 +44,7 @@ public class IntgrEventController {
 		
 		mav.addObject("page", page);
 		
-		mav.setViewName("/jangboco/intgrevent/intgrEventList");
+		mav.setViewName("jangboco/intgrevent/intgrEventList");
 		
 		return mav;		
 	}
@@ -126,7 +126,7 @@ public class IntgrEventController {
 			
 			mav.addObject("data",data);
 			
-			mav.setViewName("/jangboco/intgrevent/intgrEventDtl");				
+			mav.setViewName("jangboco/intgrevent/intgrEventDtl");				
 		} else {
 			mav.setViewName("redirect:/intgrEventList");
 		}
