@@ -57,7 +57,7 @@ public class MarketInfoController {
 		
 		if(params.get("page")!= null) {
 			page= params.get("page");
-		}
+		}	
 		
 		mav.addObject("marketInfo",marketInfo);
 		mav.addObject("page",page);

@@ -86,10 +86,10 @@
                 <li action="zzanMain">
                     <span class="sub_menu_text">가격비교</span>
                 </li>
-                <li action="">
+                <li action="itemsInfo">
                     <span class="sub_menu_text">품목별 정보</span>
                 </li>
-                <li action="">
+                <li action="pricesChart">
                     <span class="sub_menu_text">차트</span>
                 </li>
             </ul>

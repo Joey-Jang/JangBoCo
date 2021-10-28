@@ -28,9 +28,16 @@ public class PricesChartController {
 	@RequestMapping(value="/pricesChart")
 	public ModelAndView pricesChart(ModelAndView mav){		
 		
-		mav.setViewName("/jangboco/priceschart/pricesChart");		
+		int homeFlag = 0;
+	    int menuIdx = 0;
+	    int subMenuIdx = 2;
+	    mav.addObject("homeFlag", homeFlag);
+	    mav.addObject("menuIdx", menuIdx);
+	    mav.addObject("subMenuIdx", subMenuIdx);
+	    
+	    mav.setViewName("/jangboco/priceschart/pricesChart");		
 		
-		return mav;
+	    return mav;
 	}		
 	
 	

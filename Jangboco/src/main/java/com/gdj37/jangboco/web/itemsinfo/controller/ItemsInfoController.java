@@ -37,7 +37,14 @@ public class ItemsInfoController {
 		
 		mav.addObject("itemsNo",itemsNo);
 		mav.addObject("matrlName",matrlName);
-				
+		
+		int homeFlag = 0;
+	    int menuIdx = 0;
+	    int subMenuIdx = 1;
+	    mav.addObject("homeFlag", homeFlag);
+	    mav.addObject("menuIdx", menuIdx);
+	    mav.addObject("subMenuIdx", subMenuIdx);
+		
 		mav.setViewName("/jangboco/itemsinfo/itemsInfo");
 		
 		return mav;
