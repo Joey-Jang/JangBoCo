@@ -32,12 +32,14 @@ public class LayoutController {
 	
 	@RequestMapping(value = "/home")
 	public ModelAndView layoutConBlank(ModelAndView mav, HttpSession session) throws Throwable {
+		int homeFlag = 1;
 		int menuIdx = 0;
 		int subMenuIdx = 0;
+		mav.addObject("homeFlag", homeFlag);
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
-		mav.setViewName("jangboco/home");
+		mav.setViewName("jangboco/zzan/zzanMain");
 		
 		return mav;
 	}

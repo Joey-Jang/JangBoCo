@@ -51,15 +51,6 @@ $(document).ready(function() {
     
     // 서브 메뉴 클릭 이벤트
     $(".sub_menu").on("click", "li", function() {
-    	// 메뉴, 서브 메뉴 인덱스 설정
-    	var menuIdx = $(this).parent().index();
-        var subMenuIdx = $(this).index();
-        
-        $("#home_flag").val("0");
-        $("#menu_idx").val(menuIdx);
-        $("#sub_menu_idx").val(subMenuIdx);
-        
-        // 페이지 이동
         goPage($(this));
     });
     

@@ -26,7 +26,7 @@
 <main>
 	<form action="#" id="goForm" method="post">
       	<input type="hidden" name="member_no" value="${memberNo}">
-		<input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
+		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
 	</form>

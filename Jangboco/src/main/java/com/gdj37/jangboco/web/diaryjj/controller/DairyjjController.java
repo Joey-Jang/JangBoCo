@@ -30,8 +30,10 @@ public class DairyjjController {
 	
 	@RequestMapping(value = "/writeDiary")
 	public ModelAndView writeDiary(ModelAndView mav) {
+		int homeFlag = 0;
 		int menuIdx = 1;
 		int subMenuIdx = 3;
+		mav.addObject("homeFlag", homeFlag);
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
