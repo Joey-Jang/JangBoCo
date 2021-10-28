@@ -94,10 +94,10 @@
                 </li>
             </ul>
             <ul class="sub_menu diary">
-                <li action="">
+                <li action="diaryMain">
                     <span class="sub_menu_text">뉴스피드</span>
                 </li>
-                <li action="">
+                <li action="diaryLike">
                     <span class="sub_menu_text">보관함</span>
                 </li>
                 <li action="">
