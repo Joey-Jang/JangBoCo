@@ -4,8 +4,8 @@ $(document).ready(function() {
 	
     // 로고 클릭 이벤트
     $("#home_logo").click(function() {
-    	$("#goForm").attr("action", "home");
-		$("#goForm").submit();
+    	$("#go_form").attr("action", "home");
+		$("#go_form").submit();
     })
     
     // 메인 위치 설정 호버 이벤트
@@ -116,7 +116,7 @@ $(document).ready(function() {
     $("#recent_loc_list").on("click", ".del_recent_loc_btn", function() {
     	$("#del_recent_loc_no").val($(this).parent().attr("recent_loc_no"));
     	
-    	var params = $("#locForm").serialize();
+    	var params = $("#loc_form").serialize();
 		
 		$.ajax({
 			url: "delRecentLocDataAjax",
@@ -143,7 +143,7 @@ $(document).ready(function() {
     	if($("#zipcd").val()=="" || $("#addrs").val()=="") {
     		alert("주소를 입력해주세요.");
     	} else {
-	    	var params = $("#locForm").serialize();
+	    	var params = $("#loc_form").serialize();
 			
 			$.ajax({
 				url: "setLocAjax",
@@ -179,7 +179,7 @@ function initLocMap() {
 
 // 메인 위치 갱신
 function reloadMainLoc(func) {
-	var params = $("#locForm").serialize();
+	var params = $("#loc_form").serialize();
 	
 	$.ajax({
 		url: "reloadMainLocAjax",
@@ -197,7 +197,7 @@ function reloadMainLoc(func) {
 
 // 최근 위치 목록 갱신
 function reloadRecentLocList() {
-	var params = $("#locForm").serialize();
+	var params = $("#loc_form").serialize();
 	
 	$.ajax({
 		url: "reloadRecentLocListAjax",
@@ -314,6 +314,6 @@ function reloadMenu() {
 
 // 페이지 이동
 function goPage(clickMenu) {
-    $("#goForm").attr("action", clickMenu.attr("action"));
-	$("#goForm").submit();
+    $("#go_form").attr("action", clickMenu.attr("action"));
+	$("#go_form").submit();
 }
