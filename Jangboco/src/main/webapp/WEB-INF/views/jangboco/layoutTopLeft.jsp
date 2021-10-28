@@ -10,7 +10,7 @@
     </div>
 </header>
 <div id="set_loc_contnr" class="set_loc_contnr">
-	<form action="#" id="locForm" method="post" >
+	<form action="#" id="loc_form" method="post" >
 	   	<div id="loc_info" class="loc_info">
 			<input type="hidden" name="member_no" value="${memberNo}">
 	   		<input type="hidden" id="latest_loc_no" name="latest_loc_no">
