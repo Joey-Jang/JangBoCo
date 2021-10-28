@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="accbk">
+
+	<select id="getMarketList" parameterType="hashmap" resultType="hashmap">
+		SELECT MARKET_NO, MARKET_NAME
+		FROM MARKET
+		ORDER BY MARKET_NAME
+	</select>
+ 
+	<select id="getItemsList" parameterType="hashmap" resultType="hashmap">
+		SELECT ITEMS_NO, ITEMS_NAME
+		FROM ITEMS
+		ORDER BY ITEMS_NAME
+	</select>
+ 
+	<select id="getAccbkList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.ACCBK_NO, NVL2(M.MARKET_NAME,M.MARKET_NAME,A.MARKET_NAME)AS MARKET_NAME, A.DEL_FLAG, NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME) AS ITEMS_NAME,
+				A.BUY_QNT, A.COST, NVL(A.NOTE,' ') AS NOTE, TO_CHAR(A.BUY_DATE, 'YY-MM-DD') AS BUY_DATE
+		FROM MARKET M
+		RIGHT OUTER JOIN ACCBK A
+					ON M.MARKET_NO = A.MARKET_NO
+		LEFT OUTER JOIN  ITEMS I
+					ON A.ITEMS_NO = I.ITEMS_NO
+		WHERE A.DEL_FLAG = 0
+		<if test="search_text !=null and search_text != ''">
+			<choose>
+				<when test="search_gbn eq 'search_items'">
+					AND I.ITEMS_NAME LIKE '%' || #{search_text} || '%'
+				</when>
+				<when test="search_gbn eq 'search_buy_market'">
+					AND M.MARKET_NAME LIKE '%' || #{search_text} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY A.ACCBK_NO DESC
+	</select>
+ 
+	<select id="getAccbkCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS CNT
+		FROM ACCBK
+		WHERE DEL_FLAG = 0
+		<if test="search_text !=null and search_text != ''">
+			<choose>
+				<when test="search_gbn eq 'search_items'">
+				AND ITEMS_NAME LIKE  '%' || #{search_text} || '%'
+				</when>
+				<when test="search_gbn eq 'search_buy_market'">
+				AND MARKET_NAME LIKE '%' || #{search_text} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+ 
+
+   
+    <update id="delAccbk" parameterType="java.util.ArrayList">
+		UPDATE ACCBK SET DEL_FLAG = 1 
+		WHERE ACCBK_NO IN (
+	        <foreach collection="list" item="item" index="index"  separator="," >
+	            ${item}
+	        </foreach>
+						)
+ 	</update>
+ 	
+ 	<insert id="writeAccbk" parameterType="hashmap">
+	 	INSERT INTO ACCBK (ACCBK_NO, MEMBER_NO, MARKET_NO, ITEMS_NO, COST, BUY_QNT, BUY_DATE,
+	 						NOTE, MARKET_NAME, ITEMS_NAME)
+	 	VALUES (ACCBK_SEQ.NEXTVAL, 15, #{market_no}, #{items_no}, #{cost}, #{buy_qnt}, #{buy_date},
+				#{note}, #{market_name}, #{items_name})
+ 	</insert>
+ 	
+ 	<select id="getAccbk" parameterType="hashmap" resultType="hashmap">
+ 		SELECT ACCBK_NO, MEMBER_NO, BUY_DATE
+ 		FROM ACCBK
+ 		WHERE MEMBER_NO = 15
+ 		AND ACCBK_NO = #{update_no}
+ 	</select>
+
+	<update id="updateAccbk" parameterType="hashmap">
+	 UPDATE ACCBK SET MARKET_NO = #{market_no}, MARKET_NAME = #{market_name},
+	 				  ITEMS_NO = #{items_no}, ITEMS_NAME = #{items_name},
+	 				  BUY_QNT = #{buy_qnt}, COST = #{cost},
+	 				  NOTE = #{note}, BUY_DATE = #{buy_date}
+	 WHERE ACCBK_NO = #{accbk_no}
+	</update>
+	
+	<select id="getMostSpendDay" parameterType="hashmap" resultType="hashmap">
+		SELECT BUY_DATE, COST
+		FROM (
+		        SELECT TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'DD') AS BUY_DATE,
+		        SUM(COST) AS COST,
+		        ROW_NUMBER() OVER(ORDER BY SUM(COST) DESC) AS ROWN
+		        FROM ACCBK
+		        WHERE DEL_FLAG = 0
+		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+		        GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'DD')
+		    )
+		WHERE ROWN = 1
+	</select>
+	
+	<select id="getLeastSpendDay" parameterType="hashmap" resultType="hashmap">
+		SELECT BUY_DATE, COST
+		FROM (
+		        SELECT TO_CHAR(TO_DATE(BUY_DATE,'YY-fmMM-DD'),'DD') AS BUY_DATE,
+		        SUM(COST) AS COST,
+		        ROW_NUMBER() OVER(ORDER BY SUM(COST)) AS ROWN
+		        FROM ACCBK
+		        WHERE WHERE DEL_FLAG = 0
+		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+		        GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-fmMM-DD'),'DD')
+		    )
+		WHERE ROWN = 1
+	</select>
+	
+	<select id="getMostSpendItems" parameterType="hashmap" resultType="hashmap">
+		SELECT ITEMS_NAME, COST, ROWN
+		FROM(
+		        SELECT NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME) AS ITEMS_NAME, SUM(A.COST) AS COST,
+		               ROW_NUMBER() OVER(ORDER BY SUM(A.COST) DESC) AS ROWN
+		        FROM ACCBK A
+		        LEFT OUTER JOIN ITEMS I
+		        ON A.ITEMS_NO = I.ITEMS_NO
+		        WHERE WHERE DEL_FLAG =0
+        		AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+		        GROUP BY NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME)
+		        ORDER BY COST DESC
+		        )       
+		WHERE ROWN = 1
+	</select>
+   
+   <select id="getMostVisitMarket" parameterType="hashmap" resultType="hashmap">
+	   SELECT MARKET_NAME, COUNT, ROWN
+		FROM (
+		        SELECT MARKET_NAME, COUNT(MARKET_NAME) AS COUNT, ROW_NUMBER() OVER(ORDER BY COUNT(MARKET_NAME) DESC) AS ROWN
+		        FROM (
+		                SELECT TO_CHAR(TO_DATE(A.BUY_DATE,'YY-MM-DD'),'MM-DD') AS BUY_DATE, 
+		                		NVL2(M.MARKET_NAME,M.MARKET_NAME,A.MARKET_NAME) AS MARKET_NAME
+		                FROM ACCBK A
+		                LEFT OUTER JOIN MARKET M
+		                			ON A.MARKET_NO = M.MARKET_NO
+		                WHERE DEL_FLAG =0
+        				AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+		                GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM-DD'),NVL2(M.MARKET_NAME,M.MARKET_NAME,A.MARKET_NAME)
+		                ORDER BY 1
+		                )
+		        GROUP BY MARKET_NAME
+		        )
+		WHERE ROWN = 1
+   </select>
+   
+   <select id="getThisMonthSpend" parameterType="hashmap" resultType="hashmap">
+	   	SELECT SUM(COST) AS SUM
+		FROM ACCBK
+		WHERE DEL_FLAG =0
+		AND(TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{buy_date})
+   </select>
+   
+   <select id="getDisctList"  resultType="hashmap">
+   		SELECT DISCT_NO, DISCT_NAME
+		FROM DISCT
+		ORDER BY DISCT_NAME
+   </select>
+   
+   <select id="getBranchList" parameterType="hashmap" resultType="hashmap">
+	 	SELECT BRANCH_NAME
+		FROM MARKET_MEMBER
+		WHERE MARKET_NO = #{marketNo}
+		
+   </select>
+   
+   <select id="searchMarket"  parameterType="hashmap" resultType="hashmap">
+   		SELECT MARKET_NO, MARKET_NAME
+		FROM MARKET
+		WHERE DISCT_NO = #{disctNo}
+		AND MARKET_NAME LIKE '%' || #{searchMarketName} ||'%'
+		ORDER BY MARKET_NAME
+   </select>
+</mapper>

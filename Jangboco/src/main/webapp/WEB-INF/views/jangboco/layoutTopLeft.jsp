@@ -108,13 +108,13 @@
                 </li>
             </ul>
             <ul class="sub_menu accbk">
-                <li action="">
+                <li action="accbkMain">
                     <span class="sub_menu_text">메인</span>
                 </li>
-                <li action="">
+                <li action="accbkChart">
                     <span class="sub_menu_text">통계</span>
                 </li>
-                <li action="">
+                <li action="accbkR">
                     <span class="sub_menu_text">지출내역</span>
                 </li>
             </ul>
