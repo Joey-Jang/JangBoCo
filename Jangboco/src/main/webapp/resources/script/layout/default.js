@@ -172,7 +172,7 @@ function initLocMap() {
 }
 
 // 메인 위치 갱신
-function reloadMainLoc(func) {
+function reloadMainLoc() {
 	var params = $("#loc_form").serialize();
 	
 	$.ajax({
@@ -181,7 +181,7 @@ function reloadMainLoc(func) {
 		dataType: "json",
 		data: params,
 		success: function(result) {
-			setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs, func);
+			setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs);
 		},
 		error: function(request, status, error) {
 			console.log(error);
@@ -200,9 +200,6 @@ function reloadRecentLocList() {
 		data: params,
 		success: function(result) {
 			drawRecentLocList(result.recentLocList);
-			if($("#menu_idx").val()==0 && $("#sub_menu_idx")==0) {
-							locationUser();
-						}
 		},
 		error: function(request, status, error) {
 			console.log(error);
@@ -211,7 +208,7 @@ function reloadRecentLocList() {
 }
 
 // 메인 위치 설정
-function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
+function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
 	if(memberNo!=null) {
 		$("#member_no").val(memberNo);
 		if(cntRecentLoc > 0) {
@@ -235,9 +232,6 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
     	$("#dtl_addrs").val("");
 	}
 	
-	if(func != null) {
-		func.call();
-	}
 }
 
 // 최근 위치 목록 그리기
