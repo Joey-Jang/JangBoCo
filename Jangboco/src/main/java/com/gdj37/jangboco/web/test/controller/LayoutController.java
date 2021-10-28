@@ -16,12 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.jangboco.web.test.service.LocServiceIF;
+import com.gdj37.jangboco.web.zzan.service.IZzanService;
 
 @Controller
 public class LayoutController {
 
 	@Autowired
 	public LocServiceIF locService;
+	
+	@Autowired
+	public IZzanService iZzanService;
 	
 	@RequestMapping(value = "/layoutTopLeft")
 	public ModelAndView layoutTopLeft(ModelAndView mav) throws Throwable {
@@ -31,13 +35,16 @@ public class LayoutController {
 	}
 	
 	@RequestMapping(value = "/home")
-	public ModelAndView layoutConBlank(ModelAndView mav, HttpSession session) throws Throwable {
+	public ModelAndView layoutConBlank(ModelAndView mav, HttpSession session,
+									@RequestParam HashMap<String, String> params) throws Throwable {
 		int homeFlag = 1;
 		int menuIdx = 0;
 		int subMenuIdx = 0;
 		mav.addObject("homeFlag", homeFlag);
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		List<HashMap<String, String>> list = iZzanService.getMarketList(params);
 		
 		mav.setViewName("jangboco/zzan/zzanMain");
 		
