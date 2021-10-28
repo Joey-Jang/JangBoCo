@@ -239,11 +239,11 @@ function drawPaging(pb){
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="#" id="go_form" method="post">
-      	<input type="hidden" name="member_no" value="${memberNo}">
-		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
-		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
-		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
-	</form>
+      <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+      <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
+      <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
+      <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
+   	</form>
     <div class="con_contnr">
         <div class="con">        	
             <div class="market_dtl_title">우리동네 가격 비교</div>
