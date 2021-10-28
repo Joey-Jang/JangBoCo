@@ -59,5 +59,7 @@
 		GROUP BY MEMBER_TYPE 
 	</select>
 	
-	
+	<select id="getMemberNo" parameterType="String" resultType="Integer">
+		SELECT MEMBER_NO FROM MEMBER WHERE EMAIL = #{0}
+	</select>
 </mapper>

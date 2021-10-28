@@ -79,5 +79,11 @@ public class JoinDao implements IJoinDao{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int getMemberNo(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Member.getMemberNo",email);
+	}
 	
 }

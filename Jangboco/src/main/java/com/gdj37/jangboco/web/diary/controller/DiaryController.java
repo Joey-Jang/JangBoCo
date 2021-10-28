@@ -111,13 +111,9 @@ public class DiaryController {
 			System.out.println(page);
 		}
 		
-		System.out.println("tttttttttteeeeeeessssssssst"+params);
 		String email = (String) session.getAttribute("email");
-		System.out.println("cntttttttttttttttttttttt2");
 		int member_no = iDiaryService.getMemberNo(email);
-		System.out.println("cntttttttttttttttttttttt3");
 		cnt = iDiaryService.getLikeDiaryCnt(member_no);
-		System.out.println("cntttttttttttttttttttttt4");
 		//비었을때
 		//공통
 		PagingBean pb = iPagingService.getPagingBean(page, cnt, 8, 3);
@@ -128,6 +124,45 @@ public class DiaryController {
 		
 		list = iDiaryService.getLikeDiaryList(params);
 			
+		modelMap.put("list", list);
+		modelMap.put("pb", pb);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/diaryPernlPage")
+	public ModelAndView diaryMypage(ModelAndView mav) {
+		mav.addObject("page_member_no", 1);
+		mav.setViewName("jangboco/diary/diaryPernlPage");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/diaryPernlListAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String diaryPernlListAjax(@RequestParam HashMap<String,Object> params, HttpSession session) throws Throwable{
+		System.out.println(params);
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		List<HashMap<String,String>> list  = new ArrayList();
+		int page = 1;
+		int cnt = 0;
+		int pageMemberNo = Integer.parseInt((String) params.get("page_member_no"));
+		// 넘어온 페이지 값이 있을 경우 페이지 값 셋팅
+		if(!params.get("page").equals("")&&params.get("page")!=null) {
+			page = Integer.parseInt((String) params.get("page"));
+			System.out.println(page);
+		}
+		
+		cnt = iDiaryService.getDiaryPernlCnt(pageMemberNo);
+		//비었을때
+		//공통
+		PagingBean pb = iPagingService.getPagingBean(page, cnt, 6, 3);
+		
+		params.put("startCnt", Integer.toString(pb.getStartCount()));
+		params.put("endCnt", Integer.toString(pb.getEndCount()));
+		
+		list = iDiaryService.getDiaryPernlList(params);
+					
 		modelMap.put("list", list);
 		modelMap.put("pb", pb);
 		return mapper.writeValueAsString(modelMap);

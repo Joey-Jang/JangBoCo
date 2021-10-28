@@ -24,6 +24,8 @@ public interface IJoinService {
 	public int addMarketMember(HashMap<String, String> params) throws Exception;
 
 	public HashMap<String, Object> loginPernlCheck(HashMap<String, String> params) throws Exception;
+
+	public int getMemberNo(String email) throws Exception;
 	
 	
 }
