@@ -187,7 +187,7 @@ function initLocMap() {
 }
 
 // 메인 위치 갱신
-function reloadMainLoc() {
+function reloadMainLoc(func) {
 	var params = $("#locForm").serialize();
 	
 	$.ajax({
@@ -196,7 +196,7 @@ function reloadMainLoc() {
 		dataType: "json",
 		data: params,
 		success: function(result) {
-			setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs);
+			setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs, func);
 		},
 		error: function(request, status, error) {
 			console.log(error);
@@ -223,7 +223,7 @@ function reloadRecentLocList() {
 }
 
 // 메인 위치 설정
-function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
+function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
 	if(memberNo!=null) {
 		$("#member_no").val(memberNo);
 		if(cntRecentLoc > 0) {
@@ -245,6 +245,10 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
     	$("#zipcd").val("01234");
     	$("#addrs").val("비회원 주소");
     	$("#dtl_addrs").val("비회원 상세주소");
+	}
+	
+	if(func != null) {
+		func.call();
 	}
 }
 
