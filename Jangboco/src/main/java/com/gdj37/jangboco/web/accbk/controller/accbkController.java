@@ -139,10 +139,10 @@ public class accbkController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/getDisctListAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/getAccbkDisctListAjax", method = RequestMethod.POST,
 			produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String getDisctListAjax()throws Throwable{
+	public String getAccbkDisctListAjax()throws Throwable{
 	ObjectMapper mapper = new ObjectMapper();
 	
 	Map<String, Object> modelMap =  new HashMap<String, Object>();
@@ -155,10 +155,10 @@ public class accbkController {
 	}
 	
 	
-	@RequestMapping(value = "/searchMarketAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/searchAccbkMarketAjax", method = RequestMethod.POST,
 							produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String searchMarketAjax(@RequestParam HashMap<String, String> params)throws Throwable{
+	public String searchAccbkMarketAjax(@RequestParam HashMap<String, String> params)throws Throwable{
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap =  new HashMap<String, Object>();
@@ -170,10 +170,10 @@ public class accbkController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/searchBranchAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/searchAccbkBranchAjax", method = RequestMethod.POST,
 			produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String searchBranchAjax(@RequestParam HashMap<String, String> params)throws Throwable{
+	public String searchAccbkBranchAjax(@RequestParam HashMap<String, String> params)throws Throwable{
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap =  new HashMap<String, Object>();
