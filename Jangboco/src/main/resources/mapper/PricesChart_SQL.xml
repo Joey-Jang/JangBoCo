@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pricesChart">
+	<select id="getLineDataList" parameterType="hashmap" resultType="hashmap">		
+		SELECT UPDATE_DATE, ITEMS_NO, AVG_PRICE
+		FROM PRICE_CHART
+		WHERE ITEMS_NO IN (${itemsNo})
+		<if test="startDate != null and startDate !='--' and endDate != null and endDate !='--' ">
+			AND UPDATE_DATE BETWEEN #{startDate} AND #{endDate}	        
+		</if>
+		ORDER BY ITEMS_NO
+	</select>
+	
+	<select id="getDateList" parameterType="hashmap" resultType="String">
+		SELECT DISTINCT TO_CHAR(UPDATE_DATE, 'YY-MM-DD') AS UPDATE_DATE
+		FROM PRICES
+		<if test="startDate != null and startDate !='--' and endDate != null and endDate !='--' ">
+			WHERE UPDATE_DATE BETWEEN #{startDate} AND #{endDate}	        
+		</if>
+		ORDER BY UPDATE_DATE ASC
+	</select>
+	
+	<select id="getItemNameList" parameterType="hashmap" resultType="hashmap">
+		SELECT ITEMS_NO,ITEMS_NAME
+		FROM ITEMS
+		WHERE ITEMS_NO IN (${itemsNo})		
+		ORDER BY ITEMS_NO
+	</select>
+	
+	<select id="getDisctDataList" parameterType="hashmap" resultType="hashmap">
+		SELECT DISCT_NAME , AVG_PRICE, MAX_PRICE, MIN_PRICE
+		FROM (SELECT TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, DISCT_NO,I.ITEMS_NO,
+		             ROUND(AVG(PRICE)) AS AVG_PRICE,
+		             MAX(PRICE) AS MAX_PRICE,
+		             MIN(PRICE) AS MIN_PRICE
+		      FROM PRICES P INNER JOIN MARKET M 
+		                            ON P.MARKET_NO = M.MARKET_NO
+		                    INNER JOIN ITEMS I
+		                            ON P.ITEMS_NO = I.ITEMS_NO
+		      WHERE UPDATE_DATE = (SELECT MAX(UPDATE_DATE) FROM PRICES WHERE ITEMS_NO = #{itemsNo})                      
+		      GROUP BY UPDATE_DATE, DISCT_NO ,I.ITEMS_NO
+		      ORDER BY UPDATE_DATE DESC, DISCT_NO) DCT
+		      INNER JOIN DISCT D 
+		              ON DCT.DISCT_NO = D.DISCT_NO
+		WHERE ITEMS_NO = #{itemsNo}			
+	</select>
+	
+	<select id="getDisctItemsList" resultType="hashmap">
+		SELECT ITEMS_NO , ITEMS_NAME
+		FROM ITEMS
+		WHERE ITEMS_NAME LIKE '%' || #{itemsName} || '%'		
+	</select>
+	
+	<select id="getCategoryChartData" parameterType="hashmap" resultType="hashmap">
+		SELECT P.ITEMS_NO , ITEMS_NAME ,ROUND(AVG(PRICE)) AS AVG_PRICE
+		FROM PRICES P INNER JOIN ITEMS I
+		                      ON P.ITEMS_NO = I.ITEMS_NO
+		WHERE UPDATE_DATE = (SELECT MAX(UPDATE_DATE) FROM PRICES)
+		<if test="itemsName != null and itemsName != ''">
+			AND REGEXP_LIKE(ITEMS_NAME ,#{itemsName})
+		</if>   
+		GROUP BY P.ITEMS_NO , ITEMS_NAME
+		ORDER BY ITEMS_NAME	
+	</select>
+</mapper>
