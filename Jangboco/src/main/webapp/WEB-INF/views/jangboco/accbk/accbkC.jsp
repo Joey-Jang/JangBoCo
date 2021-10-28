@@ -142,9 +142,9 @@ $(document).ready(function(){
 	//마켓 직접 입력 
 	//var othersMarketName ="";
 	$("#others_market_btn").on("click",function(){
+		$("#market_no").val("");
 		$("#search_market_contnr").hide();
 		$("#others_market_name_contnr").show();
-		$("#select_market_branch_name").val("");
 		$("#select_market_branch_name").hide();
 		
 		/* othersMarketName = $("#market_name").text();
