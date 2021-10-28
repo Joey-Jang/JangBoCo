@@ -46,6 +46,8 @@ public class LayoutController {
 		
 		List<HashMap<String, String>> list = iZzanService.getMarketList(params);
 		
+		mav.addObject("list", list);
+		
 		mav.setViewName("jangboco/zzan/zzanMain");
 		
 		return mav;
