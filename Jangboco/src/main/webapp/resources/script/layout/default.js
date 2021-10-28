@@ -206,6 +206,9 @@ function reloadRecentLocList() {
 		data: params,
 		success: function(result) {
 			drawRecentLocList(result.recentLocList);
+			if($("#menu_idx").val()==0 && $("#sub_menu_idx")==0) {
+							locationUser();
+						}
 		},
 		error: function(request, status, error) {
 			console.log(error);
