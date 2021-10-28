@@ -15,8 +15,10 @@
 	</select>
  
 	<select id="getAccbkList" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM (
 		SELECT A.ACCBK_NO, NVL2(M.MARKET_NAME,M.MARKET_NAME,A.MARKET_NAME)AS MARKET_NAME, A.DEL_FLAG, NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME) AS ITEMS_NAME,
-				A.BUY_QNT, A.COST, NVL(A.NOTE,' ') AS NOTE, TO_CHAR(A.BUY_DATE, 'YY-MM-DD') AS BUY_DATE
+				A.BUY_QNT, A.COST, NVL(A.NOTE,' ') AS NOTE, TO_CHAR(A.BUY_DATE, 'YY-MM-DD') AS BUY_DATE, ROW_NUMBER() OVER(ORDER BY A.ACCBK_NO DESC) AS RNUM
 		FROM MARKET M
 		RIGHT OUTER JOIN ACCBK A
 					ON M.MARKET_NO = A.MARKET_NO
@@ -33,7 +35,8 @@
 				</when>
 			</choose>
 		</if>
-		ORDER BY A.ACCBK_NO DESC
+		)
+		WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}
 	</select>
  
 	<select id="getAccbkCnt" parameterType="hashmap" resultType="Integer">
