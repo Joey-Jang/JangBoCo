@@ -35,6 +35,12 @@
 
 
 /*accbk Main  */
+.accbk_main_notice {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 
 #period_set > option {
 	text-align: center;

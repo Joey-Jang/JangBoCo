@@ -79,6 +79,16 @@ public class accbkDao implements accbkIDao{
 	}
 
 	@Override
+	public HashMap<String, String> getMostSpendWeek(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectOne("accbk.getMostSpendWeek", params);
+	}
+	
+	@Override
+	public HashMap<String, String> getLeastSpendWeek(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectOne("accbk.getLeastSpendWeek", params);
+	}
+	
+	@Override
 	public List<HashMap<String, Object>> getDisctList() throws Throwable {
 		return sqlsession.selectList("accbk.getDisctList");
 	}
@@ -92,6 +102,7 @@ public class accbkDao implements accbkIDao{
 	public List<HashMap<String, String>> searchMarket(HashMap<String, String> params) throws Throwable {
 		return sqlsession.selectList("accbk.searchMarket", params);
 	}
+
 
 	
 

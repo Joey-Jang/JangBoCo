@@ -78,6 +78,16 @@ public class accbkService implements accbkIService {
 	public HashMap<String, String> getThisMonthSpend(HashMap<String, String> params) throws Throwable {
 		return accbkiDao.getThisMonthSpend(params);
 	}
+	
+	@Override
+	public HashMap<String, String> getMostSpendWeek(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getMostSpendWeek(params);
+	}
+	
+	@Override
+	public HashMap<String, String> getLeastSpendWeek(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getLeastSpendWeek(params);
+	}
 
 	@Override
 	public List<HashMap<String, Object>> getDisctList() throws Throwable {

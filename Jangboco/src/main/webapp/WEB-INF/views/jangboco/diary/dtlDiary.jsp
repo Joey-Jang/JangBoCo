@@ -18,7 +18,7 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-	<form action="#" id="goForm" method="post">
+	<form action="#" id="go_form" method="post">
       	<input type="hidden" name="member_no" value="${memberNo}">
 		<input type="hidden" id="home_flag" name="home_flag" value="${param.home_flag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${param.menu_idx}">

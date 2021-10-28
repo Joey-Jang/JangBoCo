@@ -44,16 +44,24 @@ public class accbkController {
 		params.put("buy_date",thisMonth);
 		
 		HashMap<String, String> getThisMonthSpend = accbkiService.getThisMonthSpend(params);
+		
 		HashMap<String, String> getMostSpendDay = accbkiService.getMostSpendDay(params);
 		HashMap<String, String> getMostVisitMarket = accbkiService.getMostVisitMarket(params);
+		HashMap<String, String> getMostSpendWeek = accbkiService.getMostSpendWeek(params);
+		
 		HashMap<String, String> getLeastSpendDay = accbkiService.getLeastSpendDay(params);
 		HashMap<String, String> getMostSpendItems = accbkiService.getMostSpendItems(params);
+		HashMap<String, String> getLeastSpendWeek = accbkiService.getLeastSpendWeek(params);
 		
 		mav.addObject("getThisMonthSpend", getThisMonthSpend);
+		
 		mav.addObject("getMostSpendDay", getMostSpendDay);
 		mav.addObject("getMostVisitMarket", getMostVisitMarket);
+		mav.addObject("getMostSpendWeek", getMostSpendWeek);
+		
 		mav.addObject("getLeastSpendDay", getLeastSpendDay);
 		mav.addObject("getMostSpendItems", getMostSpendItems);
+		mav.addObject("getLeastSpendWeek", getLeastSpendWeek);
 		
 		mav.setViewName("jangboco/accbk/accbkMain");
 		

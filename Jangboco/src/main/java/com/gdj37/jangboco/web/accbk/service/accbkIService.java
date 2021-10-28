@@ -30,6 +30,10 @@ public interface accbkIService {
 	public HashMap<String, String> getMostVisitMarket(HashMap<String, String> params)throws Throwable;
 
 	public HashMap<String, String> getThisMonthSpend(HashMap<String, String> params)throws Throwable;
+	
+	public HashMap<String, String> getMostSpendWeek(HashMap<String, String> params)throws Throwable;
+	
+	public HashMap<String, String> getLeastSpendWeek(HashMap<String, String> params)throws Throwable;
 
 	public List<HashMap<String, Object>> getDisctList()throws Throwable;
 
