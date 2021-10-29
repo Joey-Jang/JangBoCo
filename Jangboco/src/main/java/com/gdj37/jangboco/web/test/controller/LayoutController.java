@@ -44,6 +44,9 @@ public class LayoutController {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
+		int sessnMemberNo = 2;
+		mav.addObject("sessnMemberNo", sessnMemberNo);
+		
 		List<HashMap<String, String>> list = iZzanService.getMarketList(params);
 		
 		mav.addObject("list", list);

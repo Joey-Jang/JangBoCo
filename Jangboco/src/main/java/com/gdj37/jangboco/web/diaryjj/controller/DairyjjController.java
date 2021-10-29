@@ -37,6 +37,9 @@ public class DairyjjController {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
+		int sessnMemberNo = 2;
+		mav.addObject("sessnMemberNo", sessnMemberNo);
+		
 		mav.setViewName("jangboco/diary/writeDiary");
 		
 		return mav;
