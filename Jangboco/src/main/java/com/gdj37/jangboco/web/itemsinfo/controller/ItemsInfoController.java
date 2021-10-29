@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,11 +128,12 @@ public class ItemsInfoController {
 			System.out.println(cookrcp01);
 			System.out.println("====================");
 			String totalCnt = (String)cookrcp01.get("total_count");
-			System.out.println(totalCnt);
+			System.out.println(totalCnt);			
 			System.out.println("====================");
-//			JSONObject cookrcp01 = (JSONObject)cookrcp01.get("total_count");
-//			JSONObject cookrcp01 = (JSONObject)cookrcp01.get("row");
-			
+			JSONArray row = (JSONArray)cookrcp01.get("row");
+			System.out.println(row);
+			JSONObject row1 = (JSONObject)row.get(0);
+			System.out.println(row1.get("RCP_WAY2")); 
 			
 		} catch (Exception e) {
 			 e.printStackTrace();
