@@ -217,7 +217,7 @@
             },
             {
                 width : '56px', height : '56px',
-                background: 'rgba(255, 73, 73, .5)',
+                background: 'rgba(255, 73, 73, .7)',
                 borderRadius: '28px',
                 color: '#000',
                 textAlign: 'center',
@@ -308,10 +308,22 @@
 				        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
 				    		image: markerImage
 				   	 	});
+			    		
+			    		// 마커에 표시할 인포윈도우 생성
+						var infowindow2 = new kakao.maps.InfoWindow({
+					        content: '<div style="width:150px;text-align:center;padding:6px 0;">${data.MARKET_NAME}</div>' // 인포윈도우에 표시할 내용
+					    });
+						
+						// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow2));
+					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow2));
 				    	
 			    		markers.push(marker);
 			    		bounds.extend(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}));
 			    	}
+			    	
+			    	
+				    
 				</c:forEach>
 				clusterer.addMarkers(markers); //클러스터에 마커 추가
 				
@@ -359,7 +371,16 @@
 		
 		if(prsntBounds.contain(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}))){
 			markers.push(marker);
-    	}	
+    	}
+		
+		// 마커에 표시할 인포윈도우 생성
+		var infowindow = new kakao.maps.InfoWindow({
+	        content: '<div style="width:150px;text-align:center;padding:6px 0;">${data.MARKET_NAME}</div>' // 인포윈도우에 표시할 내용
+	    });
+		
+		// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+	    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
  		
 		</c:forEach>
 		clusterer.addMarkers(markers); //클러스터에 마커 추가
@@ -369,7 +390,24 @@
 		
 	})//prsnt_map event end 
 	
-    
+	
+	<%--마커 이벤트 함수--%>
+	
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	function makeOverListener(map, marker, infowindow) {
+	    return function() {
+	        infowindow.open(map, marker);
+	    };
+	}
+
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+	
+	
 	
 	<%--지도 레벨 제한하기--%>
 
