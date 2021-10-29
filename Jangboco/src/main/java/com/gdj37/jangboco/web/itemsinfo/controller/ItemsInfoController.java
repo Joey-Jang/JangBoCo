@@ -1,9 +1,14 @@
 package com.gdj37.jangboco.web.itemsinfo.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gdj37.jangboco.common.bean.PagingBean;
 import com.gdj37.jangboco.web.itemsinfo.service.IItemsInfoService;
 import com.gdj37.jangboco.web.priceschart.service.IPricesChartService;
+
+
 
 @Controller
 public class ItemsInfoController {
@@ -88,4 +94,49 @@ public class ItemsInfoController {
 		return mapper.writeValueAsString(modelMap); 
 	}
 	
+	
+	@RequestMapping(value="/recipeAjax", method= RequestMethod.POST,
+			produces = "text/json;charset=UTF-8" )
+	@ResponseBody
+	public String recipeAjax(@RequestParam HashMap<String, String> params) 
+				throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();		
+		
+		String key = "121c409444094fdea525";
+		
+		String matrlName = params.get("matrlName");
+		
+		String result = "";
+		
+		try {
+			URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
+								"/COOKRCP01/json/1/1/RCP_PARTS_DTLS="+ matrlName);
+			
+			BufferedReader bf;
+			bf = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+			
+			result = bf.readLine();
+			System.out.println(result);
+			System.out.println("====================");
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
+			JSONObject cookrcp01 = (JSONObject)jsonObject.get("COOKRCP01");
+			System.out.println(cookrcp01);
+			System.out.println("====================");
+			String totalCnt = (String)cookrcp01.get("total_count");
+			System.out.println(totalCnt);
+			System.out.println("====================");
+//			JSONObject cookrcp01 = (JSONObject)cookrcp01.get("total_count");
+//			JSONObject cookrcp01 = (JSONObject)cookrcp01.get("row");
+			
+			
+		} catch (Exception e) {
+			 e.printStackTrace();
+		}
+		
+		return mapper.writeValueAsString(modelMap); 
+	}
 }
