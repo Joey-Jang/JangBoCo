@@ -64,16 +64,7 @@ public class LayoutController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-		// 추후에 세션 sMNo로 대체
-		String memberNo = "2"; // 임시 회원번호
 		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
-			memberNo = params.get("member_no");
-		}
-		params.put("member_no", memberNo);
-		
-		if(!"".equals(memberNo) && memberNo!=null) {
-			modelMap.put("memberNo", memberNo);
-			
 			HashMap<String, Object> memberAddrs = locService.getMemberAddrs(params);
 			modelMap.put("memberAddrs", memberAddrs);
 		}

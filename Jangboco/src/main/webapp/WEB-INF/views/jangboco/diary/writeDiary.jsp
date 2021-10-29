@@ -25,7 +25,6 @@
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="#" id="go_form" method="post">
-      	<input type="hidden" name="member_no" value="${memberNo}">
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -35,8 +34,8 @@
 			<input type="file" accept="image/*" id="att_diary_img" name="att_diary_img">
 			<input type="file" accept="image/*" id="att_change_diary_img" name="att_change_diary_img">
 		</form>
-      		<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
-      		
+		<input type="hidden" id="member_no" name="member_no" value="${sessnMemberNo}">
+		
         <div class="con">
             <ul id="diary_thunl_list" class="diary_thunl_list"></ul>
             <div class="diary_img_tag_contnr">

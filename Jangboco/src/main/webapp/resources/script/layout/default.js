@@ -209,8 +209,7 @@ function reloadRecentLocList() {
 
 // 메인 위치 설정
 function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
-	if(memberNo!=null) {
-		$("#member_no").val(memberNo);
+	if($("member_no").val!="") {
 		if(cntRecentLoc > 0) {
 			$("#main_loc_addrs").text(latestLocData.ADDRS);
 			$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
