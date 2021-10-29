@@ -13,7 +13,7 @@
 
 <script type="text/javascript"
 		src="resources/script/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61c8c8efc790452c5140ffc9ec95d67e&libraries=clusterer"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61c8c8efc790452c5140ffc9ec95d67e&libraries=clusterer,services"></script>
 <script>
     var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
@@ -92,6 +92,21 @@
     	clusterer.addMarker(marker);
 	</c:forEach>
     
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('서울 동작구 서달로 10나길 6', function(result, status) {
+
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x); //주소로 좌표값 가져오기
+	        var disct = result[0].address.region_2depth_name; //주소로 구 정보 가져오기
+	        console.log(disct);
+	        console.log(result[0].y);
+	     }
+	});
     
 </script>
 </body>

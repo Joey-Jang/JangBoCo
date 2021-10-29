@@ -51,28 +51,32 @@
 }
 
 .zzan_side_contnr {
-	width: 200px;
+	width: 330px;
     height: 100%;
     display: flex;
     border: 2px solid #03A64A;
     border-radius: 20px;
     margin-right: 5px;
+    flex-direction:column;
 }
 
 .zzan_search {
-	width: 50px;
+	width: 330px;
     height: 30px;
     display: flex;
+    flex-direction:row;
+    margin: 15px;
+    margin-bottom:0px;
 }
 
 .zzan_list {
-	width: calc(100% - 50px);
-    height: 100%;
+	width: 330px;
+    height: calc(100% - 50px);
     display: flex;
 }
 
 .zzan_map_contnr {
-	width: calc(100% - 200px);
+	width: calc(100% - 300px);
     height: 100%;
     border: 2px solid #03A64A;
     border-radius: 20px;
@@ -85,7 +89,35 @@
     height: 100%;
     display: flex;
     border-radius: 20px;
+    justify-content: center;
 }
+
+#prsnt_map{
+	position: absolute;
+	top: 7px; 
+	color: #666666;
+	z-index: 10;
+	font-size: 15px;
+	font-weight: bold;
+	background: white;
+	box-shadow: 1px 1px 1px 1px #AAAAAA;
+	padding: 0px 7px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#searchBtn{
+	display: inline-block;
+}
+
+.market_list_title{
+	margin-left:20px;
+}
+
+.market_list{
+	list-style: none;
+}
+
 </style>
 
 </head>
@@ -118,59 +150,155 @@
     <div class="zzan_main_contnr">
 	    <div class="zzan_side_contnr">
 	    	<div class="zzan_search">
-	    
+	    		<form action="#" id="action_form" method="post">
+					<select name="searchGbn" id="searchGbn">
+						<option value="0">마켓</option>
+						<option value="1">품목</option>
+					</select>
+					<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}">
+					<input type="hidden" id="oldTxt"  value="${param.searchTxt}">
+					<input type="hidden" name="page" id="page" value="${page}">
+					<input type="hidden" name="no" id="no">
+					<input type="button" value="검색" id="searchBtn">
+				</form>
 	    	</div>
 	    	
 	    	<div class="zzan_list">
-	    		<p>리스트는 여기에</p>
+	    		<div>
+		    		<div class="market_list_title"><h3>마켓</h3></div>
+					<ul id="market_list" class="market_list"><li>나와라리스트</li></ul>
+				</div>
+				<div class="paging_wrap">
+
+				</div>
 	   		</div>
 	    </div>
 	    
 	    <div class="zzan_map_contnr">
 	    	<div class="zzan_map" id="map">
-			<p class="btn-init" onclick="setBounds()" style="position: absolute;right: 7px;bottom: 7px;
-			color: #666666;z-index: 10;font-size: 12px;font-weight: bold;background: white;box-shadow: 1px 1px 1px 1px #AAAAAA;padding: 0px 7px;border-radius: 4px;cursor: pointer;">초기화면으로</p>
-			<!-- 초기화면 버튼 클릭하면 바운드값 초기화 -->
-		
-			<button id="mapinfo" onclick="getInfo()" style="position: absolute;right: 100px;bottom: 15px; color: #666666;z-index :9999;">현재지도에서 보기</button>
+			<button id="prsnt_map">현재지도에서 보기</button>
 			</div>
     	</div>
     </div>
-    
-    
- 
-           
+          
 	
 	<script>
 	
-	
 	$(document).ready(function() {
-		reloadMainLoc(locateUser);
+		//서울시 폴리곤 그리기
 		$.getJSON("resources/json/seoul.json",function(geojson){
 			var data = geojson.features;
 			var coordinates = []; //좌표 저장할 배열
-			var name=''; //행정 구 이름
+			var name=''; //이름
 			
 			$.each(data,function(index,val){
 				coordinates = val.geometry.coordinates;
-				name = val.properties.SIG_KOR_NM;
+				name = val.properties.CTP_KOR_NM;
 				displayArea(coordinates, name);	
 			})
 		})
+		
 	});
 	
-	function locateUser(){
-		<%--주소로 좌표 가져오기--%>
+	
+	<%--기본 지도 정보--%>
 
-		var imageSrc =
-			"resources/images/zzan/user-location.png",
-			imageSize = new kakao.maps.Size(40, 40),
-			imageOption = {
-			offset: new kakao.maps.Point(20, 40) 
-			};//커스텀 마커 설정
+	
+	var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+        center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
+        level : 9 // 지도의 확대 레벨 
+    });
+	var bounds= new kakao.maps.LatLngBounds();//바운드객체
+	
+	var imageSrc =
+		"resources/images/zzan/marker.png",
+		imageSize = new kakao.maps.Size(30, 33),
+		imageOption = {
+		offset: new kakao.maps.Point(15, 33)
+		};//커스텀 마커 설정
+	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+	var markers=[];
+	
+	
+	
+	<%--클러스터, 마커 정보--%>
 		
-		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
-		//커스텀 마커로 마커쓰기
+		
+	// 마커 클러스터러를 생성합니다 
+    var clusterer = new kakao.maps.MarkerClusterer({
+        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+        minLevel: 7, // 클러스터 할 최소 지도 레벨 
+        calculator: [5, 10, 30], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다 
+        styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
+                width : '35px', height : '35px',
+                background: 'rgba(128, 145, 255, .6)',
+                borderRadius: '17.5px',
+                color: '#000',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                lineHeight: '31px'
+            },
+            {
+                width : '48px', height : '48px',
+                background: 'rgba(255, 137, 85, .5)',
+                borderRadius: '24px',
+                color: '#000',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                lineHeight: '41px'
+            },
+            {
+                width : '56px', height : '56px',
+                background: 'rgba(255, 73, 73, .7)',
+                borderRadius: '28px',
+                color: '#000',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                lineHeight: '51px'
+            },
+            {
+                width : '60px', height : '60px',
+                background: 'rgba(255, 80, 80, .5)',
+                borderRadius: '30px',
+                color: '#000',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                lineHeight: '61px'
+            }
+        ]
+    });
+	
+	
+	
+	<%--내 위치 정보--%>
+	
+	
+	var userImgSrc =
+		"resources/images/zzan/user-location.png",
+		userImgSize = new kakao.maps.Size(40, 40),
+		userImgOption = {
+		offset: new kakao.maps.Point(20, 40) 
+		};//사용자 위치 커스텀 마커 이미지 설정
+	
+	var locMarkerImage = new kakao.maps.MarkerImage(userImgSrc, userImgSize, userImgOption)
+	//사용자 위치 커스텀 마커이미지 사용
+	
+	var locMarker = new kakao.maps.Marker({
+         position: new kakao.maps.LatLng(33.450705, 126.570677),
+         image: locMarkerImage //사용자 위치 커스텀 마커 설정
+     });
+	
+	
+	<%--내 위치로 좌표,마커 표시하기--%>
+	
+	
+	$('#main_loc_addrs').on('DOMSubtreeModified', function() {
+		
+		locMarker.setMap(null);//내 위치 초기화
+		
+		bounds = new kakao.maps.LatLngBounds();
+		map.setBounds(bounds);//지도범위 초기화
 		
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
@@ -180,16 +308,11 @@
 
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
-
-		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-		        // 결과값으로 받은 위치를 마커로 표시합니다
-		        var locMarker = new kakao.maps.Marker({
-		            map: map,
-		            position: coords,
-		            image: markerImage //커스텀마커 이미지로
-		        });
-
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x); //주소로 좌표값 가져오기
+		        var disct = result[0].address.region_2depth_name; //주소로 구 정보 가져오기
+		        console.log(disct);
+		        locMarker.setPosition(coords); //해당좌표로 마커이동
+		        locMarker.setMap(map); //지도에 마커 표시
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
 		        var infowindow = new kakao.maps.InfoWindow({
 		            content: '<div style="width:150px;text-align:center;padding:6px 0;">내 위치</div>'
@@ -201,149 +324,130 @@
 
 	            kakao.maps.event.addListener(locMarker, 'mouseout', function() {
 	                infowindow.close();
-	            });
+	            }); 
+	     
 
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);//바운드때문에 안먹히는듯
+		        bounds.extend(coords);
+		        
+		        //기존에 있던 마커들 지우기
+		        markers=[];
+		        clusterer.clear();
+		        
+		        
+		        <c:forEach var="data" items="${list}">
+			    	if(disct=='${data.DISCT_NAME}'){
+			    		var marker = new kakao.maps.Marker({
+				        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
+				    		image: markerImage
+				   	 	});
+			    		
+			    		// 마커에 표시할 인포윈도우 생성
+						var infowindow2 = new kakao.maps.InfoWindow({
+					        content: '<div style="width:150px;text-align:center;padding:6px 0;">${data.MARKET_NAME}</div>' // 인포윈도우에 표시할 내용
+					    });
+						
+						// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow2));
+					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow2));
+				    	
+			    		markers.push(marker);
+			    		bounds.extend(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}));
+			    		
+			    		
+			    		//목록에 보이게 구현
+			    	}
+			    	
+			    	
+				    
+				</c:forEach>
+				clusterer.addMarkers(markers); //클러스터에 마커 추가
+				
+				
+				map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
+		        
 		    } 
 		}); 
 		
-	}
-	
-	/* function drawMap(){
 		
-	} */
-	var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-        center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
-        level : 9 // 지도의 확대 레벨 
-    });
-	var bounds2 = new kakao.maps.LatLngBounds();//바운드객체
-	var imageSrc =
-		"resources/images/zzan/marker.png",
-		imageSize = new kakao.maps.Size(30, 33),
-		imageOption = {
-		offset: new kakao.maps.Point(15, 33)
-		};//커스텀 마커 설정
-	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
-	
-	
-	
-    
-    // 마커 클러스터러를 생성합니다 
-    var clusterer = new kakao.maps.MarkerClusterer({
-        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-        minLevel: 7, // 클러스터 할 최소 지도 레벨 
-        calculator: [5, 10, 30], // 클러스터의 크기 구분 값, 각 사이값마다 설정된 text나 style이 적용된다
-        texts: getTexts, // texts는 ['삐약', '꼬꼬', '꼬끼오', '치멘'] 이렇게 배열로도 설정할 수 있다 
-        styles: [{ // calculator 각 사이 값 마다 적용될 스타일을 지정한다
-                width : '30px', height : '30px',
-                background: 'rgba(51, 204, 255, .8)',
-                borderRadius: '15px',
-                color: '#000',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                lineHeight: '31px'
-            },
-            {
-                width : '40px', height : '40px',
-                background: 'rgba(255, 153, 0, .8)',
-                borderRadius: '20px',
-                color: '#000',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                lineHeight: '41px'
-            },
-            {
-                width : '50px', height : '50px',
-                background: 'rgba(255, 51, 204, .8)',
-                borderRadius: '25px',
-                color: '#000',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                lineHeight: '51px'
-            },
-            {
-                width : '60px', height : '60px',
-                background: 'rgba(255, 80, 80, .8)',
-                borderRadius: '30px',
-                color: '#000',
-                textAlign: 'center',
-                fontWeight: 'bold',
-                lineHeight: '61px'
-            }
-        ]
-    });
- 
-    // 클러스터 내부에 삽입할 문자열 생성 함수입니다 
-    function getTexts( count ) {
-
-      // 한 클러스터 객체가 포함하는 마커의 개수에 따라 다른 텍스트 값을 표시합니다 
-      if(count < 5) {
-        return '삐약';        
-      } else if(count < 10) {
-        return '꼬꼬';
-      } else if(count < 30) {
-        return '꼬끼오';
-      } else {
-        return '치멘';
-      }
-    }
-
-    // 데이터를 가져오기 위해 jQuery를 사용합니다
-    // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
-    
-    <c:forEach var="data" items="${list}">
-    	var marker = new kakao.maps.Marker({
-        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
-    		image: markerImage
-   	 	});
-    	
-    	clusterer.addMarker(marker);
-	</c:forEach>
-
-
-	
-	<%--지도정보 가져오기(좌표가져오려고)--%>
-	
-	function getInfo() {
-	    // 지도의 현재 중심좌표를 얻어옵니다 
-	    var center = map.getCenter(); 
+	    });//DOMSubtreeModified end
 	    
-	    // 지도의 현재 레벨을 얻어옵니다
-	    var level = map.getLevel();
 	    
-	    // 지도타입을 얻어옵니다
-	    var mapTypeId = map.getMapTypeId(); 
 	    
-	    // 지도의 현재 영역을 얻어옵니다 
-	    var bounds3 = map.getBounds();
+	<%--현재 위치로 좌표,마커 표시하기--%>
+
+		
+	$("#prsnt_map").click(function() {
+		//기존에 있던 마커들 지우기
+        markers=[];
+        clusterer.clear();
+		
+        
+        // 지도의 현재 영역을 얻어옵니다 
+	    var prsntBounds = map.getBounds();
 	    
 	    // 영역의 남서쪽 좌표를 얻어옵니다 
-	    var swLatLng = bounds3.getSouthWest(); 
+	    var swLatLng = prsntBounds.getSouthWest(); 
 	    
 	    // 영역의 북동쪽 좌표를 얻어옵니다 
-	    var neLatLng = bounds3.getNorthEast(); 
-	    
-	    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
-	    var boundsStr = bounds3.toString();
+	    var neLatLng = prsntBounds.getNorthEast(); 
 	    
 	    
-	    var message = '지도 중심좌표는 위도 ' + center.getLat() + ', <br>';
-	    message += '경도 ' + center.getLng() + ' 이고 <br>';
-	    message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
-	    message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
-	    message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+	    var message = '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
 	    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
 	    
-	    // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
 	    console.log(message);
-	    
+        
+        
+		<c:forEach var="data" items="${list}">
+		var marker = new kakao.maps.Marker({
+	        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
+	    		image: markerImage
+	   	 	});
+		
+		if(prsntBounds.contain(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}))){
+			markers.push(marker);
+    	}
+		
+		// 마커에 표시할 인포윈도우 생성
+		var infowindow = new kakao.maps.InfoWindow({
+	        content: '<div style="width:150px;text-align:center;padding:6px 0;">${data.MARKET_NAME}</div>' // 인포윈도우에 표시할 내용
+	    });
+		
+		// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+	    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+ 		
+		</c:forEach>
+		clusterer.addMarkers(markers); //클러스터에 마커 추가
+		
+		
+		
+		
+	})//prsnt_map event end 
+	
+	
+	<%--마커 이벤트 함수--%>
+	
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	function makeOverListener(map, marker, infowindow) {
+	    return function() {
+	        infowindow.open(map, marker);
+	    };
 	}
 
-	getInfo();
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+	
+	
 	
 	<%--지도 레벨 제한하기--%>
+
+	
 	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 	var zoomControl = new kakao.maps.ZoomControl();
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
@@ -381,7 +485,7 @@
 
 
 	
-	//행정구역 폴리곤
+	//행정구역 폴리곤 그리기
 	function displayArea(coordinates, name){
 		var path=[]; //폴리곤 그려줄 path
 		
@@ -403,6 +507,83 @@
 		polygon.setMap(map);
 		
 	}
+	
+	
+	//마켓리스트목록갱신
+	function reloadMarketList() {
+		var params = $("#action_form").serialize(); //form의 데이터를 문자열로 변환
+		
+		$.ajax({ //jquery의 ajax함수 호출
+			url: "reloadMarketListAjax", //접속 주소
+			type: "post", //전송 방식
+			dataType: "json", // 받아올 데이터 형태
+			data: params, //보낼 데이터(문자열 형태)
+			success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+				drawMarketList(res.list);
+				drawPaging(res.pb);
+			},
+			error: function(request, status, error) {//실패 시 다음 함수 실행
+				console.log(error);
+			}
+		});
+	}
+	
+	//목록 그리기
+	function  drawMarketList(list){
+		var html ="";  
+		for(var data of list){
+			html += "<tr no=\""+data.B_NO + "\">             ";
+			html += "<td>" +data.B_NO + "</td>       ";
+			html += "<td>";
+			html += data.B_TITLE;
+			
+			if(data.B_FILE != null) {
+				html += "<img src=\"resources/images/attFile.png\" />";
+			}
+			
+			html += "</td>";
+			html += "<td>" +data.M_NM + "</td>     ";
+			html += "<td>" +data.B_DT + "</td>    ";
+			html += "<td>" + data.B_HIT + "</td>       ";
+			html += "</tr>            ";
+		
+		}
+		
+		$("tbody").html(html);
+	}
+	
+	//페이징
+	function drawPaging(pb) {
+		var html = "";
+		
+		html += "<span page=\"1\">처음</span>       " ;
+		
+		if($("#page").val() == "1"){
+			html += "<span page=\"1\">이전</span>       " ; 
+		} else {
+			html += "<span page=\"" + ($("#page").val() *1 - 1)+ "\">이전</span>       " ; 
+		}
+		
+		for(var i = pb.startPcount; i<=pb.endPcount; i++){
+			if($("#page").val() == i){
+				html += "<span page=\"" + i + "\"><b>" + i + "</b></span>   " ;
+			}else {
+				html += "<span page=\"" + i + "\">" + i + "</span>   " ;
+			}
+		}
+		
+		if($("#page").val() == pb.maxPcount) {
+			html += "<span page=\"" + pb.maxPcount + "\">다음</span>       " ; 
+		}else {
+			html += "<span page=\"" + ($("#page").val() *1 + 1)+ "\">다음</span>       " ;
+		}
+		
+		html += "<span page=\"" + pb.maxPcount + "\">마지막</span>       " ;
+		
+		$(".paging_wrap").html(html);
+		
+	}
+
 	
 	</script>
         </div>

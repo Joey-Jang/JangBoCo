@@ -36,6 +36,12 @@ public class accbkController {
 	@RequestMapping(value = "/accbkMain")
 	public ModelAndView accbkMain(@RequestParam HashMap<String, String> params,
 								 ModelAndView mav)throws Throwable {
+		int homeFlag = 0;
+		int menuIdx = 2;
+		int subMenuIdx = 0;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
 		
 		DecimalFormat df = new DecimalFormat("00");
         Calendar currentCalendar = Calendar.getInstance();
@@ -52,6 +58,19 @@ public class accbkController {
 		HashMap<String, String> getLeastSpendDay = accbkiService.getLeastSpendDay(params);
 		HashMap<String, String> getMostSpendItems = accbkiService.getMostSpendItems(params);
 		HashMap<String, String> getLeastSpendWeek = accbkiService.getLeastSpendWeek(params);
+		
+		
+		getMostSpendWeek.replace("WEEK", "1","첫");
+		getMostSpendWeek.replace("WEEK", "2","두");
+		getMostSpendWeek.replace("WEEK", "3","세");
+		getMostSpendWeek.replace("WEEK", "4","네");
+		getMostSpendWeek.replace("WEEK", "5","다섯");
+		
+		getLeastSpendWeek.replace("WEEK", "1", "첫");
+		getLeastSpendWeek.replace("WEEK", "2", "두");
+		getLeastSpendWeek.replace("WEEK", "3", "세");
+		getLeastSpendWeek.replace("WEEK", "4", "네");
+		getLeastSpendWeek.replace("WEEK", "5", "다섯");
 		
 		mav.addObject("getThisMonthSpend", getThisMonthSpend);
 		
@@ -74,6 +93,12 @@ public class accbkController {
 	public ModelAndView accbkChart(@RequestParam HashMap<String, String> params,
 								 ModelAndView mav) {
 		
+		int homeFlag = 0;
+		int menuIdx = 2;
+		int subMenuIdx = 1;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
 		
 		
 		
@@ -87,6 +112,13 @@ public class accbkController {
 	@RequestMapping(value = "/accbkR")
 	public ModelAndView accbkR(@RequestParam HashMap<String, String> params,
 								ModelAndView mav) {
+		int homeFlag = 0;
+		int menuIdx = 2;
+		int subMenuIdx = 2;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
 		String page ="1";
 		
 		if(params.get("page")!=null) {
