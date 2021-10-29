@@ -106,6 +106,7 @@
 	display: none;
 	width: 25px;
 	height: 25px;
+	margin-right: 2px;
 	background: center / cover no-repeat url("../../images/diary/unlike.svg");
 }
 .unlike_icon:hover {
@@ -115,6 +116,7 @@
 	display: none;
 	width: 25px;
 	height: 25px;
+	margin-right: 2px;
 	background: center / cover no-repeat url("../../images/diary/like.svg");
 }
 .like_icon:hover {
