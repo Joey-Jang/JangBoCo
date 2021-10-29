@@ -85,10 +85,10 @@ $(document).ready(function() {
 	});
 	
 	// 최근 위치 호버 이벤트
-	$("#recent_loc_list").on("mouseover", ".recent_addrs", function() {
+	$("#recent_loc_list").on("mouseenter", ".recent_addrs", function() {
 		$(this).parent().css("border-left", "2px solid #03A64A");
 	});
-	$("#recent_loc_list").on("mouseout", ".recent_addrs", function() {
+	$("#recent_loc_list").on("mouseleave", ".recent_addrs", function() {
 		$(this).parent().css("border-left", "1px solid #E0E0E0");
 	});
 	
@@ -208,8 +208,8 @@ function reloadRecentLocList() {
 }
 
 // 메인 위치 설정
-function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
-	if($("member_no").val!="") {
+function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
+	if($("#member_no").val()!="") {
 		if(cntRecentLoc > 0) {
 			$("#main_loc_addrs").text(latestLocData.ADDRS);
 			$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
@@ -230,7 +230,6 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs) {
     	$("#addrs").val("서울 동작구 서달로 10나길 6");
     	$("#dtl_addrs").val("");
 	}
-	
 }
 
 // 최근 위치 목록 그리기

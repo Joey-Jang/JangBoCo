@@ -35,7 +35,7 @@
 			<input type="file" accept="image/*" id="att_change_diary_img" name="att_change_diary_img">
 		</form>
 		<input type="hidden" id="member_no" name="member_no" value="${sessnMemberNo}">
-		
+      		
         <div class="con">
             <ul id="diary_thunl_list" class="diary_thunl_list"></ul>
             <div class="diary_img_tag_contnr">
@@ -72,19 +72,9 @@
            			</button>
            			<div class="edit_item_tag_contnr">
 	           			<input type="button" id="edit_item_tag_btn" class="edit_item_tag_btn" value="상품 태그하기">
-      				       	<div id="set_item_tag_contnr" class="set_item_tag_contnr">
+      				       	<div id="set_item_tag_contnr" class="set_item_tag_contnr" style="display:none;">
       				       		<div id="item_tag_info" class="item_tag_info">
     				       		<input type="hidden" id="market_no" name="market_no">
-    				       		<div id="others_market_name_contnr" class="others_market_name_contnr">
-	    				       		<span>마켓 이름을 직접 입력해주세요.</span>
-	    				       		<input type="text" id="market_name" name="market_name" class="market_name">
-    				       		</div>
-    				       		<input type="hidden" id="items_no" name="items_no">
-    				       		<div id="others_items_name_contnr" class="others_items_name_contnr">
-	    				       		<span>품목 이름을 직접 입력해주세요.</span>
-	    				       		<input type="text" id="items_name" name="items_name" class="items_name">
-    				       		</div>
-    				       		
        				       		<div id="search_market_contnr" class="search_market_contnr">
 	       				       		<select id="disct_gbn" class="disct_gbn"></select>
 	       				       		<input type="text" id="search_market_name" name="search_market_name" class="search_market_name">
@@ -95,6 +85,11 @@
        				       			<ul id="branch_list" class="branch_list"></ul>
        				       			<input type="text" id="select_market_branch_name" class="select_market_branch_name" disabled>
        				       		</div>
+    				       		<div id="others_market_name_contnr" class="others_market_name_contnr">
+	    				       		<span>마켓 이름을 직접 입력해주세요.</span>
+	    				       		<input type="text" id="market_name" name="market_name" class="market_name">
+    				       		</div>
+    				       		<input type="hidden" id="items_no" name="items_no">
        				       		<div id="search_items_contnr" class="search_items_contnr">
 	       				       		<input type="text" id="search_items_name" name="search_items_name" class="search_items_name">
 	       				       		<input type="button" id="search_items_btn" class="search_items_btn" value="품목 검색">
@@ -103,6 +98,10 @@
        				       			<ul id="items_list" class="items_list"></ul>
        				       			<input type="text" id="select_items_name" class="select_items_name" disabled>
        				       		</div>
+    				       		<div id="others_items_name_contnr" class="others_items_name_contnr">
+	    				       		<span>품목 이름을 직접 입력해주세요.</span>
+	    				       		<input type="text" id="items_name" name="items_name" class="items_name">
+    				       		</div>
        				       		<div id="buy_qnt_cost_contnr" class="buy_qnt_cost_contnr">
 	       				       		<input type="text" id="buy_qnt" name="buy_qnt" class="buy_qnt" placeholder="구매량">
 	       				       		<div class="cost_contnr">
@@ -113,7 +112,8 @@
       				       		</div>
       				       		<div class="item_tag_btn_contnr">
        				       		<div class="others_btn_contnr">
-       				       			<input type="button" id="others_item_tag_btn" class="others_item_tag_btn" value="직접 입력하기" gbn="0">
+       				       			<input type="button" id="others_item_tag_btn" class="others_item_tag_btn" value="직접 입력하기" others_market="0" others_items="0">
+      				       			<input type="button" id="others_items_btn" class="others_items_btn" value="품목 직접 입력하기">
        				       		</div>
        				       		<div class="accbk_add_cancel_btn_contnr">
        				       			<div id="accbk_btn_contnr" class="accbk_btn_contnr">
@@ -136,7 +136,7 @@
 		            <ul id="diary_img_list" class="diary_img_list"></ul>
             	</div>
 	            <div class="item_tag_list_dtl_contnr">
-	            	<div id="item_tag_dtl_contnr" class="item_tag_dtl_contnr">
+	            	<div id="item_tag_dtl_contnr" class="item_tag_dtl_contnr" style="display:none;">
 	            		<input type="text" id="item_tag_dtl_market_branch_name" class="item_tag_dtl_market_branch_name" disabled>
 	            		<input type="text" id="item_tag_dtl_items_name" class="item_tag_dtl_items_name" disabled>
 	            		<input type="text" id="item_tag_dtl_buy_qnt" class="item_tag_dtl_buy_qnt" disabled>
@@ -151,7 +151,18 @@
             <div class="diary_con_contnr">
             	<div class="diary_con_hastg_contnr">
 	            	<textarea id="diary_con" class="diary_con">일기 내용 어찌구저찌구</textarea>
-	            	<ul class="hastg_list"></ul>
+	            	<ul id="hastg_list" class="hastg_list">
+	            		<li>
+	            			<input type="text" class="hastg" placeholder="해시태그">
+	            			<button type="button" class="del_hastg_btn" style="display: none;">
+	            				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+	            				<line x1="18" y1="6" x2="6" y2="18"></line>
+	            				<line x1="6" y1="6" x2="18" y2="18"></line>
+	            				</svg>
+	            			</button>
+	            		</li>
+	            	</ul>
+	            	<span id="virtual_hastg" class="virtual_hastg"></span>
             	</div>
             	<div class="diary_btn_contnr">
 	            	<input type="button" id="write_diary_btn" class="write_diary_btn" value="올리기">
