@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="DBApi">
-	<select id="disctDuplctCheck" resultType="Integer">
+	<select id="disctDuplctCheck" parameterType="hashmap" resultType="Integer">
 		SELECT COUNT(DISCT_NO)
 		FROM DISCT
 		WHERE DISCT_NO = #{disctNo}
@@ -12,7 +12,7 @@
 		VALUES (#{disctNo}, #{disctName})
 	</insert>
 	
-	<select id="marketDuplctCheck" resultType="Integer">
+	<select id="marketDuplctCheck" parameterType="hashmap" resultType="Integer">
 		SELECT COUNT(MARKET_NO)
 		FROM MARKET
 		WHERE MARKET_NO = #{marketNo}
@@ -23,7 +23,7 @@
 		VALUES (#{marketNo}, #{disctNo}, #{typeNo}, #{marketName})
 	</insert>
 	
-	<select id="itemsDuplctCheck" resultType="Integer">
+	<select id="itemsDuplctCheck" parameterType="hashmap" resultType="Integer">
 		SELECT COUNT(ITEMS_NO)
 		FROM ITEMS
 		WHERE ITEMS_NO = #{itemsNo}
