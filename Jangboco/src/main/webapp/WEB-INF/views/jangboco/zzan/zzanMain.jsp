@@ -51,28 +51,32 @@
 }
 
 .zzan_side_contnr {
-	width: 200px;
+	width: 330px;
     height: 100%;
     display: flex;
     border: 2px solid #03A64A;
     border-radius: 20px;
     margin-right: 5px;
+    flex-direction:column;
 }
 
 .zzan_search {
-	width: 50px;
+	width: 330px;
     height: 30px;
     display: flex;
+    flex-direction:row;
+    margin: 15px;
+    margin-bottom:0px;
 }
 
 .zzan_list {
-	width: calc(100% - 50px);
-    height: 100%;
+	width: 330px;
+    height: calc(100% - 50px);
     display: flex;
 }
 
 .zzan_map_contnr {
-	width: calc(100% - 200px);
+	width: calc(100% - 300px);
     height: 100%;
     border: 2px solid #03A64A;
     border-radius: 20px;
@@ -85,11 +89,11 @@
     height: 100%;
     display: flex;
     border-radius: 20px;
+    justify-content: center;
 }
 
 #prsnt_map{
 	position: absolute;
-	left: 40%;
 	top: 7px; 
 	color: #666666;
 	z-index: 10;
@@ -101,6 +105,19 @@
 	border-radius: 4px;
 	cursor: pointer;
 }
+
+#searchBtn{
+	display: inline-block;
+}
+
+.market_list_title{
+	margin-left:20px;
+}
+
+.market_list{
+	list-style: none;
+}
+
 </style>
 
 </head>
@@ -133,11 +150,27 @@
     <div class="zzan_main_contnr">
 	    <div class="zzan_side_contnr">
 	    	<div class="zzan_search">
-	    
+	    		<form action="#" id="action_form" method="post">
+					<select name="searchGbn" id="searchGbn">
+						<option value="0">마켓</option>
+						<option value="1">품목</option>
+					</select>
+					<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}">
+					<input type="hidden" id="oldTxt"  value="${param.searchTxt}">
+					<input type="hidden" name="page" id="page" value="${page}">
+					<input type="hidden" name="no" id="no">
+					<input type="button" value="검색" id="searchBtn">
+				</form>
 	    	</div>
 	    	
 	    	<div class="zzan_list">
-	    		<p>리스트는 여기에</p>
+	    		<div>
+		    		<div class="market_list_title"><h3>마켓</h3></div>
+					<ul id="market_list" class="market_list"><li>나와라리스트</li></ul>
+				</div>
+				<div class="paging_wrap">
+
+				</div>
 	   		</div>
 	    </div>
 	    
@@ -320,6 +353,9 @@
 				    	
 			    		markers.push(marker);
 			    		bounds.extend(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}));
+			    		
+			    		
+			    		//목록에 보이게 구현
 			    	}
 			    	
 			    	
@@ -471,6 +507,83 @@
 		polygon.setMap(map);
 		
 	}
+	
+	
+	//마켓리스트목록갱신
+	function reloadMarketList() {
+		var params = $("#action_form").serialize(); //form의 데이터를 문자열로 변환
+		
+		$.ajax({ //jquery의 ajax함수 호출
+			url: "reloadMarketListAjax", //접속 주소
+			type: "post", //전송 방식
+			dataType: "json", // 받아올 데이터 형태
+			data: params, //보낼 데이터(문자열 형태)
+			success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+				drawMarketList(res.list);
+				drawPaging(res.pb);
+			},
+			error: function(request, status, error) {//실패 시 다음 함수 실행
+				console.log(error);
+			}
+		});
+	}
+	
+	//목록 그리기
+	function  drawMarketList(list){
+		var html ="";  
+		for(var data of list){
+			html += "<tr no=\""+data.B_NO + "\">             ";
+			html += "<td>" +data.B_NO + "</td>       ";
+			html += "<td>";
+			html += data.B_TITLE;
+			
+			if(data.B_FILE != null) {
+				html += "<img src=\"resources/images/attFile.png\" />";
+			}
+			
+			html += "</td>";
+			html += "<td>" +data.M_NM + "</td>     ";
+			html += "<td>" +data.B_DT + "</td>    ";
+			html += "<td>" + data.B_HIT + "</td>       ";
+			html += "</tr>            ";
+		
+		}
+		
+		$("tbody").html(html);
+	}
+	
+	//페이징
+	function drawPaging(pb) {
+		var html = "";
+		
+		html += "<span page=\"1\">처음</span>       " ;
+		
+		if($("#page").val() == "1"){
+			html += "<span page=\"1\">이전</span>       " ; 
+		} else {
+			html += "<span page=\"" + ($("#page").val() *1 - 1)+ "\">이전</span>       " ; 
+		}
+		
+		for(var i = pb.startPcount; i<=pb.endPcount; i++){
+			if($("#page").val() == i){
+				html += "<span page=\"" + i + "\"><b>" + i + "</b></span>   " ;
+			}else {
+				html += "<span page=\"" + i + "\">" + i + "</span>   " ;
+			}
+		}
+		
+		if($("#page").val() == pb.maxPcount) {
+			html += "<span page=\"" + pb.maxPcount + "\">다음</span>       " ; 
+		}else {
+			html += "<span page=\"" + ($("#page").val() *1 + 1)+ "\">다음</span>       " ;
+		}
+		
+		html += "<span page=\"" + pb.maxPcount + "\">마지막</span>       " ;
+		
+		$(".paging_wrap").html(html);
+		
+	}
+
 	
 	</script>
         </div>
