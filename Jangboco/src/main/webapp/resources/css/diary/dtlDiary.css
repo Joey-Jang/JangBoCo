@@ -1,0 +1,459 @@
+@charset "UTF-8";
+/* diaryWrite 기본 설정 */
+.action_form {
+	height: 100%;
+}
+
+.con {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: stretch;
+	height: 100%;
+}
+
+.con input[type="button"], .con button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 10pt;
+	font-weight: 400;
+}
+
+/* diaryImg, profile, item_tag */
+/* 다이어리 사진 */
+.diary_img_profile_tag_contnr {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	min-width: 360px;
+	max-width: 540px;
+	height: 100%;
+}
+
+.diary_img_list_contnr {
+	position: relative;
+	width: 100%;
+	padding-top: calc(75% - 2px);
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+	z-index: 50;
+}
+
+.diary_img_list {
+	list-style-type: none;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 50;
+}
+
+.diary_img_list>li {
+	width: 100%;
+}
+
+.diary_img {
+	width: 100%;
+	padding-top: calc(calc(100% + 2px) * 0.75 - 2px);
+	border-radius: 4px;
+}
+
+.previous_slide_btn {
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 30px;
+	z-index: 60;
+}
+
+.next_slide_btn {
+	position: absolute;
+	top: 50%;
+	right: 5px;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 30px;
+	z-index: 60;
+}
+/* 좋아요, 신고 */
+.like_accuse_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+	margin-top: 5px;
+}
+.like_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	height: 25px;
+	margin-right: 10px;
+}
+.unlike_icon {
+	display: none;
+	width: 25px;
+	height: 25px;
+	background: center / cover no-repeat url("../../images/diary/unlike.svg");
+}
+.unlike_icon:hover {
+	cursor: pointer;
+}
+.like_icon {
+	display: none;
+	width: 25px;
+	height: 25px;
+	background: center / cover no-repeat url("../../images/diary/like.svg");
+}
+.like_icon:hover {
+	cursor: pointer;
+}
+.accuse_info_btn_contnr {
+	position: relative;
+	width: 40px;
+	height: 25px;
+}
+.accuse_btn {
+	width: 40px;
+	height: 25px;
+}
+.accuse_info_contnr {
+	position: absolute;
+	top: -5px;
+	left: 50%;
+	transform: translate(-50%, -100%);
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 270px;
+	height: 260px;
+	padding: 10px;
+	background-color: white;
+	border: 2px solid #03A64A;
+	border-radius: 5px;
+    font-size: 10pt;
+	z-index: 80;
+}
+.title {
+	width: 100%;
+	height: 25px;
+	margin-bottom: 5px;
+	padding: 0 5px;
+}
+.reason_code {
+	width: 100%;
+	height: 25px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+.accuse_info_contnr > span {
+	height: 25px;
+	margin-bottom: 5px;
+}
+.accuse_con {
+	flex-grow: 1;
+	width: 100%;
+	max-height: 116px;
+	margin-bottom: 5px;
+	overflow: auto;
+}
+.accuse_btn_contnr {
+	align-self: flex-end;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 85px;
+	height: 25px;
+}
+.accuse_submit_btn {
+	width: 40px;
+	height: 25px;
+}
+.accuse_cancel_btn {
+	width: 40px;
+	height: 25px;
+}
+
+/* 프로필, 아이템 태그 목록 */
+.profile_item_tag_list_contnr {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 100%;
+}
+/* 프로필 */
+.profile_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	margin-right: 30px;
+	width: 180px;
+	min-width: 180px;
+	height: 100%;
+	max-height: 300px;
+	padding: 10px;
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+}
+.img_nicnm_folw_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 30px;
+}
+.profile_img {
+	width: 30px;
+	height: 30px;
+	border: 1px solid black;
+	border-radius: 50%;
+}
+.profile_img:hover {
+	cursor: pointer;
+}
+.nicnm {
+	width: 58px;
+}
+.nicnm:hover {
+	cursor: pointer;
+}
+.folw_btn {
+	width: 50px;
+	height: 25px;
+}
+.profile_diary_contnr {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin-top: 5px;
+}
+.profile_diary_img_list_contnr {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.profile_diary_img_list {
+	list-style-type: none;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-content: flex-start;
+	align-items: center;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.profile_diary_img {
+	width: 60px;
+	height: 45px;
+	margin: 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+.profile_diary_img:hover {
+	cursor: pointer;
+}
+/* 아이템 태그 목록 */
+.item_tag_list_dtl_contnr {
+	flex-grow: 1;
+	position: relative;
+	height: calc(100% - 5px);
+	margin-top: 5px;
+}
+.item_tag_list_contnr {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.item_tag_list {
+	list-style-type: none;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: center;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.item_tag_list>li {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	margin: 5px 5px 0px 5px;
+	border: 1px solid black;
+	border-radius: 50%;
+}
+.item_tag_dtl_contnr {
+	position: absolute;
+	top: 0;
+	left: 5px;
+	transform: translate(-70px, -100%);
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	width: 200px;
+	height: 135px;
+	padding: 10px;
+	background-color: white;
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+	z-index: 70;
+	pointer-events: none;
+}
+.item_tag_dtl_contnr input {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.item_tag_dtl_market_branch_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 5px;
+}
+.item_tag_dtl_items_name {
+	width: 100%;
+	height: 25px;
+	padding: 0 5px;
+}
+.item_tag_dtl_buy_qnt {
+	width: 100%;
+	height: 25px;
+	padding: 0 5px;
+	text-align: right;
+}
+.item_tag_dtl_cost_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 25px;
+}
+.item_tag_dtl_cost {
+	width: 133px;
+	height: 25px;
+	padding: 0 5px;
+	text-align: right;
+}
+.item_tag_dtl_won {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+}
+
+
+/* diary_con */
+.diary_con_hastg_comnt_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	width: 400px;
+	min-width: 400px;
+	height: 100%;
+	margin-left: 30px;
+}
+.diary_con_hastg_contnr {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	max-height: 445px;;
+}
+.diary_con_contnr {
+	width: 100%;
+	height: 200px;
+	padding: 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 10pt;
+	font-weight: 400;
+}
+.hastg_list {
+	list-style-type: none;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	align-items: center;
+	width: 100%;
+	min-height: 47px;
+	max-height: 100px;
+	margin: 10px 0;
+	padding: 7.5px;
+	border: 1px solid #03A64A;
+	border-radius: 5px;
+	overflow: auto;
+}
+.hastg_list > li {
+	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
+	height: 25px;
+	margin: 2.5px;
+	background-color: #F8F8F8;
+	border: 1px solid #D0D0D0;
+	border-radius: 1px;
+}
+.hastg_list > li::before {
+	align-self: flex-start;
+	position: absolute;
+	content: "\266F";
+	width: 15px;
+	height: 15px;
+	margin-top: 2px;
+	margin-left: 3px;
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.hastg {
+	padding-right: 5px;
+	padding-left: 16px;
+	color: #545454;
+	font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    font-weight: 400;
+}
+.comnt_contnr {
+	list-style-type: none;
+	flex-grow: 1;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	border: 1px solid black;
+	border-radius: 5px;
+}

@@ -113,67 +113,100 @@ public class DairyjjController {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
+
+		String msg = "SUCCESS";
 		
-		String memberNo = params.get("memberNo");
-		String diaryImgJSONStr = params.get("diaryImgList");
-		String itemTagJSONStr = params.get("itemTagList");
+		int memberNo = Integer.parseInt(params.get("memberNo"));
 		String con = params.get("con");
 		
 		Map<String, Object> diaryParams = new HashMap<String, Object>();
-		
 		diaryParams.put("memberNo", memberNo);
 		diaryParams.put("con", con);
 		
+		String diaryImgJSONStr = params.get("diaryImgList");
+		String itemTagJSONStr = params.get("itemTagList");
+		String hastgListJSONStr = params.get("hastgList");
 		JSONParser parser = new JSONParser();
 		JSONArray diaryImgListJSONArr = (JSONArray) parser.parse(diaryImgJSONStr);
 		JSONArray itemTagListsJSONArr = (JSONArray) parser.parse(itemTagJSONStr);
+		JSONArray hastgListJSONArr = (JSONArray) parser.parse(hastgListJSONStr);
 		
-		String msg = "SUCCESS";
-		try {
-			List<Map<String, Object>> diaryImgList = new ArrayList<Map<String, Object>>();
+		List<String> hastgNameList = new ArrayList<String>();
+		for(int i=0; i<hastgListJSONArr.size(); i++) {
+			hastgNameList.add((String) hastgListJSONArr.get(i));
+		}
+		
+		List<Integer> hastgNoList = new ArrayList<Integer>();
+		for(int i=0; i<hastgNameList.size(); i++) {
+			String hastgName = hastgNameList.get(i);
 			
-			// i번째 일기 번호에 해당하는 사진, 태그들
-			for(int i=0; i<diaryImgListJSONArr.size(); i++) {
-				Map<String, Object> diaryImgData = new HashMap<String, Object>();
-				
-				// i번째 diaryImgData에 i번째 일기 사진 추가
-				diaryImgData.put("diaryImgUrl", (String) diaryImgListJSONArr.get(i));
-				
-				// i번째 일기 사진의 태그들 JOSNArray
-				JSONArray itemTagListJSONArr = (JSONArray) itemTagListsJSONArr.get(i);
-				// JSONArray<JSONObject>에서 ArrayList<HashMap>으로 변환
-				List<Map<String, Object>> itemTaglist = new ArrayList<Map<String, Object>>();
-				
-				if(itemTagListJSONArr != null) {
-					for(int j=0; j<itemTagListJSONArr.size(); j++) {
-						JSONObject itemTagDataJSONObj = (JSONObject) itemTagListJSONArr.get(j);
-						
-						Map<String, Object> itemTagData = null;
-						
-						try {
-							itemTagData = new ObjectMapper().readValue(itemTagDataJSONObj.toJSONString(), Map.class) ;
-				        } catch (JsonParseException jpe) {
-				            jpe.printStackTrace();
-				        } catch (JsonMappingException jme) {
-				            jme.printStackTrace();
-				        } catch (IOException ioe) {
-				            ioe.printStackTrace();
-				        }
-						
-						itemTaglist.add(itemTagData);
+			int hastgDuplctCheck = diaryService.hastgDuplctCheck(hastgName);
+			if(hastgDuplctCheck==0) {
+				diaryParams.put("hastgName", hastgName);
+				try {
+					int cnt = diaryService.addHastgData(diaryParams);
+					
+					if(cnt==0) {
+						msg = "FAILED";
 					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					
+					msg = "ERROR";
 				}
-				
-				// i번째 diaryImgData에 i번째 일기 사진의 태그들 추가
-				diaryImgData.put("itemTaglist", itemTaglist);
-				// diaryImgList에 i번째 diaryImgList 추가
-				diaryImgList.add(diaryImgData);
 			}
-			// diaryParams에 diaryImgList 추가
-			diaryParams.put("diaryImgList", diaryImgList);
 			
+			int hastgNo = diaryService.getHastgNo(hastgName);
+			hastgNoList.add(hastgNo);
+		}
+		diaryParams.put("hastgNoList", hastgNoList);
+		
+		List<Map<String, Object>> diaryImgList = new ArrayList<Map<String, Object>>();
+		// i번째 일기 번호에 해당하는 사진, 태그들
+		for(int i=0; i<diaryImgListJSONArr.size(); i++) {
+			Map<String, Object> diaryImgData = new HashMap<String, Object>();
+			
+			// i번째 diaryImgData에 i번째 일기 사진 추가
+			diaryImgData.put("diaryImgUrl", (String) diaryImgListJSONArr.get(i));
+			
+			// i번째 일기 사진의 태그들 JOSNArray
+			JSONArray itemTagListJSONArr = (JSONArray) itemTagListsJSONArr.get(i);
+			// JSONArray<JSONObject>에서 ArrayList<HashMap>으로 변환
+			List<Map<String, Object>> itemTaglist = new ArrayList<Map<String, Object>>();
+			
+			if(itemTagListJSONArr != null) {
+				for(int j=0; j<itemTagListJSONArr.size(); j++) {
+					JSONObject itemTagDataJSONObj = (JSONObject) itemTagListJSONArr.get(j);
+					
+					Map<String, Object> itemTagData = null;
+					
+					try {
+						itemTagData = new ObjectMapper().readValue(itemTagDataJSONObj.toJSONString(), Map.class) ;
+					} catch (JsonParseException jpe) {
+						jpe.printStackTrace();
+					} catch (JsonMappingException jme) {
+						jme.printStackTrace();
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+					
+					itemTaglist.add(itemTagData);
+				}
+			}
+			
+			// i번째 diaryImgData에 i번째 일기 사진의 태그들 추가
+			diaryImgData.put("itemTaglist", itemTaglist);
+			// diaryImgList에 i번째 diaryImgList 추가
+			diaryImgList.add(diaryImgData);
+		}
+		// diaryParams에 diaryImgList 추가
+		diaryParams.put("diaryImgList", diaryImgList);
+		
+		try {
 			// 일기 등록
 			int cnt = diaryService.addDiaryData(diaryParams);
+			
 			if(cnt==0) {
 				msg = "FAILED";
 			}
@@ -184,6 +217,213 @@ public class DairyjjController {
 		}
 		
 		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/dtlDiary")
+	public ModelAndView dilDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
+		int sessnMemberNo = 2;
+		mav.addObject("sessnMemberNo", sessnMemberNo);
+		
+		int diaryNo = 64;
+		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
+			diaryNo = Integer.parseInt(params.get("diary_no"));
+		}
+		int memberNo = 2;
+		
+		mav.addObject("diaryNo", diaryNo);
+		mav.addObject("memberNo", memberNo);
+		
+		mav.setViewName("jangboco/diary/dtlDiary");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/getDiaryDataAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String getDiaryDataAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		HashMap<String, Object> diaryData = diaryService.getDiaryData(params);
+		List<HashMap<String, Object>> hastgList = diaryService.getHastgListOnDiary(params);
+		
+		modelMap.put("diaryData", diaryData);
+		modelMap.put("hastgList", hastgList);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/getDiaryImgItemTagAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String getDiaryImgItemTagAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> diaryImgList = diaryService.getDiaryImgListOnDiary(params);
+		for(HashMap<String, Object> diaryImgData : diaryImgList) {
+			int imgNo = Integer.parseInt(String.valueOf(diaryImgData.get("IMG_NO")));
+			
+			List<HashMap<String, Object>> itemTagList = diaryService.getItemTagListOnDiary(imgNo);
+			diaryImgData.put("itemTagList", itemTagList);
+		}
+		
+		modelMap.put("diaryImgList", diaryImgList);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/getProfileDairyListAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String getProfileDairyListAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> profileDiaryList = diaryService.getProfileDiaryList(params);
+			
+		modelMap.put("profileDiaryList", profileDiaryList);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/checkDiaryLikeAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String checkDiaryLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		int checkLike = diaryService.checkLike(params);
+		
+		modelMap.put("checkLike", checkLike);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/cntDiaryLikeAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String cntDiaryLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		int cntDiaryLike =  diaryService.cntDiaryLike(params);
+		
+		modelMap.put("cntDiaryLike", cntDiaryLike);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/diaryLikeAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String diaryLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt =  diaryService.diaryLike(params);
+
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/diaryUnlikeAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String diaryUnlikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt =  diaryService.diaryUnlike(params);
+			
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/diaryAccuseAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String diaryAccuseAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt = diaryService.addDiaryAccuseData(params);
+
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/checkFolwAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String checkFolwAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		int checkFolw = diaryService.checkFolw(params);
+		
+		modelMap.put("checkFolw", checkFolw);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/getHastgListAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String getHastgListAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> hastgList = diaryService.getHastgList(params);
+		
+		modelMap.put("hastgList", hastgList);
 		
 		return mapper.writeValueAsString(modelMap);
 	}

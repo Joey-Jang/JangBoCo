@@ -46,11 +46,32 @@
 		WHERE ITEMS_NAME LIKE '%' || #{searchItemsName} ||'%'
 		ORDER BY ITEMS_NAME
 	</select>
+		
+	<select id="hastgDuplctCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM HASTG
+		WHERE HASTG_NAME = #{hastgName}
+	</select>
+	
+	<insert id="addHastgData" parameterType="hashmap">
+		INSERT INTO HASTG (HASTG_NO, MEMBER_NO, HASTG_NAME)
+		VALUES (HASTG_SEQ.NEXTVAL, #{memberNo}, #{hastgName})
+	</insert>
+	
+	<select id="getHastgNo" parameterType="String" resultType="Integer">
+		SELECT HASTG_NO
+		FROM HASTG
+		WHERE HASTG_NAME = #{hastgName}
+	</select>
 	
 	<update id="addDiaryData" parameterType="hashmap">
 		INSERT ALL
 		INTO DIARY (DIARY_NO, MEMBER_NO, CON)
 		VALUES (DIARY_SEQ.NEXTVAL, #{memberNo}, #{con})
+		<foreach collection="hastgNoList" item="hastgNo" separator=" ">
+			INTO DIARY_HASTG (DIARY_NO, HASTG_NO)
+			VALUES (DIARY_SEQ.CURRVAL, #{hastgNo})
+		</foreach>
 		<foreach collection="diaryImgList" item="diaryImgData" separator=" ">
 			INTO DIARY_IMG (IMG_NO, DIARY_NO, IMG_URL)
 			VALUES (GET_DIARY_IMG_SEQ_NEXTVAL, DIARY_SEQ.CURRVAL, #{diaryImgData.diaryImgUrl})
@@ -67,4 +88,124 @@
 		</foreach>
 		SELECT * FROM DUAL
 	</update>
+	
+	<select id="getDiaryData" parameterType="hashmap" resultType="hashmap">
+		SELECT D.DIARY_NO, D.MEMBER_NO, D.CON, D.HIT_NUM, (	SELECT COUNT(*)
+															FROM DIARY_LIKE
+															WHERE DIARY_NO = #{diaryNo}
+														  ) AS DIARY_LIKE,
+			   M.NICNM, M.IMG_URL
+		FROM DIARY D
+		JOIN MEMBER M
+		ON D.MEMBER_NO = M.MEMBER_NO
+		WHERE DIARY_NO = #{diaryNo}
+		AND DEL_FLAG = 0
+	</select>
+	
+	<select id="getHastgListOnDiary" parameterType="hashmap" resultType="hashmap">
+		SELECT H.HASTG_NO, H.HASTG_NAME
+		FROM HASTG H
+		JOIN DIARY_HASTG DH
+		ON H.HASTG_NO = DH.HASTG_NO
+		AND H.DEL_FLAG = 0
+		WHERE DH.DIARY_NO = #{diaryNo}
+		ORDER BY HASTG_NO
+	</select>
+	
+	<select id="getDiaryImgListOnDiary" parameterType="hashmap" resultType="hashmap">
+		SELECT IMG_NO, IMG_URL
+		FROM DIARY_IMG
+		WHERE DIARY_NO = #{diaryNo}
+		ORDER BY IMG_NO
+	</select>
+	
+	<select id="getItemTagListOnDiary" parameterType="Integer" resultType="hashmap">
+		SELECT ITEM_TAG_NO, NVL2(IT.MARKET_NO, IT.MARKET_NO, M.MARKET_NO) AS MARKET_NO,
+			   NVL2(IT.ITEMS_NO, IT.ITEMS_NO, I.ITEMS_NO) AS ITEMS_NO, IMG_NO, COST, BUY_QNT,
+			   NVL2(IT.MARKET_NAME, IT.MARKET_NAME, M.MARKET_NAME) AS MARKET_NAME,
+			   NVL2(IT.ITEMS_NAME, IT.ITEMS_NAME, I.ITEMS_NAME) AS ITEMS_NAME
+		FROM ITEM_TAG IT
+		LEFT OUTER JOIN MARKET M
+					 ON IT.MARKET_NO = M.MARKET_NO
+		LEFT OUTER JOIN ITEMS I
+					 ON IT.ITEMS_NO = I.ITEMS_NO
+		WHERE IMG_NO = #{imgNo}
+	</select>
+	
+	<insert id="addDiaryAccuse" parameterType="hashmap">
+		INSERT INTO DIARY_ACCUSE (ACCUSE_NO, DIARY_NO, REQ_MEMBER_NO, REASON_CODE, TITLE, CON)
+		VALUES (DIARY_ACCUSE_SEQ.NEXTVAL, #{diaryNo}, #{memberNo}, #{reasonCode}, #{title}, #{con})
+	</insert>
+	
+	<select id="getProfileDiaryList" parameterType="hashmap" resultType="hashmap">
+		SELECT DIARY_NO, IMG_URL
+		FROM (  SELECT DIARY_NO, IMG_URL, RANK() OVER(PARTITION BY DIARY_NO ORDER BY IMG_NO) AS IMG_IDX
+		        FROM DIARY_IMG
+		        WHERE DIARY_NO IN ( SELECT DIARY_NO
+		                            FROM (
+		                                    SELECT DIARY_NO, ROW_NUMBER() OVER(ORDER BY DIARY_NO DESC) AS RNUM
+		                                    FROM DIARY
+		                                    WHERE MEMBER_NO = ( SELECT D.MEMBER_NO
+		                                                        FROM MEMBER M
+		                                                        JOIN DIARY D
+		                                                        ON M.MEMBER_NO = D.MEMBER_NO
+		                                                        WHERE D.DIARY_NO = #{diaryNo}
+		                                                      )
+		                                    AND DEL_FLAG = 0
+		                                 )
+		                            WHERE RNUM <![CDATA[<=]]> 4
+		                          )
+		)
+		WHERE IMG_IDX = 1
+		ORDER BY DIARY_NO DESC
+	</select>
+	
+	<select id="checkLike" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM DIARY_LIKE
+		WHERE MEMBER_NO = #{memberNo}
+		AND DIARY_NO = #{diaryNo}
+	</select>
+	
+	<select id="cntDiaryLike" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM DIARY_LIKE
+		WHERE DIARY_NO = #{diaryNo}
+	</select>
+	
+	<insert id="diaryLike">
+		INSERT INTO DIARY_LIKE (MEMBER_NO, DIARY_NO)
+		VALUES (#{memberNo}, #{diaryNo})
+	</insert>
+	
+	<delete id="diaryUnlike">
+		DELETE FROM DIARY_LIKE
+		WHERE MEMBER_NO = #{memberNo}
+		AND DIARY_NO = #{diaryNo}
+	</delete>
+	
+	<insert id="addDiaryAccuseData" parameterType="hashmap">
+		INSERT INTO DIARY_ACCUSE (ACCUSE_NO, DIARY_NO, REQ_MEMBER_NO, REASON_CODE, TITLE, CON)
+		VALUES (DIARY_ACCUSE_SEQ.NEXTVAL, #{diaryNo}, #{memberNo}, #{reasonCode}, #{title}, #{con})
+	</insert>
+	
+	<select id="checkFolw" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM FOLW
+		WHERE REQ_MEMBER_NO = #{memberNo}
+		AND TARGET_MEMBER_NO = (SELECT D.MEMBER_NO
+		                        FROM MEMBER M
+		                        JOIN DIARY D
+		                        ON M.MEMBER_NO = D.MEMBER_NO
+		                        WHERE D.DIARY_NO = #{diaryNo}
+		                       )
+	</select>
+	
+	<select id="getHastgList" parameterType="hashmap" resultType="hashmap">
+		SELECT H.HASTG_NO, H.HASTG_NAME
+		FROM HASTG H
+		JOIN DIARY_HASTG DH
+		ON H.HASTG_NO = DH.HASTG_NO
+        AND DIARY_NO = #{diaryNo}
+	</select>
 </mapper>

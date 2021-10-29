@@ -33,6 +33,21 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	public List<HashMap<String, Object>> getItemsList(HashMap<String, String> params) throws Throwable {
 		return sqlSession.selectList("Diary.getItemsList", params);
 	}
+	
+	@Override
+	public int hastgDuplctCheck(String hastgName) throws Throwable {
+		return sqlSession.selectOne("Diary.hastgDuplctCheck", hastgName);
+	}
+	
+	@Override
+	public int addHastgData(Map<String, Object> diaryParams) throws Throwable {
+		return sqlSession.insert("Diary.addHastgData", diaryParams);
+	}
+
+	@Override
+	public int getHastgNo(String hastgName) throws Throwable {
+		return sqlSession.selectOne("Diary.getHastgNo", hastgName);
+	}
 
 	@Override
 	public int addDiaryData(Map<String, Object> diaryParams) throws Throwable {
@@ -40,8 +55,68 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	}
 
 	@Override
-	public int addToAccbk(Map<String, Object> accbkParams) throws Throwable {
-		return sqlSession.insert("Diary.addToAccbk", accbkParams);
+	public HashMap<String, Object> getDiaryData(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.getDiaryData", params);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getHastgListOnDiary(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectList("Diary.getHastgListOnDiary", params);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getDiaryImgListOnDiary(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectList("Diary.getDiaryImgListOnDiary", params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getItemTagListOnDiary(int imgNo) throws Throwable {
+		return sqlSession.selectList("Diary.getItemTagListOnDiary", imgNo);
+	}
+
+	@Override
+	public int addDiaryAccuse(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.addDiaryAccuse", params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getProfileDiaryList(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectList("Diary.getProfileDiaryList", params);
+	}
+
+	@Override
+	public int checkLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.checkLike", params);
+	}
+	
+	@Override
+	public int cntDiaryLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.cntDiaryLike", params);
+	}
+	
+	@Override
+	public int diaryLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.diaryLike", params);
+	}
+	
+	@Override
+	public int diaryUnlike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.delete("Diary.diaryUnlike", params);
+	}
+	
+	@Override
+	public int addDiaryAccuseData(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.addDiaryAccuseData", params);
+	}
+
+	@Override
+	public int checkFolw(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.checkFolw", params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getHastgList(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectList("Diary.getHastgList", params);
 	}
 
 }
