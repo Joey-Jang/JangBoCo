@@ -3,6 +3,7 @@ package com.gdj37.jangboco.web.itemsinfo.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdj37.jangboco.common.bean.PagingBean;
+import com.gdj37.jangboco.common.service.IPagingService;
 import com.gdj37.jangboco.web.itemsinfo.service.IItemsInfoService;
 import com.gdj37.jangboco.web.priceschart.service.IPricesChartService;
 
@@ -30,6 +33,9 @@ public class ItemsInfoController {
 	public IItemsInfoService iItemsInfoService;
 	@Autowired
 	public IPricesChartService iPricesChartService;
+	
+	@Autowired
+	public IPagingService iPagingService; 
 	
 	@RequestMapping(value="/itemsInfo")
 	public ModelAndView itemsInfo(@RequestParam HashMap<String, String> params,
@@ -44,6 +50,15 @@ public class ItemsInfoController {
 		
 		mav.addObject("itemsNo",itemsNo);
 		mav.addObject("matrlName",matrlName);
+		
+
+		String page= "1";
+		
+		if(params.get("page")!=null) {
+			page = params.get("page");
+		}		
+		
+		mav.addObject("page", page);
 		
 		int homeFlag = 0;
 	    int menuIdx = 0;
@@ -113,27 +128,39 @@ public class ItemsInfoController {
 		
 		try {
 			URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
-								"/COOKRCP01/json/1/1/RCP_PARTS_DTLS="+ matrlName);
+								"/COOKRCP01/json/1/1000/RCP_PARTS_DTLS="+ matrlName);
 			
 			BufferedReader bf;
 			bf = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
 			
 			result = bf.readLine();
-			System.out.println(result);
-			System.out.println("====================");
+			// System.out.println(result);
 			
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
 			JSONObject cookrcp01 = (JSONObject)jsonObject.get("COOKRCP01");
-			System.out.println(cookrcp01);
-			System.out.println("====================");
-			String totalCnt = (String)cookrcp01.get("total_count");
+			// System.out.println(cookrcp01);
+
+			int totalCnt = Integer.parseInt((String)cookrcp01.get("total_count"));
 			System.out.println(totalCnt);			
-			System.out.println("====================");
-			JSONArray row = (JSONArray)cookrcp01.get("row");
-			System.out.println(row);
-			JSONObject row1 = (JSONObject)row.get(0);
-			System.out.println(row1.get("RCP_WAY2")); 
+
+			JSONArray recipeList = (JSONArray)cookrcp01.get("row");
+			
+			int page = Integer.parseInt(params.get("page"));
+			PagingBean pb = iPagingService.getPagingBean(page, totalCnt);				
+			
+			for(int i = 0; i<recipeList.size(); i++) {
+				String artclNo = ""+(recipeList.size()-i);				
+				
+				JSONObject recipeRow = (JSONObject)recipeList.get(i);
+				
+				recipeRow.put("artclNo", artclNo);
+				
+				System.out.println(recipeRow.get("artclNo")); 
+			}		
+			
+			modelMap.put("pb", pb);			
+			modelMap.put("recipeList", recipeList);
 			
 		} catch (Exception e) {
 			 e.printStackTrace();

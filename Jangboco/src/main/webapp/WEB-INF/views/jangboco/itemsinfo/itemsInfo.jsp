@@ -9,6 +9,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
+<style type="text/css">
+	.paging_wrap {
+		display:flex;
+		width : 100%;
+		height : 30px;
+		justify-content: space-between;
+		align-items: center;
+	}	
+</style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -25,7 +34,20 @@ $(document).ready(function(){
 	google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(reloaditemsInfo);
     
-    reloadRecipe()
+    reloadRecipe();
+    
+    $(".paging_wrap").on("click","span",function(){
+		$("#page").val($(this).attr("page"));		
+		
+		reloadRecipe();
+	});
+    
+    $("tbody").on("click","#go_recipe_dtl",function(){
+		$("#rcp_nm").val($(this).attr("nm"));
+		
+		$("#cook_recipe_form").attr("action","recipeDtl");
+		$("#action_form").submit();
+	});
 });
 
 function reloaditemsInfo(){
@@ -127,20 +149,82 @@ function drawDisctChart(res) {
     chart.draw(data, google.charts.Bar.convertOptions(options));
  }
  
-function reloadRecipe(){
-	var params= $("#matrl_name").val();
-	console.log(params);
+function reloadRecipe(){	
+	var params= $("#cook_recipe_form").serialize();
+	
 	$.ajax({
-		url: "https://openapi.foodsafetykorea.go.kr/api/121c409444094fdea525/COOKRCP01/json/1/1/RCP_PARTS_DTLS="+ params, 
+		url: "recipeAjax", 
 		type: "post", 
-		dataType: "json",		
+		dataType: "json", 
+		data: params, 
 		success : function(res) {			
-			console.log(res);
+			drawRecipeList(res);
+			drawPaging(res.pb);
 		},
 		error: function(request, status, error) { 
 			console.log(error);
 		}
 	});
+}
+
+function drawRecipeList(res){
+	var html = "";
+	var pb = res.pb;
+	var list = res.recipeList;
+	var startCnt = pb.startCount -1;
+	var endCnt = pb.endCount -1;	
+	
+	for(var i = startCnt; i < endCnt; i++ ){
+		html += "<tr>               ";
+		html += "	<td>"+ list[i].artclNo+ "</td>     ";
+		html += "	<td id =\"go_recipe_dtl\" nm = \""+ list[i].RCP_NM + "\">"+ list[i].RCP_NM + "</td>";
+		html += "</tr>              ";		
+	}
+	
+	$("tbody").html(html);
+	
+	
+};
+
+function drawPaging(pb){
+	var html ="";
+	
+	html += "<div id=\"first_btn\">    "
+	html += "	<span page=\"1\">처음</span>    "
+	html += "</div>                  "
+	html += "<div>                   "
+	if($("#page").val()<=10){		
+		html += "	<span page=\"1\">이전</span>    "
+	} else {
+		html += "	<span page=\"" +(pb.startPcount-1) + "\">이전</span>    "		
+	}	
+	html += "</div>                  "
+	for(var i=pb.startPcount; i<=pb.endPcount; i++){		
+		if($("#page").val()==i){
+			html += "<div>                   "
+			html += "	<span page=\""+ i + "\"><b>"+i+"</b></span>       "
+			html += "</div>                  "			
+		} else {
+			html += "<div>                   "
+			html += "	<span page=\""+ i + "\">"+i+"</span>       "
+			html += "</div>                  "						
+		}
+	}
+	
+	if(pb.endPcount== pb.maxPcount){		
+		html += "<div>                   "
+		html += "	<span page=\""+pb.maxPcount +"\">다음</span>    "
+		html += "</div>                  "
+	} else {
+		html += "<div>                   "
+		html += "	<span page=\""+(pb.endPcount+1) +"\">다음</span>    "
+		html += "</div>                  "		
+	}
+	html += "<div id=\"last_btn\">     "
+	html += "	<span page=\""+ pb.maxPcount +"\">마지막</span>  "
+	html += "</div>                  "
+	
+	$(".paging_wrap").html(html);
 }
 </script>
 </head>
@@ -173,6 +257,8 @@ function reloadRecipe(){
             <div class="cook_recipe_contnr">
             	<form action="#" id="cook_recipe_form" method="post">
             		<input type="hidden" id="matrl_name" name="matrlName" value="${matrlName}">
+            		<input type="hidden" id="page" name="page" value="${page}">
+            		<input type="hidden" id="rcp_nm" name="rcpNm">
             	</form>
             	<p>요리레시피</p>
             	<table class="cook_recipe_table">
@@ -186,6 +272,8 @@ function reloadRecipe(){
             		</tbody>
             	</table>
             </div>
+            <div class="paging_wrap">        		
+        	</div>
             <div class="jangbc_diary_contnr">
             </div>
         </div>
