@@ -524,8 +524,7 @@
 	flex-flow: column nowrap;
 	justify-content: space-between;
 	align-items: center;
-	width: 100%;
-	width: 180px;
+	width: 200px;
 	height: 135px;
 	padding: 10px;
 	background-color: white;
@@ -564,7 +563,7 @@
 	height: 25px;
 }
 .item_tag_dtl_cost {
-	width: 133px;
+	width: 100%;
 	height: 25px;
 	padding: 0 10px;
 	text-align: right;
