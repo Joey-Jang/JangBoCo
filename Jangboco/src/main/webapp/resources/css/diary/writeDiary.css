@@ -519,7 +519,7 @@
 	position: absolute;
 	top: 0;
 	left: 5px;
-	transform: translate(-60px, -100%);
+	transform: translate(-70px, -100%);
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
