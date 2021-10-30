@@ -168,4 +168,57 @@ public class ItemsInfoController {
 		
 		return mapper.writeValueAsString(modelMap); 
 	}
+	
+	@RequestMapping(value="/recipeDtl")
+	public ModelAndView recipeDtl(@RequestParam HashMap<String, String> params,
+								ModelAndView mav) {
+		
+		String rcpNm = params.get("rcpNm");
+		
+		mav.addObject("rcpNm", rcpNm);
+		
+		mav.setViewName("jangboco/itemsinfo/recipeDtl");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/recipeDtlAjax", method= RequestMethod.POST,
+			produces = "text/json;charset=UTF-8" )
+	@ResponseBody
+	public String recipeDtlAjax(@RequestParam HashMap<String, String> params) 
+				throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();		
+		
+		String key = "121c409444094fdea525";
+		
+		String rcpNm = params.get("rcpNm");
+		
+		String result = "";		
+		
+		
+		try {
+			URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
+								"/COOKRCP01/json/1/1/RCP_NM="+rcpNm);
+			
+			BufferedReader bf;
+			bf = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+			
+			result = bf.readLine();			
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
+			JSONObject cookrcp01 = (JSONObject)jsonObject.get("COOKRCP01");				
+
+			JSONArray recipeArray = (JSONArray)cookrcp01.get("row");					
+			JSONObject recipeList = (JSONObject)recipeArray.get(0);
+			modelMap.put("recipeList", recipeList);
+			
+		} catch (Exception e) {
+			 e.printStackTrace();
+		}
+		
+		return mapper.writeValueAsString(modelMap); 
+	}
 }

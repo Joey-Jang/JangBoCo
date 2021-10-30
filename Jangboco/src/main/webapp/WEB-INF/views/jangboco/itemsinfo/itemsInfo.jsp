@@ -46,7 +46,7 @@ $(document).ready(function(){
 		$("#rcp_nm").val($(this).attr("nm"));
 		
 		$("#cook_recipe_form").attr("action","recipeDtl");
-		$("#action_form").submit();
+		$("#cook_recipe_form").submit();
 	});
 });
 
@@ -254,6 +254,9 @@ function drawPaging(pb){
             <div id="line_chart_div" style="width: 600px; height: 250px;"></div>
             <div id="disct_chart_div" style="width: 600px; height: 250px;"></div>
             
+            <div class="jangbc_diary_contnr">
+            </div>
+            
             <div class="cook_recipe_contnr">
             	<form action="#" id="cook_recipe_form" method="post">
             		<input type="hidden" id="matrl_name" name="matrlName" value="${matrlName}">
@@ -273,9 +276,7 @@ function drawPaging(pb){
             	</table>
             </div>
             <div class="paging_wrap">        		
-        	</div>
-            <div class="jangbc_diary_contnr">
-            </div>
+        	</div>            
         </div>
     </div>
     <div class="bottom_contnr"></div>
