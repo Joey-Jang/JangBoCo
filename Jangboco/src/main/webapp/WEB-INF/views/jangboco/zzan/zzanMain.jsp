@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,6 +75,7 @@
 	width: 330px;
     height: calc(100% - 50px);
     display: flex;
+    overflow: auto;
 }
 
 .zzan_map_contnr {
@@ -116,8 +119,20 @@
 
 .market_list{
 	list-style: none;
+	
 }
 
+.market_list li{
+	border-bottom: 1px solid ;
+}
+
+.market_open {
+	color : green;
+}
+
+.market_close {
+	color : red;
+}
 </style>
 
 </head>
@@ -203,7 +218,6 @@
 	
 	<%--기본 지도 정보--%>
 
-	
 	var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
         level : 9 // 지도의 확대 레벨 
@@ -219,6 +233,12 @@
 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 	var markers=[];
 	
+	
+	<%--시간 정보--%>
+	var now= new Date();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    var nowTime = hours.toString() + minutes;
 	
 	
 	<%--클러스터, 마커 정보--%>
@@ -333,7 +353,7 @@
 		        //기존에 있던 마커들 지우기
 		        markers=[];
 		        clusterer.clear();
-		        
+		        var html = "";
 		        
 		        <c:forEach var="data" items="${list}">
 			    	if(disct=='${data.DISCT_NAME}'){
@@ -341,6 +361,8 @@
 				        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
 				    		image: markerImage
 				   	 	});
+			    		
+			    		       
 			    		
 			    		// 마커에 표시할 인포윈도우 생성
 						var infowindow2 = new kakao.maps.InfoWindow({
@@ -354,8 +376,28 @@
 			    		markers.push(marker);
 			    		bounds.extend(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}));
 			    		
-			    		
 			    		//목록에 보이게 구현
+			    		html += "<li market_no=\"" + ${data.MARKET_NO} + "\">";
+			    		html += "	<span class=\"market_name\"><h3>" + "${data.MARKET_NAME}" + "</h3></span>";
+			    		html += "	<div class=\"market_con\">";
+			    		html += "		<span class=\"market_addrs\">" + "${data.MARKET_ADDRS}" + "</span><br>";
+			    		
+			    		<c:if test="${data.PHONE_NUM != null}">
+			    		html += "		<span class=\"market_phone\">" + "${data.PHONE_NUM}" + "</span><br>";
+			    		</c:if>
+			    		<c:if test="${data.START_TIME != null and data.END_TIME != null}">
+			    		html += "		<span class=\"market_time\">" + "${data.START_TIME}" + "\~" + "${data.END_TIME}" + "</span><br>";    
+			    		if(timeCheck("${data.START_TIME}","${data.END_TIME}")){
+			    		html += "		<span class=\"market_open\">" + "영업 중" + "</span><br>";
+			    	      } else {
+			    	    html += "		<span class=\"market_close\">" + "영업 종료" + "</span><br>";
+			    	      }
+			    		
+			    		</c:if>
+			    		/* html += "	</div>";
+			    		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">"; */
+			    		html += "</li>";
+			    		
 			    	}
 			    	
 			    	
@@ -363,7 +405,7 @@
 				</c:forEach>
 				clusterer.addMarkers(markers); //클러스터에 마커 추가
 				
-				
+				$("#market_list").html(html);
 				map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
 		        
 		    } 
@@ -381,7 +423,7 @@
 		//기존에 있던 마커들 지우기
         markers=[];
         clusterer.clear();
-		
+        var html = "";
         
         // 지도의 현재 영역을 얻어옵니다 
 	    var prsntBounds = map.getBounds();
@@ -407,6 +449,15 @@
 		
 		if(prsntBounds.contain(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}))){
 			markers.push(marker);
+			
+			//목록에 보이게 구현
+			html += "<li market_no=\"" + ${data.MARKET_NO} + "\">";
+			html += "	<span class=\"market_name\"><h3>" + "${data.MARKET_NAME}" + "</h3></span>";
+			html += "	<div class=\"market_con\">";
+			html += "		<span class=\"market_addrs\">" + "${data.MARKET_ADDRS}" + "</span>";
+			/* html += "	</div>";
+			html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">"; */
+			html += "</li>";
     	}
 		
 		// 마커에 표시할 인포윈도우 생성
@@ -418,9 +469,10 @@
 	    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 	    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
  		
+	    
 		</c:forEach>
 		clusterer.addMarkers(markers); //클러스터에 마커 추가
-		
+		$("#market_list").html(html);
 		
 		
 		
@@ -583,8 +635,23 @@
 		$(".paging_wrap").html(html);
 		
 	}
-
 	
+	function timeCheck(startTime,endTime){ //시간비교
+		   var now= new Date();
+		   var hours = (now.getHours()<10?'0':'') + now.getHours();
+		   var minutes = (now.getMinutes()<10?'0':'') + now.getMinutes();
+		   var nowTime = hours.toString() + minutes;
+		   
+		   startTime = startTime.replace(":", "");
+		   endTime = endTime.replace(":", "");
+		   
+		   if(nowTime>startTime && nowTime<endTime){
+		      return true;
+		   } else {
+		      return false;
+		   }   
+		}
+
 	</script>
         </div>
     </div>

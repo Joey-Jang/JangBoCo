@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="zzan">
 	<select id="getMarketList" parameterType="hashmap" resultType="hashmap">
-		SELECT MARKET_NO,MARKET_NAME, DISCT_NO, DISCT_NAME,LAT,LNG
-		FROM MARKET NATURAL JOIN DISCT
+		SELECT M.MARKET_NO,M.MARKET_NAME, M.DISCT_NO, D.DISCT_NAME,M.LAT,M.LNG,M.MARKET_ADDRS,MM.PHONE_NUM,MM.START_TIME,MM.END_TIME
+		FROM DISCT D JOIN MARKET M
+        ON D.DISCT_NO=M.DISCT_NO
+        LEFT OUTER JOIN MARKET_MEMBER MM
+        ON M.MARKET_NO=MM.MARKET_NO
 		WHERE LAT is not null
 	</select>
 </mapper>
