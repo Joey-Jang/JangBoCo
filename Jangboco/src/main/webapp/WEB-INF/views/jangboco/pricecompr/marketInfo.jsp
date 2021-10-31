@@ -61,7 +61,7 @@ $(document).ready(function(){
 		$("#search_gbn").val("${param.searchGbn}");
 	}
 	if("${marketMemberNo}" != ""){
-		if(timeCheck("${marketInfo.START_TIME}","${marketInfo.END_TIME}")){
+		if(timeCheck("08:00","01:00")){
 			$("#time_check").html("영업 중");
 			$("#time_check").css("color","green");
 		} else {
@@ -98,19 +98,29 @@ $(document).ready(function(){
 
 function timeCheck(startTime,endTime){
 	var now= new Date();
-	var hours = now.getHours();
-	var minutes = now.getMinutes();
+	var hours = (now.getHours()<10?'0':'') + now.getHours(); 		
+	
+	var minutes = (now.getMinutes()<10?'0':'') + now.getMinutes();
+	
 	var nowTime = hours.toString() + minutes;
 	
 	startTime = startTime.replace(":", "");
 	endTime = endTime.replace(":", "");
 	
+	// 에러 있는 부분 후순위로 미루고 다음에 수정
+	if(startTime >= endTime){
+		nowTime = parseInt(nowTime);
+		nowTime += 2400;
+		endTime = parseInt(endTime);
+		endTime += 2400;
+		console.log(nowTime);
+		console.log(endTime);
+	}
 	if(nowTime>startTime && nowTime<endTime){
 		return true;
 	} else {
 		return false;
-	}
-	 
+	}	 
 	
 }
 
