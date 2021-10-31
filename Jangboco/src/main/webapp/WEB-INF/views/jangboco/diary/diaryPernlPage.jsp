@@ -18,37 +18,186 @@
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script>
 var page = 1;
+var myMemberNo = <%=session.getAttribute("member_no")%>;
 
 $(document).ready(function() {
-   if("${param.searchGbn}" != "") {
-      $("#searchGbn").val("${param.searchGbn}");
-   }
-   reloadList();
-
-   $("#searchBtn").on("click", function() {
-      $("#page").val("1");
-      $("#oldTxt").val($("#searchTxt").val());
-      reloadList();
-   });
    
-   $("#addBtn").on("click", function() {
-      $("#searchTxt").val($("#oldTxt").val());
-      $("#actionForm").attr("action","testAMAdd");
-      $("#actionForm").submit();
-   });
-   
+	
    $("#pagingWrap").on("click", "span", function() {
       $("#page").val($(this).attr("page"));
       reloadList();
    });
    
-
-    
+   reloadList();
+   getMemberImg();
+   getFolwFolwr();
+   hideInit();
+   checkFolw();
 });
 
 function diaryDtl(diary_no){
 	alert(diary_no);
 }
+
+function getMemberImg(){
+    $.ajax({ //jquery의 ajax함수 호출
+        url: "getMemberImgAjax", //접속 주소
+        type: "post", //전송 방식
+        dataType: "json", // 받아올 데이터 형태
+        data: {
+        	"member_no" : $("#page_member_no").val()
+        }, //보낼 데이터(문자열 형태)
+        success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+           var html = "";
+           if(res.IMG_URL!=null && res.IMG_URL != ""){
+        	   html += "<img src=\"resources/images/diaryImages/"+res.IMG_URL + "\" class=\"profile_img\">";
+           } else {
+        	   html += "<img src=\"resources/images/diaryImages/user.png\" class=\"profile_img\">";
+           }
+           $(".main_img").html(html);
+        },
+        error: function(request, status, error) {//실패 시 다음 함수 실행
+           console.log(error);
+        }
+     });
+}
+
+function getFolwr(){
+    $.ajax({ //jquery의 ajax함수 호출
+        url: "getFolwrAjax", //접속 주소
+        type: "post", //전송 방식
+        dataType: "json", // 받아올 데이터 형태
+        data: {
+        	"member_no" : $("#page_member_no").val()
+        }, //보낼 데이터(문자열 형태)
+        success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+        	console.log(res);
+           var html = "";
+           $(".diary_list").css("display","none");
+           $("#pagingWrap").css("display","none");
+		  
+        },
+        error: function(request, status, error) {//실패 시 다음 함수 실행
+           console.log(error);
+        }
+     });
+}
+
+function getFolwng(){
+    $.ajax({ //jquery의 ajax함수 호출
+        url: "getFolwngAjax", //접속 주소
+        type: "post", //전송 방식
+        dataType: "json", // 받아올 데이터 형태
+        data: {
+        	"member_no" : $("#page_member_no").val()
+        }, //보낼 데이터(문자열 형태)
+        success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+        	console.log(res);
+           var html = "";
+           $(".diary_list").css("display","none");
+           $("#pagingWrap").css("display","none");
+		  
+        },
+        error: function(request, status, error) {//실패 시 다음 함수 실행
+           console.log(error);
+        }
+     });
+}
+
+function getFolwFolwr(){
+    $.ajax({ //jquery의 ajax함수 호출
+        url: "getFolwrFolwngAjax", //접속 주소
+        type: "post", //전송 방식
+        dataType: "json", // 받아올 데이터 형태
+        data: {
+        	"member_no" : $("#page_member_no").val()
+        }, //보낼 데이터(문자열 형태)
+        success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+           var html = "";
+		          
+           if(res.folw.FOLWR!=null && res.folw.FOLWR!=""){
+      		   html += "<span class=\"folwr\" onClick=\"getFolwr()\">팔로워" + res.folw.FOLWR +"</span>";
+           } else {
+        	   html += "<span class=\"folwr\">팔로워0</span>";
+           }
+           
+           if(res.folw.FOLWNG!=null && res.folw.FOLWNG!=""){
+        	   html += "<span class=\"folwng\" onClick=\"getFolwng()\">팔로잉" + res.folw.FOLWNG +"</span>";
+        	   
+           } else {
+        	   html += "<span class=\"folwng\">팔로잉0</span>";
+           }
+           
+           $(".folw_List").html(html);
+        },
+        error: function(request, status, error) {//실패 시 다음 함수 실행
+           console.log(error);
+        }
+     });
+}
+
+function hideInit(){
+	//마이멤버 null이거나 ""거나 myMemberNo = pageMemberNo면 hide
+	if(myMemberNo==null||myMemberNo==""||$("#page_member_no").val()==myMemberNo){
+		alert("test");
+		$(".do_folw").css("display","none");
+	}
+	
+}
+
+function checkFolw(){
+	alert("Test");
+	//팔로우인지 팔로잉인지 확인하는것
+    $.ajax({ //jquery의 ajax함수 호출
+        url: "checkFolwAjax", //접속 주소
+        type: "post", //전송 방식
+        dataType: "json", // 받아올 데이터 형태
+        data: {
+        	"page_member_no":$("#page_member_no").val()
+        }, //보낼 데이터(문자열 형태)
+        success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+           if(res.result == 1 || res.result == "1"){
+        	   $("#doFolw").val("팔로잉");
+           } else {
+        	   $("#doFolw").val("팔로우");
+           }
+        },
+        error: function(request, status, error) {//실패 시 다음 함수 실행
+           console.log(error);
+        }
+     });
+}
+
+function doFolwUnFolw(){
+	alert("Test");
+	var flag = "";
+	if($("#doFolw").val()=="팔로잉"){
+	//unfolw	
+		flag = "unfolw";
+	} else if ($("#doFolw").val()=="팔로우"){
+	//folw
+		flag = "folw";
+	}
+	
+    $.ajax({ //jquery의 ajax함수 호출
+        url: "doFolwUnFolwAjax", //접속 주소
+        type: "post", //전송 방식
+        dataType: "json", // 받아올 데이터 형태
+        data: {
+        	"page_member_no":$("#page_member_no").val(),
+        	"flag":flag
+        }, //보낼 데이터(문자열 형태)
+        success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+           console.log(res);
+        },
+        error: function(request, status, error) {//실패 시 다음 함수 실행
+           console.log(error);
+        }
+     });
+    checkFolw();
+    getFolwFolwr();
+}
+
 
 function reloadList() {
       var params = $("#actionForm").serialize(); //form의 데이터를 문자열로 변환
@@ -76,9 +225,7 @@ function drawList(list){
 	  html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"fill-img2\"></div>";
 	 
    }
-  
-   
-   
+
    $(".diary_list").html(html);
 }
 
@@ -112,6 +259,7 @@ function drawPaging(pb) {
    $("#pagingWrap").html(html);
       
 }
+
 </script>
 </head>
 <body>
@@ -130,14 +278,15 @@ function drawPaging(pb) {
             	<div class="profile_list">
 	            	<div class="profile_contr">
     	        		<div class="main_img">
+    	        			<img src="" class="profile_img">
         	    		</div>
             			<div class="folw_List">
-            				<span onClick="f">팔로우</span>
-            				<span>팔로워</span>
+            				<span class="folwr">팔로잉</span>
+            				<span class="folwng"> 팔로워</span>
             			</div>
             		</div>
 				   	<div class="do_folw">
-            			<input type="button" value="팔로잉"/>
+					   	<input type="button" id="doFolw" class="doFolw" onClick="doFolwUnFolw()" value=""/>
             		</div>
             	</div>
 

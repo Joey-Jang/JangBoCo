@@ -71,5 +71,47 @@ public class DiaryDao implements IDiaryDao{
 		return sqlSession.selectList("DiarySW.getDiaryPernlList",params);
 	}
 
+	@Override
+	public String getMemberImg(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("DiarySW.getMemberImg", params);
+	}
+
+	@Override
+	public HashMap<String, Integer> getFolwrFolwng(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("DiarySW.getFolwrFolwng", params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getFolwrList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("DiarySW.getFolwrList", params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getFolwngList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("DiarySW.getFolwngList", params);
+	}
+
+	@Override
+	public int checkFolw(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("DiarySW.checkFolw", params);
+	}
+
+	@Override
+	public void unflow(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("DiarySW.unfolw", params);
+	}
+
+	@Override
+	public void folw(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("DiarySW.folw",params);
+	}
+
 	
 }

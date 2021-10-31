@@ -172,4 +172,41 @@
 		) D5
 		WHERE D5.RNUM2 BETWEEN #{startCnt} AND #{endCnt}
 	</select>
+	
+	<select id="getMemberImg" parameterType="hashmap" resultType="String">
+		SELECT IMG_URL FROM MEMBER WHERE MEMBER_NO = #{member_no}
+	</select>
+	
+	<select id="getFolwrFolwng" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM (SELECT COUNT(*) AS FOLWR FROM FOLW WHERE TARGET_MEMBER_NO = #{member_no}) A LEFT OUTER JOIN
+       (SELECT COUNT(*) AS FOLWNG FROM FOLW WHERE REQ_MEMBER_NO = #{member_no}) B  ON  1 = 1
+	</select>
+	
+	<select id="getFolwrList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM
+		FROM MEMBER M, (SELECT REQ_MEMBER_NO FROM FOLW WHERE TARGET_MEMBER_NO = #{member_no}) F
+		WHERE MEMBER_NO = REQ_MEMBER_NO
+	</select>
+	
+	<select id="getFolwngList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM
+		FROM MEMBER M, (SELECT TARGET_MEMBER_NO FROM FOLW WHERE REQ_MEMBER_NO = #{member_no}) F
+		WHERE MEMBER_NO = TARGET_MEMBER_NO
+	</select>
+	
+	<select id="checkFolw" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS FOLWR FROM FOLW WHERE TARGET_MEMBER_NO = #{page_member_no} AND REQ_MEMBER_NO = #{my_member_no}
+	</select>
+	
+	<insert id="folw" parameterType="hashmap">
+       INSERT INTO FOLW (FOLW_NO, REQ_MEMBER_NO, TARGET_MEMBER_NO, REGST_DATE)
+       VALUES (FOLW_SEQ.NEXTVAL, #{my_member_no}, #{page_member_no}, SYSDATE)
+	</insert>
+	
+	<delete id="unfolw" parameterType="hashmap">
+      DELETE FROM FOLW 
+      WHERE REQ_MEMBER_NO = #{my_member_no} AND TARGET_MEMBER_NO = #{page_member_no}
+	</delete>
+	
 </mapper>
