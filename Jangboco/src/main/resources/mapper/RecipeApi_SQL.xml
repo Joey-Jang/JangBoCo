@@ -49,8 +49,14 @@
 	</insert>
 	
 	<select id="getChkValue" parameterType="hashmap" resultType="Integer">
-		SELECT RECIPE_NO 
+		SELECT COUNT(RECIPE_NO) 
 		FROM RECIPE
 		WHERE RECIPE_NO = #{chkValue}
+	</select>
+	
+	<select id="getRecipeDtl" parameterType="hashmap" resultType="hashmap">
+		SELECT * 
+		FROM RECIPE
+		WHERE RECIPE_NO = #{recipeNo}
 	</select>
 </mapper>

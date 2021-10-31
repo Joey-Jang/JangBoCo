@@ -23,4 +23,11 @@ public class RecipeService implements IRecipeService {
 		
 		return iRecipeDao.getChkValue(params);
 	}
+
+	@Override
+	public HashMap<String, String> getRecipeDtl(HashMap<String, String> params) throws Throwable {
+		
+		return iRecipeDao.getRecipeDtl(params);
+	}
+	
 }

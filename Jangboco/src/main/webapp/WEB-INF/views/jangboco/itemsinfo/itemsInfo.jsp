@@ -43,7 +43,7 @@ $(document).ready(function(){
 	});
     
     $("tbody").on("click","#go_recipe_dtl",function(){
-		$("#rcp_nm").val($(this).attr("nm"));
+		$("#recipe_no").val($(this).attr("no"));
 		
 		$("#cook_recipe_form").attr("action","recipeDtl");
 		$("#cook_recipe_form").submit();
@@ -177,7 +177,7 @@ function drawRecipeList(res){
 	for(var i = startCnt; i < endCnt; i++ ){
 		html += "<tr>               ";
 		html += "	<td>"+ list[i].artclNo+ "</td>     ";
-		html += "	<td id =\"go_recipe_dtl\" nm = \""+ list[i].RCP_NM + "\">"+ list[i].RCP_NM + "</td>";
+		html += "	<td id =\"go_recipe_dtl\" no = \""+ list[i].RCP_SEQ + "\">"+ list[i].RCP_NM + "</td>";
 		html += "</tr>              ";		
 	}
 	
@@ -261,7 +261,7 @@ function drawPaging(pb){
             	<form action="#" id="cook_recipe_form" method="post">
             		<input type="hidden" id="matrl_name" name="matrlName" value="${matrlName}">
             		<input type="hidden" id="page" name="page" value="${page}">
-            		<input type="hidden" id="rcp_nm" name="rcpNm">
+            		<input type="hidden" id="recipe_no" name="recipeNo">
             	</form>
             	<p>요리레시피</p>
             	<table class="cook_recipe_table">

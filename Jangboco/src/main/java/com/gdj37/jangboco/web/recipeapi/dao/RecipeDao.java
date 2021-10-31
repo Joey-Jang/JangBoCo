@@ -24,4 +24,10 @@ public class RecipeDao implements IRecipeDao {
 		
 		return sqlSession.selectOne("RecipeApi.getChkValue", params);
 	}
+
+	@Override
+	public HashMap<String, String> getRecipeDtl(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.selectOne("RecipeApi.getRecipeDtl", params);
+	}
 }

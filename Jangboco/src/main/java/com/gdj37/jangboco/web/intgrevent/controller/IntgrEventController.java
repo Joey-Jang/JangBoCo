@@ -31,7 +31,6 @@ public class IntgrEventController {
 	@Autowired
 	public IPagingService iPagingService; 
 	
-	
 	// 지역별 행사소식 게시판 
 	@RequestMapping(value="/intgrEventList")
 	public ModelAndView intgrEventList(@RequestParam HashMap<String, String> params,

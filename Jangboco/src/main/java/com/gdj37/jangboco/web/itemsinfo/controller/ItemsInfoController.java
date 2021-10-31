@@ -24,6 +24,7 @@ import com.gdj37.jangboco.common.bean.PagingBean;
 import com.gdj37.jangboco.common.service.IPagingService;
 import com.gdj37.jangboco.web.itemsinfo.service.IItemsInfoService;
 import com.gdj37.jangboco.web.priceschart.service.IPricesChartService;
+import com.gdj37.jangboco.web.recipeapi.service.IRecipeService;
 
 
 
@@ -36,6 +37,9 @@ public class ItemsInfoController {
 	
 	@Autowired
 	public IPagingService iPagingService; 
+	
+	@Autowired
+	public IRecipeService iRecipeService;
 	
 	@RequestMapping(value="/itemsInfo")
 	public ModelAndView itemsInfo(@RequestParam HashMap<String, String> params,
@@ -173,9 +177,9 @@ public class ItemsInfoController {
 	public ModelAndView recipeDtl(@RequestParam HashMap<String, String> params,
 								ModelAndView mav) {
 		
-		String rcpNm = params.get("rcpNm");
-		
-		mav.addObject("rcpNm", rcpNm);
+		String recipeNo = params.get("recipeNo");
+		System.out.println(recipeNo);
+		mav.addObject("recipeNo", recipeNo);
 		
 		mav.setViewName("jangboco/itemsinfo/recipeDtl");
 		
@@ -191,33 +195,14 @@ public class ItemsInfoController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();		
 		
-		String key = "121c409444094fdea525";
-		
-		String rcpNm = params.get("rcpNm");
-		
-		String result = "";		
-		
-		
 		try {
-			URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
-								"/COOKRCP01/json/1/1/RCP_NM="+rcpNm);
+			HashMap<String, String> recipe = iRecipeService.getRecipeDtl(params);
 			
-			BufferedReader bf;
-			bf = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
-			
-			result = bf.readLine();			
-			
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
-			JSONObject cookrcp01 = (JSONObject)jsonObject.get("COOKRCP01");				
-
-			JSONArray recipeArray = (JSONArray)cookrcp01.get("row");					
-			JSONObject recipeList = (JSONObject)recipeArray.get(0);
-			modelMap.put("recipeList", recipeList);
+			modelMap.put("recipe", recipe);
 			
 		} catch (Exception e) {
-			 e.printStackTrace();
-		}
+			e.printStackTrace();
+		}		
 		
 		return mapper.writeValueAsString(modelMap); 
 	}

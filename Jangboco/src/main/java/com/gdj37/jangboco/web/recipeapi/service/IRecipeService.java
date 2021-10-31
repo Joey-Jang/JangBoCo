@@ -8,6 +8,8 @@ public interface IRecipeService {
 
 	public int getChkValue(HashMap<String, Object> params) throws Throwable;
 
+	public HashMap<String, String> getRecipeDtl(HashMap<String, String> params) throws Throwable;
+
 	
 
 }
