@@ -113,17 +113,30 @@
 	display: inline-block;
 }
 
+.list_contnr{
+	width:100%;
+	padding : 10px;
+}
+
 .market_list_title{
 	margin-left:20px;
 }
 
 .market_list{
 	list-style: none;
-	
+	padding-inline-start: 0px;
+}
+
+.market_name{
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 15px;
+	padding-top:10px;
 }
 
 .market_list li{
 	border-bottom: 1px solid ;
+	/* display: block; */
 }
 
 .market_open {
@@ -133,6 +146,7 @@
 .market_close {
 	color : red;
 }
+
 </style>
 
 </head>
@@ -144,6 +158,9 @@
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
+		<input type="hidden" name="searchGbn" value="${param.searchGbn}">
+		<input type="hidden" name="searchTxt" value="${param.searchTxt}">
+		<input type="hidden" name="searchTxt" value="${param.searchTxt}">
 	</form>
     <div class="con_contnr">
     	<div class="con">
@@ -179,7 +196,7 @@
 	    	</div>
 	    	
 	    	<div class="zzan_list">
-	    		<div>
+	    		<div class="list_contnr">
 		    		<div class="market_list_title"><h3>마켓</h3></div>
 					<ul id="market_list" class="market_list"><li>나와라리스트</li></ul>
 				</div>
@@ -213,6 +230,19 @@
 			})
 		})
 		
+		
+		//리스트 호버 이벤트
+		$(".market_list").on('mouseover','li',(function(){
+			$(this).css("background", "rgba( 218, 233, 220, 0.4 )");}));
+		$(".market_list").on('mouseout','li',(function(){
+			$(this).css("background", "none");}));
+	
+		//리스트 클릭 이벤트
+		$(".market_list").on('click','li',(function(){
+			$("#dtlForm").submit();
+		});
+	
+	
 	});
 	
 	
@@ -378,7 +408,7 @@
 			    		
 			    		//목록에 보이게 구현
 			    		html += "<li market_no=\"" + ${data.MARKET_NO} + "\">";
-			    		html += "	<span class=\"market_name\"><h3>" + "${data.MARKET_NAME}" + "</h3></span>";
+			    		html += "	<div class=\"market_name\">" + "${data.MARKET_NAME}" + "</div>";
 			    		html += "	<div class=\"market_con\">";
 			    		html += "		<span class=\"market_addrs\">" + "${data.MARKET_ADDRS}" + "</span><br>";
 			    		
@@ -649,7 +679,7 @@
 		      return true;
 		   } else {
 		      return false;
-		   }   
+		   }
 		}
 
 	</script>

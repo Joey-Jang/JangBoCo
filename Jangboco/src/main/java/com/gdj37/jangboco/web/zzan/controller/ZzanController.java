@@ -22,6 +22,9 @@ public class ZzanController {
 		int homeFlag = 0;
 		int menuIdx = 0;
 		int subMenuIdx = 0;
+		int sessnMemberNo = 2;
+		mav.addObject("sessnMemberNo", sessnMemberNo);
+
 		mav.addObject("homeFlag", homeFlag);
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
