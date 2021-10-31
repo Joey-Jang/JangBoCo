@@ -12,8 +12,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/join/diary.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
-<script type="text/javascript" src="resources/script/layout/default.js"></script>
-<script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<!-- <script type="text/javascript" src="resources/script/layout/default.js"></script>
+ --><script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script>
@@ -26,6 +26,10 @@ $(document).ready(function() {
    $("#pagingWrap").on("click", "span", function() {
       $("#page").val($(this).attr("page"));
       reloadList();
+   });
+   
+   $(".folwr").on("click",function(){
+	   alert("팔로워");
    });
    
    reloadList();
@@ -63,6 +67,7 @@ function getMemberImg(){
 }
 
 function getFolwr(){
+	alert("Test");
     $.ajax({ //jquery의 ajax함수 호출
         url: "getFolwrAjax", //접속 주소
         type: "post", //전송 방식
@@ -73,15 +78,29 @@ function getFolwr(){
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
         	console.log(res);
            var html = "";
-           $(".diary_list").css("display","none");
-           $("#pagingWrap").css("display","none");
+           for(var data of res.list){
+       		html += "<div class=\"folw_list\">";
+			html += "<div class=\"folw_member\">";
+			html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"folw_img\" alt=\"프로필\">";
+			html += "<div class=\"nicnm\">"+data.NICNM+"</div>";
+			html += "</div></div>";
+           }
+		   
+           $(".member_diary").html(html);
 		  
         },
         error: function(request, status, error) {//실패 시 다음 함수 실행
            console.log(error);
         }
      });
+    
 }
+
+for(var data of list){
+	  html +=  "<div class=\"diary\">";
+	  html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"fill-img2\"></div>";
+	 
+ }
 
 function getFolwng(){
     $.ajax({ //jquery의 ajax함수 호출
@@ -93,10 +112,16 @@ function getFolwng(){
         }, //보낼 데이터(문자열 형태)
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
         	console.log(res);
-           var html = "";
-           $(".diary_list").css("display","none");
-           $("#pagingWrap").css("display","none");
-		  
+            var html = "";
+            for(var data of res.list){
+        		html += "<div class=\"folw_list\">";
+ 			html += "<div class=\"folw_member\">";
+ 			html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"folw_img\" alt=\"프로필\">";
+ 			html += "<div class=\"nicnm\">"+data.NICNM+"</div>";
+ 			html += "</div></div>";
+            }
+            $(".member_diary").html(html);
+ 		  
         },
         error: function(request, status, error) {//실패 시 다음 함수 실행
            console.log(error);
@@ -116,13 +141,13 @@ function getFolwFolwr(){
            var html = "";
 		          
            if(res.folw.FOLWR!=null && res.folw.FOLWR!=""){
-      		   html += "<span class=\"folwr\" onClick=\"getFolwr()\">팔로워" + res.folw.FOLWR +"</span>";
+      		   html += "<span class=\"folwr\" onClick=\"getFolwr();\">팔로워" + res.folw.FOLWR +"</span>";
            } else {
         	   html += "<span class=\"folwr\">팔로워0</span>";
            }
            
            if(res.folw.FOLWNG!=null && res.folw.FOLWNG!=""){
-        	   html += "<span class=\"folwng\" onClick=\"getFolwng()\">팔로잉" + res.folw.FOLWNG +"</span>";
+        	   html += "<span class=\"folwng\" onClick=\"getFolwng();\">팔로잉" + res.folw.FOLWNG +"</span>";
         	   
            } else {
         	   html += "<span class=\"folwng\">팔로잉0</span>";
@@ -139,14 +164,12 @@ function getFolwFolwr(){
 function hideInit(){
 	//마이멤버 null이거나 ""거나 myMemberNo = pageMemberNo면 hide
 	if(myMemberNo==null||myMemberNo==""||$("#page_member_no").val()==myMemberNo){
-		alert("test");
 		$(".do_folw").css("display","none");
 	}
 	
 }
 
 function checkFolw(){
-	alert("Test");
 	//팔로우인지 팔로잉인지 확인하는것
     $.ajax({ //jquery의 ajax함수 호출
         url: "checkFolwAjax", //접속 주소
@@ -156,7 +179,8 @@ function checkFolw(){
         	"page_member_no":$("#page_member_no").val()
         }, //보낼 데이터(문자열 형태)
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
-           if(res.result == 1 || res.result == "1"){
+           console.log(res);
+           if(res.result > 0){
         	   $("#doFolw").val("팔로잉");
            } else {
         	   $("#doFolw").val("팔로우");
@@ -188,14 +212,13 @@ function doFolwUnFolw(){
         	"flag":flag
         }, //보낼 데이터(문자열 형태)
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
-           console.log(res);
+            checkFolw();
+            getFolwFolwr();
         },
         error: function(request, status, error) {//실패 시 다음 함수 실행
            console.log(error);
         }
      });
-    checkFolw();
-    getFolwFolwr();
 }
 
 
@@ -260,6 +283,8 @@ function drawPaging(pb) {
       
 }
 
+
+
 </script>
 </head>
 <body>
@@ -281,8 +306,8 @@ function drawPaging(pb) {
     	        			<img src="" class="profile_img">
         	    		</div>
             			<div class="folw_List">
-            				<span class="folwr">팔로잉</span>
-            				<span class="folwng"> 팔로워</span>
+            				<span class="folwr" >팔로잉</span>
+            				<span class="folwng">팔로워</span>
             			</div>
             		</div>
 				   	<div class="do_folw">
@@ -292,12 +317,14 @@ function drawPaging(pb) {
 
             </div>
             <div class="right_side_contr">
-            	<div class="member_diary">
-		            <form action="#" id="actionForm" method="post">
+            		  <form action="#" id="actionForm" method="post">
 		               <input type="hidden" id="no" name="no" />
 		               <input type="hidden" id="page" name="page" value="${page}" />
 	                   <input type="hidden" id="page_member_no" name="page_member_no" value="${page_member_no}">
 		            </form>
+            	<div class="member_diary" >
+            		<div class="folw_list" style="display:none;">      			
+            		</div>
 		            <div class="diary_list">
 		            	<div class="diary">
 		            		<img src="resources/images/diaryImages/profile.png" class="fill-img2" alt="프로필">
@@ -318,7 +345,7 @@ function drawPaging(pb) {
 		            		<img src="resources/images/diaryImages/profile.png" class="fill-img2" alt="프로필">
 		            	</div>
 		            </div>
-		            <div id="pagingWrap">
+		            <div id="pagingWrap" style="display:none;">
 		            1234
 	           		</div>
            		</div>	

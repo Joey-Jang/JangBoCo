@@ -224,6 +224,7 @@ public class DiaryController {
 	public String checkFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
 		System.out.println(params);
 		params.put("my_member_no", session.getAttribute("member_no"));
+		System.out.println(session.getAttribute("member_no"));
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		int cnt = iDiaryService.checkFolw(params);
@@ -235,8 +236,6 @@ public class DiaryController {
 			produces = "text/json; charset=UTF-8")
 	@ResponseBody
 	public String doFolwUnFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
-		System.out.println("****************************************************************");
-		System.out.println(params);
 		params.put("my_member_no", session.getAttribute("member_no"));
 		String flag = (String) params.get("flag");
 		if(flag.equals("unfolw")) {

@@ -209,4 +209,15 @@
       WHERE REQ_MEMBER_NO = #{my_member_no} AND TARGET_MEMBER_NO = #{page_member_no}
 	</delete>
 	
+	<select id="folwrList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM, IMG_URL
+		FROM MEMBER M, (SELECT REQ_MEMBER_NO FROM FOLW WHERE TARGET_MEMBER_NO = #{page_member_no}) F
+		WHERE MEMBER_NO = REQ_MEMBER_NO
+	</select>
+	
+	<select id="folwngList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM, IMG_URL
+		FROM MEMBER M, (SELECT TARGET_MEMBER_NO FROM FOLW WHERE REQ_MEMBER_NO = #{page_member_no}) F
+		WHERE MEMBER_NO = TARGET_MEMBER_NO
+	</select>
 </mapper>
