@@ -21,9 +21,9 @@
 	.paging_wrap {
 		display:flex;
 		width : 550px;
-		height : 30px;
-		justify-content: space-between;
-		align-items: center;
+		/* height : 30px; */
+		 justify-content: center;
+		/* align-items: center;  */
 		margin: auto;
 		margin-top: 30px;
 	}	
@@ -130,6 +130,24 @@
 		text-overflow:ellipsis;
 		overflow:hidden;
 		white-space: nowrap; 
+	}
+	
+	.paging_btn {
+		width: 50px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		text-align:center;
+		border: 1px solid #C4C4C4;
+		border-left:0;
+	}
+	
+	.paging_btn:hover{
+		background-color: #03A64A20;
+		cursor: pointer;
+	}
+	
+	#first_btn {
+		border-left:1px solid #C4C4C4;
 	}
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -246,6 +264,15 @@ function drawBestList(bestList){
 // 행사소식 목록(일반)
 function drawNomalList(normalList){
 	var html = "";
+	
+	if(normalList.length == 0){
+		
+    	html += "<tr>                                    ";
+		html += "	<td colspan=\"8\">게시글이 없습니다.</td>	";            		
+		html += "</tr>                                   ";
+		
+	}
+	
 	for( var data of normalList){
 		html += "<tr>        ";
 		html += "    <td>"+ data.EVENT_NO +"</td>                   ";
@@ -268,10 +295,10 @@ function drawNomalList(normalList){
 function drawPaging(pb){
 	var html ="";
 	
-	html += "<div id=\"first_btn\">    "
+	html += "<div class=\"paging_btn\" id=\"first_btn\">    "
 	html += "	<span page=\"1\">처음</span>    "
 	html += "</div>                  "
-	html += "<div>                   "
+	html += "<div class=\"paging_btn\">                   "
 	if($("#page").val()<=10){		
 		html += "	<span page=\"1\">이전</span>    "
 	} else {
@@ -280,26 +307,26 @@ function drawPaging(pb){
 	html += "</div>                  "
 	for(var i=pb.startPcount; i<=pb.endPcount; i++){		
 		if($("#page").val()==i){
-			html += "<div>                   "
+			html += "<div class=\"paging_btn\">                   "
 			html += "	<span page=\""+ i + "\"><b>"+i+"</b></span>       "
 			html += "</div>                  "			
 		} else {
-			html += "<div>                   "
+			html += "<div class=\"paging_btn\">                   "
 			html += "	<span page=\""+ i + "\">"+i+"</span>       "
 			html += "</div>                  "						
 		}
 	}
 	
 	if(pb.endPcount== pb.maxPcount){		
-		html += "<div>                   "
+		html += "<div class=\"paging_btn\">                   "
 		html += "	<span page=\""+pb.maxPcount +"\">다음</span>    "
 		html += "</div>                  "
 	} else {
-		html += "<div>                   "
+		html += "<div class=\"paging_btn\">                   "
 		html += "	<span page=\""+(pb.endPcount+1) +"\">다음</span>    "
 		html += "</div>                  "		
 	}
-	html += "<div id=\"last_btn\">     "
+	html += "<div class=\"paging_btn\" id=\"last_btn\">     "
 	html += "	<span page=\""+ pb.maxPcount +"\">마지막</span>  "
 	html += "</div>                  "
 	
@@ -399,7 +426,7 @@ function drawPaging(pb){
 		                </thead>
 		                <tbody class="event_best">	                    	                             	                  
 		                </tbody>
-		            	<tbody class="event_normal">	            	
+		            	<tbody class="event_normal">            	
 		            	</tbody>
 		            </table>	            
 		        	<div class="paging_wrap">
