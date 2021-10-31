@@ -113,5 +113,11 @@ public class DiaryDao implements IDiaryDao{
 		sqlSession.insert("DiarySW.folw",params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getHastgList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("DiarySW.getHastgList",params);
+	}
+
 	
 }

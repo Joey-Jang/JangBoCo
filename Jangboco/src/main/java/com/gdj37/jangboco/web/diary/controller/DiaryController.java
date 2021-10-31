@@ -129,6 +129,20 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
+	@RequestMapping(value = "/hastgListAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String hastgListAjax(@RequestParam HashMap<String,Object> params, HttpSession session) throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		List<HashMap<String,String>> list  = new ArrayList();
+		list = iDiaryService.getHastgList(params);
+		System.out.println("tttttttttttttttttttttt");
+		System.out.println(list);
+		modelMap.put("list", list);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
 	@RequestMapping(value = "/diaryPernlPage")
 	public ModelAndView diaryMypage(ModelAndView mav) {
 		mav.addObject("page_member_no", 1);

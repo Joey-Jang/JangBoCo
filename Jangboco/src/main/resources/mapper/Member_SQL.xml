@@ -62,4 +62,14 @@
 	<select id="getMemberNo" parameterType="String" resultType="Integer">
 		SELECT MEMBER_NO FROM MEMBER WHERE EMAIL = #{0}
 	</select>
+	
+	<select id="findPw" parameterType="String" resultType="Integer"> 
+		SELECT COUNT(EMAIL)
+		FROM MEMBER 
+		WHERE EMAIL = #{email} AND SOCIAL_TYPE = 1
+	</select>
+
+	<update id="setNewPw" parameterType="hashmap">
+		UPDATE MEMBER SET PW = #{pw} WHERE EMAIL = #{email}
+	</update>
 </mapper>
