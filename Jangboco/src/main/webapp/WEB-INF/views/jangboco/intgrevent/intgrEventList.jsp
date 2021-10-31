@@ -20,7 +20,7 @@
 	}
 	.paging_wrap {
 		display:flex;
-		width : 550px;
+		width : auto;
 		/* height : 30px; */
 		 justify-content: center;
 		/* align-items: center;  */
@@ -81,6 +81,7 @@
 		display:inline-block;
 		font-size : 20px;
 		color: #038C3E;
+		cursor: pointer;
 	}
 	
 	.disct_choice div {
@@ -149,6 +150,8 @@
 	#first_btn {
 		border-left:1px solid #C4C4C4;
 	}
+	
+	
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
@@ -216,7 +219,21 @@ $(document).ready(function(){
 		$("#action_form").submit();
 	});
 	
+	$("#disct_name").on("click",function(){
+		$(".disct_choice div").css("display","flex");		
+	});
 	
+	$("#disct_choice").on("change",function(){
+		$("#disct_no").val($(this).val());
+		$("#disct_name_data").val($("#disct_choice option:checked").text());
+		$("#disct_name").html($("#disct_choice option:checked").text() +">");
+		$(".disct_choice div").css("display","none");
+		reloadList();
+	});
+	
+	$("#disct_choice").on("blur",function(){
+		$(".disct_choice div").css("display","none");
+	});
 });
 
 // 데이터 취득
@@ -332,7 +349,6 @@ function drawPaging(pb){
 	
 	$(".paging_wrap").html(html);
 }
-
 </script>
 </head>
 <body>
