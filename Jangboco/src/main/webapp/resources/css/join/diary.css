@@ -11,6 +11,23 @@ a {
 	object-fit: cover;
 }
 
+.ui-autocomplete {
+	z-index:1000;
+	font-size:20px;
+	color: black;
+}
+
+.dialog {
+	font-size: 15px;
+}
+
+.ui-autocomplete.ui-widget {
+	font-family: Verdana,Arial,sans-serif;
+	font-size: 15px;
+	heigth: 20px;
+	line-height: 3.5;
+}
+
 .container {
   font-size: 15px;
   color: #444;
@@ -172,6 +189,7 @@ a {
     justify-content: center;
     align-items: center;
     margin-top: -50px;
+    font-size: 20px;
 }
 
 .profile_list {
@@ -203,7 +221,7 @@ a {
 }
 
 .diary {
-
+	width: 33%;
     height: 45%;
 }
 
@@ -236,7 +254,7 @@ img.profile_img {
 .folw_list{
     width: 100%;
     height: 100%;
-    font-size: 25px;
+    font-size: 20px;
     overflow: scroll;
     -ms-overflow-style: none;
     border: 1px solid grey;
@@ -256,15 +274,26 @@ img.profile_img {
     height: 70px;
     margin-bottom: 20px;
     align-items: center;
+    border-bottom: 1px solid grey;
+    padding-bottom: 20px;
 }
 
 img.folw_img {
-    width: 70px;
-    height: 70px;
+    width: 40px;
+    height: 40px;
     border-radius: 60%;
 }
 
 .nicnm {
-    height: 50px;
+	height: 50px;
     margin-left: 15px;
+    line-height: 50px;
+}
+
+.doFolw {
+	font-size: 20px;
+}
+
+.folwng {
+    margin-left: 10px;
 }

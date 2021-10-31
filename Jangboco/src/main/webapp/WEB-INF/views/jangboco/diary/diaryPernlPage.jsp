@@ -19,6 +19,7 @@
 <script>
 var page = 1;
 var myMemberNo = <%=session.getAttribute("member_no")%>;
+var listFlag = 0;
 
 $(document).ready(function() {
    
@@ -67,7 +68,9 @@ function getMemberImg(){
 }
 
 function getFolwr(){
-	alert("Test");
+	console.log("팔로워리스트 불러오기");
+	//list flag 1
+	listFlag = 1;
     $.ajax({ //jquery의 ajax함수 호출
         url: "getFolwrAjax", //접속 주소
         type: "post", //전송 방식
@@ -78,13 +81,14 @@ function getFolwr(){
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
         	console.log(res);
            var html = "";
+           html += "<div class=\"folw_list\">";
            for(var data of res.list){
-       		html += "<div class=\"folw_list\">";
 			html += "<div class=\"folw_member\">";
 			html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"folw_img\" alt=\"프로필\">";
 			html += "<div class=\"nicnm\">"+data.NICNM+"</div>";
-			html += "</div></div>";
+			html += "</div>";
            }
+           html+="</div>";
 		   
            $(".member_diary").html(html);
 		  
@@ -103,6 +107,9 @@ for(var data of list){
  }
 
 function getFolwng(){
+	console.log("팔로잉리스트 불러오기");
+	//list flag 2
+	listFlag = 2;
     $.ajax({ //jquery의 ajax함수 호출
         url: "getFolwngAjax", //접속 주소
         type: "post", //전송 방식
@@ -214,6 +221,11 @@ function doFolwUnFolw(){
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
             checkFolw();
             getFolwFolwr();
+            if(listFlag==1){
+            	getFolwr();
+            } else if(listFlag==2) {
+            	getFolwng();
+            }
         },
         error: function(request, status, error) {//실패 시 다음 함수 실행
            console.log(error);
@@ -345,7 +357,7 @@ function drawPaging(pb) {
 		            		<img src="resources/images/diaryImages/profile.png" class="fill-img2" alt="프로필">
 		            	</div>
 		            </div>
-		            <div id="pagingWrap" style="display:none;">
+		            <div id="pagingWrap">
 		            1234
 	           		</div>
            		</div>	

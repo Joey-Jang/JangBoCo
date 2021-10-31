@@ -29,4 +29,8 @@ public interface IJoinDao {
 
 	public int getMemberNo(String email) throws Exception;
 
+	public int findPw(String email) throws Exception;
+
+	public int setNewPw(HashMap<String, Object> params) throws Exception;
+
 }

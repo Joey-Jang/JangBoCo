@@ -85,5 +85,17 @@ public class JoinDao implements IJoinDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("Member.getMemberNo",email);
 	}
+
+	@Override
+	public int findPw(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("Member.findPw",email);
+	}
+
+	@Override
+	public int setNewPw(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("Member.setNewPw", params);
+	}
 	
 }

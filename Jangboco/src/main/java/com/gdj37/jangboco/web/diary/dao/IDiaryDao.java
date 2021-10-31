@@ -39,5 +39,7 @@ public interface IDiaryDao {
 
 	public void folw(HashMap<String, Object> params) throws Exception;
 
+	public List<HashMap<String, String>> getHastgList(HashMap<String, Object> params) throws Exception;
+
 
 }
