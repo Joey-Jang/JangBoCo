@@ -122,7 +122,7 @@
 		white-space: nowrap; 
 	}
 	
-	.event_name:hover{
+	tobody .event_name:hover{
 		cursor: pointer;
 	}
 	
@@ -138,25 +138,37 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){	
-	/* $('#main_loc_addrs').on('DOMSubtreeModified', function() { //주소스팬태그 값 변하면 동작
-	      
-	      // 주소-좌표 변환 객체를 생성합
-	      var geocoder = new kakao.maps.services.Geocoder();
-	      
-	      // 주소로 좌표를 검색
-	      geocoder.addressSearch($("#main_loc_addrs").text(), function(result, status) {
-
-	          // 정상적으로 검색이 완료
-	           if (status === kakao.maps.services.Status.OK) {
-	              var disct = result[0].address.region_2depth_name; //주소로 구 정보 가져오기
-	              console.log(disct); }
-		});
-	}); */
+$(document).ready(function(){			
+	if($("#disct_no").val() == null || $("#disct_no").val() == ""){	
+		var disctName = "";
+		$('#main_loc_addrs').on('DOMSubtreeModified', function() { //주소스팬태그 값 변하면 동작
+		      
+		      // 주소-좌표 변환 객체를 생성합
+		      var geocoder = new kakao.maps.services.Geocoder();
+		      
+		      // 주소로 좌표를 검색
+		      geocoder.addressSearch($("#main_loc_addrs").text(), function(result, status) {
+	
+		          // 정상적으로 검색이 완료
+		           if (status === kakao.maps.services.Status.OK) {
+		              disctName = result[0].address.region_2depth_name; //주소로 구 정보 가져오기
+		              console.log(disctName); 
+						// 지역구 번호 없이 넘어오는 경우
+						$("#disct_name_data").val(disctName);
+						$("#disct_name").html(disctName + ">");
+						console.log($("#disct_name_data").val());
+						reloadList();
+		              }
+			});
+		});		
+	} else {
+		reloadList();
+	}
+	
 	if("${param.searchGbn}" != ""){
 		$("#search_gbn").val("${param.searchGbn}");
 	} 
-	reloadList();
+	
 	
 	$(".paging_wrap").on("click","span",function(){
 		$("#page").val($(this).attr("page"));
@@ -191,6 +203,7 @@ $(document).ready(function(){
 
 // 데이터 취득
 function reloadList(){
+	
 	var params = $("#action_form").serialize();
 	
 	$.ajax({ 
@@ -317,7 +330,7 @@ function drawPaging(pb){
 	        	</div>
 	            <div class="disct_search">
 	            	<div class="disct_choice">
-	            		<span id="disct_name">지역구명 ></span>
+	            		<span id="disct_name">${disctName} ></span>
 	            		<div>
 	            			<select id="disct_choice">
 	            				<option hidden="" disabled="disabled" selected="selected" value="">지역 선택</option>
@@ -354,7 +367,8 @@ function drawPaging(pb){
 	            			<input type="hidden" id="save_text" value="${param.searchText}">
 	            			<input type="hidden" name="page" id="page" value="${page}">
 	            			<input type="hidden" name="eventNo" id="event_no">
-	            			<input type="hidden" name="disctNo" id="disct_no">	            			
+	            			<input type="hidden" name="disctName" id="disct_name_data">	            			
+	            			<input type="hidden" name="disctNo" id="disct_no" value="${disctNo}">	            			
 	            			<div id="search_box">
 		            			<select name=searchGbn id="search_gbn">
 		            				<option hidden="" disabled="disabled" selected="selected" value="">검색</option>

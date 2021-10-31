@@ -9,11 +9,15 @@ public interface IIntgrEventService {
 
 	public int getEventCnt(HashMap<String, String> params) throws Throwable;
 
-	public List<HashMap<String, String>> getEventBestList() throws Throwable;
+	public List<HashMap<String, String>> getEventBestList(HashMap<String, String> params) throws Throwable;
 
 	public HashMap<String, String> getEventDtl(HashMap<String, String> params) throws Throwable;
 
 	public int updateEventHit(HashMap<String, String> params) throws Throwable;
+
+	public String getDisctNo(HashMap<String, String> params) throws Throwable;
+
+	public String getDisctName(HashMap<String, String> params) throws Throwable;
 	
 
 }

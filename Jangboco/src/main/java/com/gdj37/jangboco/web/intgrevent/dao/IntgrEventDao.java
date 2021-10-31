@@ -25,9 +25,9 @@ public class IntgrEventDao implements IIntgrEventDao {
 	}
 
 	@Override
-	public List<HashMap<String, String>> getEventBestList() throws Throwable {
+	public List<HashMap<String, String>> getEventBestList(HashMap<String, String> params) throws Throwable {
 		
-		return sqlSession.selectList("intgrEvent.getEventBestList");
+		return sqlSession.selectList("intgrEvent.getEventBestList",params);
 	}
 
 	@Override
@@ -40,6 +40,18 @@ public class IntgrEventDao implements IIntgrEventDao {
 	public int updateEventHit(HashMap<String, String> params) throws Throwable {
 		
 		return sqlSession.update("intgrEvent.updateEventHit", params);
+	}
+
+	@Override
+	public String getDisctNo(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.selectOne("intgrEvent.getDisctNo",params);
+	}
+
+	@Override
+	public String getDisctName(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.selectOne("intgrEvent.getDisctName",params);
 	}
 
 }

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="intgrEvent">
 	<select id="getEventNormalList" parameterType="hashmap" resultType="hashmap">
-		 SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE,LIKE_CNT ,HIT_NUM ,RNUM 
-		 FROM (SELECT E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+		 SELECT DISCT_NO,EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE,LIKE_CNT ,HIT_NUM ,RNUM 
+		 FROM (SELECT D.DISCT_NO ,E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
 		 			  TO_CHAR(E.START_DATE,'YY-MM-DD') AS START_DATE,TO_CHAR(E.END_DATE,'YY-MM-DD') AS END_DATE,
        				  E.HIT_NUM, ROW_NUMBER() OVER(ORDER BY E.EVENT_NO DESC) AS RNUM,
        				  (SELECT COUNT(*) 
@@ -13,6 +13,8 @@
              				ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
              			    JOIN MARKET M
              				ON( MM.MARKET_NO = M.MARKET_NO)
+             				JOIN DISCT D
+             				ON( M.DISCT_NO = D.DISCT_NO)
 		  	   WHERE DEL_FLAG = 0
 		  	   <if test="searchText != null and searchText != '' ">
 		  	   		<choose>
@@ -25,7 +27,8 @@
 		  	   		</choose>
 		  	   </if>		  	   
 		  	   ) E		  	   
-		 WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}		               			
+		 WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}
+		 AND DISCT_NO = #{disctNo}		               			
 	</select>
 	
 	<select id="getEventCnt" parameterType="hashmap" resultType="Integer">
@@ -34,7 +37,10 @@
              			ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
              		  JOIN MARKET M
              			ON( MM.MARKET_NO = M.MARKET_NO)
+             		  JOIN DISCT D
+             			ON( M.DISCT_NO = D.DISCT_NO)
 		 WHERE DEL_FLAG = 0
+		 AND D.DISCT_NO = #{disctNo}		 
 		 <if test="searchText != null and searchText != '' ">
   	   		<choose>
   	   			<when test="searchGbn eq 0">
@@ -47,11 +53,11 @@
   	   	 </if>	      	
 	</select>
 	
-	<select id="getEventBestList" resultType="hashmap">
-		SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE, HIT_NUM, LIKE_CNT, BEST_STD,RNUM
-		FROM (SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE, HIT_NUM, LIKE_CNT, BEST_STD,
+	<select id="getEventBestList" parameterType="hashmap" resultType="hashmap">
+		SELECT DISCT_NO,EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE, HIT_NUM, LIKE_CNT, BEST_STD,RNUM
+		FROM (SELECT DISCT_NO,EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE,END_DATE, HIT_NUM, LIKE_CNT, BEST_STD,
 		             ROW_NUMBER() OVER(ORDER BY BEST_STD DESC,HIT_NUM DESC) AS RNUM
-		      FROM (SELECT E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+		      FROM (SELECT D.DISCT_NO,E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
 		                   TO_CHAR(E.START_DATE,'YY-MM-DD') AS START_DATE,TO_CHAR(E.END_DATE,'YY-MM-DD') AS END_DATE,
 		                   E.HIT_NUM,
 		                   (SELECT COUNT(*) 
@@ -64,9 +70,12 @@
 		                         ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
 		                         JOIN MARKET M
 		                         ON( MM.MARKET_NO = M.MARKET_NO)
+		                         JOIN DISCT D
+             					 ON( M.DISCT_NO = D.DISCT_NO)
 		            WHERE DEL_FLAG = 0)
 		      ) E
-		WHERE RNUM BETWEEN 1 AND 3           
+		WHERE RNUM BETWEEN 1 AND 3
+		AND DISCT_NO = #{disctNo} 
 	</select>
 	
 	<select id="getEventDtl" parameterType="hashmap" resultType="hashmap">
@@ -89,4 +98,16 @@
 		UPDATE EVENT SET HIT_NUM= HIT_NUM+1
 		WHERE EVENT_NO = #{eventNo}
 	</update>
+	
+	<select id="getDisctNo" parameterType="hashmap" resultType="String">
+		SELECT DISCT_NO 
+		FROM DISCT
+		WHERE DISCT_NAME = #{disctName}
+	</select>
+	
+	<select id="getDisctName" parameterType="hashmap" resultType="String">
+		SELECT DISCT_NAME
+		FROM DISCT
+		WHERE DISCT_NO = #{disctNo}
+	</select>
 </mapper>
