@@ -185,7 +185,7 @@ function toDisabled(sel){
 		       				</div>        			
 		       			</div>
         			</form>
-        			<div class="joinBtn">
+        			<div class="join_btn">
 	        			<input type="button" value="가입" id="social_join_btn">
 	        			<input type="button" value="취소" id="cancel_btn">
         			</div>

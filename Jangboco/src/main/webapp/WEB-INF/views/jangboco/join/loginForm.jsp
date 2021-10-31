@@ -90,7 +90,7 @@ function checkVal(sel) {
     <div class="con_contnr">
         <div class="login_con">
            <div class="login_form_header">
-              일반로그인
+              로그인
            </div>
            <div class="login_form_body">
               <div class="login_form">
@@ -117,7 +117,7 @@ function checkVal(sel) {
                       	<input type="hidden" id="member_type" name="member_type">
                       </div>
                  </form>
-                 <div class="loginBtn">
+                 <div class="login_btn">
                     <input type="button" value="로그인" id="login_btn">
                     <input type="button" value="취소" id="cancel_btn">
                  </div>
