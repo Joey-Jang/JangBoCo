@@ -79,6 +79,18 @@ public class JoinController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/findPw")
+	public ModelAndView findPw(ModelAndView mav) {
+		mav.setViewName("jangboco/join/findPw");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/findPwSet")
+	public ModelAndView findPwSet(ModelAndView mav) {
+		mav.setViewName("jangboco/join/findPwSet");
+		return mav;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
     public String mailCheck(String email) throws Exception{
@@ -570,9 +582,39 @@ public class JoinController {
 			session.setAttribute("email", params.get("email"));
 		}
 		int member_no = iJoinService.getMemberNo(params.get("email"));
-		session.setAttribute("member_no", member_no);
+		session.setAttribute("member_no", member_no); 
 		mav.setViewName(pageUrl);
 		return mav;
 	}
+	
+	//해당 아이디가 있는지 없는지 확인
+	@ResponseBody
+	@RequestMapping(value="/findPwAjax", method = RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	public String findPwAjax(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
+		System.out.println(params);
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		int cnt = iJoinService.findPw(params.get("email"));
+		modelMap.put("cnt", cnt);
+		return mapper.writeValueAsString(modelMap);
+	}
 
+	@RequestMapping(value="/findMember")
+	public ModelAndView findMember(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
+		System.out.println(params);
+		mav.addObject("email",params.get("email"));
+		mav.setViewName("jangboco/join/findPwSet");
+		return mav;
+	}
+	
+	@RequestMapping(value="/setNewPw")
+	public ModelAndView setNewPw(@RequestParam HashMap<String,Object> params, ModelAndView mav) throws Throwable {
+		System.out.println(params);
+		int cnt = iJoinService.setNewPw(params);
+		mav.setViewName("jangboco/join/setNewPwSuccess");
+		return mav;
+	}
+	
+	
 }

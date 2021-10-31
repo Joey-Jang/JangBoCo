@@ -18,13 +18,21 @@
 
 .join_con {
 	width: 100%;
-	height: 600px;
+	height: 90%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
 .login_con {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    margin-top: 120px;
+}
+
+.find_con {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -99,6 +107,38 @@
 	text-align: center;
 }
 
+.find_header {
+	width: 200px;
+	height: 200px;
+	font-size: 15px;
+	text-align: center;
+	line-height: 200px;
+}
+.find_form_header {
+	width: 800px;
+	height: 100px;
+	background-color: white;
+	color: black;
+	text-align: center;
+	line-height: 100px;
+	margin-top: -20px;
+	font-size:30px;
+}
+.find_form_body {
+	width: 800px;
+	height: 700px;
+	font-size:15px;
+	display: flex;
+	justify-content:center;
+}
+.find_form {
+	width: 100%;
+	height:700px;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
 
 .form_input_val > input {
 	width: 500px;
@@ -156,6 +196,11 @@
     justify-content: center;
 }
 
+.find_btn {
+    display: flex;
+    justify-content: center;
+}
+
 .login_btn > input[type="button"]{
 	width: 150px;
 	height: 50px;
@@ -198,7 +243,7 @@
 }
 
 .market_modal {
-    width: 78%;
+    width: 85%;
     height: 78%;
     position: absolute;
 /*     top: 0;
@@ -222,9 +267,15 @@
 }
 
 table {
-	border: 1px solid black;
 	width: 290px;
-	height: 100px;
+}
+
+.market_search {
+	display: flex;
+}
+
+.market_search input {
+    margin-left: 10px;
 }
 
 .market_contnr_top {
@@ -254,12 +305,14 @@ th, td {
     overflow: scroll;
     overflow-x: unset;
     height: 100px;
+    background-color: white;
 }
 
 .market_branch_list {
 	overflow: scroll;
     overflow-x: unset;
     height: 100px;
+    background-color: white;
 }
 
 .market_info {
@@ -271,7 +324,9 @@ th, td {
 }
 
 .market_input_contnr {
-	margin: 50px auto auto 50px;
+	display: flex;
+	justify-content: center;
+	margin: 20px;
 }
 
 .market_input {
@@ -363,3 +418,6 @@ th, td {
 	line-height: 100px;
 }
 
+.zipcd_btn {
+    margin-left: 20px !important;
+}
