@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.jangboco.web.join.service.IJoinService;
+import com.gdj37.jangboco.util.Utils;
 
 @Controller
 public class JoinController {
@@ -143,10 +144,11 @@ public class JoinController {
     }
 	
 	@RequestMapping(value = "/joinPernlMember", method=RequestMethod.POST)
-	public ModelAndView joinPernlMember(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
+	public ModelAndView joinPernlMember(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
 		System.out.println(params);
 		params.put("member_type", "1");
 		params.put("social_type", "1");
+		params.put("pw",Utils.encryptAES128(params.get("pw")));
 		int cnt = iJoinService.addMember(params);
 		mav.setViewName("jangboco/join/joinSuccess");
 		return mav;
@@ -164,8 +166,9 @@ public class JoinController {
 	}
 	
 	@RequestMapping(value = "/joinMarketMember", method=RequestMethod.POST)
-	public ModelAndView joinMarketMember (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
+	public ModelAndView joinMarketMember (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
 		System.out.println(params);
+		params.put("pw",Utils.encryptAES128(params.get("pw")));
 		int cnt = iJoinService.addMarketMember(params);
 		mav.setViewName("jangboco/join/joinSuccess");
 		return mav;
@@ -177,7 +180,6 @@ public class JoinController {
 	public String validEmail(@RequestParam HashMap<String,String> params) throws Throwable{
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		System.out.println("ㅅ빌망ㅁ나움ㄴㅇㅁㄴㅇ"+params);
 		int cnt = iJoinService.validEmail(params.get("email"));
 		System.out.println(cnt);
 		if(cnt==0) {
@@ -549,6 +551,7 @@ public class JoinController {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		HashMap<String,Object> hm = new HashMap<String, Object>();
+		params.put("pw",Utils.encryptAES128(params.get("pw")));
 		hm = iJoinService.loginPernlCheck(params);
 		if(hm!=null) {
 			modelMap.put("cnt", hm.get("CNT"));
@@ -611,6 +614,7 @@ public class JoinController {
 	@RequestMapping(value="/setNewPw")
 	public ModelAndView setNewPw(@RequestParam HashMap<String,Object> params, ModelAndView mav) throws Throwable {
 		System.out.println(params);
+		params.put("pw",Utils.encryptAES128((String) params.get("pw")));
 		int cnt = iJoinService.setNewPw(params);
 		mav.setViewName("jangboco/join/setNewPwSuccess");
 		return mav;
