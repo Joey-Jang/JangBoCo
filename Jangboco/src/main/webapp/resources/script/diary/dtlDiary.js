@@ -206,7 +206,7 @@ $(document).ready(function() {
 									break;
 								}
 							}
-							nowHeight -= 195;
+							nowHeight -= 210;
 							$("#comnt_list").animate({scrollTop: $("#comnt_list")[0].scrollHeight * nowHeight / totalHeight}, 500);
 						} else {
 							addedComnt = $("#comnt_list > li").last();
