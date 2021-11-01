@@ -93,12 +93,12 @@
 		margin-bottom: 15px;
 	}
 	
-	.writer_info_con>span,div{
+	.writer_info_con>span,#like_btn{
 		margin-right:50px;
 	}
 	
 	.event_info_contnr {
-		width: 90%;
+		width: 95%;
 		height: 100%;
 	}
 	
@@ -108,7 +108,8 @@
 		min-width : 750px;
 		height : calc(100% - 300px);
 		overflow-y:auto;
-		line-break:anywhere;		
+		line-break:anywhere;	
+		padding: 15px;	
 	}
 	.move_btn_contnr {
 		display: flex;
