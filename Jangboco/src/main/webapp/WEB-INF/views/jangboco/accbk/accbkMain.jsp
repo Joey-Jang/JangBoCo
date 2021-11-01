@@ -148,20 +148,20 @@ function getWeekAgo(){
 			<div class="accbk_main_notice">
 				<h3><span>(닉네임)님</span><br>
 				<span id="month_of_today"></span>월 지출 금액은<br>
-				<span id="spend of month">${getThisMonthSpend.SUM}원</span> 입니다.</h3>
+				<span id="spend of month">${getThisMonthSpend.SUM}원</span> 입니다.</h3><br>
 				<!--  -->
 				<!--css display none으로 설정해주고 그때그때 나오게 해야하나    -->
 				<h6> 더 사용 </h6>
 				<h6> 덜 사용 </h6>
 			</div>
 			<!-- 가운데 오게   -->
+			
 			<input type="button" class="spend_regst" id="spend_regst" value="지출 등록" ><br>
-			<div class="accbk_main" id="accbk_summr_box">
+			<div class="accbk_main_summr_contnr" id="accbk_main_summr_contnr">
 				<div class="summr_accbk msd" id="most_spend_day">
 					<a class="main_summr_title" id="">가장 많이 쓴 날</a><br>
 					<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE} 일</span><br>
 					<span id="most_spend_day_cost">${getMostSpendDay.COST} 원</span>
-					
 				</div>
 				<div class="summr_accbk msw" id="most_spend_week">
 					<a class="main_summr_title">가장 많이 쓴 주</a><br>

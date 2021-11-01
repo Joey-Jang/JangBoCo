@@ -60,11 +60,13 @@ public class accbkController {
 		HashMap<String, String> getLeastSpendWeek = accbkiService.getLeastSpendWeek(params);
 		
 		
-		getMostSpendWeek.replace("WEEK", "1","첫");
-		getMostSpendWeek.replace("WEEK", "2","두");
-		getMostSpendWeek.replace("WEEK", "3","세");
-		getMostSpendWeek.replace("WEEK", "4","네");
-		getMostSpendWeek.replace("WEEK", "5","다섯");
+		System.out.println("============replace=========="+getMostSpendWeek);
+		
+		
+		
+		
+		System.out.println("============replace=========="+getLeastSpendWeek);
+		
 		
 		getLeastSpendWeek.replace("WEEK", "1", "첫");
 		getLeastSpendWeek.replace("WEEK", "2", "두");
@@ -100,12 +102,41 @@ public class accbkController {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
+		//이번 달 구하기
+		DecimalFormat df = new DecimalFormat("00");
+        Calendar currentCalendar = Calendar.getInstance();
+        String thisMonth  = df.format(currentCalendar.get(Calendar.MONTH) + 1);
+		
+		params.put("thisMonth",thisMonth);
+		
 		
 		
 		mav.setViewName("jangboco/accbk/accbkChart");
 		
 		return mav;
 	}
+	
+	//가계부_best5_품목_차트
+	@RequestMapping(value = "/accbkItemsChartAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String accbkItemsChartAjax(@RequestParam HashMap<String, String> params)throws Throwable{
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap =  new HashMap<String, Object>();
+	
+	try {
+		List<HashMap<String, String>> getFiveItems = accbkiService.getFiveItems(params);
+	
+		modelMap.put("getFiveItems", getFiveItems);
+	} catch (Throwable e) {
+		e.printStackTrace();
+	}
+	
+	return mapper.writeValueAsString(modelMap);
+	}
+	
+	
 	
 	
 	//기본 페이지를 띄워주기 위한 주소 mapping

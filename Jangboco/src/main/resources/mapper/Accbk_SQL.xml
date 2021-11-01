@@ -207,4 +207,20 @@
 		AND MARKET_NAME LIKE '%' || #{searchMarketName} ||'%'
 		ORDER BY MARKET_NAME
    </select>
+   
+   <select id="getFiveItems" parameterType="hashmap" resultType="hashmap">
+	 	SELECT ITEMS_NAME, COST, ROWN
+		FROM(
+		        SELECT NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME) AS ITEMS_NAME, SUM(A.COST) AS COST,
+		               ROW_NUMBER() OVER(ORDER BY SUM(A.COST) DESC) AS ROWN 
+		        FROM ACCBK A
+		        LEFT OUTER JOIN ITEMS I
+		        ON A.ITEMS_NO = I.ITEMS_NO
+		        WHERE DEL_FLAG =0
+		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{thisMonth})
+		        GROUP BY NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME)
+		        ORDER BY COST DESC
+		        )
+		WHERE ROWN BETWEEN 1 AND 5
+   </select>
 </mapper>

@@ -103,6 +103,16 @@ public class accbkDao implements accbkIDao{
 		return sqlsession.selectList("accbk.searchMarket", params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getAccbkPeriodChart(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectList("accbk.getAccbkPeriodChart", params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getFiveItems(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectList("accbk.getFiveItems", params);
+	}
+
 
 	
 

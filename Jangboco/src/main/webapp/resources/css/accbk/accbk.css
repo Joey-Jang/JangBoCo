@@ -39,8 +39,16 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin: 0 auto;
 }
 
+.accbk_main_summr_contnr {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
 
 #period_set > option {
 	text-align: center;
@@ -48,16 +56,6 @@
 	color: #03A64A;
 }
 
-#accbk_summr_box {
-	display: inline;
-} 
-.accbk_main_notice {
-	margin: 0 auto;
-}
-
-.accbk_main {
-	margin: 0 auto;
-}
 input.spend_regst {
 	background: url("../images/accbkCBtn.png") no-repeat transparent ;
 	border : none;
@@ -66,8 +64,7 @@ input.spend_regst {
 }
 
 .summr_accbk {
-	width : 175px;
-	height : 175px;
+	width : 25%;
 	border: 1px solid #03A64A;
 	border-radius: 10%;
 	display: inline-block;
@@ -85,3 +82,5 @@ input.spend_regst {
 .paging_wrap span:hover {
 	cursor: pointer;
 }
+
+

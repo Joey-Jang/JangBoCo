@@ -104,5 +104,15 @@ public class accbkService implements accbkIService {
 		return accbkiDao.searchMarket(params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getAccbkPeriodChart(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getAccbkPeriodChart(params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getFiveItems(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getFiveItems(params);
+	}
+
 
 }

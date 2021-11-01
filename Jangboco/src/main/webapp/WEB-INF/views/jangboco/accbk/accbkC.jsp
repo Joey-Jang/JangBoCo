@@ -363,8 +363,7 @@ function drawBranchList(branchList) {
 			구입 일자 <input type="date" id="buy_date" name="buy_date">
 			<br> 
 			</form>
-			<input type="button" value="작성" id="write_btn">
-			<input type="button" value="취소" id="write_cancel_btn">
+			<input type="button" value="작성" id="write_btn"> <input type="button" value="취소" id="write_cancel_btn">
         </div>
     </div>
     <div class="bottom_contnr"></div>

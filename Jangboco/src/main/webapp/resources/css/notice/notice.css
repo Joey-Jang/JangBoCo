@@ -1,0 +1,47 @@
+@charset "UTF-8";
+/* noticeR */
+
+#search_btn {
+	background-color:transparent; 
+    cursor: pointer;
+	border: none;
+	position : absolute;
+	left:208px;
+	top:1px;	
+}
+
+#search_contnr {
+	position : relative;
+	margin-right: 65px;
+}
+
+	table{
+		width:90%;
+		min-height:360px;					
+		margin:auto;
+		text-align: center;
+		border-collapse: collapse;
+		table-layout:fixed;
+	}
+	
+	thead{
+		border-bottom: 2px solid #000000;	
+	}	
+	
+	tbody tr {
+		border-bottom: 1px solid #D9B88F;
+	}
+	
+	.paging_btn {
+		width: 50px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		text-align:center;
+		border: 1px solid #C4C4C4;
+		border-left:0;
+	}
+	
+	.paging_btn:hover{
+		background-color: #03A64A20;
+		cursor: pointer;
+	}

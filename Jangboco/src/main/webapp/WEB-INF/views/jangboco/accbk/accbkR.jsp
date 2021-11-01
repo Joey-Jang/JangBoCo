@@ -11,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <link rel="stylesheet" href="resources/css/accbk/accbk.css" type="text/css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="resources/script/jquery/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="resources/script/jquery/jquery.tablesorter.widgets.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
@@ -31,7 +33,7 @@
 			<!--품목 & 구입처로 검색할 수 있게 하기.  -->
 			<input type="button" id="write_btn" value="지출내역추가" >
 			<div>
-			<table>
+			<table id="accbk_r_tbl">
 				<thead>
 				 	<tr>
 				 		<th><input type="checkbox" name="del_chkbx" class="chkbx_all" ></th>
