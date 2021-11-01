@@ -29,6 +29,7 @@
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
 	</form>
+	
     <div class="con_contnr">
        	<form action="#" id="action_form" class="action_form" method="post">
        		<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">

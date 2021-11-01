@@ -23,8 +23,6 @@ public interface DiaryServiceIF {
 	public int addDiaryData(Map<String, Object> diaryParams) throws Throwable;
 
 	public HashMap<String, Object> getDiaryData(HashMap<String, String> params) throws Throwable;
-	
-	public List<HashMap<String, Object>> getHastgListOnDiary(HashMap<String, String> params) throws Throwable;
 
 	public List<HashMap<String, Object>> getDiaryImgListOnDiary(HashMap<String, String> params) throws Throwable;
 
@@ -69,5 +67,15 @@ public interface DiaryServiceIF {
 	public int addComntAccuseData(HashMap<String, String> params) throws Throwable;
 
 	public int addComntData(HashMap<String, String> params) throws Throwable;
+	
+	public int resetDiaryHastg(Map<String, Object> diaryParams) throws Throwable;
+	
+	public int resetItemTag(Map<String, Object> diaryParams) throws Throwable;
+	
+	public int resetDiaryImg(Map<String, Object> diaryParams) throws Throwable;
+
+	public int updateDiaryData(Map<String, Object> diaryParams) throws Throwable;
+
+	public int updateDiaryCon(Map<String, Object> diaryParams) throws Throwable;
 
 }

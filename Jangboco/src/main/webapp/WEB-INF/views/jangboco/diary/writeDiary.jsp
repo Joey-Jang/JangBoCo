@@ -29,6 +29,7 @@
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
 	</form>
+	
     <div class="con_contnr">
 	    <form action="fileUploadAjax" id="file_form" class="hidden_tag" method="post" enctype="multipart/form-data">
 			<input type="file" accept="image/*" id="att_diary_img" name="att_diary_img">
@@ -151,18 +152,20 @@
             <div class="diary_con_contnr">
             	<div class="diary_con_hastg_contnr">
 	            	<textarea id="diary_con" class="diary_con">일기 내용 어찌구저찌구</textarea>
-	            	<ul id="hastg_list" class="hastg_list">
-	            		<li>
-	            			<input type="text" class="hastg" placeholder="해시태그">
-	            			<button type="button" class="del_hastg_btn" style="display: none;">
-	            				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
-	            				<line x1="18" y1="6" x2="6" y2="18"></line>
-	            				<line x1="6" y1="6" x2="18" y2="18"></line>
-	            				</svg>
-	            			</button>
-	            		</li>
-	            	</ul>
-	            	<span id="virtual_hastg" class="virtual_hastg"></span>
+	            	<div class="hastg_list_contnr">
+		            	<ul id="hastg_list" class="hastg_list">
+		            		<li>
+		            			<input type="text" class="hastg" placeholder="해시태그">
+		            			<button type="button" class="del_hastg_btn" style="display: none;">
+		            				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+		            				<line x1="18" y1="6" x2="6" y2="18"></line>
+		            				<line x1="6" y1="6" x2="18" y2="18"></line>
+		            				</svg>
+		            			</button>
+		            		</li>
+		            	</ul>
+		            	<span id="virtual_hastg" class="virtual_hastg"></span>
+	            	</div>
             	</div>
             	<div class="diary_btn_contnr">
 	            	<input type="button" id="write_diary_btn" class="write_diary_btn" value="올리기">

@@ -69,8 +69,8 @@
 		INTO DIARY (DIARY_NO, MEMBER_NO, CON)
 		VALUES (DIARY_SEQ.NEXTVAL, #{memberNo}, #{con})
 		<foreach collection="hastgNoList" item="hastgNo" separator=" ">
-			INTO DIARY_HASTG (DIARY_NO, HASTG_NO)
-			VALUES (DIARY_SEQ.CURRVAL, #{hastgNo})
+			INTO DIARY_HASTG (DIARY_NO, HASTG_NO, DIARY_HASTG_NO)
+			VALUES (DIARY_SEQ.CURRVAL, #{hastgNo}, GET_DIARY_HASTG_SEQ_NEXTVAL)
 		</foreach>
 		<foreach collection="diaryImgList" item="diaryImgData" separator=" ">
 			INTO DIARY_IMG (IMG_NO, DIARY_NO, IMG_URL)
@@ -100,16 +100,6 @@
 		ON D.MEMBER_NO = M.MEMBER_NO
 		AND D.DIARY_NO = #{diaryNo}
 		AND D.DEL_FLAG = 0
-	</select>
-	
-	<select id="getHastgListOnDiary" parameterType="hashmap" resultType="hashmap">
-		SELECT H.HASTG_NO, H.HASTG_NAME
-		FROM HASTG H
-		JOIN DIARY_HASTG DH
-		ON H.HASTG_NO = DH.HASTG_NO
-		AND DH.DIARY_NO = #{diaryNo}
-		AND H.DEL_FLAG = 0
-		ORDER BY HASTG_NO
 	</select>
 	
 	<select id="getDiaryImgListOnDiary" parameterType="hashmap" resultType="hashmap">
@@ -219,6 +209,7 @@
 		ON H.HASTG_NO = DH.HASTG_NO
 		AND DH.DIARY_NO = #{diaryNo}
 		AND H.DEL_FLAG = 0
+		ORDER BY DIARY_HASTG_NO
 	</select>
 	
 	<select id="getComntList" parameterType="hashmap" resultType="hashmap">
@@ -288,4 +279,50 @@
 		INSERT INTO COMNT (COMNT_NO, DIARY_NO, MEMBER_NO, PARENT_COMNT_NO, CON)
 		VALUES (COMNT_SEQ.NEXTVAL, #{diaryNo}, #{memberNo}, #{parentComntNo}, #{con})
 	</insert>
+	
+	<delete id="resetDiaryHastg" parameterType="hashmap">
+		DELETE FROM DIARY_HASTG
+		WHERE DIARY_NO = #{diaryNo}
+	</delete>
+	
+	<delete id="resetItemTag" parameterType="hashmap">
+		DELETE FROM ITEM_TAG
+		WHERE IMG_NO IN (	SELECT IMG_NO
+							FROM DIARY_IMG
+							WHERE DIARY_NO = #{diaryNo}
+						)
+	</delete>
+	
+	<delete id="resetDiaryImg" parameterType="hashmap">
+		DELETE FROM DIARY_IMG
+		WHERE DIARY_NO = #{diaryNo}
+	</delete>
+	
+	<update id="updateDiaryData" parameterType="hashmap">
+	INSERT ALL
+	<foreach collection="hastgNoList" item="hastgNo" separator=" ">
+		INTO DIARY_HASTG (DIARY_NO, HASTG_NO, DIARY_HASTG_NO)
+		VALUES (#{diaryNo}, #{hastgNo}, GET_DIARY_HASTG_SEQ_NEXTVAL)
+	</foreach>
+	<foreach collection="diaryImgList" item="diaryImgData" separator=" ">
+		INTO DIARY_IMG (IMG_NO, DIARY_NO, IMG_URL)
+		VALUES (GET_DIARY_IMG_SEQ_NEXTVAL, #{diaryNo}, #{diaryImgData.diaryImgUrl})
+		<foreach collection="diaryImgData.itemTaglist" item="itemTagData" separator=" ">
+			INTO ITEM_TAG
+			VALUES (GET_ITEM_TAG_SEQ_NEXTVAL, #{itemTagData.marketNo}, #{itemTagData.itemsNo}, GET_DIARY_IMG_SEQ_CURRVAL,
+					#{itemTagData.cost}, #{itemTagData.buyQnt}, #{itemTagData.marketName}, #{itemTagData.itemsName})
+			<if test="itemTagData.addToAccbkFlag eq 1">
+			INTO ACCBK (ACCBK_NO, MEMBER_NO, MARKET_NO, ITEMS_NO, COST, BUY_QNT, BUY_DATE, MARKET_NAME, ITEMS_NAME)
+			VALUES (GET_ACCBK_SEQ_NEXTVAL, #{memberNo}, #{itemTagData.marketNo}, #{itemTagData.itemsNo},
+					#{itemTagData.cost}, #{itemTagData.buyQnt}, #{itemTagData.buyDate}, #{itemTagData.marketName}, #{itemTagData.itemsName})
+			</if>
+		</foreach>
+	</foreach>
+	SELECT * FROM DUAL
+	</update>
+	
+	<update id="updateDiaryCon" parameterType="hashmap">
+		UPDATE DIARY SET CON = #{con}
+		WHERE DIARY_NO = #{diaryNo}
+	</update>
 </mapper>

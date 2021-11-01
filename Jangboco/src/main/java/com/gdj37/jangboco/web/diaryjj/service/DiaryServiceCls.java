@@ -61,11 +61,6 @@ public class DiaryServiceCls implements DiaryServiceIF {
 	}
 	
 	@Override
-	public List<HashMap<String, Object>> getHastgListOnDiary(HashMap<String, String> params) throws Throwable {
-		return diaryDao.getHastgListOnDiary(params);
-	}
-	
-	@Override
 	public List<HashMap<String, Object>> getDiaryImgListOnDiary(HashMap<String, String> params) throws Throwable {
 		return diaryDao.getDiaryImgListOnDiary(params);
 	}
@@ -173,6 +168,31 @@ public class DiaryServiceCls implements DiaryServiceIF {
 	@Override
 	public int addComntData(HashMap<String, String> params) throws Throwable {
 		return diaryDao.addComntData(params);
+	}
+	
+	@Override
+	public int resetDiaryHastg(Map<String, Object> diaryParams) throws Throwable {
+		return diaryDao.resetDiaryHastg(diaryParams);
+	}
+	
+	@Override
+	public int resetItemTag(Map<String, Object> diaryParams) throws Throwable {
+		return diaryDao.resetItemTag(diaryParams);
+	}
+	
+	@Override
+	public int resetDiaryImg(Map<String, Object> diaryParams) throws Throwable {
+		return diaryDao.resetDiaryImg(diaryParams);
+	}
+
+	@Override
+	public int updateDiaryData(Map<String, Object> diaryParams) throws Throwable {
+		return diaryDao.updateDiaryData(diaryParams);
+	}
+
+	@Override
+	public int updateDiaryCon(Map<String, Object> diaryParams) throws Throwable {
+		return diaryDao.updateDiaryCon(diaryParams);
 	}
 
 }

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.jangboco.web.diaryjj.service.DiaryServiceIF;
 
 @Controller
-public class DairyjjController {
+public class DiaryjjConroller {
 
 	@Autowired
 	public DiaryServiceIF diaryService;
@@ -230,10 +230,7 @@ public class DairyjjController {
 		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
 			diaryNo = Integer.parseInt(params.get("diary_no"));
 		}
-		int memberNo = 2;
-		
 		mav.addObject("diaryNo", diaryNo);
-		mav.addObject("memberNo", memberNo);
 		
 		mav.setViewName("jangboco/diary/dtlDiary");
 		return mav;
@@ -248,10 +245,8 @@ public class DairyjjController {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
 		HashMap<String, Object> diaryData = diaryService.getDiaryData(params);
-		List<HashMap<String, Object>> hastgList = diaryService.getHastgListOnDiary(params);
 		
 		modelMap.put("diaryData", diaryData);
-		modelMap.put("hastgList", hastgList);
 		
 		return mapper.writeValueAsString(modelMap);
 	}
@@ -632,6 +627,144 @@ public class DairyjjController {
 		String msg = "SUCCESS";
 		try {
 			int cnt = diaryService.addComntData(params);
+			
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/updateDiary")
+	public ModelAndView updateDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) {
+		int sessnMemberNo = 1;
+		mav.addObject("sessnMemberNo", sessnMemberNo);
+		
+		int diaryNo = 86;
+		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
+			diaryNo = Integer.parseInt(params.get("diary_no"));
+		}
+		mav.addObject("diaryNo", diaryNo);
+		
+		mav.setViewName("jangboco/diary/updateDiary");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/updateDiaryAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	@SuppressWarnings("unchecked")
+	public String updateDiaryAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		
+		int diaryNo = Integer.parseInt(params.get("diaryNo"));
+		int memberNo = Integer.parseInt(params.get("memberNo"));
+		String con = params.get("con");
+		
+		Map<String, Object> diaryParams = new HashMap<String, Object>();
+		diaryParams.put("diaryNo", diaryNo);
+		diaryParams.put("memberNo", memberNo);
+		diaryParams.put("con", con);
+		
+		String diaryImgJSONStr = params.get("diaryImgList");
+		String itemTagJSONStr = params.get("itemTagList");
+		String hastgListJSONStr = params.get("hastgList");
+		JSONParser parser = new JSONParser();
+		JSONArray diaryImgListJSONArr = (JSONArray) parser.parse(diaryImgJSONStr);
+		JSONArray itemTagListsJSONArr = (JSONArray) parser.parse(itemTagJSONStr);
+		JSONArray hastgListJSONArr = (JSONArray) parser.parse(hastgListJSONStr);
+		
+		List<String> hastgNameList = new ArrayList<String>();
+		for(int i=0; i<hastgListJSONArr.size(); i++) {
+			hastgNameList.add((String) hastgListJSONArr.get(i));
+		}
+		
+		List<Integer> hastgNoList = new ArrayList<Integer>();
+		for(int i=0; i<hastgNameList.size(); i++) {
+			String hastgName = hastgNameList.get(i);
+			
+			int hastgDuplctCheck = diaryService.hastgDuplctCheck(hastgName);
+			if(hastgDuplctCheck==0) {
+				diaryParams.put("hastgName", hastgName);
+				try {
+					int cnt = diaryService.addHastgData(diaryParams);
+					
+					if(cnt==0) {
+						msg = "FAILED";
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					
+					msg = "ERROR";
+				}
+			}
+			
+			int hastgNo = diaryService.getHastgNo(hastgName);
+			hastgNoList.add(hastgNo);
+		}
+		diaryParams.put("hastgNoList", hastgNoList);
+		
+		List<Map<String, Object>> diaryImgList = new ArrayList<Map<String, Object>>();
+		// i번째 일기 번호에 해당하는 사진, 태그들
+		for(int i=0; i<diaryImgListJSONArr.size(); i++) {
+			Map<String, Object> diaryImgData = new HashMap<String, Object>();
+			
+			// i번째 diaryImgData에 i번째 일기 사진 추가
+			diaryImgData.put("diaryImgUrl", (String) diaryImgListJSONArr.get(i));
+			
+			// i번째 일기 사진의 태그들 JOSNArray
+			JSONArray itemTagListJSONArr = (JSONArray) itemTagListsJSONArr.get(i);
+			// JSONArray<JSONObject>에서 ArrayList<HashMap>으로 변환
+			List<Map<String, Object>> itemTaglist = new ArrayList<Map<String, Object>>();
+			
+			if(itemTagListJSONArr != null) {
+				for(int j=0; j<itemTagListJSONArr.size(); j++) {
+					JSONObject itemTagDataJSONObj = (JSONObject) itemTagListJSONArr.get(j);
+					
+					Map<String, Object> itemTagData = null;
+					
+					try {
+						itemTagData = new ObjectMapper().readValue(itemTagDataJSONObj.toJSONString(), Map.class) ;
+					} catch (JsonParseException jpe) {
+						jpe.printStackTrace();
+					} catch (JsonMappingException jme) {
+						jme.printStackTrace();
+					} catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+					
+					itemTaglist.add(itemTagData);
+				}
+			}
+			
+			// i번째 diaryImgData에 i번째 일기 사진의 태그들 추가
+			diaryImgData.put("itemTaglist", itemTaglist);
+			// diaryImgList에 i번째 diaryImgList 추가
+			diaryImgList.add(diaryImgData);
+		}
+		// diaryParams에 diaryImgList 추가
+		diaryParams.put("diaryImgList", diaryImgList);
+		
+		try {
+			// 일기 수정
+			int cnt = diaryService.resetDiaryHastg(diaryParams);
+			cnt = diaryService.resetItemTag(diaryParams);
+			cnt = diaryService.resetDiaryImg(diaryParams);
+			cnt = diaryService.updateDiaryData(diaryParams);
+			cnt = diaryService.updateDiaryCon(diaryParams);
 			
 			if(cnt==0) {
 				msg = "FAILED";

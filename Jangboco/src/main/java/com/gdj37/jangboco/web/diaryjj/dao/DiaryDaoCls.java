@@ -60,11 +60,6 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	}
 	
 	@Override
-	public List<HashMap<String, Object>> getHastgListOnDiary(HashMap<String, String> params) throws Throwable {
-		return sqlSession.selectList("Diary.getHastgListOnDiary", params);
-	}
-	
-	@Override
 	public List<HashMap<String, Object>> getDiaryImgListOnDiary(HashMap<String, String> params) throws Throwable {
 		return sqlSession.selectList("Diary.getDiaryImgListOnDiary", params);
 	}
@@ -172,6 +167,31 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	@Override
 	public int addComntData(HashMap<String, String> params) throws Throwable {
 		return sqlSession.insert("Diary.addComntData", params);
+	}
+	
+	@Override
+	public int resetDiaryHastg(Map<String, Object> diaryParams) throws Throwable {
+		return sqlSession.delete("Diary.resetDiaryHastg", diaryParams);
+	}
+	
+	@Override
+	public int resetItemTag(Map<String, Object> diaryParams) throws Throwable {
+		return sqlSession.delete("Diary.resetItemTag", diaryParams);
+	}
+	
+	@Override
+	public int resetDiaryImg(Map<String, Object> diaryParams) throws Throwable {
+		return sqlSession.delete("Diary.resetDiaryImg", diaryParams);
+	}
+
+	@Override
+	public int updateDiaryData(Map<String, Object> diaryParams) throws Throwable {
+		return sqlSession.insert("Diary.updateDiaryData", diaryParams);
+	}
+
+	@Override
+	public int updateDiaryCon(Map<String, Object> diaryParams) throws Throwable {
+		return sqlSession.update("Diary.updateDiaryCon", diaryParams);
 	}
 
 }
