@@ -408,6 +408,14 @@
 					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow2));
 					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow2));
 				    	
+					    kakao.maps.event.addListener(marker, 'click', function() {
+					    	$("#market_no").val(${data.MARKET_NO});
+							$("#market_member_no").val(${data.MARKET_MEMBER_NO});
+							/* $("#items_choice_no").val($(this).attr("no")); */
+							$("#info_form").submit();
+					        
+					    });
+					    
 			    		markers.push(marker);
 			    		bounds.extend(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}));
 			    		
