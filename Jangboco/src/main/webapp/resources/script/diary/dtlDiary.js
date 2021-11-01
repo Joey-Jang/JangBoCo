@@ -5,6 +5,7 @@ $(document).ready(function() {
 	loadProfileDiaryList();
 	loadHastgList();
 	loadComntList();
+	$("#comnt_list").animate({scrollTop: $("#comnt_list")[0].scrollHeight}, 500);
 
 	var diaryImgIdx = 0;
 
@@ -210,6 +211,7 @@ $(document).ready(function() {
 						} else {
 							addedComnt = $("#comnt_list > li").last();
 							
+							$("#add_comnt_con").css("height", "auto");
 							$("#comnt_list").animate({scrollTop: $("#comnt_list")[0].scrollHeight}, 500);
 						}
 						addedComnt.find(".comnt_con_contnr").animate({backgroundColor: "#03A64AAA"}, 800).animate({backgroundColor: "#FFFFFF"}, 600);

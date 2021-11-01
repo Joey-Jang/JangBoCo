@@ -126,7 +126,7 @@
 				            	<ul id="comnt_list" class="comnt_list"></ul>
 		            		</div>
 			            	<div class="add_comnt_contnr">
-			            		<textarea class="add_comnt_con"></textarea>
+			            		<textarea id="add_comnt_con" class="add_comnt_con"></textarea>
 			            		<input type="button" class="add_comnt_btn" value="댓글 등록">
 			            	</div>
 		            	</div>
