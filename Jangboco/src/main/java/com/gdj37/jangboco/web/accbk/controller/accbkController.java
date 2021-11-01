@@ -127,7 +127,6 @@ public class accbkController {
 	
 	try {
 		List<HashMap<String, String>> getFiveItems = accbkiService.getFiveItems(params);
-	
 		modelMap.put("getFiveItems", getFiveItems);
 	} catch (Throwable e) {
 		e.printStackTrace();

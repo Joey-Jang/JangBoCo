@@ -217,7 +217,7 @@
 		        LEFT OUTER JOIN ITEMS I
 		        ON A.ITEMS_NO = I.ITEMS_NO
 		        WHERE DEL_FLAG =0
-		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{thisMonth})
+		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'MM') IN #{month})
 		        GROUP BY NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME)
 		        ORDER BY COST DESC
 		        )
