@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna">
+
+	<select id="getQnaCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS CNT
+		FROM QNA
+		WHERE DEL_FLAG = 0
+		<if test="search_text !=null and search_text != ''">
+			<choose>
+				<when test="search_gbn eq 'title'">
+				AND  TITLE LIKE  '%' || #{search_text} || '%'
+				</when>
+				<when test="search_gbn eq 'con'">
+				AND QNA_NO LIKE '%' || #{search_text} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="getQnaList" parameterType="hashmap" resultType="hashmap">
+		SELECT QNA_NO,MEMBER_NO,QNA_TYPE,TITLE,QSTN_CON,HIT_NUM,REGST_DATE
+		FROM (
+		        SELECT QNA_NO,MEMBER_NO,QNA_TYPE,TITLE,QSTN_CON,HIT_NUM,
+		        		TO_CHAR(REGST_DATE, 'YY-MM-DD') AS REGST_DATE, 
+		                ROW_NUMBER() OVER(ORDER BY QNA_NO DESC) AS ROWN 
+		        FROM QNA
+		        WHERE DEL_FLAG = 0
+		        <if test="search_text !=null and search_text != ''">
+					<choose>
+						<when test="search_gbn eq 'title'">
+						AND  TITLE LIKE  '%' || #{search_text} || '%'
+						</when>
+						<when test="search_gbn eq 'con'">
+						AND QNA_NO LIKE '%' || #{search_text} || '%'
+						</when>
+					</choose>
+				</if>
+		        )
+		WHERE ROWN BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+</mapper>
