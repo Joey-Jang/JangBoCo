@@ -40,6 +40,7 @@ a {
   justify-content: space-between;
   width: calc(100% - 40px);
   margin: 0 20px;
+  height: 60px;
 }
 .header-container-nav {
   display: flex;
@@ -93,10 +94,11 @@ a {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  height: calc(100% - 90px);
 }
 .card {
   width: 25%;
-  /* height: 50%; */
+  height: 50%;
   padding: 15px;
   background: white;
 }
@@ -296,4 +298,8 @@ img.folw_img {
 
 .folwng {
     margin-left: 10px;
+}
+
+#pagingWrap {
+    height: 30px;
 }

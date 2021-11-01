@@ -55,7 +55,7 @@ function getMemberImg(){
         success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
            var html = "";
            if(res.IMG_URL!=null && res.IMG_URL != ""){
-        	   html += "<img src=\"resources/images/diaryImages/"+res.IMG_URL + "\" class=\"profile_img\">";
+        	   html += "<img src=\"resources/upload/"+res.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "\" class=\"profile_img\">";
            } else {
         	   html += "<img src=\"resources/images/diaryImages/user.png\" class=\"profile_img\">";
            }
@@ -100,11 +100,6 @@ function getFolwr(){
     
 }
 
-for(var data of list){
-	  html +=  "<div class=\"diary\">";
-	  html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"fill-img2\"></div>";
-	 
- }
 
 function getFolwng(){
 	console.log("팔로잉리스트 불러오기");
@@ -257,8 +252,11 @@ function drawList(list){
 
    for(var data of list){
 	  html +=  "<div class=\"diary\">";
-	  html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"fill-img2\"></div>";
-	 
+	  if(data.IMG_URL!=null){
+		  html += "<img src=\"resources/upload/"+ data.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "\" class=\"fill-img2\"></div>";
+	  } else {
+		  html += "<img src=\"resources/images/diaryImages/profile.png\" class=\"fill-img2\"></div>";
+	  }
    }
 
    $(".diary_list").html(html);
