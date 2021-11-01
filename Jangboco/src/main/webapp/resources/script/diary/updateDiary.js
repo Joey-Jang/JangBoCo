@@ -656,7 +656,8 @@ $(document).ready(function() {
 				success: function(result) {
 					if(result.msg=="SUCCESS") {
 						alert("일기 수정에 성공하였습니다.");
-						location.href = "home";
+						$("#action_form").attr("action", "dtlDiary");
+						$("#action_form").submit();
 					} else if(result.msg=="FAILED") {
 						alert("일기 수정에 실패하였습니다.");
 					} else {
@@ -670,7 +671,10 @@ $(document).ready(function() {
 		}
 	});
 	
-	// 일기 수정하기 취소 버튼 클릭 이벤트 /////////////////////////////////
+	// 일기 수정하기 취소 버튼 클릭 이벤트
+	$("#cancel_diary_btn").on("click", function() {
+		history.back();
+	});
 });
 
 

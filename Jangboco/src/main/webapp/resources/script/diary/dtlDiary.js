@@ -86,7 +86,11 @@ $(document).ready(function() {
 		DiaryFolwUnfolw();
 	});
 	
-	// 일기 수정 버튼 클릭 이벤트 ///////////////////////////////////////////////////////
+	// 일기 수정 버튼 클릭 이벤트
+	$("#img_nicnm_folw_btn_contnr").on("click", "#diary_update_btn", function() {
+		$("#action_form").attr("action", "updateDiary");
+		$("#action_form").submit();
+	});
 	
 	// 프로필 일기 목록 클릭 이벤트
 	$("#profile_diary_img_list").on("click", "li", function() {

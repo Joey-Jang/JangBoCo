@@ -223,7 +223,7 @@ public class DiaryjjConroller {
 	
 	@RequestMapping(value = "/dtlDiary")
 	public ModelAndView dilDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
-		int sessnMemberNo = 1;
+		int sessnMemberNo = 2;
 		mav.addObject("sessnMemberNo", sessnMemberNo);
 		
 		int diaryNo = 64;
@@ -644,9 +644,6 @@ public class DiaryjjConroller {
 	
 	@RequestMapping(value = "/updateDiary")
 	public ModelAndView updateDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) {
-		int sessnMemberNo = 1;
-		mav.addObject("sessnMemberNo", sessnMemberNo);
-		
 		int diaryNo = 86;
 		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
 			diaryNo = Integer.parseInt(params.get("diary_no"));

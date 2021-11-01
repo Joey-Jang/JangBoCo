@@ -35,8 +35,10 @@
 			<input type="file" accept="image/*" id="att_diary_img" name="att_diary_img">
 			<input type="file" accept="image/*" id="att_change_diary_img" name="att_change_diary_img">
 		</form>
-      	<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">
-		<input type="hidden" id="member_no" name="member_no" value="${sessnMemberNo}">
+		<form action="#" id="action_form" class="hidden_tag" method="post">
+			<input type="hidden" id="member_no" name="member_no" value="${param.member_no}">
+	      	<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">
+		</form>
 		
         <div class="con">
             <ul id="diary_thunl_list" class="diary_thunl_list"></ul>
