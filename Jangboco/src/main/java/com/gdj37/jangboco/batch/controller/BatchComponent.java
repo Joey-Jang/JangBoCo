@@ -1,5 +1,6 @@
 package com.gdj37.jangboco.batch.controller;
 
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -8,11 +9,13 @@ import java.util.HashMap;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.gdj37.jangboco.web.dbapi.service.DBApiServiceIF;
+import com.gdj37.jangboco.web.recipeapi.service.IRecipeService;
 
 @Component
 public class BatchComponent {
@@ -35,6 +38,9 @@ public class BatchComponent {
 	
 	@Autowired
 	DBApiServiceIF DBApiService;
+	
+	@Autowired
+	IRecipeService iRecipeService;
 	
 	@Scheduled(cron = "0 0 0 * * *")
 	public void updateApiDataEveryday() throws Throwable {
@@ -125,5 +131,113 @@ public class BatchComponent {
 			}
 		}
 	}
-
+	
+	@Scheduled(cron = "0 0 0 1 * *")
+	public void updateRecipeApiEveryMonth() throws Throwable {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		boolean flag = false;
+		int start = 1;
+		int end = 1000;
+		String key ="121c409444094fdea525";
+		String result = "";		
+		
+		while(true) {
+			try {
+				URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
+						"/COOKRCP01/json/"+ start +"/"+ end +"/");
+	
+				BufferedReader bf;
+				bf = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+				
+				result = bf.readLine();				
+				
+				JSONParser jsonParser = new JSONParser();
+				JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
+				JSONObject cookrcp01 = (JSONObject)jsonObject.get("COOKRCP01");				
+			
+				int totalCnt = Integer.parseInt((String)cookrcp01.get("total_count"));
+				
+				JSONArray recipeList = (JSONArray)cookrcp01.get("row");
+				
+				for(int i = 0; i<recipeList.size(); i++) {			
+					JSONObject recipeRow = (JSONObject)recipeList.get(i);
+					params.put("chkValue", recipeRow.get("RCP_SEQ"));
+					int chkCnt = iRecipeService.getChkValue(params);
+					if(chkCnt == 0) {						
+						params.put("RCP_SEQ", recipeRow.get("RCP_SEQ"));
+						params.put("RCP_NM", recipeRow.get("RCP_NM"));
+						params.put("RCP_WAY2", recipeRow.get("RCP_WAY2"));
+						params.put("RCP_PAT2", recipeRow.get("RCP_PAT2"));
+						params.put("INFO_WGT", recipeRow.get("INFO_WGT"));
+						params.put("INFO_ENG", recipeRow.get("INFO_ENG"));
+						params.put("INFO_CAR", recipeRow.get("INFO_CAR"));
+						params.put("INFO_PRO", recipeRow.get("INFO_PRO"));
+						params.put("INFO_FAT", recipeRow.get("INFO_FAT"));
+						params.put("INFO_NA", recipeRow.get("INFO_NA"));
+						params.put("ATT_FILE_NO_MAIN", recipeRow.get("ATT_FILE_NO_MAIN"));
+						params.put("RCP_PARTS_DTLS", recipeRow.get("RCP_PARTS_DTLS"));
+						params.put("MANUAL01", recipeRow.get("MANUAL01"));
+						params.put("MANUAL_IMG01", recipeRow.get("MANUAL_IMG01"));
+						params.put("MANUAL02", recipeRow.get("MANUAL02"));
+						params.put("MANUAL_IMG02", recipeRow.get("MANUAL_IMG02"));
+						params.put("MANUAL03", recipeRow.get("MANUAL03"));
+						params.put("MANUAL_IMG03", recipeRow.get("MANUAL_IMG03"));
+						params.put("MANUAL04", recipeRow.get("MANUAL04"));
+						params.put("MANUAL_IMG04", recipeRow.get("MANUAL_IMG04"));
+						params.put("MANUAL05", recipeRow.get("MANUAL05"));
+						params.put("MANUAL_IMG05", recipeRow.get("MANUAL_IMG05"));
+						params.put("MANUAL06", recipeRow.get("MANUAL06"));
+						params.put("MANUAL_IMG06", recipeRow.get("MANUAL_IMG06"));
+						params.put("MANUAL07", recipeRow.get("MANUAL07"));
+						params.put("MANUAL_IMG07", recipeRow.get("MANUAL_IMG07"));
+						params.put("MANUAL08", recipeRow.get("MANUAL08"));
+						params.put("MANUAL_IMG08", recipeRow.get("MANUAL_IMG08"));
+						params.put("MANUAL09", recipeRow.get("MANUAL09"));
+						params.put("MANUAL_IMG09", recipeRow.get("MANUAL_IMG09"));
+						params.put("MANUAL10", recipeRow.get("MANUAL10"));
+						params.put("MANUAL_IMG10", recipeRow.get("MANUAL_IMG10"));
+						params.put("MANUAL11", recipeRow.get("MANUAL11"));
+						params.put("MANUAL_IMG11", recipeRow.get("MANUAL_IMG11"));
+						params.put("MANUAL12", recipeRow.get("MANUAL12"));
+						params.put("MANUAL_IMG12", recipeRow.get("MANUAL_IMG12"));
+						params.put("MANUAL13", recipeRow.get("MANUAL13"));
+						params.put("MANUAL_IMG13", recipeRow.get("MANUAL_IMG13"));
+						params.put("MANUAL14", recipeRow.get("MANUAL14"));
+						params.put("MANUAL_IMG14", recipeRow.get("MANUAL_IMG14"));
+						params.put("MANUAL15", recipeRow.get("MANUAL15"));
+						params.put("MANUAL_IMG15", recipeRow.get("MANUAL_IMG15"));
+						params.put("MANUAL16", recipeRow.get("MANUAL16"));
+						params.put("MANUAL_IMG16", recipeRow.get("MANUAL_IMG16"));
+						params.put("MANUAL17", recipeRow.get("MANUAL17"));
+						params.put("MANUAL_IMG17", recipeRow.get("MANUAL_IMG17"));
+						params.put("MANUAL18", recipeRow.get("MANUAL18"));
+						params.put("MANUAL_IMG18", recipeRow.get("MANUAL_IMG18"));
+						params.put("MANUAL19", recipeRow.get("MANUAL19"));
+						params.put("MANUAL_IMG19", recipeRow.get("MANUAL_IMG19"));
+						params.put("MANUAL20", recipeRow.get("MANUAL20"));
+						params.put("MANUAL_IMG20", recipeRow.get("MANUAL_IMG20"));	
+						int cnt = iRecipeService.addRecipeData(params);
+					}					
+					
+				}
+			
+				if(flag) {
+					break;
+				}				
+				start += 1000;
+				end += 1000;
+				
+				if( end >= totalCnt) {
+					end = totalCnt;
+					flag = true;					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

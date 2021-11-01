@@ -10,16 +10,19 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <link rel="stylesheet" type="text/css" href="resources/css/join/diary.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script>
 var page = 1;
 
 $(document).ready(function() {
+    
    if("${param.searchGbn}" != "") {
       $("#searchGbn").val("${param.searchGbn}");
    }
@@ -47,7 +50,38 @@ $(document).ready(function() {
 	     alert("test");
 	});
    
+/*    $("#searchTxt").autocomplete({
+       source: [ "감자", "고구마", "배추" ],
+   });
+ */
+   
+   $("#searchTxt").on("keyup",function(){
+	      $.ajax({ //jquery의 ajax함수 호출
+	          url: "hastgListAjax", //접속 주소
+	          type: "post", //전송 방식
+	          dataType: "json",
+	          data: // 받아올 데이터 형태
+	        	  {"searchTxt":$("#searchTxt").val(),
+	          }, //보낼 데이터(문자열 형태)
+	          success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+	        	  $("#searchTxt").autocomplete({
+	        	       source: hastgToArray(res.list)
+	        	   });
+	          },
+	          error: function(request, status, error) {//실패 시 다음 함수 실행
+	             console.log(error);
+	          }
+	       });
+   });
 });
+
+function hastgToArray(list){
+	var arr = [];
+	for ( data of list){
+		arr.push(data.HASTG_NAME);
+	}
+	return arr;
+}
 
 function diaryDtl(diary_no){
 	alert(diary_no);
@@ -167,7 +201,6 @@ function drawPaging(pb) {
 	                     <input type="hidden" id="no" name="no" />
 	                     <input type="hidden" id="page" name="page" value="${page}" />
 	                     <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
-	                     <input type="hidden" id="oldTxt" value="${param.searchTxt}" />
 	                     <input type="button" id="searchBtn" value="검색" />
 	                  </form>                    
                     </div>

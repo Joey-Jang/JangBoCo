@@ -31,17 +31,26 @@ public class IntgrEventController {
 	@Autowired
 	public IPagingService iPagingService; 
 	
-	
 	// 지역별 행사소식 게시판 
 	@RequestMapping(value="/intgrEventList")
 	public ModelAndView intgrEventList(@RequestParam HashMap<String, String> params,
-							ModelAndView mav) {
+							ModelAndView mav) throws Throwable{
 		String page= "1";
 		
 		if(params.get("page")!=null) {
 			page = params.get("page");
 		}
 		
+		String disctNo="";
+		String disctName = "";				
+		if(params.get("disctNo") != null) {
+			disctNo= params.get("disctNo");
+			disctName = iIntgrEventService.getDisctName(params);
+		}
+		
+		
+		mav.addObject("disctNo",disctNo);
+		mav.addObject("disctName",disctName);
 		mav.addObject("page", page);
 		
 		mav.setViewName("jangboco/intgrevent/intgrEventList");
@@ -60,7 +69,7 @@ public class IntgrEventController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-		try {
+		try {			
 			int page = Integer.parseInt(params.get("page"));
 			
 			int cnt = iIntgrEventService.getEventCnt(params);
@@ -70,9 +79,15 @@ public class IntgrEventController {
 			params.put("startCnt", Integer.toString(pb.getStartCount()));
 			params.put("endCnt", Integer.toString(pb.getEndCount()));
 			
+			String disctNo ="";
+			if(params.get("disctNo") == null || params.get("disctNo") == "" ) {
+				disctNo = iIntgrEventService.getDisctNo(params);
+				params.put("disctNo", disctNo);				
+			}
+			
 			List<HashMap<String, String>> normalList = iIntgrEventService.getEventNormalList(params);
 			
-			List<HashMap<String, String>> bestList= iIntgrEventService.getEventBestList();
+			List<HashMap<String, String>> bestList= iIntgrEventService.getEventBestList(params);
 			
 			modelMap.put("normalList", normalList);
 			modelMap.put("bestList", bestList);

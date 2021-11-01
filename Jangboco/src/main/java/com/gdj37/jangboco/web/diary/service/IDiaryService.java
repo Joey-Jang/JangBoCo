@@ -25,5 +25,21 @@ public interface IDiaryService {
 
 	public List<HashMap<String, String>> getDiaryPernlList(HashMap<String, Object> params) throws Exception;
 
+	public String getMemberImg(HashMap<String, Object> params) throws Exception;
+
+	public HashMap<String, Integer> getFolwrFolwng(HashMap<String, Object> params) throws Exception;
+
+	public List<HashMap<String, String>> getFolwrList(HashMap<String, Object> params) throws Exception;
+
+	public List<HashMap<String, String>> getFolwngList(HashMap<String, Object> params) throws Exception;
+
+	public int checkFolw(HashMap<String, Object> params) throws Exception;
+
+	public void unfolw(HashMap<String, Object> params) throws Exception;
+
+	public void folw(HashMap<String, Object> params) throws Exception;
+
+	public List<HashMap<String, String>> getHastgList(HashMap<String, Object> params) throws Exception;
+
 
 }

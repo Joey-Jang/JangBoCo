@@ -19,46 +19,32 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-
    var emailNum;
    var emailFlag = false;
-   var eCheck=/^[_a-zA-Z0-9]+([-+.][_a-zA-Z0-9]+)*@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/i;
- 
 
+   function checkVal(sel) {
+	   if($.trim($(sel).val()) == "") {
+	      return true;
+	   } else {
+	      return false;
+	   }
+	}
    
    $("#cancel_btn").on("click",function(){
       history.back();
    });
    
-   $("#login_btn").on("click",function(){
-      if(checkVal("#email")){
-          alert("이메일을 입력해주세요");
-          $("#email").focus();
-       } else if (checkVal("#pw")){
-         alert("비밀번호를 입력해주세요");
-         $("#pw").focus();
-      }  else {
-         $.ajax({
-             type:"POST",
-             url: "loginCheck",
-             dataType:"json",
-             data: {"email":$("#email").val(),
-            	 	"pw":$("#pw").val()
-            	   },
-             success: function(res){
-            	 console.log(res);
-                if(res.cnt==0||res.cnt==""||res.cnt==null){
-                   alert("해당하는 회원정보가 없습니다")
-                } else {
-                   alert("로그인성공!");
-                   $("#member_type").val(res.member_type);
-                   $("#login_form").submit();
-                } 
-             }, 
-             error: function(error){
-                console.log(error);
-             }
-          });
+   $("#set_btn").on("click",function(){
+	   if (checkVal("#pw")){
+	        alert("비밀번호를 입력해주세요");
+	        $("#pw").focus();
+	     } else if (checkVal("#pw_check")){
+	        alert("비밀번호 확인란을 입력해주세요");
+	        $("#pw_check").focus();
+	     } else if ($("#pw").val() != $("#pw_check").val()){
+	        alert("비밀번호 확인이 일치하지 않습니다");	
+	   }  else {
+		  $("#set_form").submit();
       }
    });
    
@@ -88,24 +74,14 @@ function checkVal(sel) {
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${param.sub_menu_idx}">
 	</form>
     <div class="con_contnr">
-        <div class="login_con">
-           <div class="login_form_header">
-              로그인
+        <div class="find_con">
+           <div class="find_form_header">
+              비밀번호 변경
            </div>
-           <div class="login_form_body">
-              <div class="login_form">
-                 <form action="loginMember" id="login_form" method="post">
-                      <div class="form_input" >
-                         <div class="form_input_text">
-                            이메일
-                         </div>
-                         <div class="login_email_input">
-                            <div class="form_input_val">
-                               <input type="email" id="email" name="email"/>
-                            </div>
-                         </div>                    
-                      </div>
-                      <div class="form_input">
+           <div class="find_form_body">
+              <div class="find_form">
+                 <form action="setNewPw" id="set_form" method="post">
+                 	<div class="form_input">
                          <div class="form_input_text">
                             비밀번호
                          </div>
@@ -113,12 +89,18 @@ function checkVal(sel) {
                             <input id="pw" name="pw"/>
                          </div>                    
                       </div>
-                      <div class="form_input_val">
-                      	<input type="hidden" id="member_type" name="member_type">
+                      <div class="form_input">
+                         <div class="form_input_text">
+                            비밀번호 확인
+                         </div>
+                         <div class="form_input_val">
+                            <input id="pw_check" name="pw_check"/>
+                         </div>                    
                       </div>
+                      <input type="hidden" name="email" value="${email}">
                  </form>
-                 <div class="login_btn">
-                    <input type="button" value="로그인" id="login_btn">
+                 <div class="find_btn">
+                    <input type="button" value="확인" id="set_btn">
                     <input type="button" value="취소" id="cancel_btn">
                  </div>
               </div>

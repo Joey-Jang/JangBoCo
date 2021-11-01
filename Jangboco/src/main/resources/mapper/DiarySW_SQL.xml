@@ -69,13 +69,13 @@
 			WHERE D5.MEMBER_NO = M.MEMBER_NO
 			) D6, (SELECT DIARY_NO, DH.HASTG_NO, H.HASTG_NAME FROM DIARY_HASTG DH, HASTG H
 			WHERE DH.HASTG_NO = H.HASTG_NO) H1
-			WHERE D6.DIARY_NO = H1.DIARY_NO(+) AND H1.HASTG_NAME LIKE '%' ||#{searchTxt}||'%'
+			WHERE D6.DIARY_NO = H1.DIARY_NO(+) AND H1.HASTG_NAME = #{searchTxt}
 		) D7
 	</select>
 	
 	<select id="getSearchDiaryList" parameterType="hashmap" resultType="hashmap">
 		SELECT DIARY_NO, MEMBER_NO, CON, HIT_NUM, CNT AS LIKE_CNT, IMG_URL, NICNM, MEMBER_IMG, HASTG_NAME, RNUM
-			FROM (SELECT D6.DIARY_NO, D6.MEMBER_NO, D6.CON, D6.HIT_NUM, D6.CNT, D6.IMG_URL, D6.NICNM, D6.MEMBER_IMG H1.HASTG_NAME, ROW_NUMBER() OVER(ORDER BY D6.DIARY_NO DESC) AS RNUM
+			FROM (SELECT D6.DIARY_NO, D6.MEMBER_NO, D6.CON, D6.HIT_NUM, D6.CNT, D6.IMG_URL, D6.NICNM, D6.MEMBER_IMG, H1.HASTG_NAME, ROW_NUMBER() OVER(ORDER BY D6.DIARY_NO DESC) AS RNUM
 			FROM (SELECT D5.DIARY_NO, D5.MEMBER_NO, D5.CON, D5.HIT_NUM, D5.CNT, D5.IMG_URL, M.NICNM, M.IMG_URL AS MEMBER_IMG
 			FROM (SELECT D3.DIARY_NO, D3.MEMBER_NO, D3.CON, D3.HIT_NUM, D3.CNT, D4.IMG_URL FROM 
 			(SELECT D.DIARY_NO, D.MEMBER_NO, D.CON, D.HIT_NUM, D2.CNT
@@ -94,7 +94,7 @@
 			WHERE D5.MEMBER_NO = M.MEMBER_NO
 			) D6, (SELECT DIARY_NO, DH.HASTG_NO, H.HASTG_NAME FROM DIARY_HASTG DH, HASTG H
 			WHERE DH.HASTG_NO = H.HASTG_NO) H1
-			WHERE D6.DIARY_NO = H1.DIARY_NO(+) AND H1.HASTG_NAME LIKE '%' ||#{searchTxt}||'%'
+			WHERE D6.DIARY_NO = H1.DIARY_NO(+) AND H1.HASTG_NAME = #{searchTxt}
 			) D7
 		WHERE D7.RNUM BETWEEN #{startCnt} AND #{endCnt}
 	</select>
@@ -145,6 +145,10 @@
 	            WHERE D5.MEMBER_NO = M.MEMBER_NO
 	         ) D6
 	</select>
+
+	<select id="getHastgList" parameterType="hashmap" resultType="hashmap">
+		SELECT HASTG_NAME FROM HASTG WHERE HASTG_NAME LIKE #{searchTxt} || '%' ORDER BY LENGTH(HASTG_NAME) ASC
+	</select>
 	
 	<select id="getMemberNo" parameterType="String" resultType="Integer">
         SELECT MEMBER_NO FROM MEMBER WHERE EMAIL = #{0}
@@ -172,4 +176,54 @@
 		) D5
 		WHERE D5.RNUM2 BETWEEN #{startCnt} AND #{endCnt}
 	</select>
+	
+	<select id="getMemberImg" parameterType="hashmap" resultType="String">
+		SELECT IMG_URL FROM MEMBER WHERE MEMBER_NO = #{member_no}
+	</select>
+	
+	<select id="getFolwrFolwng" parameterType="hashmap" resultType="hashmap">
+		SELECT *
+		FROM (SELECT COUNT(*) AS FOLWR FROM FOLW WHERE TARGET_MEMBER_NO = #{member_no}) A LEFT OUTER JOIN
+       (SELECT COUNT(*) AS FOLWNG FROM FOLW WHERE REQ_MEMBER_NO = #{member_no}) B  ON  1 = 1
+	</select>
+	
+	<select id="getFolwrList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM
+		FROM MEMBER M, (SELECT REQ_MEMBER_NO FROM FOLW WHERE TARGET_MEMBER_NO = #{member_no}) F
+		WHERE MEMBER_NO = REQ_MEMBER_NO
+	</select>
+	
+	<select id="getFolwngList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM
+		FROM MEMBER M, (SELECT TARGET_MEMBER_NO FROM FOLW WHERE REQ_MEMBER_NO = #{member_no}) F
+		WHERE MEMBER_NO = TARGET_MEMBER_NO
+	</select>
+	
+	<select id="checkFolw" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*) AS FOLWR FROM FOLW WHERE TARGET_MEMBER_NO = #{page_member_no} AND REQ_MEMBER_NO = #{my_member_no}
+	</select>
+	
+	<insert id="folw" parameterType="hashmap">
+       INSERT INTO FOLW (FOLW_NO, REQ_MEMBER_NO, TARGET_MEMBER_NO, REGST_DATE)
+       VALUES (FOLW_SEQ.NEXTVAL, #{my_member_no}, #{page_member_no}, SYSDATE)
+	</insert>
+	
+	<delete id="unfolw" parameterType="hashmap">
+      DELETE FROM FOLW 
+      WHERE REQ_MEMBER_NO = #{my_member_no} AND TARGET_MEMBER_NO = #{page_member_no}
+	</delete>
+	
+	<select id="folwrList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM, IMG_URL
+		FROM MEMBER M, (SELECT REQ_MEMBER_NO FROM FOLW WHERE TARGET_MEMBER_NO = #{page_member_no}) F
+		WHERE MEMBER_NO = REQ_MEMBER_NO
+	</select>
+	
+	<select id="folwngList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM, IMG_URL
+		FROM MEMBER M, (SELECT TARGET_MEMBER_NO FROM FOLW WHERE REQ_MEMBER_NO = #{page_member_no}) F
+		WHERE MEMBER_NO = TARGET_MEMBER_NO
+	</select>
+	
+	
 </mapper>

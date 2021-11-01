@@ -24,11 +24,11 @@ public class IntgrEventService implements IIntgrEventService {
 		
 		return iIntgrEventDao.getEventCnt(params);
 	}
-
+	
 	@Override
-	public List<HashMap<String, String>> getEventBestList() throws Throwable {
+	public List<HashMap<String, String>> getEventBestList(HashMap<String, String> params) throws Throwable {
 		
-		return iIntgrEventDao.getEventBestList();
+		return iIntgrEventDao.getEventBestList(params);
 	}
 
 	@Override
@@ -41,5 +41,17 @@ public class IntgrEventService implements IIntgrEventService {
 	public int updateEventHit(HashMap<String, String> params) throws Throwable {
 		
 		return iIntgrEventDao.updateEventHit(params);
+	}
+
+	@Override
+	public String getDisctNo(HashMap<String, String> params) throws Throwable {
+		
+		return iIntgrEventDao.getDisctNo(params);
+	}
+
+	@Override
+	public String getDisctName(HashMap<String, String> params) throws Throwable {
+		
+		return iIntgrEventDao.getDisctName(params);
 	}
 }

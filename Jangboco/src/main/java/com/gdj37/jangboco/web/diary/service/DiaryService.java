@@ -75,6 +75,54 @@ public class DiaryService implements IDiaryService{
 		return iDiaryDao.getDiaryPernlList(params);
 	}
 
+	@Override
+	public String getMemberImg(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getMemberImg(params);
+	}
+
+	@Override
+	public HashMap<String, Integer> getFolwrFolwng(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getFolwrFolwng(params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getFolwrList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getFolwrList(params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getFolwngList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getFolwngList(params);
+	}
+
+	@Override
+	public int checkFolw(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.checkFolw(params);
+	}
+
+	@Override
+	public void unfolw(HashMap<String, Object> params) throws Exception {
+		iDiaryDao.unflow(params);
+		
+	}
+
+	@Override
+	public void folw(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		iDiaryDao.folw(params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getHastgList(HashMap<String, Object> params) throws Exception {
+		// TODO Auto-generated method stub
+		return iDiaryDao.getHastgList(params);
+	}
+
 
 
 }

@@ -129,6 +129,20 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
+	@RequestMapping(value = "/hastgListAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String hastgListAjax(@RequestParam HashMap<String,Object> params, HttpSession session) throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		List<HashMap<String,String>> list  = new ArrayList();
+		list = iDiaryService.getHastgList(params);
+		System.out.println("tttttttttttttttttttttt");
+		System.out.println(list);
+		modelMap.put("list", list);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
 	@RequestMapping(value = "/diaryPernlPage")
 	public ModelAndView diaryMypage(ModelAndView mav) {
 		mav.addObject("page_member_no", 1);
@@ -169,4 +183,83 @@ public class DiaryController {
 	}
 	
 	
+	@RequestMapping(value = "/getMemberImgAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String getMemberImgAjax(@RequestParam HashMap<String,Object> params) throws Throwable{
+		System.out.println(params);
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		String img_url = iDiaryService.getMemberImg(params);
+		modelMap.put("img_url",img_url);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/getFolwrFolwngAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String getFolwrFolwngAjax(@RequestParam HashMap<String,Object> params) throws Throwable{
+		System.out.println(params);
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		HashMap<String,Integer> hm = iDiaryService.getFolwrFolwng(params);
+		modelMap.put("folw",hm);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	
+	@RequestMapping(value = "/getFolwrAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String getFolwrAjax(@RequestParam HashMap<String,Object> params) throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		List<HashMap<String,String>> list  = new ArrayList();
+		list = iDiaryService.getFolwrList(params);
+		modelMap.put("list",list);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/getFolwngAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String getFolwngAjax(@RequestParam HashMap<String,Object> params) throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		List<HashMap<String,String>> list  = new ArrayList();
+		list = iDiaryService.getFolwngList(params);
+		modelMap.put("list",list);
+		return mapper.writeValueAsString(modelMap);
+	}
+
+	@RequestMapping(value = "/checkFolwAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String checkFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
+		System.out.println(params);
+		params.put("my_member_no", session.getAttribute("member_no"));
+		System.out.println(session.getAttribute("member_no"));
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		int cnt = iDiaryService.checkFolw(params);
+		modelMap.put("result", cnt);
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/doFolwUnFolwAjax", method=RequestMethod.POST,
+			produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public String doFolwUnFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
+		params.put("my_member_no", session.getAttribute("member_no"));
+		String flag = (String) params.get("flag");
+		if(flag.equals("unfolw")) {
+			iDiaryService.unfolw(params);
+		} else if(flag.equals("folw")) {
+			iDiaryService.folw(params);
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("result", "success");
+		return mapper.writeValueAsString(modelMap);
+	}
 }
