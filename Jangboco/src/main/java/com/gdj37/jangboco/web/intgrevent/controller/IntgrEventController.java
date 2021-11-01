@@ -148,4 +148,96 @@ public class IntgrEventController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/checkEventLikeAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String checkEventLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		int checkEventLike = iIntgrEventService.checkEventLike(params);
+		
+		modelMap.put("checkEventLike", checkEventLike);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/cntEventLikeAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String cntEventLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		 
+		try {
+			int cntEventLike = iIntgrEventService.cntEventLike(params);			
+			modelMap.put("cntEventLike", cntEventLike);			
+		} catch (Exception e) {
+			 e.printStackTrace();
+		}
+		
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value="/addEventLikeAjax", method= RequestMethod.POST,
+			produces = "text/json;charset=UTF-8" )
+	@ResponseBody 
+	public String addEventLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String result = "success";
+		
+		try {
+			int cnt= iIntgrEventService.addEventLike(params);
+			
+			if(cnt == 0) {
+				result="failed";
+			} 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			result ="error";
+		}
+		
+		modelMap.put("result", result);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value="/deleteEventLikeAjax", method= RequestMethod.POST,
+			produces = "text/json;charset=UTF-8" )
+	@ResponseBody 
+	public String deleteEventLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String result = "success";
+		
+		try {
+			int cnt= iIntgrEventService.deleteEventLike(params);
+			
+			if(cnt == 0) {
+				result="failed";
+			} 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			result ="error";
+		}
+		
+		modelMap.put("result", result);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
 }

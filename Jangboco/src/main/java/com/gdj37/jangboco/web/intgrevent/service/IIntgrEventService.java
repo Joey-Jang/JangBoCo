@@ -18,6 +18,14 @@ public interface IIntgrEventService {
 	public String getDisctNo(HashMap<String, String> params) throws Throwable;
 
 	public String getDisctName(HashMap<String, String> params) throws Throwable;
+
+	public int checkEventLike(HashMap<String, String> params) throws Throwable;
+
+	public int cntEventLike(HashMap<String, String> params) throws Throwable;
+
+	public int addEventLike(HashMap<String, String> params) throws Throwable;
+
+	public int deleteEventLike(HashMap<String, String> params) throws Throwable;
 	
 
 }
