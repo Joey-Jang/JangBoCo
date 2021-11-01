@@ -222,16 +222,14 @@ $(document).ready(function(){
 				error: function(request, status, error) {
 					console.log(error);
 				}
+			});	
 			
 		} else {
 			if(confirm("로그인을 하셔야합니다.")){
 				$("#go_form").attr("action", "loginMain	");
 				$("#go_form").submit();				
 			}
-		}		
-	});	
-	
-	
+		}
 });
 
 //좋아요 여부
