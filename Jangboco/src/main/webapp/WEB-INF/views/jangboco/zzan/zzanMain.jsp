@@ -241,6 +241,9 @@
 	
 		//리스트 클릭 이벤트
 		$(".market_list").on('click','li',(function(){
+			$("#market_no").val($(this).attr("market_no"));
+			$("#market_member_no").val($(this).attr("market_member_no"));
+			/* $("#items_choice_no").val($(this).attr("no")); */
 			$("#info_form").submit();
 		})); 
 	
@@ -409,7 +412,7 @@
 			    		bounds.extend(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}));
 			    		
 			    		//목록에 보이게 구현
-			    		html += "<li market_no=\"" + ${data.MARKET_NO} + "\">";
+			    		html += "<li market_no=" + "${data.MARKET_NO}" + " market_member_no="+ "${data.MARKET_MEMBER_NO}" + ">";
 			    		html += "	<div class=\"market_name\">" + "${data.MARKET_NAME}" + "</div>";
 			    		html += "	<div class=\"market_con\">";
 			    		html += "		<span class=\"market_addrs\">" + "${data.MARKET_ADDRS}" + "</span><br>";
