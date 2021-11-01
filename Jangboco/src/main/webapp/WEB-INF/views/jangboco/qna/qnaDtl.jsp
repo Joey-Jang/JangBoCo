@@ -27,6 +27,12 @@
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
    </form>
+   <div class="con_contnr">
+        <div class="con">
+        
+        
+        </div>
+	</div>
  <div class="bottom_contnr"></div>
 </main>
 </body>

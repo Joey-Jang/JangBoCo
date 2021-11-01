@@ -110,4 +110,29 @@
 		FROM DISCT
 		WHERE DISCT_NO = #{disctNo}
 	</select>
+	
+	<select id="checkEventLike" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM EVENT_LIKE
+		WHERE MEMBER_NO = #{memberNo}
+		AND EVENT_NO = #{eventNo}
+	</select>
+	
+	<select id="cntEventLike" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM EVENT_LIKE
+		WHERE EVENT_NO = #{eventNo}
+	</select>
+	
+	<insert id="addEventLike" parameterType="hashmap">
+		INSERT INTO EVENT_LIKE (MEMBER_NO, EVENT_NO)
+		VALUES (#{memberNo}, #{eventNo})
+	</insert>
+	
+	<delete id="deleteEventLike" parameterType="hashmap">
+		DELETE FROM EVENT_LIKE
+		WHERE MEMBER_NO = #{memberNo}
+		AND EVENT_NO = #{eventNo}
+	</delete>	
+	
 </mapper>

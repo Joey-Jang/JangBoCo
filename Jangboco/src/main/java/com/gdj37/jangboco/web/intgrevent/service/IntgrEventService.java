@@ -54,4 +54,28 @@ public class IntgrEventService implements IIntgrEventService {
 		
 		return iIntgrEventDao.getDisctName(params);
 	}
+
+	@Override
+	public int checkEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return iIntgrEventDao.checkEventLike(params);
+	}
+
+	@Override
+	public int cntEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return iIntgrEventDao.cntEventLike(params);
+	}
+
+	@Override
+	public int addEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return iIntgrEventDao.addEventLike(params);
+	}
+
+	@Override
+	public int deleteEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return iIntgrEventDao.deleteEventLike(params);
+	}
 }

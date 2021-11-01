@@ -1,5 +1,24 @@
 @charset "UTF-8";
 /* noticeR */
+main {
+		min-height: 820px;
+		min-width: 1200px;
+	}
+	
+.con {
+	display: flex;
+}
+
+.paging_wrap {
+		display:flex;
+		width : auto;
+		/* height : 30px; */
+		 justify-content: center;
+		/* align-items: center;  */
+		margin: auto;
+		margin-top: 30px;
+	}	
+
 
 #search_btn {
 	background-color:transparent; 
@@ -23,14 +42,49 @@
 		border-collapse: collapse;
 		table-layout:fixed;
 	}
+
+	.notice_tbl_body td {
+		background-color: #03A64A20;
+				
+	}
 	
+	.btn_img {
+		width: 20px;
+		filter: invert(44%) sepia(70%) saturate(381%) hue-rotate(103deg) brightness(88%) contrast(85%);
+	}	
+	
+	#search_btn{
+		background-color:transparent; 
+	    cursor: pointer;
+		border: none;
+		position : absolute;
+		left:208px;
+		top:1px;	
+	}	
+	
+	#search_contnr {
+		position : relative;
+		margin-right: 65px;
+	}
+		
 	thead{
 		border-bottom: 2px solid #000000;	
 	}	
 	
-	tbody tr {
-		border-bottom: 1px solid #D9B88F;
+	tbody tr, tfoot tr {
+		border-bottom: 1px solid #038C3E;
+		height:4vh;
 	}
+	
+	.title{
+		text-overflow:ellipsis;
+		overflow:hidden;
+		white-space: nowrap; 
+	}
+	
+	tbody .title:hover,tfoot .title:hover{
+		cursor: pointer;
+	}		
 	
 	.paging_btn {
 		width: 50px;

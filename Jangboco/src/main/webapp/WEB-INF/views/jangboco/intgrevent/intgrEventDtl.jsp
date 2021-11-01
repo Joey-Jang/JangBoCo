@@ -88,28 +88,17 @@
 	}
 	
 	.writer_info_con {
-		display: inline-block;
-		font-size:16px;
-		margin-right: 50px;
+		display: flex;
+		font-size:16px;				
 		margin-bottom: 15px;
 	}
 	
-	#unlike{
-		width: 25px;
-		height:25px;
-		position:absolute;
-		left: 512px;
-	}
-	
-	#like{
-		width: 25px;
-		height:25px;
-		position:absolute;
-		left: 512px;
+	.writer_info_con>span,#like_btn{
+		margin-right:50px;
 	}
 	
 	.event_info_contnr {
-		width: 90%;
+		width: 95%;
 		height: 100%;
 	}
 	
@@ -119,12 +108,38 @@
 		min-width : 750px;
 		height : calc(100% - 300px);
 		overflow-y:auto;
-		line-break:anywhere;		
+		line-break:anywhere;	
+		padding: 15px;	
 	}
 	.move_btn_contnr {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+	}
+	
+	#unlike{
+		display:none;
+		width: 25px;
+		height:25px;		
+	}
+	
+	#like{
+		display:none;
+		width: 25px;
+		height:25px;		
+	}
+	
+	#like_btn{
+		display: flex;
+		text-align: center;
+	}	
+	.like_unlike_contnr{
+		width: 25px;
+		height:25px;
+		margin-right:20px;		
+	}
+	.like_unlike_contnr:hover{
+		cursor: pointer;
 	}
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -134,6 +149,9 @@
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	checkEventLike();
+	cntEventLike();
+	
 	// 이전글에 대한 데이터가 없을 시 
 	if($("#before_btn").attr("no")==-1){
 		$("#before_btn").css({
@@ -176,17 +194,148 @@ $(document).ready(function(){
 	});
 	
 	
+	// 좋아요 버튼 클릭 이벤트(로그인 / 비로그인시 처리)
+	$(".like_unlike_contnr").on("click",function(){
+		if($("#member_no").val() != null && $("#member_no").val() != ''){
+			var params = {
+					"memberNo": $("#member_no").val(),
+					"eventNo": $("#event_no").val()
+				 };
 	
-	
-	
+			$.ajax({
+				url: "checkEventLikeAjax",
+				type: "post",
+				dataType: "json",
+				data: params,
+				success: function(res) {
+					if(res.checkEventLike==0) {
+						addEventLike();						
+						
+					} else {
+						deleteEventLike();
+						
+					}
+				},
+				error: function(request, status, error) {
+					console.log(error);
+				}
+			});	
+			
+		} else {
+			if(confirm("로그인을 하셔야합니다.")){
+				$("#go_form").attr("action", "loginMain	");
+				$("#go_form").submit();				
+			}
+		}
+	});		
 });
+
+//좋아요 여부
+function checkEventLike() {
+	if($("#member_no").val() != null && $("#member_no").val() != ''){
+		var params = {
+						"memberNo": $("#member_no").val(),
+						"eventNo": $("#event_no").val()
+					 };
+		
+		$.ajax({
+			url: "checkEventLikeAjax",
+			type: "post",
+			dataType: "json",
+			data: params,
+			success: function(res) {
+				if(res.checkEventLike==0) {
+					$("#like").hide();
+					$("#unlike").show();
+				} else {
+					$("#unlike").hide();
+					$("#like").show();
+				}
+			},
+			error: function(request, status, error) {
+				console.log(error);
+			}
+		});		
+	} else {
+		$("#like").hide();
+		$("#unlike").show();		
+	}
+}
+
+//좋아요 개수
+function cntEventLike() {
+	var params = {
+					"eventNo": $("#event_no").val()
+				 };
+	
+	$.ajax({
+		url: "cntEventLikeAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			$("#like_cnt").text(res.cntEventLike);
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});
+}
+
+// 좋아요 누르기
+function addEventLike(){
+	var params = {
+					"eventNo":$("#event_no").val(),
+					"memberNo": $("#member_no").val()
+				};
+	
+	$.ajax({
+		url: "addEventLikeAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			console.log(res.result);
+			$("#unlike").hide();
+			$("#like").show();
+			cntEventLike();
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});	
+}
+
+//좋아요 취소
+function deleteEventLike(){
+	var params = {
+					"eventNo":$("#event_no").val(),
+					"memberNo": $("#member_no").val()
+				};
+	
+	$.ajax({
+		url: "deleteEventLikeAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			console.log(res.result);
+			$("#like").hide();
+			$("#unlike").show();
+			cntEventLike();
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});	
+}
 </script>
 </head>
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="#" id="go_form" method="post">
-      <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+      <input type="hidden" id="member_no" name="member_no" value="${member_no}">
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -221,11 +370,17 @@ $(document).ready(function(){
 		        			<img src="resources/images/intgrevent/market_icon.png">
 		        		</div>
         			</div>
-	        		<span class="writer_info_con">행사기간: ${data.START_DATE} ~  ${data.END_DATE}</span>
-	        		<img id="unlike" src="resources/images/intgrevent/unlike.svg">
-	        		<img id="like" src="resources/images/intgrevent/like.svg">
-	        		<span class="writer_info_con">${data.LIKE_CNT}</span>
-	        		<span class="writer_info_con">조회수 ${data.HIT_NUM}</span>
+	        		<div class="writer_info_con">
+		        		<span>행사기간: ${data.START_DATE} ~  ${data.END_DATE}</span>
+		        		<div id="like_btn">
+		        			<div class="like_unlike_contnr">
+				        		<img id="unlike" src="resources/images/intgrevent/unlike.svg">
+				        		<img id="like" src="resources/images/intgrevent/like.svg">
+		        			</div>
+			        		<span id="like_cnt"></span>
+		        		</div> 
+		        		<span>조회수 ${data.HIT_NUM}</span>
+	        		</div>
         		</div>
         		<div class="event_con">
         			${data.CON}

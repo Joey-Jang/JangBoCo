@@ -54,4 +54,28 @@ public class IntgrEventDao implements IIntgrEventDao {
 		return sqlSession.selectOne("intgrEvent.getDisctName",params);
 	}
 
+	@Override
+	public int checkEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.selectOne("intgrEvent.checkEventLike",params);
+	}
+
+	@Override
+	public int cntEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.selectOne("intgrEvent.cntEventLike",params);
+	}
+
+	@Override
+	public int addEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.update("intgrEvent.addEventLike", params);
+	}
+
+	@Override
+	public int deleteEventLike(HashMap<String, String> params) throws Throwable {
+		
+		return sqlSession.delete("intgrEvent.deleteEventLike", params);
+	}
+
 }

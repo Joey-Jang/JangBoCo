@@ -23,4 +23,34 @@ public class noticeService implements noticeIService {
 	public List<HashMap<String, String>> getNoticeList(HashMap<String, String> params) throws Throwable {
 		return noticeiDao.getNoticeList(params);
 	}
+
+	@Override
+	public int updateNoticeHit(HashMap<String, String> params) throws Throwable {
+		return noticeiDao.updateNoticeHot(params);
+	}
+
+	@Override
+	public HashMap<String, String> getNoticeDtl(HashMap<String, String> params) throws Throwable {
+		return noticeiDao.getNoticeDtl(params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getNoticeBestList(HashMap<String, String> params) throws Throwable {
+		return noticeiDao.getNoticeBestList(params);
+	}
+
+	@Override
+	public int writeNotice(HashMap<String, String> params) throws Throwable {
+		return noticeiDao.writeNotice(params);
+	}
+
+	@Override
+	public int updateNotice(HashMap<String, String> params) throws Throwable {
+		return noticeiDao.updateNotice(params);
+	}
+
+	@Override
+	public int delNotice(HashMap<String, String> params) throws Throwable {
+		return noticeiDao.delNotice(params);
+	}
 }
