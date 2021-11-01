@@ -4,6 +4,11 @@ $(document).ready(function(){
 	}
 	getList();
 	
+	//목록 sort
+	$(function(){
+		$("#accbk_r_tbl").tablesorter({ sortList: [[0,0], [1,0]] });
+	});
+	
 	//지출 내역 추가 
 	$("#write_btn").on("click", function(){
 		$("#action_form").attr("action", "accbkC");

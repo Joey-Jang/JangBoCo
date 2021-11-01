@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<select id="getNoticeCnt" parameterType="hashmap" resultType="hashmap">
+		SELECT COUNT(*) AS CNT
+		FROM NOTICE
+		WHERE DEL_FLAG = 0
+		<if test="search_text !=null and search_text !=''">
+			<choose>
+				<when test="search_gbn eq 'title'">
+				AND TITLE LIKE '%' || #{searchText} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="getNoticeList" parameterType="hashmap" resultType="hashmap">
+		SELECT NOTICE_NO, NOTICE_TYPE,TITLE, CON,HIT_NUM,REGST_DATE
+		FROM (
+				SELECT NOTICE_NO, NOTICE_TYPE,TITLE, CON,HIT_NUM,REGST_DATE, ROW_NUMBER() OVER(ORDER BY NOTICE_NO DESC) AS RNUM
+				FROM NOTICE
+				WHERE DEL_FLAG = 0
+		<if test="search_text !=null and search_text !=''">
+			<choose>
+				<when test="search_gbn eq 'title'">
+				AND TITLE LIKE '%' || #{searchText} || '%'
+				</when>
+			</choose>
+		</if>
+		 	 )
+		WHERE RNUM  BETWEEN #{startCnt} AND ${endCnt}
+	</select>
+</mapper>

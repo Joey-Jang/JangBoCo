@@ -12,57 +12,20 @@
 <link rel="stylesheet" href="resources/css/accbk/accbk.css" type="text/css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	// 이번 달 표시하기 
-	var today = new Date();
-	var getMth = today.getMonth() +1;
-	
-	$("#month_of_today").text(getMth);
-	
-	
 	// Load the Visualization API and the corechart package.
 	google.charts.load('current', {'packages':['corechart']});
 	
 	// Set a callback to run when the Google Visualization API is loaded.
 	google.charts.setOnLoadCallback(drawChart);
 	
-	google.charts.load('current', {'packages':['corechart']});
-	
-	google.charts.setOnLoadCallback(getAccbkItemsChart);
-	
 	// Callback that creates and populates a data table,
 	// instantiates the pie chart, passes in the data and
 	// draws it.
-	/* google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawPeriodChart); */
-	
-});
-
-
-	function getAccbkItemsChart(){
-		var params = $("month_of_today").val();
-		
-		$.ajax({
-			url: "accbkItemsChartAjax", 
-			type: "post", 
-			dataType: "json", 
-			data: params, 
-			success : function(result) {			
-				drawAccbkItemsChart(result);
-			},
-			error: function(request, status, error) { 
-				console.log(error);
-			}
-			
-		});
-	}
-
-
 	function drawChart() {
 	
 		  // Create the data table.
@@ -86,26 +49,6 @@ $(document).ready(function(){
 		  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 		  chart.draw(data, options);
 	}
-	
-	
-	
-	
-	 function drawAccbkItemsChart(result) {
-		var iTemsChart  = new google.visualization.DataTable();
-		
-		iTemsChart.addColumn('string','items');
-		iTemsChart.addColumn('number','rank');
-			for(data of result.getFiveItems){
-				iTemsChart.addRows(['['+'data.ITEMS_NAME',data.ROWN+']']);
-			}
-		// Set chart options
-		  var options = {'title':'이걸 과연 바꿀 수 있을까 ',
-		                 'width':400,
-		                 'height':300};
-		  var chart = new google.visualization.PieChart(document.getElementById('period_chart_contnr'));
-		  chart.draw(iTemsChart, options);
- 
-	}
 </script>
 </head>
 <body>
@@ -119,11 +62,8 @@ $(document).ready(function(){
    </form>
     <div class="con_contnr">
         <div class="con">
-		    <div id="accbk_chart_contnr">
-		     	<span id="month_of_today"></span>
-		    	<div id="chart_div"></div>
-				<div id="period_chart_contnr"></div>		    
-		    </div>
+			<!--Div that will hold the pie chart-->
+		    <div id="chart_div"></div>
         </div>
     </div>
     <div class="bottom_contnr"></div>

@@ -42,6 +42,10 @@ public interface accbkIDao {
 
 	public List<HashMap<String, String>> searchMarket(HashMap<String, String> params)throws Throwable;
 
+	public List<HashMap<String, String>> getAccbkPeriodChart(HashMap<String, String> params)throws Throwable;
+
+	public List<HashMap<String, String>> getFiveItems(HashMap<String, String> params)throws Throwable;
+
 
 
 
