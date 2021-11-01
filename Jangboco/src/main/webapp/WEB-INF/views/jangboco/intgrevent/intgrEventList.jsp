@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
 	main {
-		min-height: 710px;
+		min-height: 820px;
 		min-width: 1200px;
 	}
 	
@@ -113,8 +113,9 @@
 		border-bottom: 2px solid #000000;	
 	}	
 	
-	tbody tr {
+	tbody tr, tfoot tr {
 		border-bottom: 1px solid #D9B88F;
+		height:4vh;
 	}
 	
 	.event_name{
@@ -123,9 +124,9 @@
 		white-space: nowrap; 
 	}
 	
-	tobody .event_name:hover{
+	tobody .event_name:hover,tfoot .event_name:hover{
 		cursor: pointer;
-	}
+	}		
 	
 	.market_name{
 		text-overflow:ellipsis;
@@ -212,7 +213,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("tbody").on("click","#go_event_dtl",function(){
+	$("tbody,tfoot").on("click","#go_event_dtl",function(){
 		$("#event_no").val($(this).attr("no"));
 		
 		$("#action_form").attr("action","intgrEventDtl");
@@ -288,6 +289,7 @@ function drawNomalList(normalList){
 		html += "	<td colspan=\"8\">게시글이 없습니다.</td>	";            		
 		html += "</tr>                                   ";
 		
+		$("table").css("min-height","auto");
 	}
 	
 	for( var data of normalList){
@@ -442,8 +444,8 @@ function drawPaging(pb){
 		                </thead>
 		                <tbody class="event_best">	                    	                             	                  
 		                </tbody>
-		            	<tbody class="event_normal">            	
-		            	</tbody>
+		            	<tfoot class="event_normal">            	
+		            	</tfoot>     	
 		            </table>	            
 		        	<div class="paging_wrap">
 		        	</div>		        	
