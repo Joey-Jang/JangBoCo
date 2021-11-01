@@ -412,7 +412,7 @@ function drawPaging(pb){
 	            			<input type="hidden" id="save_text" value="${param.searchText}">
 	            			<input type="hidden" name="page" id="page" value="${page}">
 	            			<input type="hidden" name="eventNo" id="event_no">
-	            			<input type="hidden" name="disctName" id="disct_name_data">	            			
+	            			<input type="hidden" name="disctName" id="disct_name_data" value="${disctName}">	            			
 	            			<input type="hidden" name="disctNo" id="disct_no" value="${disctNo}">	            			
 	            			<div id="search_box">
 		            			<select name=searchGbn id="search_gbn">
