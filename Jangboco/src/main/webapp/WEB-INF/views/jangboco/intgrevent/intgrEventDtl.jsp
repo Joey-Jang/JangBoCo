@@ -193,7 +193,7 @@ $(document).ready(function(){
 	});
 	
 	
-	// 좋아요 버튼 클릭 이벤트
+	// 좋아요 버튼 클릭 이벤트(로그인 / 비로그인시 처리)
 	$(".like_unlike_contnr").on("click",function(){
 		if($("#member_no").val() != null && $("#member_no").val() != ''){
 			var params = {
@@ -208,15 +208,11 @@ $(document).ready(function(){
 				data: params,
 				success: function(res) {
 					if(res.checkEventLike==0) {
-						addEventLike();
-						cntEventLike();
-						$("#unlike").hide();
-						$("#like").show();
+						addEventLike();						
+						
 					} else {
 						deleteEventLike();
-						cntEventLike();
-						$("#like").hide();
-						$("#unlike").show();
+						
 					}
 				},
 				error: function(request, status, error) {
@@ -230,6 +226,7 @@ $(document).ready(function(){
 				$("#go_form").submit();				
 			}
 		}
+	});		
 });
 
 //좋아요 여부
@@ -298,12 +295,14 @@ function addEventLike(){
 		data: params,
 		success: function(res) {
 			console.log(res.result);
+			$("#unlike").hide();
+			$("#like").show();
+			cntEventLike();
 		},
 		error: function(request, status, error) {
 			console.log(error);
 		}
-	});
-	
+	});	
 }
 
 //좋아요 취소
@@ -320,12 +319,14 @@ function deleteEventLike(){
 		data: params,
 		success: function(res) {
 			console.log(res.result);
+			$("#like").hide();
+			$("#unlike").show();
+			cntEventLike();
 		},
 		error: function(request, status, error) {
 			console.log(error);
 		}
-	});
-	
+	});	
 }
 </script>
 </head>
