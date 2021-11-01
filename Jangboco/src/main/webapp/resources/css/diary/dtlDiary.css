@@ -555,6 +555,7 @@
 }
 .comnt_con_contnr {
 	flex-grow: 1;
+	margin-bottom: 5px;
 	padding: 5px;
 	border-radius: 5px;
 }
