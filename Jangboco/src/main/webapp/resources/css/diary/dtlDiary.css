@@ -400,6 +400,7 @@
 	margin-left: 30px;
 }
 .diary_con_hastg_contnr {
+	flex-grow: 1;
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
@@ -408,8 +409,8 @@
 	max-height: 445px;;
 }
 .diary_con_contnr {
+	flex-grow: 1;
 	width: 100%;
-	height: 200px;
 	padding: 5px;
 	border: 1px solid black;
 	border-radius: 5px;
@@ -466,9 +467,10 @@
     font-weight: 400;
 }
 .comnt_list_add_comnt_contnr_no_border {
-	flex-grow: 1;
 	position: relative;
 	width: 100%;
+	height: 275px;
+	min-height: 275px;
 }
 .comnt_list_add_comnt_contnr {
 	display: flex;
