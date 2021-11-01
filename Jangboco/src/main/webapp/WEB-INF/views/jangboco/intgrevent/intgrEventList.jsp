@@ -369,7 +369,7 @@ function drawPaging(pb){
 		        	<img class="btn_img" src = "resources/images/intgrevent/back_button.svg">     	
 				</button>        	
         	</div>
-        	<div class="intgr_event_con">
+        	<div class="intgr_event_contnr">
 	        	<div class="intgr_event_title">
 		            지역구별 행사 소식
 	        	</div>
