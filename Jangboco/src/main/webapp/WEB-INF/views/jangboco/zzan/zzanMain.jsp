@@ -153,14 +153,16 @@
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-	<form action="#" id="go_form" method="post">
+	<form action="marketInfo" id="info_form" method="post">
       	<input type="hidden" name="member_no" value="${memberNo}">
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
-		<input type="hidden" name="searchGbn" value="${param.searchGbn}">
-		<input type="hidden" name="searchTxt" value="${param.searchTxt}">
-		<input type="hidden" name="searchTxt" value="${param.searchTxt}">
+		<%-- <input type="hidden" name="searchGbn" value="${param.searchGbn}">
+		<input type="hidden" name="searchTxt" value="${param.searchTxt}"> --%>
+		<input type="hidden" name="market_no" id="market_no">
+		<input type="hidden" name="market_member_no" id="market_member_no">
+		<input type="hidden" name="items_choice_no" id="items_choice_no">
 	</form>
     <div class="con_contnr">
     	<div class="con">
@@ -239,8 +241,8 @@
 	
 		//리스트 클릭 이벤트
 		$(".market_list").on('click','li',(function(){
-			$("#dtlForm").submit();
-		});
+			$("#info_form").submit();
+		})); 
 	
 	
 	});
@@ -424,8 +426,6 @@
 			    	      }
 			    		
 			    		</c:if>
-			    		/* html += "	</div>";
-			    		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">"; */
 			    		html += "</li>";
 			    		
 			    	}
