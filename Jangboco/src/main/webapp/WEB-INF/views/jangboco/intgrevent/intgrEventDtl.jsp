@@ -9,6 +9,124 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
+<style type="text/css">
+	.con {
+		display: flex;
+	}
+
+	.back_btn_contnr{
+		margin-right: 10px;
+		padding-top:5px;
+		width: 34px;
+	}
+	
+	.back_btn{
+		background-color: #FFFFFF; 
+	    cursor: pointer;
+		border-width: 1px;
+   		border-radius: 6px;
+   		border-color: #FFFFFF;
+	}
+	
+	.btn_img {
+		width: 20px;
+		filter: invert(44%) sepia(70%) saturate(381%) hue-rotate(103deg) brightness(88%) contrast(85%);
+	}
+	
+	.market_icon img{
+		width:45px;
+		height: 45px;
+	}
+	
+	.move_btn {
+		background-color: #03A64A;
+		color : #FFFFFF;
+		width : 100px;
+		border-width: 1px;
+		border-radius: 6px;	
+		cursor: pointer;
+		border-color: #FFFFFF;	
+	}
+	
+	.writer_info{
+		display:flex;
+	}
+	
+	.page_title_contnr{
+		font-size: 25px;
+		margin-bottom: 30px;
+	}
+	
+	.event_title_contnr{
+		min-width: 750px;
+		
+		font-size: 35px;
+		font-weight:bold;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		margin-bottom: 15px;
+	}
+	
+	.writer_info{
+		margin-bottom: 15px;
+		margin-left: 10px;
+	}
+	
+	.writer_info div:nth-child(1) {
+		margin-right:10px;
+	}
+	
+	.writer_info div:nth-child(1) span:nth-child(1){
+		font-size: 20px;
+		font-weight: bold;
+	}
+	
+	.regst_date{
+		font-size:16px;
+		color: #C4C4C4;
+	}
+	
+	.writer_info_con {
+		display: inline-block;
+		font-size:16px;
+		margin-right: 50px;
+		margin-bottom: 15px;
+	}
+	
+	#unlike{
+		width: 25px;
+		height:25px;
+		position:absolute;
+		left: 512px;
+	}
+	
+	#like{
+		width: 25px;
+		height:25px;
+		position:absolute;
+		left: 512px;
+	}
+	
+	.event_info_contnr {
+		width: 90%;
+		height: 100%;
+	}
+	
+	.event_con{		
+		margin-bottom: 15px;
+		border: 1px solid #03A64A;
+		min-width : 750px;
+		height : calc(100% - 300px);
+		overflow-y:auto;
+		line-break:anywhere;		
+	}
+	.move_btn_contnr {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+</style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -19,36 +137,48 @@ $(document).ready(function(){
 	// 이전글에 대한 데이터가 없을 시 
 	if($("#before_btn").attr("no")==-1){
 		$("#before_btn").css({
-			"visibility":"hidden"
-		})
-	};
-	// 다음글에 대한 데이터가 없을 시 
+			"background-color":"#C4C4C4",
+			"cursor":"auto"
+		});		
+		
+	} else {
+		// 행사소식 이전글
+		$("#before_btn").on("click",function(){
+			$("#event_no").val($(this).attr("no"));
+			
+			$("#action_form").attr("action","intgrEventDtl");
+			$("#action_form").submit();
+		});
+	}
+	// 다음글에 대한 데이터가 없을 시 	
 	if($("#next_btn").attr("no")==-1){
 		$("#next_btn").css({
-			"visibility":"hidden"
-		})
-	};
+			"background-color":"#C4C4C4",
+			"cursor":"auto"
+		});		
+		
+	} else {
+		// 행사소식 다음글
+		$("#next_btn").on("click",function(){
+			
+			
+			$("#event_no").val($(this).attr("no"));
+			
+			$("#action_form").attr("action","intgrEventDtl");
+			$("#action_form").submit();
+		});
+	}
+	
 	// 목록으로 돌아가기
 	$("#back_btn").on("click",function(){
 		$("#action_form").attr("action","intgrEventList");
 		$("#action_form").submit();
 	});
 	
-	// 행사소식 이전글
-	$("#before_btn").on("click",function(){
-		$("#event_no").val($(this).attr("no"));
-		
-		$("#action_form").attr("action","intgrEventDtl");
-		$("#action_form").submit();
-	});
 	
-	// 행사소식 다음글
-	$("#next_btn").on("click",function(){
-		$("#event_no").val($(this).attr("no"));
-		
-		$("#action_form").attr("action","intgrEventDtl");
-		$("#action_form").submit();
-	});
+	
+	
+	
 });
 </script>
 </head>
@@ -67,32 +197,46 @@ $(document).ready(function(){
         		<input type="hidden" name="searchGbn" value="${param.searchGbn}">
         		<input type="hidden" name="searchText" value="${param.searchText}">
         		<input type="hidden" name="page" value="${param.page}">        		 
-        		<input type="hidden" name="eventNo" id="event_no" value="${param.eventNo}">       		
+        		<input type="hidden" name="eventNo" id="event_no" value="${param.eventNo}">
+        		<input type="hidden" name="disctName" id="disct_name_data" value="${param.disctName}">	            			
+	            <input type="hidden" name="disctNo" id="disct_no" value="${param.disctNo}">       		
         	</form>
-        	<div class="title_back">
-        		<button type="button" id="back_btn">뒤로가기</button> 
-        		<span>행사소식</span>        		
+        	<div class="back_btn_contnr">
+        		<button type="button" class="back_btn" id="back_btn">
+        			<img class="btn_img" src = "resources/images/intgrevent/back_button.svg">
+				</button> 
         	</div>
-        	<div class="event_info">
-        		<div class="event_title">
+        	<div class="event_info_contnr">
+	        	<div class="page_title_contnr">행사소식</div>        	        		
+        		<div class="event_title_contnr">
         			<span>${data.EVENT_NAME}</span>
         		</div>
-        		<div class="write_info">
-	        		<span>${data.MARKET_NAME}</span>        		
-	        		<span>${data.REGST_DATE}</span>
-	        		<div class="market_icon">아이콘이들어갈거임</div>
-	        		<span>행사기간: ${data.START_DATE} ~ ${data.END_DATE}</span>
-	        		<span>좋아요 ${data.LIKE_CNT}</span>
-	        		<span>조회수 ${data.HIT_NUM}</span>
+        		<div class="writer_info_contnr">
+        			<div class="writer_info">
+        				<div>
+			        		<span>${data.MARKET_NAME}</span><br>        		
+			        		<span class="regst_date">${data.REGST_DATE}</span><br>
+        				</div>
+		        		<div class="market_icon">
+		        			<img src="resources/images/intgrevent/market_icon.png">
+		        		</div>
+        			</div>
+	        		<span class="writer_info_con">행사기간: ${data.START_DATE} ~  ${data.END_DATE}</span>
+	        		<img id="unlike" src="resources/images/intgrevent/unlike.svg">
+	        		<img id="like" src="resources/images/intgrevent/like.svg">
+	        		<span class="writer_info_con">${data.LIKE_CNT}</span>
+	        		<span class="writer_info_con">조회수 ${data.HIT_NUM}</span>
         		</div>
         		<div class="event_con">
-        			<span>${data.CON}</span>        			
+        			${data.CON}
+        			ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss			
+        			        			
         		</div>
-        		<div class="move_btn">
-        			<button type="button" no="${data.EVENT_NO_BEFORE}" id="before_btn">이전글</button>
-        			<button type="button" no="${data.EVENT_NO_NEXT}" id="next_btn">다음글</button>        		
+        		<div class="move_btn_contnr">
+        			<button type="button" class="move_btn" no="${data.EVENT_NO_BEFORE}" id="before_btn">이전글</button>
+        			<button type="button" class="move_btn" no="${data.EVENT_NO_NEXT}" id="next_btn">다음글</button>        		
         		</div>        		
-        	</div>                	 
+        	</div>
         </div>
     </div>
     <div class="bottom_contnr"></div>

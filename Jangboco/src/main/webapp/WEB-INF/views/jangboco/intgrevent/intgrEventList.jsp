@@ -37,7 +37,8 @@
 		background-color: #FFFFFF; 
 	    cursor: pointer;
 		border-width: 1px;
-   		border-radius: 10px;		
+   		border-radius: 6px;
+   		border-color: #FFFFFF;		
 	}
 	
 	.btn_img {
