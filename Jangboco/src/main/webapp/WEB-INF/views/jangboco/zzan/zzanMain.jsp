@@ -154,7 +154,17 @@
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="marketInfo" id="info_form" method="post">
-      	<input type="hidden" name="member_no" value="${memberNo}">
+		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
+		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
+		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
+		<%-- <input type="hidden" name="searchGbn" value="${param.searchGbn}">
+		<input type="hidden" name="searchTxt" value="${param.searchTxt}"> --%>
+		<input type="hidden" name="market_no" id="market_no">
+		<input type="hidden" name="market_member_no" id="market_member_no">
+		<input type="hidden" name="items_choice_no" id="items_choice_no">
+	</form>
+	
+	<form action="marketInfo" id="go_form" method="post">
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -394,19 +404,20 @@
 			    	if(disct=='${data.DISCT_NAME}'){
 			    		var marker = new kakao.maps.Marker({
 				        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
-				    		image: markerImage
+				    		image: markerImage,
+				    		title: '${data.MARKET_NAME}'
 				   	 	});
 			    		
 			    		       
 			    		
 			    		// 마커에 표시할 인포윈도우 생성
-						var infowindow2 = new kakao.maps.InfoWindow({
+						var infowindowMarker = new kakao.maps.InfoWindow({
 					        content: '<div style="width:150px;text-align:center;padding:6px 0;">${data.MARKET_NAME}</div>' // 인포윈도우에 표시할 내용
 					    });
 						
 						// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
-					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow2));
-					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow2));
+					    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindowMarker));
+					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindowMarker));
 				    	
 					    kakao.maps.event.addListener(marker, 'click', function() {
 					    	$("#market_no").val(${data.MARKET_NO});
@@ -449,6 +460,44 @@
 				$("#market_list").html(html);
 				map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
 		        
+				/* var temp = null; // 기존 content를 담는 변수
+
+				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) { //클러스러터 마우스 오버 이벤트  
+				    temp = cluster.getClusterMarker().getContent();
+				    console.log(temp);
+				    // 변경하려는 div 선언
+				    var content = "<div style='cursor: pointer; width: 52px; height: 52px; border-radius: 52px; border: 1px solid #1a86ae; background-color:white; line-height: 52px; font-size: 14px; text-align: center; font-weight: bold;'>"+cluster.getSize()+"</div>";
+				    cluster.getClusterMarker().setContent(content);
+				});
+
+				kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) { // 클러스터러 마우스 아웃 이벤트
+				    // 마우스 아웃 시 기존 content로 변경
+				    if(temp) {
+				        cluster.getClusterMarker().setContent(temp);
+				    }
+					//console.log('아웃은 되니?')
+				}); */
+				
+				//클러스터 내부 마커 추출
+				var clusterMarkers = clusterer.getMarkers();
+				
+				for(var i=0; i<clusterMarkers.length; i++){
+			    	console.log(clusterMarkers[i].getTitle());
+				}
+				// 클러스터에 표시할 인포윈도우 생성
+				var infowindowCluster = new kakao.maps.InfoWindow({
+			        content: "<div style='width:150px;text-align:center;padding:6px 0;'>clusterMarkers[0].getTitle()+clusterMarkers[1].getTitle()</div>" // 인포윈도우에 표시할 내용
+			    });
+				
+				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) {
+				    console.log( cluster.getBounds() );
+				});
+				kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
+				    console.log( cluster.getSize() );
+				});
+				
+				kakao.maps.event.addListener(clusterer, 'mouseover', makeOverListener(map, clusterer, infowindowCluster));
+			    kakao.maps.event.addListener(clusterer, 'mouseout', makeOutListener(infowindowCluster)); 
 		    } 
 		}); 
 		
