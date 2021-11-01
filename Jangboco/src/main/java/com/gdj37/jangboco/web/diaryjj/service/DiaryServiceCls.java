@@ -86,8 +86,8 @@ public class DiaryServiceCls implements DiaryServiceIF {
 	}
 
 	@Override
-	public int checkLike(HashMap<String, String> params) throws Throwable {
-		return diaryDao.checkLike(params);
+	public int checkDiaryLike(HashMap<String, String> params) throws Throwable {
+		return diaryDao.checkDiaryLike(params);
 	}
 	
 	@Override
@@ -111,13 +111,68 @@ public class DiaryServiceCls implements DiaryServiceIF {
 	}
 
 	@Override
-	public int checkFolw(HashMap<String, String> params) throws Throwable {
-		return diaryDao.checkFolw(params);
+	public int checkDiaryFolw(HashMap<String, String> params) throws Throwable {
+		return diaryDao.checkDiaryFolw(params);
+	}
+	
+	@Override
+	public int diaryFolw(HashMap<String, String> params) throws Throwable {
+		return diaryDao.diaryFolw(params);
+	}
+	
+	@Override
+	public int diaryUnfolw(HashMap<String, String> params) throws Throwable {
+		return diaryDao.diaryUnfolw(params);
 	}
 
 	@Override
 	public List<HashMap<String, Object>> getHastgList(HashMap<String, String> params) throws Throwable {
 		return diaryDao.getHastgList(params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getComntList(HashMap<String, String> params) throws Throwable {
+		return diaryDao.getComntList(params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getRecomntList(int parentComntNo) throws Throwable {
+		return diaryDao.getRecomntList(parentComntNo);
+	}
+
+	@Override
+	public int cntRecomnt(HashMap<String, String> params) throws Throwable {
+		return diaryDao.cntRecomnt(params);
+	}
+
+	@Override
+	public int checkComntLike(HashMap<String, String> params) throws Throwable {
+		return diaryDao.checkComntLike(params);
+	}
+
+	@Override
+	public int cntComntLike(HashMap<String, String> params) throws Throwable {
+		return diaryDao.cntComntLike(params);
+	}
+
+	@Override
+	public int comntLike(HashMap<String, String> params) throws Throwable {
+		return diaryDao.comntLike(params);
+	}
+
+	@Override
+	public int comntUnlike(HashMap<String, String> params) throws Throwable {
+		return diaryDao.comntUnlike(params);
+	}
+
+	@Override
+	public int addComntAccuseData(HashMap<String, String> params) throws Throwable {
+		return diaryDao.addComntAccuseData(params);
+	}
+
+	@Override
+	public int addComntData(HashMap<String, String> params) throws Throwable {
+		return diaryDao.addComntData(params);
 	}
 
 }

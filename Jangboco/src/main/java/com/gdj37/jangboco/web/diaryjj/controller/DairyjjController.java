@@ -223,7 +223,7 @@ public class DairyjjController {
 	
 	@RequestMapping(value = "/dtlDiary")
 	public ModelAndView dilDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
-		int sessnMemberNo = 2;
+		int sessnMemberNo = 1;
 		mav.addObject("sessnMemberNo", sessnMemberNo);
 		
 		int diaryNo = 64;
@@ -300,9 +300,9 @@ public class DairyjjController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-		int checkLike = diaryService.checkLike(params);
+		int checkDiaryLike = diaryService.checkDiaryLike(params);
 		
-		modelMap.put("checkLike", checkLike);
+		modelMap.put("checkDiaryLike", checkDiaryLike);
 		
 		return mapper.writeValueAsString(modelMap);
 	}
@@ -398,23 +398,73 @@ public class DairyjjController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/checkFolwAjax", method = RequestMethod.POST,
+	@RequestMapping(value = "/checkDiaryFolwAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF8")
 	@ResponseBody
-	public String checkFolwAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String checkDiaryFolwAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
-		int checkFolw = diaryService.checkFolw(params);
+		int checkDiaryFolw = diaryService.checkDiaryFolw(params);
 		
-		modelMap.put("checkFolw", checkFolw);
+		modelMap.put("checkDiaryFolw", checkDiaryFolw);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/diaryFolwAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String diaryFolwAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt =  diaryService.diaryFolw(params);
+
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/diaryUnfolwAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String diaryUnfolwAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt =  diaryService.diaryUnfolw(params);
+			
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
 		
 		return mapper.writeValueAsString(modelMap);
 	}
 	
 	@RequestMapping(value = "/getHastgListAjax", method = RequestMethod.POST,
-			produces = "text/json;charset=UTF8")
+					produces = "text/json;charset=UTF8")
 	@ResponseBody
 	public String getHastgListAjax(@RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
@@ -424,6 +474,175 @@ public class DairyjjController {
 		List<HashMap<String, Object>> hastgList = diaryService.getHastgList(params);
 		
 		modelMap.put("hastgList", hastgList);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/getComntListAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String getComntListAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> comntList = diaryService.getComntList(params);
+		for(HashMap<String, Object> comntData : comntList) {
+			int parentComntNo = Integer.parseInt(String.valueOf(comntData.get("COMNT_NO")));
+			
+			List<HashMap<String, Object>> recomntList = diaryService.getRecomntList(parentComntNo);
+			
+			comntData.put("recomntList", recomntList);
+		}
+		
+		modelMap.put("comntList", comntList);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/cntRecomntAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String cntRecomntAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		int cntRecomnt = diaryService.cntRecomnt(params);
+		
+		modelMap.put("cntRecomnt", cntRecomnt);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/checkComntLikeAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String checkComntLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap = new HashMap<String, Object>();
+	
+	int checkComntLike = diaryService.checkComntLike(params);
+	
+	modelMap.put("checkComntLike", checkComntLike);
+	
+	return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/cntComntLikeAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String cntComntLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap = new HashMap<String, Object>();
+	
+	int cntComntLike =  diaryService.cntComntLike(params);
+	
+	modelMap.put("cntComntLike", cntComntLike);
+	
+	return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/comntLikeAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String comntLikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap = new HashMap<String, Object>();
+	
+	String msg = "SUCCESS";
+	try {
+		int cnt =  diaryService.comntLike(params);
+	
+		if(cnt==0) {
+			msg = "FAILED";
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		msg = "ERROR";
+	}
+	
+	modelMap.put("msg", msg);
+	
+	return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/comntUnlikeAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String comntUnlikeAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap = new HashMap<String, Object>();
+	
+	String msg = "SUCCESS";
+	try {
+		int cnt =  diaryService.comntUnlike(params);
+		
+		if(cnt==0) {
+			msg = "FAILED";
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		msg = "ERROR";
+	}
+	
+	modelMap.put("msg", msg);
+	
+	return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/comntAccuseAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String comntAccuseAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt = diaryService.addComntAccuseData(params);
+
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/addComntAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF8")
+	@ResponseBody
+	public String addComntAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt = diaryService.addComntData(params);
+			
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
+		}
+		
+		modelMap.put("msg", msg);
 		
 		return mapper.writeValueAsString(modelMap);
 	}

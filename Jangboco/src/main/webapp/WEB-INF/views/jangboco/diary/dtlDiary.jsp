@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a34fa20b8bdbafa1061701c69f892c1&libraries=services"></script>
@@ -23,7 +24,7 @@
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="#" id="go_form" method="post">
-      	<input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+		<input type="hidden" id="member_no" name="member_no" value="${sessnMemberNo}">
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -53,29 +54,30 @@
 	            			<div id="like_icon" class="like_icon"></div>
 	            			<span id="like" class="like"></span>
 	            		</div>
-	            		<div class="accuse_info_btn_contnr">
-	            			<div id="accuse_info_contnr" class="accuse_info_contnr" style="display:none;">
-       				       		<input type="text" id="title" name="title" class="title" placeholder="제목">
-	    				       	<select id="reason_code" class="reason_code">
+	            		<div class="diary_accuse_info_btn_contnr">
+	            			<div id="diary_accuse_info_contnr" class="diary_accuse_info_contnr" style="display:none;">
+       				       		<input type="text" id="diary_accuse_title" class="accuse_title" placeholder="제목">
+	    				       	<select id="diary_accuse_reason_code" class="accuse_reason_code">
 	    				       		<option value="" selected disabled hidden>- 신고 사유 -</option>
 	    				       		<option value="0">광고글</option>
 	    				       	</select>
 	    				       	<span>자세한 내용을 적어주세요.</span>
-    				       		<textarea id="accuse_con" class="accuse_con"></textarea>
+    				       		<textarea id="diary_accuse_con" class="accuse_con"></textarea>
        				       		<div class="accuse_btn_contnr">
-				           			<input type="button" id="accuse_submit_btn" class="accuse_submit_btn" value="접수">
-				           			<input type="button" id="accuse_cancel_btn" class="accuse_cancel_btn" value="취소">
+				           			<input type="button" id="diary_accuse_submit_btn" class="accuse_submit_btn" value="접수">
+				           			<input type="button" id="diary_accuse_cancel_btn" class="accuse_cancel_btn" value="취소">
        				       		</div>
 	           				</div>
-		            		<input type="button" id="accuse_btn" class="accuse_btn" value="신고">
+		            		<input type="button" id="diary_accuse_btn" class="diary_accuse_btn" value="신고">
 	            		</div>
 	            	</div>
 		            <div class="profile_item_tag_list_contnr">
 		            	<div class="profile_contnr">
-		            		<div class="img_nicnm_folw_btn_contnr">
-		            			<div id="profile_img" class="profile_img"></div>
-		            			<span id="nicnm" class="nicnm"></span>
-		            			<input type="button" id="folw_btn" class="folw_btn" value="팔로우">
+		            		<div id="img_nicnm_folw_btn_contnr" class="img_nicnm_folw_btn_contnr">
+		            			<div class="profile_img_nicnm_contnr">
+			            			<div id="profile_img" class="profile_img"></div>
+			            			<span id="nicnm" class="nicnm"></span>
+		            			</div>
 		            		</div>
 		            		<div class="profile_diary_contnr">
 		            			<div class="profile_diary_img_list_contnr">
@@ -104,7 +106,31 @@
 		            	</div>
 		            	<ul id="hastg_list" class="hastg_list"></ul>
 	            	</div>
-	            	<ul class="comnt_contnr"></ul>
+	            	<div class="comnt_list_add_comnt_contnr_no_border">
+	            		<div id="comnt_accuse_info_contnr" class="comnt_accuse_info_contnr" style="display:none;">
+	            			<input type="hidden" id="accuse_comnt_no">
+							<input type="text" id="comnt_accuse_title" class="accuse_title" placeholder="제목">
+    				       	<select id="comnt_accuse_reason_code" class="accuse_reason_code">
+    				       		<option value="" selected disabled hidden>- 신고 사유 -</option>
+    				       		<option value="0">광고글</option>
+    				       	</select>
+    				       	<span>자세한 내용을 적어주세요.</span>
+   				       		<textarea id="comnt_accuse_con" class="accuse_con"></textarea>
+      				       	<div class="accuse_btn_contnr">
+			           			<input type="button" id="comnt_accuse_submit_btn" class="accuse_submit_btn" value="접수">
+			           			<input type="button" id="comnt_accuse_cancel_btn" class="accuse_cancel_btn" value="취소">
+      				       	</div>
+           				</div>
+		            	<div id="comnt_list_add_comnt_contnr" class="comnt_list_add_comnt_contnr">
+		            		<div class="comnt_list_contnr">
+				            	<ul id="comnt_list" class="comnt_list"></ul>
+		            		</div>
+			            	<div class="add_comnt_contnr">
+			            		<textarea class="add_comnt_con"></textarea>
+			            		<input type="button" class="add_comnt_btn" value="댓글 등록">
+			            	</div>
+		            	</div>
+	            	</div>
 	            </div>
 	        </div>
        	</form>

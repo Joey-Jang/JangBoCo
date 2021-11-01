@@ -85,8 +85,8 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	}
 
 	@Override
-	public int checkLike(HashMap<String, String> params) throws Throwable {
-		return sqlSession.selectOne("Diary.checkLike", params);
+	public int checkDiaryLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.checkDiaryLike", params);
 	}
 	
 	@Override
@@ -110,13 +110,68 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	}
 
 	@Override
-	public int checkFolw(HashMap<String, String> params) throws Throwable {
-		return sqlSession.selectOne("Diary.checkFolw", params);
+	public int checkDiaryFolw(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.checkDiaryFolw", params);
+	}
+	
+	@Override
+	public int diaryFolw(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.diaryFolw", params);
+	}
+	
+	@Override
+	public int diaryUnfolw(HashMap<String, String> params) throws Throwable {
+		return sqlSession.delete("Diary.diaryUnfolw", params);
 	}
 
 	@Override
 	public List<HashMap<String, Object>> getHastgList(HashMap<String, String> params) throws Throwable {
 		return sqlSession.selectList("Diary.getHastgList", params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getComntList(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectList("Diary.getComntList", params);
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getRecomntList(int parentComntNo) throws Throwable {
+		return sqlSession.selectList("Diary.getRecomntList", parentComntNo);
+	}
+
+	@Override
+	public int cntRecomnt(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.cntRecomnt", params);
+	}
+
+	@Override
+	public int checkComntLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.checkComntLike", params);
+	}
+
+	@Override
+	public int cntComntLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.selectOne("Diary.cntComntLike", params);
+	}
+
+	@Override
+	public int comntLike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.comntLike", params);
+	}
+
+	@Override
+	public int comntUnlike(HashMap<String, String> params) throws Throwable {
+		return sqlSession.delete("Diary.comntUnlike", params);
+	}
+
+	@Override
+	public int addComntAccuseData(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.addComntAccuseData", params);
+	}
+
+	@Override
+	public int addComntData(HashMap<String, String> params) throws Throwable {
+		return sqlSession.insert("Diary.addComntData", params);
 	}
 
 }

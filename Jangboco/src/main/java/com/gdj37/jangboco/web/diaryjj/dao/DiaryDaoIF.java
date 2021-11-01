@@ -34,7 +34,7 @@ public interface DiaryDaoIF {
 
 	public List<HashMap<String, Object>> getProfileDiaryList(HashMap<String, String> params) throws Throwable;
 	
-	public int checkLike(HashMap<String, String> params) throws Throwable;
+	public int checkDiaryLike(HashMap<String, String> params) throws Throwable;
 	
 	public int cntDiaryLike(HashMap<String, String> params) throws Throwable;
 	
@@ -42,10 +42,32 @@ public interface DiaryDaoIF {
 	
 	public int diaryUnlike(HashMap<String, String> params) throws Throwable;
 
-	public int checkFolw(HashMap<String, String> params) throws Throwable;
+	public int checkDiaryFolw(HashMap<String, String> params) throws Throwable;
 
 	public List<HashMap<String, Object>> getHastgList(HashMap<String, String> params) throws Throwable;
+	
+	public int diaryFolw(HashMap<String, String> params) throws Throwable;
+	
+	public int diaryUnfolw(HashMap<String, String> params) throws Throwable;
 
 	public int addDiaryAccuseData(HashMap<String, String> params) throws Throwable;
+
+	public List<HashMap<String, Object>> getComntList(HashMap<String, String> params) throws Throwable;
+
+	public List<HashMap<String, Object>> getRecomntList(int parentComntNo) throws Throwable;
+
+	public int cntRecomnt(HashMap<String, String> params) throws Throwable;
+
+	public int checkComntLike(HashMap<String, String> params) throws Throwable;
+
+	public int cntComntLike(HashMap<String, String> params) throws Throwable;
+
+	public int comntLike(HashMap<String, String> params) throws Throwable;
+
+	public int comntUnlike(HashMap<String, String> params) throws Throwable;
+
+	public int addComntAccuseData(HashMap<String, String> params) throws Throwable;
+
+	public int addComntData(HashMap<String, String> params) throws Throwable;
 
 }
