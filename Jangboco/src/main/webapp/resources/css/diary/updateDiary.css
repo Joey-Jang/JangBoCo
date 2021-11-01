@@ -365,12 +365,12 @@
 	height: 25px;
 }
 .others_item_tag_btn {
-	width: 90px;
 	height: 25px;
+	padding: 0 5px !important;
 }
 .others_items_btn {
-	width: 120px;
 	height: 25px;
+	padding: 0 5px !important;
 }
 /* 가계부 추가, 등록, 취소 버튼 */
 .accbk_add_cancel_btn_contnr {

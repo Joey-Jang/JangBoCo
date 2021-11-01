@@ -164,12 +164,9 @@ $(document).ready(function() {
 	$("#edit_item_tag_btn").on("click", function() {
 		if($("#set_item_tag_contnr").css("display")=="none") {
 			initItemTagInfo();
+			initOthersBtn();
 			
 			$("#search_market_name").val("");
-			$("#others_market_name_contnr").hide();
-			$("#others_items_name_contnr").hide();
-			
-			$("#others_item_tag_btn").val("직접 입력하기");
 			
 			$("#add_to_accbk_active").hide();
 			$("#add_to_accbk_inactive").show();
@@ -208,6 +205,7 @@ $(document).ready(function() {
 	});
 	$("#search_market_btn").on("click", function() {
 		initItemTagInfo();
+		initOthersBtn();
 		
 		if(checkVal("#disct_gbn")) {
 			alert("지역구 선택 후 마켓을 검색해주세요.")
@@ -372,7 +370,6 @@ $(document).ready(function() {
 	$("#others_items_btn").on("click", function() {
 		if($("#others_item_tag_btn").attr("others_items")=="0") {
 			$("#others_item_tag_btn").attr("others_items", "1");			// 품목 직접
-			$("#others_items_btn").css("width", "90px");
 			$("#others_items_btn").val("품목 검색하기");
 			$("#items_no").val("");
 			$("#search_items_name").val("")
@@ -385,7 +382,6 @@ $(document).ready(function() {
 			$("#buy_qnt_cost_contnr").show();
 		} else {
 			$("#others_item_tag_btn").attr("others_items", "0");			// 품목 검색
-			$("#others_items_btn").css("width", "120px");
 			$("#others_items_btn").val("품목 직접 입력하기");
 			$("#items_name").val("");
 			$("#others_items_name_contnr").hide();
@@ -402,7 +398,6 @@ $(document).ready(function() {
 		if($("#others_item_tag_btn").val()=="직접 입력하기") {
 			$("#others_item_tag_btn").attr("others_market", "1");			// 마켓 직접
 			$("#others_item_tag_btn").attr("others_items", "1");			// 품목 직접
-			$("#others_item_tag_btn").css("width", "120px");
 			$("#others_item_tag_btn").val("검색으로 입력하기");
 			$("#search_market_contnr").hide();
 			$("#others_market_name_contnr").show();
@@ -411,7 +406,6 @@ $(document).ready(function() {
 		} else {
 			$("#others_item_tag_btn").attr("others_market", "0");			// 마켓 검색
 			$("#others_item_tag_btn").attr("others_items", "0");			// 품목 검색
-			$("#others_item_tag_btn").css("width", "90px");
 			$("#others_item_tag_btn").val("직접 입력하기");
 			$("#disct_gbn").val("");
 			$("#search_market_name").val("");
@@ -758,6 +752,16 @@ function initItemTagInfo() {
 	$("#items_name_contnr, #items_name_contnr > *").hide();
 	$("#buy_qnt_cost_contnr").hide();
 	$("#others_items_btn").hide();
+	$("#others_market_name_contnr").hide();
+	$("#others_items_name_contnr").hide();
+}
+
+// 직접 입력 버튼 초기화
+function initOthersBtn() {
+	$("#others_item_tag_btn").attr("others_market", "0");
+	$("#others_item_tag_btn").attr("others_items", "0");
+	$("#others_item_tag_btn").val("직접 입력하기");
+	$("#others_items_btn").val("품목 직접 입력하기");
 }
 
 // 지역구 목록 그리기
