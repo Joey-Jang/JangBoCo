@@ -224,11 +224,11 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
 	    	$("#dtl_addrs").val(memberAddrs.DTL_ADDRS);
 		}
 	} else {
-		$("#main_loc_addrs").text("비회원 주소");
+		$("#main_loc_addrs").text("서울 금천구 가산디지털2로 115");
 		$("#latest_loc_no").val("");
-    	$("#zipcd").val("12345");
-    	$("#addrs").val("비회원 주소");
-    	$("#dtl_addrs").val("");
+    	$("#zipcd").val("08505");
+    	$("#addrs").val("서울 금천구 가산디지털2로 115");
+    	$("#dtl_addrs").val("대륭테크노타운3차 1109-1호");
 	}
 }
 

@@ -79,6 +79,8 @@ $(document).ready(function() {
 	
 	// 프로필 사진, 닉네임 클릭 이벤트 //////////////////////////////////////////////////
 	$("#profile_img, #nicnm").on("click", function() {
+		$("#action_form").attr("action", "diaryPernlPage");
+		$("#action_form").submit();
 	});
 	
 	// 팔로우 버튼 클릭 이벤트
