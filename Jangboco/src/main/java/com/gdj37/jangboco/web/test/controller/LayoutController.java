@@ -44,9 +44,6 @@ public class LayoutController {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
-		int sessnMemberNo = 2;
-		mav.addObject("sessnMemberNo", sessnMemberNo);
-		
 		List<HashMap<String, String>> list = iZzanService.getMarketList(params);
 		
 		mav.addObject("list", list);
@@ -90,11 +87,10 @@ public class LayoutController {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
 		// 회원이 아니면 최근 위치 출력하지 않음 => AOP로 추후에 구현
-		String memberNo = "2"; // 임시 회원번호
 		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
-			memberNo = params.get("member_no");
+			String memberNo = params.get("member_no");
+			params.put("member_no", memberNo);
 		}
-		params.put("member_no", memberNo);
 		
 		List<HashMap<String, Object>> recentLocList = locService.getRecentLocList(params);
 		modelMap.put("recentLocList", recentLocList);

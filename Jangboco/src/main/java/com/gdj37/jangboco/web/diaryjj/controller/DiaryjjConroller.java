@@ -37,9 +37,6 @@ public class DiaryjjConroller {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
-		int sessnMemberNo = 2;
-		mav.addObject("sessnMemberNo", sessnMemberNo);
-		
 		mav.setViewName("jangboco/diary/writeDiary");
 		
 		return mav;
@@ -223,14 +220,10 @@ public class DiaryjjConroller {
 	
 	@RequestMapping(value = "/dtlDiary")
 	public ModelAndView dilDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
-		int sessnMemberNo = 2;
-		mav.addObject("sessnMemberNo", sessnMemberNo);
-		
-		int diaryNo = 64;
 		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
-			diaryNo = Integer.parseInt(params.get("diary_no"));
+			int diaryNo = Integer.parseInt(params.get("diary_no"));
+			mav.addObject("diaryNo", diaryNo);
 		}
-		mav.addObject("diaryNo", diaryNo);
 		
 		mav.setViewName("jangboco/diary/dtlDiary");
 		return mav;

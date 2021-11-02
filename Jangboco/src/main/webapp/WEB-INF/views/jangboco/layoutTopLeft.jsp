@@ -12,7 +12,7 @@
 <div id="set_loc_contnr" class="set_loc_contnr">
 	<form action="#" id="loc_form" method="post" >
 	   	<div id="loc_info" class="loc_info">
-			<input type="hidden" name="member_no" value="${sessnMemberNo}">
+			<input type="hidden" name="member_no" value="${sMNo}">
 	   		<input type="hidden" id="latest_loc_no" name="latest_loc_no">
 	   		<input type="hidden" id="del_recent_loc_no" name="del_recent_loc_no">
 	    	<input type="text" id="zipcd" name="zipcd" class="zipcd" placeholder="우편번호" readonly>

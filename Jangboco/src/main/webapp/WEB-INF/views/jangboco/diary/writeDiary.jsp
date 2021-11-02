@@ -35,7 +35,7 @@
 			<input type="file" accept="image/*" id="att_diary_img" name="att_diary_img">
 			<input type="file" accept="image/*" id="att_change_diary_img" name="att_change_diary_img">
 		</form>
-		<input type="hidden" id="member_no" name="member_no" value="${sessnMemberNo}">
+		<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
       		
         <div class="con">
             <ul id="diary_thunl_list" class="diary_thunl_list"></ul>
