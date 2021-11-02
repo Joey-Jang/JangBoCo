@@ -100,7 +100,7 @@
                 <li action="diaryLike">
                     <span class="sub_menu_text">보관함</span>
                 </li>
-                <li action="">
+                <li action="diaryPernlPage">
                     <span class="sub_menu_text">마이페이지</span>
                 </li>
                 <li action="writeDiary">

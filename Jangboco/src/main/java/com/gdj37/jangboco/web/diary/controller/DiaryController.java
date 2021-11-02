@@ -37,6 +37,13 @@ public class DiaryController {
 	
 	@RequestMapping(value = "/diaryMain")
 	public ModelAndView diaryMain(ModelAndView mav) {
+		int homeFlag = 0;
+		int menuIdx = 1;
+		int subMenuIdx = 0;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
 		mav.setViewName("jangboco/diary/main");
 		return mav;
 	}
@@ -90,6 +97,13 @@ public class DiaryController {
 	
 	@RequestMapping(value = "/diaryLike")
 	public ModelAndView diaryLike(ModelAndView mav) {
+		int homeFlag = 0;
+		int menuIdx = 1;
+		int subMenuIdx = 1;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
 		mav.setViewName("jangboco/diary/diaryLike");
 		return mav;
 	}
@@ -142,10 +156,26 @@ public class DiaryController {
 	}
 	
 	@RequestMapping(value = "/diaryPernlPage")
-	public ModelAndView diaryMypage(@RequestParam HashMap<String,Object> params, ModelAndView mav) {
-		//mav.addObject("page_member_no", params.get("diary_member_no"));
-		mav.addObject("page_member_no", 2);
-		mav.setViewName("jangboco/diary/diaryPernlPage");
+	public ModelAndView diaryMypage(HttpSession session, @RequestParam HashMap<String,Object> params, ModelAndView mav) {
+		int homeFlag = 0;
+		int menuIdx = 1;
+		int subMenuIdx = 2;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) {
+			mav.addObject("page_member_no", session.getAttribute("sMNo"));
+			
+			if(!"".equals(params.get("diary_member_no")) && params.get("diary_member_no")!=null) {
+				mav.addObject("page_member_no", params.get("diary_member_no"));
+			}
+			
+			mav.setViewName("jangboco/diary/diaryPernlPage");
+		} else {
+			mav.setViewName("redirect:loginMain");
+		}
+		
 		return mav;
 	}
 	
