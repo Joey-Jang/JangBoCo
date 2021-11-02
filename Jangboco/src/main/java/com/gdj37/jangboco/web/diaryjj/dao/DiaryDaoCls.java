@@ -170,18 +170,18 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	}
 	
 	@Override
-	public int resetDiaryHastg(Map<String, Object> diaryParams) throws Throwable {
-		return sqlSession.delete("Diary.resetDiaryHastg", diaryParams);
+	public int deleteDiaryHastg(int diaryNo) throws Throwable {
+		return sqlSession.delete("Diary.deleteDiaryHastg", diaryNo);
 	}
 	
 	@Override
-	public int resetItemTag(Map<String, Object> diaryParams) throws Throwable {
-		return sqlSession.delete("Diary.resetItemTag", diaryParams);
+	public int deleteItemTag(int diaryNo) throws Throwable {
+		return sqlSession.delete("Diary.deleteItemTag", diaryNo);
 	}
 	
 	@Override
-	public int resetDiaryImg(Map<String, Object> diaryParams) throws Throwable {
-		return sqlSession.delete("Diary.resetDiaryImg", diaryParams);
+	public int deleteDiaryImg(int diaryNo) throws Throwable {
+		return sqlSession.delete("Diary.deleteDiaryImg", diaryNo);
 	}
 
 	@Override
@@ -192,6 +192,11 @@ public class DiaryDaoCls implements DiaryDaoIF {
 	@Override
 	public int updateDiaryCon(Map<String, Object> diaryParams) throws Throwable {
 		return sqlSession.update("Diary.updateDiaryCon", diaryParams);
+	}
+
+	@Override
+	public int deleteDiary(int diaryNo) throws Throwable {
+		return sqlSession.update("Diary.deleteDiary", diaryNo);
 	}
 
 }

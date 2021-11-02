@@ -280,12 +280,12 @@
 		VALUES (COMNT_SEQ.NEXTVAL, #{diaryNo}, #{memberNo}, #{parentComntNo}, #{con})
 	</insert>
 	
-	<delete id="resetDiaryHastg" parameterType="hashmap">
+	<delete id="deleteDiaryHastg" parameterType="Integer">
 		DELETE FROM DIARY_HASTG
 		WHERE DIARY_NO = #{diaryNo}
 	</delete>
 	
-	<delete id="resetItemTag" parameterType="hashmap">
+	<delete id="deleteItemTag" parameterType="Integer">
 		DELETE FROM ITEM_TAG
 		WHERE IMG_NO IN (	SELECT IMG_NO
 							FROM DIARY_IMG
@@ -293,7 +293,7 @@
 						)
 	</delete>
 	
-	<delete id="resetDiaryImg" parameterType="hashmap">
+	<delete id="deleteDiaryImg" parameterType="Integer">
 		DELETE FROM DIARY_IMG
 		WHERE DIARY_NO = #{diaryNo}
 	</delete>
@@ -323,6 +323,11 @@
 	
 	<update id="updateDiaryCon" parameterType="hashmap">
 		UPDATE DIARY SET CON = #{con}
+		WHERE DIARY_NO = #{diaryNo}
+	</update>
+	
+	<update id="deleteDiary" parameterType="Integer">
+		UPDATE DIARY SET DEL_FLAG = 1
 		WHERE DIARY_NO = #{diaryNo}
 	</update>
 </mapper>

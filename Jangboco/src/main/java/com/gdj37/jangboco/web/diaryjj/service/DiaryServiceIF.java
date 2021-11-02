@@ -68,14 +68,16 @@ public interface DiaryServiceIF {
 
 	public int addComntData(HashMap<String, String> params) throws Throwable;
 	
-	public int resetDiaryHastg(Map<String, Object> diaryParams) throws Throwable;
+	public int deleteDiaryHastg(int diaryNo) throws Throwable;
 	
-	public int resetItemTag(Map<String, Object> diaryParams) throws Throwable;
+	public int deleteItemTag(int diaryNo) throws Throwable;
 	
-	public int resetDiaryImg(Map<String, Object> diaryParams) throws Throwable;
+	public int deleteDiaryImg(int diaryNo) throws Throwable;
 
 	public int updateDiaryData(Map<String, Object> diaryParams) throws Throwable;
 
 	public int updateDiaryCon(Map<String, Object> diaryParams) throws Throwable;
+
+	public int deleteDiary(int diaryNo) throws Throwable;
 
 }

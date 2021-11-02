@@ -218,7 +218,7 @@
 .img_nicnm_folw_btn_contnr {
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 	width: 100%;
 	height: 30px;
@@ -240,7 +240,7 @@
 	cursor: pointer;
 }
 .nicnm {
-	width: 58px;
+	width: 53px;
 	margin: 0 5px;
 	font-weight: 500;
 	overflow: auto;
@@ -254,8 +254,13 @@
 	height: 25px;
 }
 .diary_update_btn {
-	width: 70px;
+	width: 30px;
 	height: 25px;
+}
+.diary_delete_btn {
+	width: 30px;
+	height: 25px;
+	margin-left: 5px !important;
 }
 .profile_diary_contnr {
 	position: relative;

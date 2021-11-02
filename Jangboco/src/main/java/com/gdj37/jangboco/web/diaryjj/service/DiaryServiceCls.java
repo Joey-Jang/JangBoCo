@@ -171,18 +171,18 @@ public class DiaryServiceCls implements DiaryServiceIF {
 	}
 	
 	@Override
-	public int resetDiaryHastg(Map<String, Object> diaryParams) throws Throwable {
-		return diaryDao.resetDiaryHastg(diaryParams);
+	public int deleteDiaryHastg(int diaryNo) throws Throwable {
+		return diaryDao.deleteDiaryHastg(diaryNo);
 	}
 	
 	@Override
-	public int resetItemTag(Map<String, Object> diaryParams) throws Throwable {
-		return diaryDao.resetItemTag(diaryParams);
+	public int deleteItemTag(int diaryNo) throws Throwable {
+		return diaryDao.deleteItemTag(diaryNo);
 	}
 	
 	@Override
-	public int resetDiaryImg(Map<String, Object> diaryParams) throws Throwable {
-		return diaryDao.resetDiaryImg(diaryParams);
+	public int deleteDiaryImg(int diaryNo) throws Throwable {
+		return diaryDao.deleteDiaryImg(diaryNo);
 	}
 
 	@Override
@@ -193,6 +193,11 @@ public class DiaryServiceCls implements DiaryServiceIF {
 	@Override
 	public int updateDiaryCon(Map<String, Object> diaryParams) throws Throwable {
 		return diaryDao.updateDiaryCon(diaryParams);
+	}
+
+	@Override
+	public int deleteDiary(int diaryNo) throws Throwable {
+		return diaryDao.deleteDiary(diaryNo);
 	}
 
 }

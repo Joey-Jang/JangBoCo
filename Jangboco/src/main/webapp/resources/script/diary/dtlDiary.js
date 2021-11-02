@@ -77,7 +77,7 @@ $(document).ready(function() {
 		$("#diary_accuse_info_contnr").fadeOut(200);
 	});
 	
-	// 프로필 사진, 닉네임 클릭 이벤트 //////////////////////////////////////////////////
+	// 프로필 사진, 닉네임 클릭 이벤트
 	$("#profile_img, #nicnm").on("click", function() {
 		$("#action_form").attr("action", "diaryPernlPage");
 		$("#action_form").submit();
@@ -92,6 +92,35 @@ $(document).ready(function() {
 	$("#img_nicnm_folw_btn_contnr").on("click", "#diary_update_btn", function() {
 		$("#action_form").attr("action", "updateDiary");
 		$("#action_form").submit();
+	});
+	
+	// 일기 삭제 버튼 클릭 이벤트
+	$("#img_nicnm_folw_btn_contnr").on("click", "#diary_delete_btn", function() {
+		if(confirm("일기를 삭제하시겠습니까?")) {
+			var params = {
+							"diaryNo": $("#diary_no").val(),
+						 };
+			
+			$.ajax({
+				url: "deleteDiaryAjax",
+				type: "post",
+				dataType: "json",
+				data: params,
+				success: function(result) {
+					if(result.msg=="SUCCESS") {
+						alert("일기 삭제에 성공하였습니다.");
+						location.href = "diaryMain";
+					} else if(result.msg=="FAILED") {
+						alert("일기 삭제에 실패하였습니다.");
+					} else {
+						alert("일기 삭제 중 문제가 발생하였습니다.");
+					}
+				},
+				error: function(request, status, error) {
+					console.log(error);
+				}
+			});
+		}
 	});
 	
 	// 프로필 일기 목록 클릭 이벤트
@@ -452,7 +481,8 @@ function loadDiaryData() {
 			}
 			$("#nicnm").text(result.diaryData.NICNM);
 			if($("#member_no").val()==result.diaryData.MEMBER_NO) {
-				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_update_btn\" class=\"diary_update_btn\" value=\"일기 수정\">");
+				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_update_btn\" class=\"diary_update_btn\" value=\"수정\">");
+				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_delete_btn\" class=\"diary_delete_btn\" value=\"삭제\">");
 			} else {
 				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"folw_btn\" class=\"folw_btn\">");
 				checkDiaryFolw();

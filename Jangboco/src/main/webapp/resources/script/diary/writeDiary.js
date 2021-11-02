@@ -653,7 +653,7 @@ $(document).ready(function() {
 				success: function(result) {
 					if(result.msg=="SUCCESS") {
 						alert("일기 올리기에 성공하였습니다.");
-						location.href = "home";
+						location.href = "diaryMain";
 					} else if(result.msg=="FAILED") {
 						alert("일기 올리기에 실패하였습니다.");
 					} else {
@@ -667,7 +667,10 @@ $(document).ready(function() {
 		}
 	});
 	
-	// 일기 올리기 취소 버튼 클릭 이벤트 /////////////////////////////////
+	// 일기 올리기 취소 버튼 클릭 이벤트
+	$("#cancel_diary_btn").on("click", function() {
+		history.back();
+	});
 });
 
 

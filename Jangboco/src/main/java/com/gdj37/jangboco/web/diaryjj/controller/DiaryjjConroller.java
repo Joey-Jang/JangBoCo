@@ -750,9 +750,9 @@ public class DiaryjjConroller {
 		
 		try {
 			// 일기 수정
-			int cnt = diaryService.resetDiaryHastg(diaryParams);
-			cnt = diaryService.resetItemTag(diaryParams);
-			cnt = diaryService.resetDiaryImg(diaryParams);
+			int cnt = diaryService.deleteDiaryHastg(diaryNo);
+			cnt = diaryService.deleteItemTag(diaryNo);
+			cnt = diaryService.deleteDiaryImg(diaryNo);
 			cnt = diaryService.updateDiaryData(diaryParams);
 			cnt = diaryService.updateDiaryCon(diaryParams);
 			
@@ -766,6 +766,34 @@ public class DiaryjjConroller {
 		}
 		
 		modelMap.put("msg", msg);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+	
+	@RequestMapping(value = "/deleteDiaryAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String deleteDiaryAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		int diaryNo = Integer.parseInt(params.get("diaryNo"));
+		
+		String msg = "SUCCESS";
+		try {
+			int cnt = diaryService.deleteDiary(diaryNo);
+			
+			if(cnt==0) {
+				msg = "FAILED";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			msg = "ERROR";
+		}
+		
+		modelMap.put("mag", msg);
 		
 		return mapper.writeValueAsString(modelMap);
 	}

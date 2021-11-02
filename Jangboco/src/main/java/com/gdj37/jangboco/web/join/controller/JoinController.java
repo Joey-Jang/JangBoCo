@@ -585,7 +585,7 @@ public class JoinController {
 			session.setAttribute("email", params.get("email"));
 		}
 		int member_no = iJoinService.getMemberNo(params.get("email"));
-		session.setAttribute("sMNo", member_no); 
+		session.setAttribute("sMNo", member_no);
 		mav.setViewName(pageUrl);
 		return mav;
 	}
