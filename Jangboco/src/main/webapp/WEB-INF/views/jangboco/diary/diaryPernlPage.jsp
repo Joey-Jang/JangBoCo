@@ -18,7 +18,7 @@
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 <script>
 var page = 1;
-var myMemberNo = <%=session.getAttribute("member_no")%>;
+var myMemberNo = <%=session.getAttribute("sMNo")%>;
 var listFlag = 0;
 
 $(document).ready(function() {

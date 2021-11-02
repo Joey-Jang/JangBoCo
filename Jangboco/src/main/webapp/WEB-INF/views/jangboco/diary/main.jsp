@@ -84,7 +84,8 @@ function hastgToArray(list){
 }
 
 function diaryDtl(diary_no){
-	alert(diary_no);
+	$("#diary_no").val(diary_no);
+	$("#dtlForm").submit();
 }
 
 function reloadList() {
@@ -188,14 +189,9 @@ function drawPaging(pb) {
     <div class="con_contnr">
         <div class="con">
 
-<%--             <form action="#" id="actionForm" method="post">
-               <input type="hidden" id="no" name="no" />
-               <input type="hidden" id="page" name="page" value="${page}" />
-               <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
-               <input type="hidden" id="oldTxt" value="${param.searchTxt}" />
-               <input type="button" id="searchBtn" value="검색" />
-               <input type="button" id="addBtn" value="등록" />
-            </form> --%>
+            <form action="dtlDiary" id="dtlForm" method="post">
+                <input type="hidden" id="diary_no" name="diary_no"/>
+            </form>
              <div class="container">
                 <div class="header-container">
                   <h3>장보코_다이어리</h3>
@@ -220,178 +216,9 @@ function drawPaging(pb) {
                   </div>
                 </div>
                 <div class="card-wrapper">
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/1.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/2.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/3.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/1.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/2.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/3.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img src="resources/images/diaryImages/profile.png" class="fill-img" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/1.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <div class="card-user">
-                        <div class="card-user-profile">
-                          <img class="fill-img" src="resources/images/diaryImages/profile.png" alt="프로필">
-                        </div>
-                        <p class="card-user-name">오픈더캐비닛</p>
-                      </div>
-                      <div class="card-like">
-                        <img src="resources/images/diaryImages/heart.png" alt="좋아요">
-                        <span>2</span>
-                      </div>
-                    </div>
-                    <div class="card-thumbnail">
-                      <span class="card-thumbnail-views">조회수 120</span>
-                      <img class="fill-img" src="resources/images/diaryImages/2.jpg" alt="썸네일">
-                    </div>
-                    <div class="card-contents">
-                      온더 테이블 모음 🔥 파스타와 오픈샌드위치 ✨
-                    </div>
-                  </div>
-                </div>
-  	            <div id="pagingWrap">
+              	</div>
+              	 <div id="pagingWrap">
             	</div>
-              </div>
            </div>
     </div>
     <div class="bottom_contnr"></div>

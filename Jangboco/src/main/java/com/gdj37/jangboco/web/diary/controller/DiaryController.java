@@ -137,15 +137,13 @@ public class DiaryController {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		List<HashMap<String,String>> list  = new ArrayList();
 		list = iDiaryService.getHastgList(params);
-		System.out.println("tttttttttttttttttttttt");
-		System.out.println(list);
 		modelMap.put("list", list);
 		return mapper.writeValueAsString(modelMap);
 	}
 	
 	@RequestMapping(value = "/diaryPernlPage")
-	public ModelAndView diaryMypage(ModelAndView mav) {
-		mav.addObject("page_member_no", 1);
+	public ModelAndView diaryMypage(@RequestParam HashMap<String,Object> params, ModelAndView mav) {
+		mav.addObject("page_member_no", params.get("diary_member_no"));
 		mav.setViewName("jangboco/diary/diaryPernlPage");
 		return mav;
 	}
