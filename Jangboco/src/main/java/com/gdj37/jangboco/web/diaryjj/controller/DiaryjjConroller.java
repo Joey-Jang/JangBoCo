@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,7 +32,7 @@ public class DiaryjjConroller {
 	public DiaryServiceIF diaryService;
 	
 	@RequestMapping(value = "/writeDiary")
-	public ModelAndView writeDiary(ModelAndView mav) {
+	public ModelAndView writeDiary(HttpSession session, ModelAndView mav) {
 		int homeFlag = 0;
 		int menuIdx = 1;
 		int subMenuIdx = 3;
@@ -38,7 +40,13 @@ public class DiaryjjConroller {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
-		mav.setViewName("jangboco/diary/writeDiary");
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) {
+			mav.addObject("page_member_no", session.getAttribute("sMNo"));
+			
+			mav.setViewName("jangboco/diary/writeDiary");
+		} else {
+			mav.setViewName("jangboco/join/loginMain");
+		}
 		
 		return mav;
 	}

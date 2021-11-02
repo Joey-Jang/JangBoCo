@@ -96,7 +96,7 @@ public class DiaryController {
 
 	
 	@RequestMapping(value = "/diaryLike")
-	public ModelAndView diaryLike(ModelAndView mav) {
+	public ModelAndView diaryLike(HttpSession session, ModelAndView mav) {
 		int homeFlag = 0;
 		int menuIdx = 1;
 		int subMenuIdx = 1;
@@ -104,7 +104,14 @@ public class DiaryController {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
-		mav.setViewName("jangboco/diary/diaryLike");
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) {
+			mav.addObject("page_member_no", session.getAttribute("sMNo"));
+			
+			mav.setViewName("jangboco/diary/diaryLike");
+		} else {
+			mav.setViewName("jangboco/join/loginMain");
+		}
+		
 		return mav;
 	}
 	
@@ -173,7 +180,7 @@ public class DiaryController {
 			
 			mav.setViewName("jangboco/diary/diaryPernlPage");
 		} else {
-			mav.setViewName("redirect:loginMain");
+			mav.setViewName("jangboco/join/loginMain");
 		}
 		
 		return mav;

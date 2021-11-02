@@ -45,13 +45,21 @@ public class JoinController {
 	private JavaMailSender mailSender;
 
 	@RequestMapping(value = "/joinMain")
-	public ModelAndView join(ModelAndView mav) {
+	public ModelAndView join(@RequestParam HashMap<String, String> params, ModelAndView mav) {
+		mav.addObject("homeFlag", params.get("home_flag"));
+		mav.addObject("menuIdx", params.get("menu_idx"));
+		mav.addObject("subMenuIdx", params.get("sub_menu_idx"));
+		
 		mav.setViewName("jangboco/join/main");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/loginMain")
-	public ModelAndView loginMain(ModelAndView mav) {
+	public ModelAndView loginMain(@RequestParam HashMap<String, String> params, ModelAndView mav) {
+		mav.addObject("homeFlag", params.get("home_flag"));
+		mav.addObject("menuIdx", params.get("menu_idx"));
+		mav.addObject("subMenuIdx", params.get("sub_menu_idx"));
+		
 		mav.setViewName("jangboco/join/loginMain");
 		return mav;
 	}
