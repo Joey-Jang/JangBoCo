@@ -85,6 +85,10 @@ function hastgToArray(list){
 
 function diaryDtl(diary_no){
 	$("#diary_no").val(diary_no);
+	$("#prev_home_flag").val($("#home_flag").val());
+	$("#prev_menu_idx").val($("#menu_idx").val());
+	$("#prev_sub_menu_idx").val($("#sub_menu_idx").val());
+	
 	$("#dtlForm").submit();
 }
 
@@ -190,6 +194,9 @@ function drawPaging(pb) {
 
             <form action="dtlDiary" id="dtlForm" method="post">
                 <input type="hidden" id="diary_no" name="diary_no"/>
+             	<input type="hidden" id="prev_home_flag" name="home_flag">
+				<input type="hidden" id="prev_menu_idx" name="menu_idx">
+				<input type="hidden" id="prev_sub_menu_idx" name="sub_menu_idx">
             </form>
              <div class="container">
                 <div class="header-container">

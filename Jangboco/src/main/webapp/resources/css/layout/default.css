@@ -173,12 +173,6 @@ main {
 .login_logout_menu > ul > li > .menu_text {
     margin-left: 15px;
 }
-.login_menu {
-    /* display: none; */
-}
-.logout_menu {
-    display: none;
-}
 /* 사이드 메뉴 */
 .side_menu_contnr {
     display: flex;

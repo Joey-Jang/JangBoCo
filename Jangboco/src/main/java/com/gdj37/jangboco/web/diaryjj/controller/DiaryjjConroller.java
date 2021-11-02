@@ -229,12 +229,27 @@ public class DiaryjjConroller {
 	
 	@RequestMapping(value = "/dtlDiary")
 	public ModelAndView dilDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
+		if(params.get("home_flag")!=null) {
+			int homeFlag = Integer.parseInt(params.get("home_flag"));
+			mav.addObject("homeFlag", homeFlag);
+		}
+		if(params.get("menu_idx")!=null) {
+			int menuIdx = Integer.parseInt(params.get("menu_idx"));
+			mav.addObject("menuIdx", menuIdx);
+		}
+		if(params.get("sub_menu_idx")!=null) {
+			int subMenuIdx = Integer.parseInt(params.get("sub_menu_idx"));
+			mav.addObject("subMenuIdx", subMenuIdx);
+		}
+		
 		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
 			int diaryNo = Integer.parseInt(params.get("diary_no"));
 			mav.addObject("diaryNo", diaryNo);
+			mav.setViewName("jangboco/diary/dtlDiary");
+		} else {
+			mav.setViewName("jangboco/diary/diaryMain");
 		}
 		
-		mav.setViewName("jangboco/diary/dtlDiary");
 		return mav;
 	}
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
     <div id="home_logo" class="home_logo"></div>
     <div id="main_loc_contnr" class="main_loc_contnr">
@@ -31,30 +32,36 @@
 </div>
 <aside>
     <div id="login_logout_menu" class="login_logout_menu">
-        <ul class="login_menu">
-            <li action="loginMain">
-                <div class="menu_icon"></div>
-                <div class="menu_icon_hover"></div>
-                <span class="menu_text">로그인</span>
-            </li>
-            <li action="joinMain">
-                <div class="menu_icon"></div>
-                <div class="menu_icon_hover"></div>
-                <span class="menu_text">함께하기</span>
-            </li>
-        </ul>
-        <ul class="logout_menu">
-            <li action="">
-                <div class="menu_icon"></div>
-                <div class="menu_icon_hover"></div>
-                <span class="menu_text">회원이름</span>
-            </li>
-            <li action="">
-                <div class="menu_icon"></div>
-                <div class="menu_icon_hover"></div>
-                <span class="menu_text">로그아웃</span>
-            </li>
-        </ul>
+    	<c:choose>
+	    	<c:when test="${empty sMNo}">
+		        <ul class="login_menu">
+		            <li action="loginMain">
+		                <div class="menu_icon"></div>
+		                <div class="menu_icon_hover"></div>
+		                <span class="menu_text">로그인</span>
+		            </li>
+		            <li action="joinMain">
+		                <div class="menu_icon"></div>
+		                <div class="menu_icon_hover"></div>
+		                <span class="menu_text">함께하기</span>
+		            </li>
+		        </ul>
+	    	</c:when>
+	    	<c:otherwise>
+		        <ul class="logout_menu">
+		            <li action="">
+		                <div class="menu_icon"></div>
+		                <div class="menu_icon_hover"></div>
+		                <span class="menu_text">회원이름</span>
+		            </li>
+		            <li action="">
+		                <div class="menu_icon"></div>
+		                <div class="menu_icon_hover"></div>
+		                <span class="menu_text">로그아웃</span>
+		            </li>
+		        </ul>
+	    	</c:otherwise>
+    	</c:choose>
     </div>
     <div class="side_menu_contnr">
         <div id="main_menu_contnr" class="main_menu_contnr">

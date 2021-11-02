@@ -34,6 +34,9 @@
 			<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
        		<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">
        		<input type="hidden" id="diary_member_no" name="diary_member_no">
+			<input type="hidden" id="prev_home_flag" name="home_flag">
+			<input type="hidden" id="prev_menu_idx" name="menu_idx">
+			<input type="hidden" id="prev_sub_menu_idx" name="sub_menu_idx">
        		
 	        <div class="con">
 	            <div class="diary_img_profile_tag_contnr">

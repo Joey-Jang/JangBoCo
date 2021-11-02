@@ -126,6 +126,9 @@ $(document).ready(function() {
 	// 프로필 일기 목록 클릭 이벤트
 	$("#profile_diary_img_list").on("click", "li", function() {
 		$("#diary_no").val($(this).attr("diary_no"));
+		$("#prev_home_flag").val($("#home_flag").val());
+		$("#prev_menu_idx").val($("#menu_idx").val());
+		$("#prev_sub_menu_idx").val($("#sub_menu_idx").val());
 		
 		$("#action_form").attr("action", "dtlDiary");
 		$("#action_form").submit();
