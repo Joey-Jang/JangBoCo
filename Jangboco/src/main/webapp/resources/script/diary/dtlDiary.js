@@ -792,7 +792,7 @@ function drawComntList(comntList, recomntList) {
 		comntHtml += "			</div>";
 		comntHtml += "		</div>";
 		comntHtml += "		<div class=\"comnt_btn_contnr\">";
-		comntHtml += "			<span class=\"comnt_date\">1일</span>";
+		comntHtml += "			<span class=\"comnt_date\">" + comntData.COMNT_DATE + "</span>";
 		comntHtml += "			<span class=\"like\">" + "좋아요 " + comntData.COMNT_LIKE + "개" + "</span>";
 		comntHtml += "			<input type=\"button\" class=\"recomnt_btn\" value=\"답글 달기\">";
 		comntHtml += "		</div>";
@@ -836,7 +836,7 @@ function drawComntList(comntList, recomntList) {
 			recomntHtml += "			</div>";
 			recomntHtml += "		</div>";
 			recomntHtml += "		<div class=\"comnt_btn_contnr\">";
-			recomntHtml += "			<span class=\"comnt_date\">1일</span>";
+			recomntHtml += "			<span class=\"comnt_date\">" + recomntData.COMNT_DATE + "</span>";
 			recomntHtml += "			<span class=\"like\">" + "좋아요 " + recomntData.COMNT_LIKE + "개" + "</span>";
 			recomntHtml += "		</div>";
 			recomntHtml += "	</div>";

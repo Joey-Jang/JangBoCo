@@ -280,7 +280,7 @@
 	list-style-type: none;
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-content: flex-start;
 	align-items: center;
 	width: 100%;

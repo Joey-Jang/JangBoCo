@@ -1,6 +1,7 @@
 package com.gdj37.jangboco.web.diaryjj.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -476,9 +477,37 @@ public class DiaryjjConroller {
 		
 		List<HashMap<String, Object>> comntList = diaryService.getComntList(params);
 		for(HashMap<String, Object> comntData : comntList) {
+			int comntDateInt = (int) Math.ceil(((BigDecimal) comntData.get("COMNT_DATE")).doubleValue()*86400);
+			String comntDateStr = "";
+			if(comntDateInt < 60) {
+				comntDateStr = comntDateInt + "초 전";
+			} else if(comntDateInt < 3600) {
+				comntDateStr = comntDateInt/60 + "분 전";
+			} else if(comntDateInt < 86400) {
+				comntDateStr = comntDateInt/3600 + "시간 전";
+			} else {
+				comntDateStr = comntDateInt/86400 + "일 전";
+			}
+			System.out.println(comntDateInt);
+			System.out.println(comntDateStr);
+			comntData.put("COMNT_DATE", comntDateStr);
+					
 			int parentComntNo = Integer.parseInt(String.valueOf(comntData.get("COMNT_NO")));
 			
 			List<HashMap<String, Object>> recomntList = diaryService.getRecomntList(parentComntNo);
+			for(HashMap<String, Object> recomntData : recomntList) {
+				comntDateInt = (int) Math.ceil(((BigDecimal) recomntData.get("COMNT_DATE")).doubleValue()*86400);
+				if(comntDateInt < 60) {
+					comntDateStr = comntDateInt + "초 전";
+				} else if(comntDateInt < 3600) {
+					comntDateStr = comntDateInt/60 + "분 전";
+				} else if(comntDateInt < 86400) {
+					comntDateStr = comntDateInt/3600 + "시간 전";
+				} else {
+					comntDateStr = comntDateInt/86400 + "일 전";
+				}
+				recomntData.put("COMNT_DATE", comntDateStr);
+			}
 			
 			comntData.put("recomntList", recomntList);
 		}
@@ -793,7 +822,7 @@ public class DiaryjjConroller {
 			msg = "ERROR";
 		}
 		
-		modelMap.put("mag", msg);
+		modelMap.put("msg", msg);
 		
 		return mapper.writeValueAsString(modelMap);
 	}
