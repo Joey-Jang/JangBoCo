@@ -235,12 +235,13 @@ public class DiaryController {
 			produces = "text/json; charset=UTF-8")
 	@ResponseBody
 	public String checkFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
-		System.out.println(params);
-		params.put("my_member_no", session.getAttribute("sMNo"));
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
+		if(session.getAttribute("sMNo")!=null&&!session.getAttribute("sMNo").equals("")) {
+		params.put("my_member_no", session.getAttribute("sMNo"));
 		int cnt = iDiaryService.checkFolw(params);
 		modelMap.put("result", cnt);
+		}
 		return mapper.writeValueAsString(modelMap);
 	}
 	
@@ -248,6 +249,9 @@ public class DiaryController {
 			produces = "text/json; charset=UTF-8")
 	@ResponseBody
 	public String doFolwUnFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		if(session.getAttribute("sMNo")!=null&&!session.getAttribute("sMNo").equals("")) {	
 		params.put("my_member_no", session.getAttribute("sMNo"));
 		String flag = (String) params.get("flag");
 		if(flag.equals("unfolw")) {
@@ -255,9 +259,8 @@ public class DiaryController {
 		} else if(flag.equals("folw")) {
 			iDiaryService.folw(params);
 		}
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, Object> modelMap = new HashMap<String, Object>();
 		modelMap.put("result", "success");
+		}
 		return mapper.writeValueAsString(modelMap);
 	}
 }
