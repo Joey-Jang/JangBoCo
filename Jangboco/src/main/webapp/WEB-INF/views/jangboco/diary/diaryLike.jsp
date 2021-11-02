@@ -136,7 +136,6 @@ function drawPaging(pb) {
    </form>
     <div class="con_contnr">
         <div class="con">
-         <div class="diary_contnr">
 <%--             <form action="#" id="actionForm" method="post">
                <input type="hidden" id="no" name="no" />
                <input type="hidden" id="page" name="page" value="${page}" />
@@ -159,12 +158,10 @@ function drawPaging(pb) {
                   </div>
                 </div>
                 <div class="card-wrapper">
-    
                 </div>
               </div>
             <div id="pagingWrap">
             </div>
-           </div>
        </div>
     </div>
     <div class="bottom_contnr"></div>
