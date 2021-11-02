@@ -39,9 +39,9 @@ $(document).ready(function() {
 });
 
 function diaryDtl(diary_no){
-	alert(diary_no);
+	$("#diary_no").val(diary_no);
+	$("#dtlForm").submit();
 }
-
 function reloadList() {
       var params = $("#actionForm").serialize(); //form의 데이터를 문자열로 변환
       
@@ -84,8 +84,11 @@ function drawList(list){
       html += "</div>";
       html += "<div class=\"card-thumbnail\">";
       html += "<span class=\"card-thumbnail-views\">"+data.HIT_NUM+"</span>";
-      html += "<img class=\"full-img\" src=\"resources/images/diaryImages/1.jpg\" alt=\"썸네일\">";
-      html += "</div>";
+      if(data.IMG_URL!=null){
+         	html += "<img class=\"full-img\" src=\"resources/upload/"+ data.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "\" alt=\"썸네일\">";    	  
+      } else {
+        	html += "<img class=\"full-img\" src=\"resources/images/diaryImages/1.jpg\" alt=\"썸네일\">";
+      }     html += "</div>";
       html += "<div class=\"card-contents\">"+data.CON+" </div>";
       html += "</div>";
    }
@@ -136,14 +139,9 @@ function drawPaging(pb) {
    </form>
     <div class="con_contnr">
         <div class="con">
-<%--             <form action="#" id="actionForm" method="post">
-               <input type="hidden" id="no" name="no" />
-               <input type="hidden" id="page" name="page" value="${page}" />
-               <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
-               <input type="hidden" id="oldTxt" value="${param.searchTxt}" />
-               <input type="button" id="searchBtn" value="검색" />
-               <input type="button" id="addBtn" value="등록" />
-            </form> --%>
+            <form action="dtlDiary" id="dtlForm" method="post">
+                <input type="hidden" id="diary_no" name="diary_no"/>
+            </form>
              <div class="container">
                 <div class="header-container">
                   <h3>좋아요 보관함</h3>

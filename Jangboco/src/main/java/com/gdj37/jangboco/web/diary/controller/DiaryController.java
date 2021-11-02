@@ -143,7 +143,8 @@ public class DiaryController {
 	
 	@RequestMapping(value = "/diaryPernlPage")
 	public ModelAndView diaryMypage(@RequestParam HashMap<String,Object> params, ModelAndView mav) {
-		mav.addObject("page_member_no", params.get("diary_member_no"));
+		//mav.addObject("page_member_no", params.get("diary_member_no"));
+		mav.addObject("page_member_no", 2);
 		mav.setViewName("jangboco/diary/diaryPernlPage");
 		return mav;
 	}
@@ -235,8 +236,7 @@ public class DiaryController {
 	@ResponseBody
 	public String checkFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
 		System.out.println(params);
-		params.put("my_member_no", session.getAttribute("member_no"));
-		System.out.println(session.getAttribute("member_no"));
+		params.put("my_member_no", session.getAttribute("sMNo"));
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		int cnt = iDiaryService.checkFolw(params);
@@ -248,7 +248,7 @@ public class DiaryController {
 			produces = "text/json; charset=UTF-8")
 	@ResponseBody
 	public String doFolwUnFolwAjax(@RequestParam HashMap<String,Object> params,HttpSession session) throws Throwable{
-		params.put("my_member_no", session.getAttribute("member_no"));
+		params.put("my_member_no", session.getAttribute("sMNo"));
 		String flag = (String) params.get("flag");
 		if(flag.equals("unfolw")) {
 			iDiaryService.unfolw(params);

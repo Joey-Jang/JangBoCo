@@ -41,7 +41,8 @@ $(document).ready(function() {
 });
 
 function diaryDtl(diary_no){
-	alert(diary_no);
+	$("#diary_no").val(diary_no);
+	$("#dtlForm").submit();
 }
 
 function getMemberImg(){
@@ -251,7 +252,7 @@ function drawList(list){
    var html = "";
 
    for(var data of list){
-	  html +=  "<div class=\"diary\">";
+	  html +=  "<div class=\"diary_contr\" onClick=\"diaryDtl("+data.DIARY_NO+")\">";
 	  if(data.IMG_URL!=null){
 		  html += "<img src=\"resources/upload/"+ data.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "\" class=\"fill-img2\"></div>";
 	  } else {
@@ -307,6 +308,9 @@ function drawPaging(pb) {
    </form>
     <div class="con_contnr">
         <div class="con">
+             <form action="dtlDiary" id="dtlForm" method="post">
+                <input type="hidden" id="diary_no" name="diary_no"/>
+            </form>
          <div class="mypage_contnr">
             <div class="left_side_contr">
             	<div class="profile_list">
