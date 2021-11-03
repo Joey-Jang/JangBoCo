@@ -738,6 +738,7 @@
 			data: params, //보낼 데이터(문자열 형태)
 			success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
 				drawMarketList(res.list);
+				drawMarketMap(res.list);
 			},
 			error: function(request, status, error) {//실패 시 다음 함수 실행
 				console.log(error);
@@ -774,37 +775,87 @@
 		$("#market_list").html(html);
 	}
 	
-	/* //페이징
-	function drawPaging(pb) {
-		var html = "";
-		
-		html += "<span page=\"1\">처음</span>       " ;
-		
-		if($("#page").val() == "1"){
-			html += "<span page=\"1\">이전</span>       " ; 
-		} else {
-			html += "<span page=\"" + ($("#page").val() *1 - 1)+ "\">이전</span>       " ; 
+	
+	//검색결과지도그리기
+	function  drawMarketMap(list){
+		bounds = new kakao.maps.LatLngBounds();
+		map.setBounds(bounds);//지도범위 초기화
+        //기존에 있던 마커들 지우기
+        markers=[];
+        clusterer.clear();
+        var overlayHtml = "";
+
+        for(var data of list){
+	    	
+    		var marker = new kakao.maps.Marker({
+	        	position : new kakao.maps.LatLng(data.LAT, data.LNG),
+	    		image: markerImage,
+	    		title: data.MARKET_NAME
+	   	 	});
+    		
+    		if(data.START_TIME != null && data.END_TIME != null && (timeCheck(data.START_TIME,data.END_TIME))==false){
+    			marker.setImage(markerOffImage);
+    		} //영업종료시 marker_off이미지 사용
+    		       
+    		
+    		// 마커에 표시할 인포윈도우 생성
+			var infowindowMarker = new kakao.maps.InfoWindow({
+		        content: '<div style="width:150px;text-align:center;padding:6px 0;">' + data.MARKET_NAME + '</div>' // 인포윈도우에 표시할 내용
+		    });
+			
+			// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+		    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindowMarker));
+		    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindowMarker));
+	    	
+		    kakao.maps.event.addListener(marker, 'click', function() {
+		    	$("#market_no").val(data.MARKET_NO);
+				$("#market_member_no").val(data.MARKET_MEMBER_NO);
+				/* $("#items_choice_no").val($(this).attr("no")); */
+				$("#info_form").submit();
+		        
+		    });
+		    
+    		markers.push(marker);
+    		bounds.extend(new kakao.maps.LatLng(data.LAT, data.LNG));
+	    		
+	   		
 		}
+		clusterer.addMarkers(markers); //클러스터에 마커 추가
 		
-		for(var i = pb.startPcount; i<=pb.endPcount; i++){
-			if($("#page").val() == i){
-				html += "<span page=\"" + i + "\"><b>" + i + "</b></span>   " ;
-			}else {
-				html += "<span page=\"" + i + "\">" + i + "</span>   " ;
+		map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
+     
+
+		var overlayContent = '';//빈 커스텀오버레이 콘텐츠
+	    
+		kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) { //클러스터 마우스오버 이벤트
+		    var clusterMarkers =cluster.getMarkers(); //마커배열 담기
+		    overlayContent += '<div class=\"custom_overlay\" style=\'background-color:white; opacity:0.8\'><ul id=\"overlay_market_list\" style=\' list-style: none; padding-inline-start: 0px; \'>';
+		    for(var i=0; i<cluster.getSize(); i++){
+		    	overlayContent +="<li style=\'border-bottom: 1px solid;\'>" + clusterMarkers[i].getTitle() + "</li>"; //각각 마커의 이름 담기
 			}
-		}
+		    
+		    overlayContent += '  </ul></div>';
+			
+		    customOverlay.setContent(overlayContent); //콘텐츠 설정
+		    customOverlay.setPosition(cluster.getCenter()); //클러스터 중심으로 좌표 설정
+			customOverlay.setMap(map); //맵에 표시
+		   
+		console.log("몇번이나 되는겨");
+		    
+		});
+		kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
+			customOverlay.setMap(null);//맵에서 제거
+		    console.log("몇번이나 끝나는겨?");
+		    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+		});
 		
-		if($("#page").val() == pb.maxPcount) {
-			html += "<span page=\"" + pb.maxPcount + "\">다음</span>       " ; 
-		}else {
-			html += "<span page=\"" + ($("#page").val() *1 + 1)+ "\">다음</span>       " ;
-		}
+		kakao.maps.event.addListener( clusterer, 'clusterclick', function( cluster ) {
+			customOverlay.setMap(null);//맵에서 제거
+		    console.log("잘되는겨?");
+		    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+		});
 		
-		html += "<span page=\"" + pb.maxPcount + "\">마지막</span>       " ;
-		
-		$(".paging_wrap").html(html);
-		
-	} */
+	}
 	
 	function timeCheck(startTime,endTime){ //시간비교
 		   var now= new Date();
