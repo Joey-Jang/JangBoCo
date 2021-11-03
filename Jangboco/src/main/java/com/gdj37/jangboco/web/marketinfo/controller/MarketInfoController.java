@@ -31,38 +31,53 @@ public class MarketInfoController {
 							ModelAndView mav) throws Throwable {
 		HashMap<String, String> marketInfo = null;
 		List<HashMap<String, String>> marketList = null;
-		// marketNo 테스트 데이터
-		String marketNo = "49";
-		params.put("marketNo",marketNo);
-		mav.addObject("marketNo",marketNo);
-		
-		// marketMemberNo 테스트 데이터
-		String marketMemberNo = "9";
-		mav.addObject("marketMemberNo",marketMemberNo);
-		params.put("marketMemberNo", marketMemberNo);
-		
-		if(params.get("marketMemberNo")!= null) {			
-			marketInfo = iMarketInfoService.getMarketInfoU(params);
-		} else {
-			marketInfo = iMarketInfoService.getMarketInfoBU(params);
-		}		
-		
-		String itemsChoiceNo = "99";
-		if(params.get("itemsChoiceNo")!= null) {
-			itemsChoiceNo = params.get("itemsChoiceNo");
+		if(params.get("market_no") != null && params.get("market_no") != null) {			
+			// marketNo 데이터
+			String marketNo = "";		
+			marketNo = params.get("market_no");
+			System.out.println("=======================");
+			System.out.println(marketNo);
+			System.out.println("=======================");
+			params.put("marketNo",marketNo);		
+			mav.addObject("marketNo",marketNo);
+			
+			// marketMemberNo 데이터
+			String marketMemberNo = "";
+			marketMemberNo = params.get("market_member_no");
+			System.out.println("=======================");
+			System.out.println(marketMemberNo);
+			System.out.println(params.get("market_member_no"));
+			System.out.println("=======================");
+			params.put("marketMemberNo", marketMemberNo);
+			mav.addObject("marketMemberNo",marketMemberNo);		
+			
+			if(params.get("marketMemberNo")!= null && params.get("marketMemberNo")!= "") {
+				System.out.println("회원 데이터 조회");
+				marketInfo = iMarketInfoService.getMarketInfoU(params);
+			} else {
+				System.out.println("비회원 데이터 조회");
+				marketInfo = iMarketInfoService.getMarketInfoBU(params);
+			}		
+			
+			String itemsChoiceNo = "";
+			if(params.get("items_choice_no")!= null) {
+				itemsChoiceNo = params.get("items_choice_no");
+			}
+			mav.addObject("itemsChoiceNo",itemsChoiceNo);
+			
+			String page="1";
+			
+			if(params.get("page")!= null) {
+				page= params.get("page");
+			}
+			
+			mav.addObject("marketInfo",marketInfo);
+			mav.addObject("page",page);
+			
+			mav.setViewName("jangboco/pricecompr/marketInfo");	
+		} else {			
+			mav.setViewName("redirect:/home");	
 		}
-		mav.addObject("itemsChoiceNo",itemsChoiceNo);
-		
-		String page="1";
-		
-		if(params.get("page")!= null) {
-			page= params.get("page");
-		}	
-		
-		mav.addObject("marketInfo",marketInfo);
-		mav.addObject("page",page);
-		
-		mav.setViewName("jangboco/pricecompr/marketInfo");		
 		
 		return mav;
 	}
@@ -79,6 +94,11 @@ public class MarketInfoController {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
 		try {
+			System.out.println("=======================");
+			System.out.println(params.get("marketNo"));
+			System.out.println("마켓번호 조회");
+			System.out.println("=======================");
+			
 			List<HashMap<String, String>> list = null;
 			if(params.get("itemsChoiceNo") == "") {
 				list = iMarketInfoService.getItemsList(params);				
@@ -86,7 +106,10 @@ public class MarketInfoController {
 				list = iMarketInfoService.getItemsListNoChoice(params);
 				list.add(0,iMarketInfoService.getItemsListChoice(params));				
 			}
-			
+			System.out.println("=======================");
+			System.out.println(list);
+			System.out.println("리스트 조회");
+			System.out.println("=======================");
 			modelMap.put("list", list);
 		} catch (Exception e) {
 			 e.printStackTrace();
@@ -112,7 +135,7 @@ public class MarketInfoController {
 			
 			int cnt = iMarketInfoService.getMarketEventCnt(params);
 			
-			PagingBean pb = iPagingService.getPagingBean(page, cnt,7,5);
+			PagingBean pb = iPagingService.getPagingBean(page, cnt,5,5);
 			
 			params.put("startCnt", Integer.toString(pb.getStartCount()));
 			params.put("endCnt", Integer.toString(pb.getEndCount()));
@@ -128,8 +151,6 @@ public class MarketInfoController {
 		}
 		
 		return mapper.writeValueAsString(modelMap); 
-	}
-	
-	
+	}	
 	
 }

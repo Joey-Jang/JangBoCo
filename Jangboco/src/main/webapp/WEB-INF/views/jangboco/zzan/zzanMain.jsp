@@ -334,6 +334,10 @@
         ]
     });
 	
+	//커스텀오버레이 선언
+    var customOverlay = new kakao.maps.CustomOverlay({
+    	yAnchor: 2
+    });
 	
 	
 	<%--내 위치 정보--%>
@@ -478,26 +482,61 @@
 					//console.log('아웃은 되니?')
 				}); */
 				
+				
+				/* var content = document.createElement('div');
+				
 				//클러스터 내부 마커 추출
 				var clusterMarkers = clusterer.getMarkers();
 				
 				for(var i=0; i<clusterMarkers.length; i++){
-			    	console.log(clusterMarkers[i].getTitle());
+					content.className = 'overlay';
+					content.innerHTML = 'clusterMarkers[0].getTitle()';
 				}
-				// 클러스터에 표시할 인포윈도우 생성
-				var infowindowCluster = new kakao.maps.InfoWindow({
-			        content: "<div style='width:150px;text-align:center;padding:6px 0;'>clusterMarkers[0].getTitle()+clusterMarkers[1].getTitle()</div>" // 인포윈도우에 표시할 내용
-			    });
+				 */
+				// 커스텀 오버레이 엘리먼트를 만들고, 컨텐츠를 추가합니다
+				//console.log(clusterer.getCenter());
+				
+				/* var customoverlay = new kakao.maps.CustomOverlay({
+				    map: map,
+				    content: content,
+				    position: clusterer.getCenter()
+				}); */
+				
+				var content = '<div class="customoverlay">' +
+			    '    <span class="title">구의야구공원</span>' +
+			    '  </a>' +
+			    '</div>';
+				
+			    customOverlay.setContent(content);
+				
+				
 				
 				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) {
-				    console.log( cluster.getBounds() );
+				    /* console.log( cluster.getBounds() );
+				    console.log( cluster.getCenter() );
+				    console.log( cluster.getMarkers() );
+				    console.log( cluster.getSize() );
+				    console.log( cluster.getClusterMarker() );
+				    console.log( cluster.getCenter() ); */
+				    customOverlay.setPosition(cluster.getCenter());
+					customOverlay.setMap(map);
+				   
+				console.log("몇번이나 되는겨");
+				    
 				});
 				kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
-				    console.log( cluster.getSize() );
+					customOverlay.setMap(null);
+				    console.log("몇번이나 끝나는겨?");
 				});
 				
-				kakao.maps.event.addListener(clusterer, 'mouseover', makeOverListener(map, clusterer, infowindowCluster));
-			    kakao.maps.event.addListener(clusterer, 'mouseout', makeOutListener(infowindowCluster)); 
+				
+				/* kakao.maps.event.addListener( clusterer, 'clustered', function( clusters ) {
+				    console.log( clusters.length );
+				});
+				클러스터드됐을때 젤 싼 마커있으면 클러스터 모양 변경 */
+				
+				
+				
 		    } 
 		}); 
 		
@@ -577,15 +616,13 @@
 	        infowindow.open(map, marker);
 	    };
 	}
-
+	
 	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
 	function makeOutListener(infowindow) {
 	    return function() {
 	        infowindow.close();
 	    };
 	}
-	
-	
 	
 	<%--지도 레벨 제한하기--%>
 

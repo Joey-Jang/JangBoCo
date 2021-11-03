@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="getMarketInfoU" parameterType="hashmap" resultType="hashmap">
-		SELECT MARKET_NAME , PHONE_NUM, ADDRS,DTL_ADDRS ,START_TIME, END_TIME
+		SELECT MARKET_NAME ,BRANCH_NAME ,PHONE_NUM, ADDRS,DTL_ADDRS ,START_TIME, END_TIME
 		FROM MARKET_MEMBER MM JOIN MEMBER M 
 		                        ON(MM.MARKET_MEMBER_NO = M.MEMBER_NO)
 		                      JOIN MARKET MA 
@@ -37,13 +37,19 @@
 	</select>
 	
 	<select id="getMarketInfoBU" parameterType="hashmap" resultType="hashmap">
-		SELECT MARKET_NAME
+		SELECT MARKET_NAME ,MARKET_ADDRS
 		FROM MARKET
 		WHERE MARKET_NO = #{marketNo}
 	</select>
 	
 	<select id="getItemsList" parameterType="hashmap" resultType="hashmap">
-		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,SELL_STD,PRICE,NOTE,RNUM
+		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,SELL_STD,PRICE,
+		        (SELECT ROUND(AVG(PRICE))
+		        FROM PRICES
+		        WHERE UPDATE_DATE = DT.UPDATE_DATE
+		        AND ITEMS_NO = DT.ITEMS_NO
+		        GROUP BY ITEMS_NO) AS AVG_PRICE
+		        ,NOTE,RNUM
 		FROM (SELECT PRICES_NO , TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, MARKET_NO,
 		             P.ITEMS_NO, ITEMS_NAME, SELL_STD, PRICE, NOTE,
 		             ROW_NUMBER() OVER(ORDER BY PRICES_NO DESC) AS RNUM
@@ -51,13 +57,20 @@
 		                    ON(P.ITEMS_NO = I.ITEMS_NO)
 		      WHERE MARKET_NO = #{marketNo}
 		      AND TO_CHAR(UPDATE_DATE,'YY-MM-DD') = (SELECT MAX(TO_CHAR(UPDATE_DATE,'YY-MM-DD'))
-		                                           FROM PRICES)
-		      ORDER BY PRICES_NO DESC, ITEMS_NO)
-		WHERE RNUM BETWEEN 1 AND 17		
+		                                           FROM PRICES 
+		                                           WHERE MARKET_NO = #{marketNo})
+		      ORDER BY PRICES_NO DESC, ITEMS_NO) DT
+		WHERE RNUM BETWEEN 1 AND 17
 	</select>
 	
 	<select id="getItemsListChoice" parameterType="hashmap" resultType="hashmap">
-		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,SELL_STD,PRICE,NOTE,RNUM
+		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,SELL_STD,PRICE,
+		       (SELECT ROUND(AVG(PRICE))
+		        FROM PRICES
+		        WHERE UPDATE_DATE = DT.UPDATE_DATE
+		        AND ITEMS_NO = DT.ITEMS_NO
+		        GROUP BY ITEMS_NO) AS AVG_PRICE
+		       ,NOTE,RNUM
 		FROM (SELECT PRICES_NO , TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, MARKET_NO,
 		             P.ITEMS_NO, ITEMS_NAME, SELL_STD, PRICE, NOTE,
 		             ROW_NUMBER() OVER(ORDER BY PRICES_NO DESC) AS RNUM
@@ -66,12 +79,18 @@
 		      WHERE MARKET_NO = #{marketNo}
 		      AND I.ITEMS_NO = #{itemsChoiceNo}
 		      AND TO_CHAR(UPDATE_DATE,'YY-MM-DD') = (SELECT MAX(TO_CHAR(UPDATE_DATE,'YY-MM-DD'))
-		                                           FROM PRICES)                                            
-		      ORDER BY PRICES_NO DESC, ITEMS_NO)
+		                                           FROM PRICES WHERE MARKET_NO = #{marketNo})                                            
+		      ORDER BY PRICES_NO DESC, ITEMS_NO) DT
 		WHERE RNUM = 1
 	</select>
 	<select id="getItemsListNoChoice" parameterType="hashmap" resultType="hashmap">
-		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,SELL_STD,PRICE,NOTE,RNUM
+		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,SELL_STD,PRICE,
+		       (SELECT ROUND(AVG(PRICE))
+		        FROM PRICES
+		        WHERE UPDATE_DATE = DT.UPDATE_DATE
+		        AND ITEMS_NO = DT.ITEMS_NO
+		        GROUP BY ITEMS_NO) AS AVG_PRICE
+		       ,NOTE,RNUM
 		FROM (SELECT PRICES_NO , TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, MARKET_NO,
 		             P.ITEMS_NO, ITEMS_NAME, SELL_STD, PRICE, NOTE,
 		             ROW_NUMBER() OVER(ORDER BY PRICES_NO DESC) AS RNUM
@@ -80,8 +99,8 @@
 		      WHERE MARKET_NO = #{marketNo}
 		      AND I.ITEMS_NO != #{itemsChoiceNo}
 		      AND TO_CHAR(UPDATE_DATE,'YY-MM-DD') = (SELECT MAX(TO_CHAR(UPDATE_DATE,'YY-MM-DD'))
-		                                           FROM PRICES)                                            
-		      ORDER BY PRICES_NO DESC, ITEMS_NO)
-		WHERE RNUM BETWEEN 1 AND 16	
+		                                           FROM PRICES WHERE MARKET_NO = #{marketNo})                                            
+		      ORDER BY PRICES_NO DESC, ITEMS_NO) DT
+		WHERE RNUM BETWEEN 1 AND 16
 	</select>
 </mapper>
