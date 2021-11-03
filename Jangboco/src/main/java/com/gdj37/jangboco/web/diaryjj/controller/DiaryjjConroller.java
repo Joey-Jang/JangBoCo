@@ -45,7 +45,7 @@ public class DiaryjjConroller {
 			
 			mav.setViewName("jangboco/diary/writeDiary");
 		} else {
-			mav.setViewName("jangboco/join/loginMain");
+			mav.setViewName("redirect:loginMain");
 		}
 		
 		return mav;
@@ -247,7 +247,7 @@ public class DiaryjjConroller {
 			mav.addObject("diaryNo", diaryNo);
 			mav.setViewName("jangboco/diary/dtlDiary");
 		} else {
-			mav.setViewName("jangboco/diary/diaryMain");
+			mav.setViewName("redirect:loginMain");
 		}
 		
 		return mav;

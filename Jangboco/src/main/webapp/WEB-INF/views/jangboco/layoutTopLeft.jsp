@@ -54,7 +54,7 @@
 		                <div class="menu_icon_hover"></div>
 		                <span class="menu_text">회원이름</span>
 		            </li>
-		            <li action="">
+		            <li action="logout">
 		                <div class="menu_icon"></div>
 		                <div class="menu_icon_hover"></div>
 		                <span class="menu_text">로그아웃</span>

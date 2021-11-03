@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +21,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gdj37.jangboco.web.join.service.IJoinService;
 import com.gdj37.jangboco.util.Utils;
+import com.gdj37.jangboco.web.join.service.IJoinService;
 
 @Controller
 public class JoinController {
@@ -45,20 +43,20 @@ public class JoinController {
 	private JavaMailSender mailSender;
 
 	@RequestMapping(value = "/joinMain")
-	public ModelAndView join(@RequestParam HashMap<String, String> params, ModelAndView mav) {
-		mav.addObject("homeFlag", params.get("home_flag"));
-		mav.addObject("menuIdx", params.get("menu_idx"));
-		mav.addObject("subMenuIdx", params.get("sub_menu_idx"));
+	public ModelAndView join(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
 		
 		mav.setViewName("jangboco/join/main");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/loginMain")
-	public ModelAndView loginMain(@RequestParam HashMap<String, String> params, ModelAndView mav) {
-		mav.addObject("homeFlag", params.get("home_flag"));
-		mav.addObject("menuIdx", params.get("menu_idx"));
-		mav.addObject("subMenuIdx", params.get("sub_menu_idx"));
+	public ModelAndView loginMain(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
 		
 		mav.setViewName("jangboco/join/loginMain");
 		return mav;
@@ -66,36 +64,60 @@ public class JoinController {
 	
 	@RequestMapping(value = "/joinPernl")
 	public ModelAndView joinPernl(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/joinPernl");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/joinPernlForm")
 	public ModelAndView joinPernlForm(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/joinPernlForm");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/joinMarketForm")
 	public ModelAndView joinMarketForm(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/joinMarketForm");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/joinPernlSocial")
 	public ModelAndView joinPernlSocial(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/joinPernlSocial");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/findPw")
 	public ModelAndView findPw(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/findPw");
 		return mav;
 	}
 	
 	@RequestMapping(value = "/findPwSet")
 	public ModelAndView findPwSet(ModelAndView mav) {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/findPwSet");
 		return mav;
 	}
@@ -153,6 +175,10 @@ public class JoinController {
 	
 	@RequestMapping(value = "/joinPernlMember", method=RequestMethod.POST)
 	public ModelAndView joinPernlMember(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		System.out.println(params);
 		params.put("member_type", "1");
 		params.put("social_type", "1");
@@ -164,6 +190,10 @@ public class JoinController {
 	
 	@RequestMapping(value = "/joinSocialMember", method=RequestMethod.POST)
 	public ModelAndView joinSocialMember (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Exception {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		//social type 1 일반 2네이버 3카카오
 		params.put("member_type", "1");
 		params.put("social_type", "2");
@@ -175,6 +205,10 @@ public class JoinController {
 	
 	@RequestMapping(value = "/joinMarketMember", method=RequestMethod.POST)
 	public ModelAndView joinMarketMember (@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		System.out.println(params);
 		params.put("pw",Utils.encryptAES128(params.get("pw")));
 		int cnt = iJoinService.addMarketMember(params);
@@ -202,6 +236,10 @@ public class JoinController {
 	
 	@RequestMapping(value="/agrnt")
 	public ModelAndView agrnt(ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/agrnt");
 		return mav;
 	}
@@ -334,80 +372,84 @@ public class JoinController {
 	//네이버 소셜 callback처리
 	@RequestMapping(value = {"/naverCallback"})
 	public ModelAndView naverCallback(ModelAndView mav, HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-		    String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
-		    String clientSecret = "PQJLkkvB6N";//애플리케이션 클라이언트 시크릿값";
-		    String code = httpRequest.getParameter("code");
-		    String state = httpRequest.getParameter("state");
-		    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback", "UTF-8");
-		    String apiURL;
-		    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
-		    apiURL += "client_id=" + clientId;
-		    apiURL += "&client_secret=" + clientSecret;
-		    apiURL += "&redirect_uri=" + redirectURI;
-		    apiURL += "&code=" + code;
-		    apiURL += "&state=" + state;
-		    
-		    String access_token = "";
-		    String refresh_token = "";
-		    String token_error = "";
-		    System.out.println("apiURL="+apiURL);
-		    try {
-		      URL url = new URL(apiURL);
-		      HttpURLConnection con = (HttpURLConnection)url.openConnection();
-		      con.setRequestMethod("GET");
-		      int responseCode = con.getResponseCode();
-		      BufferedReader br;
-		      System.out.print("responseCode="+responseCode);
-		      if(responseCode==200) { // 정상 호출
-		        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		      } else {  // 에러 발생
-		        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-		      }
-		      String inputLine;
-		      StringBuffer res = new StringBuffer();
-		      while ((inputLine = br.readLine()) != null) {
-		        res.append(inputLine);
-		      }
-		      br.close();
-		      if(responseCode==200) {
-		    	 //로그인 취소시 여기서 터짐
-		    	 //로그인 에러가 아닐시
-	    		System.out.println("여기서 터지나"+res.toString());
-	    		JSONParser parsing = new JSONParser();
-	    		Object obj = parsing.parse(res.toString());
-	    		JSONObject jsonObj = (JSONObject)obj;
-	    			        
-	    		access_token = (String)jsonObj.get("access_token");
-	    		refresh_token = (String)jsonObj.get("refresh_token");
-	    		token_error = (String)jsonObj.get("error");
-	    		if(access_token != null && access_token !="") { // access_token을 잘 받아왔다면
-	    			String email = getMemberEmail(access_token);
-	    			int cnt = iJoinService.validEmail(email);
-	    			if(cnt>0) {
-	    				//가입한 사람이있음
-	    				mav.setViewName("/jangboco/join/joinNotSuccess");
-	    				return mav;
-	    			} else {
-	    				//가입한 사람 없음 가입 진행하고 파람에 담아둠 
-	    				mav.addObject("SocialEmail", email);
-	    				mav.setViewName("/jangboco/join/joinSocialForm");
-	    				return mav;
-	    			}
-	    		}
-	    		if(token_error !=null&& token_error!="") {
-	    			System.out.println("error");
-	    			mav.setViewName("redirect:/");
-	    			return mav;
-	    		}
-		      } else {
-		    	  mav.setViewName("redirect:/");
-				    return mav;
-		      }
-		    } catch (Exception e) {
-		      System.out.println(e);
-		    }
-		    mav.setViewName("redirect:/jangboco/join/joinSuccess");
-		    return mav;
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
+	    String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
+	    String clientSecret = "PQJLkkvB6N";//애플리케이션 클라이언트 시크릿값";
+	    String code = httpRequest.getParameter("code");
+	    String state = httpRequest.getParameter("state");
+	    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback", "UTF-8");
+	    String apiURL;
+	    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+	    apiURL += "client_id=" + clientId;
+	    apiURL += "&client_secret=" + clientSecret;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&code=" + code;
+	    apiURL += "&state=" + state;
+	    
+	    String access_token = "";
+	    String refresh_token = "";
+	    String token_error = "";
+	    System.out.println("apiURL="+apiURL);
+	    try {
+	      URL url = new URL(apiURL);
+	      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	      con.setRequestMethod("GET");
+	      int responseCode = con.getResponseCode();
+	      BufferedReader br;
+	      System.out.print("responseCode="+responseCode);
+	      if(responseCode==200) { // 정상 호출
+	        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	      } else {  // 에러 발생
+	        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	      }
+	      String inputLine;
+	      StringBuffer res = new StringBuffer();
+	      while ((inputLine = br.readLine()) != null) {
+	        res.append(inputLine);
+	      }
+	      br.close();
+	      if(responseCode==200) {
+	    	 //로그인 취소시 여기서 터짐
+	    	 //로그인 에러가 아닐시
+    		System.out.println("여기서 터지나"+res.toString());
+    		JSONParser parsing = new JSONParser();
+    		Object obj = parsing.parse(res.toString());
+    		JSONObject jsonObj = (JSONObject)obj;
+    			        
+    		access_token = (String)jsonObj.get("access_token");
+    		refresh_token = (String)jsonObj.get("refresh_token");
+    		token_error = (String)jsonObj.get("error");
+    		if(access_token != null && access_token !="") { // access_token을 잘 받아왔다면
+    			String email = getMemberEmail(access_token);
+    			int cnt = iJoinService.validEmail(email);
+    			if(cnt>0) {
+    				//가입한 사람이있음
+    				mav.setViewName("/jangboco/join/joinNotSuccess");
+    				return mav;
+    			} else {
+    				//가입한 사람 없음 가입 진행하고 파람에 담아둠 
+    				mav.addObject("SocialEmail", email);
+    				mav.setViewName("/jangboco/join/joinSocialForm");
+    				return mav;
+    			}
+    		}
+    		if(token_error !=null&& token_error!="") {
+    			System.out.println("error");
+    			mav.setViewName("redirect:/");
+    			return mav;
+    		}
+	      } else {
+	    	  mav.setViewName("redirect:/");
+			    return mav;
+	      }
+	    } catch (Exception e) {
+	      System.out.println(e);
+	    }
+	    mav.setViewName("redirect:/jangboco/join/joinSuccess");
+	    return mav;
 	}
 
 	
@@ -417,84 +459,88 @@ public class JoinController {
 	//TODO: 소셜 공통 함수처리 합시다
 	@RequestMapping(value = {"/naverCallback2"})
 	public ModelAndView naverCallback2(ModelAndView mav, HttpSession session, HttpServletRequest httpRequest, HttpServletResponse response) throws Exception {
-		    System.out.println("ttttttttttttteeeeeeeeeeeeeeeeeeeeeeelogin");
-			String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
-		    String clientSecret = "PQJLkkvB6N";//애플리케이션 클라이언트 시크릿값";
-		    String code = httpRequest.getParameter("code");
-		    String state = httpRequest.getParameter("state");
-		    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback2", "UTF-8");
-		    String apiURL;
-		    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
-		    apiURL += "client_id=" + clientId;
-		    apiURL += "&client_secret=" + clientSecret;
-		    apiURL += "&redirect_uri=" + redirectURI;
-		    apiURL += "&code=" + code;
-		    apiURL += "&state=" + state;
-		    
-		    String access_token = "";
-		    String refresh_token = "";
-		    String token_error = "";
-		    System.out.println("apiURL="+apiURL);
-		    try {
-		      URL url = new URL(apiURL);
-		      HttpURLConnection con = (HttpURLConnection)url.openConnection();
-		      con.setRequestMethod("GET");
-		      int responseCode = con.getResponseCode();
-		      BufferedReader br;
-		      System.out.print("responseCode="+responseCode);
-		      if(responseCode==200) { // 정상 호출
-		        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		      } else {  // 에러 발생
-		        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-		      }
-		      String inputLine;
-		      StringBuffer res = new StringBuffer();
-		      while ((inputLine = br.readLine()) != null) {
-		        res.append(inputLine);
-		      }
-		      br.close();
-		      if(responseCode==200) {
-		    	 //로그인 취소시 여기서 터짐
-		    	 //로그인 에러가 아닐시
-	    		System.out.println("여기서 터지나"+res.toString());
-	    		JSONParser parsing = new JSONParser();
-	    		Object obj = parsing.parse(res.toString());
-	    		JSONObject jsonObj = (JSONObject)obj;
-	    		access_token = (String)jsonObj.get("access_token");
-	    		refresh_token = (String)jsonObj.get("refresh_token");
-	    		token_error = (String)jsonObj.get("error");
-	    		if(access_token != null && access_token !="") { // access_token을 잘 받아왔다면
-	    			String email = getMemberEmail(access_token);
-	    			int cnt = iJoinService.validEmail(email);
-	    			if(cnt>0) {
-	    				//가입한 사람이있음
-	    				//세션에 담고 홈으로 이동
-	    				session.setAttribute("memberType", "1");
-	    				session.setAttribute("email", email);
-	    				System.out.println(session.getAttribute("email"));
-	    				mav.setViewName("redirect:/home");
-	    				return mav;
-	    			} else {
-	    				//가입한 사람 없으니까 가입진행바로 함
-	    				mav.addObject("SocialEmail", email);
-	    				mav.setViewName("/jangboco/join/joinSocialForm");
-	    				return mav;
-	    			}
-	    		}
-	    		if(token_error !=null&& token_error!="") {
-	    			System.out.println("error");
-	    			mav.setViewName("redirect:/home");
-	    			return mav;
-	    		}
-		      } else {
-		    	  mav.setViewName("redirect:/home");
-				    return mav;
-		      }
-		    } catch (Exception e) {
-		      System.out.println(e);
-		    }
-		    mav.setViewName("redirect:/home");
-		    return mav;
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
+	    System.out.println("ttttttttttttteeeeeeeeeeeeeeeeeeeeeeelogin");
+		String clientId = "jlJuEKFjyjO5XiGwl5eX";//애플리케이션 클라이언트 아이디값";
+	    String clientSecret = "PQJLkkvB6N";//애플리케이션 클라이언트 시크릿값";
+	    String code = httpRequest.getParameter("code");
+	    String state = httpRequest.getParameter("state");
+	    String redirectURI = URLEncoder.encode("http://localhost:8090/Jangboco/naverCallback2", "UTF-8");
+	    String apiURL;
+	    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+	    apiURL += "client_id=" + clientId;
+	    apiURL += "&client_secret=" + clientSecret;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&code=" + code;
+	    apiURL += "&state=" + state;
+	    
+	    String access_token = "";
+	    String refresh_token = "";
+	    String token_error = "";
+	    System.out.println("apiURL="+apiURL);
+	    try {
+	      URL url = new URL(apiURL);
+	      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	      con.setRequestMethod("GET");
+	      int responseCode = con.getResponseCode();
+	      BufferedReader br;
+	      System.out.print("responseCode="+responseCode);
+	      if(responseCode==200) { // 정상 호출
+	        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	      } else {  // 에러 발생
+	        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	      }
+	      String inputLine;
+	      StringBuffer res = new StringBuffer();
+	      while ((inputLine = br.readLine()) != null) {
+	        res.append(inputLine);
+	      }
+	      br.close();
+	      if(responseCode==200) {
+	    	 //로그인 취소시 여기서 터짐
+	    	 //로그인 에러가 아닐시
+    		System.out.println("여기서 터지나"+res.toString());
+    		JSONParser parsing = new JSONParser();
+    		Object obj = parsing.parse(res.toString());
+    		JSONObject jsonObj = (JSONObject)obj;
+    		access_token = (String)jsonObj.get("access_token");
+    		refresh_token = (String)jsonObj.get("refresh_token");
+    		token_error = (String)jsonObj.get("error");
+    		if(access_token != null && access_token !="") { // access_token을 잘 받아왔다면
+    			String email = getMemberEmail(access_token);
+    			int cnt = iJoinService.validEmail(email);
+    			if(cnt>0) {
+    				//가입한 사람이있음
+    				//세션에 담고 홈으로 이동
+    				session.setAttribute("memberType", "1");
+    				session.setAttribute("email", email);
+    				System.out.println(session.getAttribute("email"));
+    				mav.setViewName("redirect:/home");
+    				return mav;
+    			} else {
+    				//가입한 사람 없으니까 가입진행바로 함
+    				mav.addObject("SocialEmail", email);
+    				mav.setViewName("/jangboco/join/joinSocialForm");
+    				return mav;
+    			}
+    		}
+    		if(token_error !=null&& token_error!="") {
+    			System.out.println("error");
+    			mav.setViewName("redirect:/home");
+    			return mav;
+    		}
+	      } else {
+	    	  mav.setViewName("redirect:/home");
+			    return mav;
+	      }
+	    } catch (Exception e) {
+	      System.out.println(e);
+	    }
+	    mav.setViewName("redirect:/home");
+	    return mav;
 	}
 	
 	
@@ -541,12 +587,20 @@ public class JoinController {
 	
 	@RequestMapping(value="/loginPernl")
 	public ModelAndView loginPernl(ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/loginPernl");
 		return mav;
 	}
 	
 	@RequestMapping(value="/loginForm")
 	public ModelAndView loginForm(ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		mav.setViewName("jangboco/join/loginForm");
 		return mav;
 	}
@@ -572,6 +626,10 @@ public class JoinController {
 	public ModelAndView loginMember(@RequestParam HashMap<String,String> params, 
 			HttpSession session,
 			ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		System.out.println(params);
 		String memberType = params.get("member_type");
 		String pageUrl = "jangboco/join/";
@@ -613,6 +671,10 @@ public class JoinController {
 
 	@RequestMapping(value="/findMember")
 	public ModelAndView findMember(@RequestParam HashMap<String,String> params, ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		System.out.println(params);
 		mav.addObject("email",params.get("email"));
 		mav.setViewName("jangboco/join/findPwSet");
@@ -621,6 +683,10 @@ public class JoinController {
 	
 	@RequestMapping(value="/setNewPw")
 	public ModelAndView setNewPw(@RequestParam HashMap<String,Object> params, ModelAndView mav) throws Throwable {
+		mav.addObject("homeFlag", 1);
+		mav.addObject("menuIdx", 0);
+		mav.addObject("subMenuIdx", 0);
+		
 		System.out.println(params);
 		params.put("pw",Utils.encryptAES128((String) params.get("pw")));
 		int cnt = iJoinService.setNewPw(params);
@@ -628,5 +694,13 @@ public class JoinController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/logout")
+	public ModelAndView logout(HttpSession session, ModelAndView mav) throws Throwable {
+		session.invalidate();
+		
+		mav.setViewName("redirect:home");
+		
+		return mav;
+	}
 	
 }

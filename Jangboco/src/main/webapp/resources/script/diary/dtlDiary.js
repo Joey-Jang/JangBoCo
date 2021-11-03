@@ -85,6 +85,10 @@ $(document).ready(function() {
 	
 	// 팔로우 버튼 클릭 이벤트
 	$("#img_nicnm_folw_btn_contnr").on("click", "#folw_btn", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		DiaryFolwUnfolw();
 	});
 	
@@ -195,6 +199,10 @@ $(document).ready(function() {
 		}
 	});
 	$("#comnt_list_add_comnt_contnr").on("click", ".add_comnt_btn", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		var con = $(this).parent().children("textarea");
 		
 		if($.trim(con.val())=="") {
@@ -273,6 +281,10 @@ $(document).ready(function() {
 	
 	// 댓글 좋아요 버튼 클릭 이벤트
 	$("#comnt_list").on("click", ".unlike_icon, .like_icon ", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		var comnt = $(this).parent().parent().parent().parent()
 		
 		comntLikeUnlike(comnt);
@@ -280,6 +292,10 @@ $(document).ready(function() {
 	
 	// 댓글 신고 버튼 클릭 이벤트
 	$("#comnt_list").on("click", ".comnt_accuse_btn", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		if($("#comnt_accuse_info_contnr").css("display")=="none") {
 			$("#accuse_comnt_no").val($(this).parent().parent().parent().parent().attr("comnt_no"));
 			resetAccuse($("#comnt_accuse_info_contnr"));
@@ -289,6 +305,10 @@ $(document).ready(function() {
 	
 	// 댓글 신고 접수 버튼 클릭 이벤트
 	$("#comnt_accuse_submit_btn").on("click", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		if(checkVal("#comnt_accuse_title")) {
 			alert("신고 제목을 입력하세요.");
 			$("#comnt_accuse_title").focus();
@@ -678,7 +698,7 @@ function diaryFolw() {
 		dataType: "json",
 		data: params,
 		success: function(result) {
-			$("#folw_btn").val("팔로잉");
+			checkDiaryFolw();
 		},
 		error: function(request, status, error) {
 			console.log(error);

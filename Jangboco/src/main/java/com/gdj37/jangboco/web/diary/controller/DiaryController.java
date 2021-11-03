@@ -109,7 +109,7 @@ public class DiaryController {
 			
 			mav.setViewName("jangboco/diary/diaryLike");
 		} else {
-			mav.setViewName("jangboco/join/loginMain");
+			mav.setViewName("redirect:loginMain");
 		}
 		
 		return mav;
@@ -180,7 +180,7 @@ public class DiaryController {
 			
 			mav.setViewName("jangboco/diary/diaryPernlPage");
 		} else {
-			mav.setViewName("jangboco/join/loginMain");
+			mav.setViewName("redirect:loginMain");
 		}
 		
 		return mav;
