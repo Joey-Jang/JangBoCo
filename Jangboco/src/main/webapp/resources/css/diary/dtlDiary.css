@@ -218,7 +218,7 @@
 .img_nicnm_folw_btn_contnr {
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 	width: 100%;
 	height: 30px;
@@ -252,6 +252,12 @@
 .folw_btn {
 	width: 50px;
 	height: 25px;
+}
+.diary_btn_contnr {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: center;
 }
 .diary_update_btn {
 	width: 30px;

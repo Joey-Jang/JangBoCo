@@ -513,8 +513,10 @@ function loadDiaryData() {
 			$("#nicnm").text(result.diaryData.NICNM);
 			
 			if($("#member_no").val()==result.diaryData.MEMBER_NO) {
-				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_update_btn\" class=\"diary_update_btn\" value=\"수정\">");
-				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_delete_btn\" class=\"diary_delete_btn\" value=\"삭제\">");
+				$("#img_nicnm_folw_btn_contnr").append("<div class=\"diary_btn_contnr\">"
+													+ "		<input type=\"button\" id=\"diary_update_btn\" class=\"diary_update_btn\" value=\"수정\">"
+													+ "		<input type=\"button\" id=\"diary_delete_btn\" class=\"diary_delete_btn\" value=\"삭제\">"
+													+ "</div>");
 			} else {
 				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"folw_btn\" class=\"folw_btn\">");
 				checkDiaryFolw();
