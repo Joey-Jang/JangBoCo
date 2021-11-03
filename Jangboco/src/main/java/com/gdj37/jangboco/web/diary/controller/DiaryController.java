@@ -173,11 +173,9 @@ public class DiaryController {
 		
 		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) {
 			mav.addObject("page_member_no", session.getAttribute("sMNo"));
-			
-			if(!"".equals(params.get("diary_member_no")) && params.get("diary_member_no")!=null) {
-				mav.addObject("page_member_no", params.get("diary_member_no"));
-			}
-			
+			mav.setViewName("jangboco/diary/diaryPernlPage");
+		} else if(!"".equals(params.get("diary_member_no")) && params.get("diary_member_no")!=null) {
+			mav.addObject("page_member_no", params.get("diary_member_no"));
 			mav.setViewName("jangboco/diary/diaryPernlPage");
 		} else {
 			mav.setViewName("redirect:loginMain");
