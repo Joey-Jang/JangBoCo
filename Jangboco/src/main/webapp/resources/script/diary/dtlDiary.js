@@ -19,11 +19,19 @@ $(document).ready(function() {
 	
 	// 좋아요 버튼 클릭 이벤트
 	$("#unlike_icon, #like_icon").on("click", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		diaryLikeUnlike();
 	});
 	
 	// 신고 버튼 클릭 이벤트
 	$("#diary_accuse_btn").on("click", function() {
+		if($("#member_no").val()=="") {
+			return false;
+		}
+		
 		if($("#diary_accuse_info_contnr").css("display")=="none") {
 			resetAccuse($("#diary_accuse_info_contnr"));
 			$("#diary_accuse_info_contnr").fadeIn(200);
@@ -503,6 +511,7 @@ function loadDiaryData() {
 													+ "\")");
 			}
 			$("#nicnm").text(result.diaryData.NICNM);
+			
 			if($("#member_no").val()==result.diaryData.MEMBER_NO) {
 				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_update_btn\" class=\"diary_update_btn\" value=\"수정\">");
 				$("#img_nicnm_folw_btn_contnr").append("<input type=\"button\" id=\"diary_delete_btn\" class=\"diary_delete_btn\" value=\"삭제\">");
