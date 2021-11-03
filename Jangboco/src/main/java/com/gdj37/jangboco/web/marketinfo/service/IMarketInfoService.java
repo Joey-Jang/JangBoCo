@@ -17,6 +17,8 @@ public interface IMarketInfoService {
 
 	public List<HashMap<String, String>> getItemsListNoChoice(HashMap<String, String> params) throws Throwable;
 
-	public HashMap<String, String> getItemsListChoice(HashMap<String, String> params) throws Throwable;	
+	public HashMap<String, String> getItemsListChoice(HashMap<String, String> params) throws Throwable;
+
+	public HashMap<String, String> getEventData(HashMap<String, String> params) throws Throwable;
 
 }
