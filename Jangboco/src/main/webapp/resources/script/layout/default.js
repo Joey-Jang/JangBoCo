@@ -245,7 +245,7 @@ function setMainLoc(memberAddrs, cntRecentLoc, latestLocData, cookies) {
 					var cookieDtlAddrs = decodeURIComponent(cookie.value);
 				}
 			}
-			if(tempZipcd!=null && tempAddrs!=null && tempDtlAddrs!=null) {
+			if(cookieZipcd!=null && cookieAddrs!=null && cookieDtlAddrs!=null) {
 				nonmemberZipcd = cookieZipcd;
 				nonmemberAddrs = cookieAddrs;
 				nonmemberDtlAddrs = cookieDtlAddrs;
