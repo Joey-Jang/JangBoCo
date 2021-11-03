@@ -286,7 +286,7 @@
     var nowTime = hours.toString() + minutes;
 	
 	
-	<%--클러스터, 마커 정보--%>
+	<%--클러스터, 마커, 오버레이 정보--%>
 		
 		
 	// 마커 클러스터러를 생성합니다 
@@ -336,8 +336,10 @@
 	
 	//커스텀오버레이 선언
     var customOverlay = new kakao.maps.CustomOverlay({
-    	yAnchor: 2
+    	yAnchor: 1.1
     });
+	
+    
 	
 	
 	<%--내 위치 정보--%>
@@ -403,6 +405,7 @@
 		        markers=[];
 		        clusterer.clear();
 		        var html = "";
+		        var overlayHtml = "";
 		        
 		        <c:forEach var="data" items="${list}">
 			    	if(disct=='${data.DISCT_NAME}'){
@@ -454,6 +457,9 @@
 			    		</c:if>
 			    		html += "</li>";
 			    		
+			    		
+						
+			    		
 			    	}
 			    	
 			    	
@@ -502,22 +508,29 @@
 				    position: clusterer.getCenter()
 				}); */
 				
-				var content = '<div class="customoverlay">' +
-			    '    <span class="title">구의야구공원</span>' +
-			    '  </a>' +
-			    '</div>';
 				
-			    customOverlay.setContent(content);
-				
-				
-				
+
+				var overlayContent = '';
+			    
 				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) {
-				    /* console.log( cluster.getBounds() );
-				    console.log( cluster.getCenter() );
+				    //console.log( cluster.getBounds() );
+				    //console.log( cluster.getCenter() );
 				    console.log( cluster.getMarkers() );
-				    console.log( cluster.getSize() );
-				    console.log( cluster.getClusterMarker() );
-				    console.log( cluster.getCenter() ); */
+				    //console.log( cluster.getSize() );
+				    //console.log( cluster.getClusterMarker() );
+				    //console.log( cluster.getCenter() ); */
+				    var clusterMarkers =cluster.getMarkers();
+				    overlayContent += '<div class=\"custom_overlay\" style=\'background-color:white; margin=0\'><ul id=\"overlay_market_list\" style=\' list-style: none; padding-inline-start: 0px; \'>';
+				    for(var i=0; i<cluster.getSize(); i++){
+				    	overlayContent +="<li style=\'border-bottom: 1px solid;\'>" + clusterMarkers[i].getTitle() + "</li>";
+					}
+				    
+				    overlayContent += '  </ul></div>';
+				    					
+					//$("#overlay_market_list").html(overlayHtml);
+					console.log(overlayContent); 
+					
+				    customOverlay.setContent(overlayContent);
 				    customOverlay.setPosition(cluster.getCenter());
 					customOverlay.setMap(map);
 				   
@@ -527,6 +540,7 @@
 				kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
 					customOverlay.setMap(null);
 				    console.log("몇번이나 끝나는겨?");
+				    overlayContent="";
 				});
 				
 				
