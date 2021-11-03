@@ -196,7 +196,8 @@ $(document).ready(function(){
 	
 	// 좋아요 버튼 클릭 이벤트(로그인 / 비로그인시 처리)
 	$(".like_unlike_contnr").on("click",function(){
-		if($("#member_no").val() != null && $("#member_no").val() != ''){
+		console.log($("#member_no").val());
+		if($("#member_no").val() != null && $("#member_no").val() != ''){			
 			var params = {
 					"memberNo": $("#member_no").val(),
 					"eventNo": $("#event_no").val()
@@ -213,7 +214,6 @@ $(document).ready(function(){
 						
 					} else {
 						deleteEventLike();
-						
 					}
 				},
 				error: function(request, status, error) {
@@ -335,7 +335,7 @@ function deleteEventLike(){
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	<form action="#" id="go_form" method="post">
-      <input type="hidden" id="member_no" name="member_no" value="${member_no}">
+      <input type="hidden" id="member_no" name="member_no" value="${sMNo}">
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
