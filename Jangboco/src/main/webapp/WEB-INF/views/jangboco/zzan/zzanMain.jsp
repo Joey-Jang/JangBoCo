@@ -421,9 +421,9 @@
 				    		title: '${data.MARKET_NAME}'
 				   	 	});
 			    		
-			    		if((timeCheck("${data.START_TIME}","${data.END_TIME}"))==false && ${data.START_TIME != null and data.END_TIME != null}){
+			    		if(${data.START_TIME != null and data.END_TIME != null} && (timeCheck("${data.START_TIME}","${data.END_TIME}"))==false){
 			    			marker.setImage(markerOffImage);
-			    		}
+			    		} //영업종료시 marker_off이미지 사용
 			    		       
 			    		
 			    		// 마커에 표시할 인포윈도우 생성
@@ -534,6 +534,7 @@
         markers=[];
         clusterer.clear();
         var html = "";
+        var overlayHtml = "";
         
         // 지도의 현재 영역을 얻어옵니다 
 	    var prsntBounds = map.getBounds();
@@ -544,47 +545,92 @@
 	    // 영역의 북동쪽 좌표를 얻어옵니다 
 	    var neLatLng = prsntBounds.getNorthEast(); 
 	    
-	    
-	    var message = '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
-	    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
-	    
-	    console.log(message);
-        
-        
 		<c:forEach var="data" items="${list}">
 		var marker = new kakao.maps.Marker({
 	        	position : new kakao.maps.LatLng(${data.LAT}, ${data.LNG}),
-	    		image: markerImage
+	    		image: markerImage,
+	    		title: '${data.MARKET_NAME}'
 	   	 	});
+		
+		if(${data.START_TIME != null and data.END_TIME != null} && (timeCheck("${data.START_TIME}","${data.END_TIME}"))==false){
+			marker.setImage(markerOffImage);
+		} //영업종료시 marker_off이미지 사용
 		
 		if(prsntBounds.contain(new kakao.maps.LatLng(${data.LAT}, ${data.LNG}))){
 			markers.push(marker);
 			
 			//목록에 보이게 구현
-			html += "<li market_no=\"" + ${data.MARKET_NO} + "\">";
-			html += "	<span class=\"market_name\"><h3>" + "${data.MARKET_NAME}" + "</h3></span>";
-			html += "	<div class=\"market_con\">";
-			html += "		<span class=\"market_addrs\">" + "${data.MARKET_ADDRS}" + "</span>";
-			/* html += "	</div>";
-			html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">"; */
-			html += "</li>";
+    		html += "<li market_no=" + "${data.MARKET_NO}" + " market_member_no="+ "${data.MARKET_MEMBER_NO}" + ">";
+    		html += "	<div class=\"market_name\">" + "${data.MARKET_NAME}" + "</div>";
+    		html += "	<div class=\"market_con\">";
+    		html += "		<span class=\"market_addrs\">" + "${data.MARKET_ADDRS}" + "</span><br>";
+    		
+    		<c:if test="${data.PHONE_NUM != null}">
+    		html += "		<span class=\"market_phone\">" + "${data.PHONE_NUM}" + "</span><br>";
+    		</c:if>
+    		<c:if test="${data.START_TIME != null and data.END_TIME != null}">
+    		html += "		<span class=\"market_time\">" + "${data.START_TIME}" + "\~" + "${data.END_TIME}" + "</span><br>";    
+    		if(timeCheck("${data.START_TIME}","${data.END_TIME}")){
+    		html += "		<span class=\"market_open\">" + "영업 중" + "</span><br>";
+    	      } else {
+    	    html += "		<span class=\"market_close\">" + "영업 종료" + "</span><br>";
+    	      }
+    		
+    		</c:if>
+    		html += "</li>";
     	}
 		
 		// 마커에 표시할 인포윈도우 생성
-		var infowindow = new kakao.maps.InfoWindow({
+		var infowindowMarker = new kakao.maps.InfoWindow({
 	        content: '<div style="width:150px;text-align:center;padding:6px 0;">${data.MARKET_NAME}</div>' // 인포윈도우에 표시할 내용
 	    });
 		
 		// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
-	    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-	    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindowMarker));
+	    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindowMarker));
+    	
+	    kakao.maps.event.addListener(marker, 'click', function() {
+	    	$("#market_no").val(${data.MARKET_NO});
+			$("#market_member_no").val(${data.MARKET_MEMBER_NO});
+			/* $("#items_choice_no").val($(this).attr("no")); */
+			$("#info_form").submit();
+	        
+	    });
  		
 	    
 		</c:forEach>
 		clusterer.addMarkers(markers); //클러스터에 마커 추가
 		$("#market_list").html(html);
 		
+		var overlayContent = '';//빈 커스텀오버레이 콘텐츠
+	    
+		kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) { //클러스터 마우스오버 이벤트
+		    var clusterMarkers =cluster.getMarkers(); //마커배열 담기
+		    overlayContent += '<div class=\"custom_overlay\" style=\'background-color:white; opacity:0.8\'><ul id=\"overlay_market_list\" style=\' list-style: none; padding-inline-start: 0px; \'>';
+		    for(var i=0; i<cluster.getSize(); i++){
+		    	overlayContent +="<li style=\'border-bottom: 1px solid;\'>" + clusterMarkers[i].getTitle() + "</li>"; //각각 마커의 이름 담기
+			}
+		    
+		    overlayContent += '  </ul></div>';
+			
+		    customOverlay.setContent(overlayContent); //콘텐츠 설정
+		    customOverlay.setPosition(cluster.getCenter()); //클러스터 중심으로 좌표 설정
+			customOverlay.setMap(map); //맵에 표시
+		   
+		console.log("몇번이나 되는겨");
+		    
+		});
+		kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
+			customOverlay.setMap(null);//맵에서 제거
+		    console.log("몇번이나 끝나는겨?");
+		    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+		});
 		
+		kakao.maps.event.addListener( clusterer, 'clusterclick', function( cluster ) {
+			customOverlay.setMap(null);//맵에서 제거
+		    console.log("잘되는겨?");
+		    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+		});
 		
 	})//prsnt_map event end 
 	
