@@ -117,7 +117,7 @@ public class LayoutController {
 					cnt = locService.addRecentLocData(params);
 				}
 				
-				if(cnt > 0) {
+				if(cnt==0) {
 					msg = "FAILED";
 				}
 			} catch (Exception e) {
