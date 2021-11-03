@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +20,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdj37.jangboco.common.bean.PagingBean;
 import com.gdj37.jangboco.common.service.IPagingService;
+import com.gdj37.jangboco.web.intgrevent.service.IIntgrEventService;
 import com.gdj37.jangboco.web.marketinfo.service.IMarketInfoService;
 
 @Controller
 public class MarketInfoController {
 	@Autowired
 	public IMarketInfoService iMarketInfoService;
+	
+	@Autowired
+	public IIntgrEventService iIntgrEventService;
 	
 	@Autowired
 	public IPagingService iPagingService;
@@ -153,4 +161,67 @@ public class MarketInfoController {
 		return mapper.writeValueAsString(modelMap); 
 	}	
 	
+	@RequestMapping(value="/eventDtlModal")
+	public ModelAndView eventDtlModal(@RequestParam HashMap<String, String> params,
+			ModelAndView mav) {
+		
+		mav.setViewName("jangboco/pricecompr/eventDtlModal");
+		
+		return mav;
+	}
+	
+	// 행사 모달
+		@RequestMapping(value="/eventModalAjax", method= RequestMethod.POST,
+				produces = "text/json;charset=UTF-8" )
+		@ResponseBody
+		public String eventModalAjax( HttpServletRequest request, HttpServletResponse response,
+				@RequestParam HashMap<String, String> params) 
+					throws Throwable{
+			ObjectMapper mapper = new ObjectMapper();
+			
+			Map<String, Object> modelMap = new HashMap<String, Object>();
+			
+			String eventNo = params.get("eventNo");
+			try {
+				// 조회수 중복 방지를 위한 쿠키
+				
+				Cookie comprCookie = null; // 비교를 위한 쿠키 선언
+				
+				Cookie[] cookies = request.getCookies(); // 클라이언트의 쿠키를 가져옴.
+				
+				if(cookies != null) { 
+					for(Cookie cookie : cookies) { 
+						// for문으로 가져온 쿠키들의 이름을 비교
+						// 클라이언트의 쿠키 중 해당 게시글을 읽었다면
+						// 비교쿠키에 해당 쿠키값을 넣어준다.
+						if(cookie.getName().equals("eventView"+eventNo)) {						
+							comprCookie = cookie;
+						}
+					}
+				}
+				
+				if(comprCookie ==null) {
+					// 비교할 쿠키가 널이라면 해당 게시글을 읽은 이력이 없기 때문에
+					// 새로운 쿠키를 eventView + eventNo 형식의 이름과, [ 행사글번호 ]를 저장. 
+					Cookie newCookie = new Cookie("eventView"+eventNo,"["+ eventNo +"]");
+					
+					newCookie.setMaxAge(60*60*1);
+					
+					// 새로 생성한 쿠키를 클라이언트의 브라우저저장소에 추가
+					response.addCookie(newCookie);
+					
+					// 비교할 쿠키가 널이었기 때문에 조회수를 올려준다.
+					int result = iIntgrEventService.updateEventHit(params);				
+				}
+				
+				HashMap<String, String> data = iMarketInfoService.getEventData(params);		
+			
+				
+				modelMap.put("data", data);							
+			} catch (Exception e) {
+				 e.printStackTrace();
+			}
+			
+			return mapper.writeValueAsString(modelMap); 
+		}
 }

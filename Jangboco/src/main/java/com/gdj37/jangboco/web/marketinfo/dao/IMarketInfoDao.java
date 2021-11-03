@@ -19,6 +19,8 @@ public interface IMarketInfoDao {
 
 	public HashMap<String, String> getItemsListChoice(HashMap<String, String> params) throws Throwable;
 
+	public HashMap<String, String> getEventData(HashMap<String, String> params) throws Throwable;
+
 	
 
 }

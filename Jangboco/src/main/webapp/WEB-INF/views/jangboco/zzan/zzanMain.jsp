@@ -261,7 +261,7 @@
 	});
 	
 	
-	<%--기본 지도 정보--%>
+	<%--기본 지도, 마커 정보--%>
 
 	var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
@@ -277,6 +277,12 @@
 		};//커스텀 마커 설정
 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 	var markers=[];
+	var markerOffImage = new kakao.maps.MarkerImage(
+			'resources/images/zzan/marker_off.png',
+		    new kakao.maps.Size(30, 33), new kakao.maps.Point(15, 33));
+	var markerBestImage = new kakao.maps.MarkerImage(
+			'resources/images/zzan/marker_best.png',
+		    new kakao.maps.Size(30, 33), new kakao.maps.Point(15, 33));
 	
 	
 	<%--시간 정보--%>
@@ -286,7 +292,7 @@
     var nowTime = hours.toString() + minutes;
 	
 	
-	<%--클러스터, 마커, 오버레이 정보--%>
+	<%--클러스터, 오버레이 정보--%>
 		
 		
 	// 마커 클러스터러를 생성합니다 
@@ -415,6 +421,9 @@
 				    		title: '${data.MARKET_NAME}'
 				   	 	});
 			    		
+			    		if((timeCheck("${data.START_TIME}","${data.END_TIME}"))==false && ${data.START_TIME != null and data.END_TIME != null}){
+			    			marker.setImage(markerOffImage);
+			    		}
 			    		       
 			    		
 			    		// 마커에 표시할 인포윈도우 생성
@@ -469,78 +478,36 @@
 				
 				$("#market_list").html(html);
 				map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
-		        
-				/* var temp = null; // 기존 content를 담는 변수
+		     
 
-				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) { //클러스러터 마우스 오버 이벤트  
-				    temp = cluster.getClusterMarker().getContent();
-				    console.log(temp);
-				    // 변경하려는 div 선언
-				    var content = "<div style='cursor: pointer; width: 52px; height: 52px; border-radius: 52px; border: 1px solid #1a86ae; background-color:white; line-height: 52px; font-size: 14px; text-align: center; font-weight: bold;'>"+cluster.getSize()+"</div>";
-				    cluster.getClusterMarker().setContent(content);
-				});
-
-				kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) { // 클러스터러 마우스 아웃 이벤트
-				    // 마우스 아웃 시 기존 content로 변경
-				    if(temp) {
-				        cluster.getClusterMarker().setContent(temp);
-				    }
-					//console.log('아웃은 되니?')
-				}); */
-				
-				
-				/* var content = document.createElement('div');
-				
-				//클러스터 내부 마커 추출
-				var clusterMarkers = clusterer.getMarkers();
-				
-				for(var i=0; i<clusterMarkers.length; i++){
-					content.className = 'overlay';
-					content.innerHTML = 'clusterMarkers[0].getTitle()';
-				}
-				 */
-				// 커스텀 오버레이 엘리먼트를 만들고, 컨텐츠를 추가합니다
-				//console.log(clusterer.getCenter());
-				
-				/* var customoverlay = new kakao.maps.CustomOverlay({
-				    map: map,
-				    content: content,
-				    position: clusterer.getCenter()
-				}); */
-				
-				
-
-				var overlayContent = '';
+				var overlayContent = '';//빈 커스텀오버레이 콘텐츠
 			    
-				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) {
-				    //console.log( cluster.getBounds() );
-				    //console.log( cluster.getCenter() );
-				    console.log( cluster.getMarkers() );
-				    //console.log( cluster.getSize() );
-				    //console.log( cluster.getClusterMarker() );
-				    //console.log( cluster.getCenter() ); */
-				    var clusterMarkers =cluster.getMarkers();
-				    overlayContent += '<div class=\"custom_overlay\" style=\'background-color:white; margin=0\'><ul id=\"overlay_market_list\" style=\' list-style: none; padding-inline-start: 0px; \'>';
+				kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) { //클러스터 마우스오버 이벤트
+				    var clusterMarkers =cluster.getMarkers(); //마커배열 담기
+				    overlayContent += '<div class=\"custom_overlay\" style=\'background-color:white; opacity:0.8\'><ul id=\"overlay_market_list\" style=\' list-style: none; padding-inline-start: 0px; \'>';
 				    for(var i=0; i<cluster.getSize(); i++){
-				    	overlayContent +="<li style=\'border-bottom: 1px solid;\'>" + clusterMarkers[i].getTitle() + "</li>";
+				    	overlayContent +="<li style=\'border-bottom: 1px solid;\'>" + clusterMarkers[i].getTitle() + "</li>"; //각각 마커의 이름 담기
 					}
 				    
 				    overlayContent += '  </ul></div>';
-				    					
-					//$("#overlay_market_list").html(overlayHtml);
-					console.log(overlayContent); 
 					
-				    customOverlay.setContent(overlayContent);
-				    customOverlay.setPosition(cluster.getCenter());
-					customOverlay.setMap(map);
+				    customOverlay.setContent(overlayContent); //콘텐츠 설정
+				    customOverlay.setPosition(cluster.getCenter()); //클러스터 중심으로 좌표 설정
+					customOverlay.setMap(map); //맵에 표시
 				   
 				console.log("몇번이나 되는겨");
 				    
 				});
 				kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
-					customOverlay.setMap(null);
+					customOverlay.setMap(null);//맵에서 제거
 				    console.log("몇번이나 끝나는겨?");
-				    overlayContent="";
+				    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+				});
+				
+				kakao.maps.event.addListener( clusterer, 'clusterclick', function( cluster ) {
+					customOverlay.setMap(null);//맵에서 제거
+				    console.log("잘되는겨?");
+				    overlayContent="";//커스텀오버레이 컨텐츠 비우기
 				});
 				
 				

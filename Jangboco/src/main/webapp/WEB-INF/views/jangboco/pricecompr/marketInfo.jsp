@@ -113,7 +113,7 @@
 	.items_slide{
 		display: none;		
 		flex-wrap: wrap;
-		width: 90%;
+		width: 923px;
 		height:auto;
 		margin:auto;
 	}
@@ -194,10 +194,10 @@
 	.event_name {
 		text-overflow:ellipsis;
 		overflow:hidden;
-		white-space: nowrap; 
+		white-space: nowrap;		
 	}
 	
-	tobody> .event_name:hover{
+	tbody .event_name:hover{
 		cursor:pointer;
 	}		
 	
@@ -244,6 +244,152 @@
 	#first_btn {
 		border-left:1px solid #C4C4C4;
 	}
+	
+	
+	/* *********************************************************** */
+	/* *********************************************************** */
+	/* 모달창  */
+	/* *********************************************************** */
+	/* *********************************************************** */
+	.event_dtl_modal {
+		/* position:absolute; */
+		font-family: 'Noto Sans KR', sans-serif;
+	    font-size: 11pt;
+	    font-weight: 400;	   
+	    display:none;
+	    height: 100%;
+	}
+	
+	.btn_img {
+		width: 20px;
+		filter: invert(44%) sepia(70%) saturate(381%) hue-rotate(103deg) brightness(88%) contrast(85%);
+	}
+	
+	.market_icon img{
+		width:45px;
+		height: 45px;
+	}
+	
+	.move_btn {
+		background-color: #03A64A;
+		color : #FFFFFF;
+		width : 100px;
+		border-width: 1px;
+		border-radius: 6px;	
+		cursor: pointer;
+		border-color: #FFFFFF;	
+	}
+	
+	.writer_info{
+		display:flex;
+	}
+	
+	.page_title_btn_contnr{
+		display: flex;
+    	justify-content: space-between;
+	}
+	
+	.page_title_contnr{
+		font-size: 25px;
+		margin-bottom: 30px;
+	}
+	
+	.modal_close_btn{
+	    width: 35px;
+	    height: 35px;
+	    text-align: center;
+	    font-size: 22px;
+	    border: 1px solid #C4C4C4;
+	    color: #03A64A;
+	    cursor: pointer;	
+	}
+	
+	.event_title_contnr{
+		min-width: 750px;
+		
+		font-size: 35px;
+		font-weight:bold;
+		overflow: hidden;
+		text-overflow:ellipsis;
+		white-space: nowrap;
+		margin-bottom: 15px;
+	}
+	
+	.writer_info{
+		margin-bottom: 15px;
+		margin-left: 10px;
+	}
+	
+	.writer_info div:nth-child(1) {
+		margin-right:10px;
+	}
+	
+	.writer_info div:nth-child(1) span:nth-child(1){
+		font-size: 20px;
+		font-weight: bold;
+	}
+	
+	.regst_date{
+		font-size:16px;
+		color: #C4C4C4;
+	}
+	
+	.writer_info_con {
+		display: flex;
+		font-size:16px;				
+		margin-bottom: 15px;
+	}
+	
+	.writer_info_con>span,#like_btn{
+		margin-right:50px;
+	}
+	
+	.event_info_contnr {
+		height: 100%;
+		background-color: #FFFFFF;
+		padding: 10px;
+	}
+	
+	.event_con{		
+		margin-bottom: 15px;
+		border: 1px solid #03A64A;
+		min-width : 750px;
+		height : calc(100% - 300px);
+		overflow-y:auto;
+		line-break:anywhere;	
+		padding: 15px;	
+	}
+	.move_btn_contnr {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	
+	#unlike{
+		display:none;
+		width: 25px;
+		height:25px;		
+	}
+	
+	#like{
+		display:none;
+		width: 25px;
+		height:25px;		
+	}
+	
+	#like_btn{
+		display: flex;
+		text-align: center;
+	}	
+	.like_unlike_contnr{
+		width: 25px;
+		height:25px;
+		margin-right:20px;		
+	}
+	.like_unlike_contnr:hover{
+		cursor: pointer;
+	}
+	
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
@@ -256,7 +402,7 @@ $(document).ready(function(){
 		$("#search_gbn").val("${param.searchGbn}");
 	}
 	if("${marketMemberNo}" != ""){
-		if(timeCheck("08:00","01:00")){
+		if(timeCheck("${marketInfo.START_TIME}","${marketInfo.END_TIME}")){
 			$("#time_check").html("영업 중");
 			$("#time_check").css("color","green");
 		} else {
@@ -309,6 +455,11 @@ $(document).ready(function(){
 		history.back();
 	});
 	
+	$("tbody").on("click","#go_event_dtl",function(){
+		$("#event_no").val($(this).attr("no"));
+		
+		reloadModal();
+	});
 });
 
 function timeCheck(startTime,endTime){
@@ -323,7 +474,7 @@ function timeCheck(startTime,endTime){
 	endTime = endTime.replace(":", "");
 	
 	// 에러 있는 부분 후순위로 미루고 다음에 수정
-	if(startTime >= endTime){
+	if(startTime >= endTime){		
 		nowTime = parseInt(nowTime);
 		nowTime += 2400;
 		endTime = parseInt(endTime);
@@ -519,6 +670,247 @@ function showSlides(slideIndex) {
 	slides[slideIndex-1].style.display = "flex";
 	dots[slideIndex-1].className += " active2";		
 }
+
+function reloadModal(){
+	var params = $("#action_form").serialize();
+	
+	$.ajax({ 
+		url: "eventModalAjax", 
+		type: "post", 
+		dataType: "json", 
+		data: params, 
+		success : function(res) {			
+			drawEventModal(res.data);
+			checkEventLike();
+			cntEventLike();
+			$(".con").hide();
+			$(".event_dtl_modal").show();
+			$(".con_contnr").css("background-color","#03A64A20");
+			// 이전글에 대한 데이터가 없을 시 
+			if($("#before_btn").attr("no")==-1){
+				$("#before_btn").css({
+					"background-color":"#C4C4C4",
+					"cursor":"auto"
+				});		
+				
+			} else {
+				// 행사소식 이전글
+				$("#before_btn").on("click",function(){
+					$("#event_no").val($(this).attr("no"));
+					
+					reloadModal();
+				});
+			}
+			// 다음글에 대한 데이터가 없을 시 	
+			if($("#next_btn").attr("no")==-1){
+				$("#next_btn").css({
+					"background-color":"#C4C4C4",
+					"cursor":"auto"
+				});		
+				
+			} else {
+				// 행사소식 다음글
+				$("#next_btn").on("click",function(){					
+					$("#event_no").val($(this).attr("no"));
+					
+					reloadModal();
+				});
+			}
+			
+			// 좋아요 버튼 클릭 이벤트(로그인 / 비로그인시 처리)
+			$(".like_unlike_contnr").on("click",function(){
+				if($("#member_no").val() != null && $("#member_no").val() != ''){
+					var params = {
+							"memberNo": $("#member_no").val(),
+							"eventNo": $("#event_no").val()
+						 };
+			
+					$.ajax({
+						url: "checkEventLikeAjax",
+						type: "post",
+						dataType: "json",
+						data: params,
+						success: function(res) {
+							if(res.checkEventLike==0) {
+								addEventLike();						
+								
+							} else {
+								deleteEventLike();
+								
+							}
+						},
+						error: function(request, status, error) {
+							console.log(error);
+						}
+					});	
+					
+				} else {
+					if(confirm("로그인을 하셔야합니다.")){
+						$("#go_form").attr("action", "loginMain	");
+						$("#go_form").submit();				
+					}
+				}
+			});
+			
+			$(".modal_close_btn").on("click",function(){
+				$(".con_contnr").css("background-color","");
+				$(".event_dtl_modal").hide();
+				$(".event_dtl_modal").html("");
+				reloadEventList();
+				$(".con").show();
+				
+				
+			});
+		},
+		error: function(request, status, error) { 
+			console.log(error);
+		}
+	});
+	
+}
+
+function drawEventModal(data){
+	var html = "";	
+	
+	html += "<div class=\"event_info_contnr\">                                                                              ";
+	html += "	<div class=\"page_title_btn_contnr\">";
+	html += "	<div class=\"page_title_contnr\">행사소식</div>        	        		                                  ";
+	html += "	<div class=\"modal_close_btn\">X</div> ";	
+	html += "	</div>";	
+	html += "	<div class=\"event_title_contnr\">                                                                          ";
+	html += "		<span>"+ data.EVENT_NAME +"</span>                                                                                 ";
+	html += "	</div>                                                                                                    ";
+	html += "	<div class=\"writer_info_contnr\">                                                                          ";
+	html += "		<div class=\"writer_info\">                                                                             ";
+	html += "			<div>                                                                                             ";
+    html += "    		<span>"+ data.MARKET_NAME +"</span><br>        		                                                              ";
+    html += "    		<span class=\"regst_date\">"+ data.REGST_DATE +"</span><br>                                                        ";
+	html += "			</div>                                                                                            ";
+    html += "		<div class=\"market_icon\">                                                                             ";
+    html += "			<img src=\"resources/images/intgrevent/market_icon.png\">                                           ";
+    html += "		</div>                                                                                                ";
+	html += "		</div>                                                                                                ";
+	html += "	<div class=\"writer_info_con\">                                                                             ";
+    html += "		<span>행사기간: "+ data.START_DATE +" ~  "+ data.END_DATE +"</span>                                                               ";
+    html += "		<div id=\"like_btn\">                                                                                   ";
+    html += "			<div class=\"like_unlike_contnr\">                                                                  ";
+	html += "        		<img id=\"unlike\" src=\"resources/images/intgrevent/unlike.svg\">                                ";
+	html += "        		<img id=\"like\" src=\"resources/images/intgrevent/like.svg\">                                    ";
+    html += "			</div>                                                                                            ";
+    html += "    		<span id=\"like_cnt\"></span>                                                                       ";
+    html += "		</div>                                                                                                ";
+    html += "		<span>조회수 "+ data.HIT_NUM +"</span>                                                                            ";
+	html += "	</div>                                                                                                    ";
+	html += "	</div>                                                                                                    ";
+	html += "	<div class=\"event_con\">"+ data.CON +"</div>";
+	html += "	<div class=\"move_btn_contnr\">                                                                             ";
+	html += "		<button type=\"button\" class=\"move_btn\" no=\""+ data.EVENT_NO_BEFORE +"\" id=\"before_btn\">이전글</button>   ";
+	html += "		<button type=\"button\" class=\"move_btn\" no=\""+ data.EVENT_NO_NEXT +"\" id=\"next_btn\">다음글</button>       "; 		
+	html += "	</div>        		                                                                                      ";
+	html += "</div>                                                                                                       ";
+	
+	$(".event_dtl_modal").html(html);
+}
+
+//좋아요 여부
+function checkEventLike() {
+	if($("#member_no").val() != null && $("#member_no").val() != ''){
+		var params = {
+						"memberNo": $("#member_no").val(),
+						"eventNo": $("#event_no").val()
+					 };
+		
+		$.ajax({
+			url: "checkEventLikeAjax",
+			type: "post",
+			dataType: "json",
+			data: params,
+			success: function(res) {
+				if(res.checkEventLike==0) {
+					$("#like").hide();
+					$("#unlike").show();
+				} else {
+					$("#unlike").hide();
+					$("#like").show();
+				}
+			},
+			error: function(request, status, error) {
+				console.log(error);
+			}
+		});		
+	} else {
+		$("#like").hide();
+		$("#unlike").show();		
+	}
+}
+
+//좋아요 개수
+function cntEventLike() {
+	var params = {
+					"eventNo": $("#event_no").val()
+				 };
+	
+	$.ajax({
+		url: "cntEventLikeAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			$("#like_cnt").text(res.cntEventLike);
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});
+}
+
+// 좋아요 누르기
+function addEventLike(){
+	var params = {
+					"eventNo":$("#event_no").val(),
+					"memberNo": $("#member_no").val()
+				};
+	
+	$.ajax({
+		url: "addEventLikeAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			console.log(res.result);
+			$("#unlike").hide();
+			$("#like").show();
+			cntEventLike();
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});	
+}
+
+//좋아요 취소
+function deleteEventLike(){
+	var params = {
+					"eventNo":$("#event_no").val(),
+					"memberNo": $("#member_no").val()
+				};
+	
+	$.ajax({
+		url: "deleteEventLikeAjax",
+		type: "post",
+		dataType: "json",
+		data: params,
+		success: function(res) {
+			console.log(res.result);
+			$("#like").hide();
+			$("#unlike").show();
+			cntEventLike();
+		},
+		error: function(request, status, error) {
+			console.log(error);
+		}
+	});	
+}
 </script>
 </head>
 <body>
@@ -531,6 +923,8 @@ function showSlides(slideIndex) {
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
    	</form>
     <div class="con_contnr">
+    	<div class="event_dtl_modal">	       	
+	     </div>  
         <div class="con">
         	<div class="market_info_addrs_contnr">
         	<c:choose>
@@ -556,7 +950,7 @@ function showSlides(slideIndex) {
 	            		<c:choose>
 	            			<c:when test="${!empty marketMemberNo}">
 				            	<span>${marketInfo.MARKET_NAME} ${marketInfo.BRANCH_NAME}</span>				            	
-				            	<span id="market_info_addrs">${marketInfo.ADDRS} ${marketInfo.DTL_ADDRS}ssssssssssssssssssssss</span>
+				            	<span id="market_info_addrs">${marketInfo.ADDRS} ${marketInfo.DTL_ADDRS}</span>
 				            	<span>${marketInfo.PHONE_NUM}</span>
 				            	<span>${marketInfo.START_TIME} - ${marketInfo.END_TIME}</span>
 				            	<span id="time_check"></span>			            	
@@ -630,9 +1024,7 @@ function showSlides(slideIndex) {
 	           	</div>
 	        	<div class="paging_wrap">        		
 	        	</div>
-        	</div>        	
-        	<div class="event_dtl_modal">
-        	</div>            
+        	</div>
         </div>
     </div>
     <div class="bottom_contnr"></div>

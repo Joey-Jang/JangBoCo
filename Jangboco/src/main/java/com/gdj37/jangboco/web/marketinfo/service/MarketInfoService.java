@@ -55,5 +55,11 @@ public class MarketInfoService implements IMarketInfoService {
 		return iMarketInfoDao.getItemsListChoice(params);
 	}
 
+	@Override
+	public HashMap<String, String> getEventData(HashMap<String, String> params) throws Throwable {
+		
+		return iMarketInfoDao.getEventData(params);
+	}
+
 	
 }
