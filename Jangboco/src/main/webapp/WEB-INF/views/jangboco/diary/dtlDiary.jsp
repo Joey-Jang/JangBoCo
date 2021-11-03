@@ -136,6 +136,7 @@
 			            	</div>
 		            	</div>
 	            	</div>
+	            	<input type="button" id="diary_list_btn" class="diary_list_btn" value="뉴스피드로">
 	            </div>
 	        </div>
        	</form>

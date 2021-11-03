@@ -205,6 +205,16 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("#comnt_list_add_comnt_contnr").on("click", "textarea", function() {
+		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			$(this).val("");
+			$(this).attr("disabled", true);
+			
+			return false;
+		}
+	});
+	
 	// 댓글 등록 버튼 클릭 이벤트
 	$("#comnt_list_add_comnt_contnr").on("keypress", "textarea", function(event) {
 		if(event.keyCode==13) {
@@ -368,6 +378,11 @@ $(document).ready(function() {
 	// 댓글 신고 취소 버튼 클릭 이벤트
 	$("#comnt_accuse_cancel_btn").on("click", function() {
 		$("#comnt_accuse_info_contnr").fadeOut(200);
+	});
+	
+	$("#diary_list_btn").on("click", function() {
+		$("#go_form").attr("action", "diaryMain");
+		$("#go_form").submit();
 	});
 });
 

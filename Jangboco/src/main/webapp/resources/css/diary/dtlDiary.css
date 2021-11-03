@@ -404,7 +404,7 @@
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
-	align-items: stretch;
+	align-items: flex-end;
 	width: 350px;
 	height: 100%;
 	margin-left: 30px;
@@ -664,5 +664,9 @@
 }
 .add_comnt_btn {
 	height: 25px;
+	padding: 0 5px !important;
+}
+.diary_list_btn {
+	margin-top: 10px !important;
 	padding: 0 5px !important;
 }
