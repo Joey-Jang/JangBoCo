@@ -161,6 +161,12 @@ $(document).ready(function() {
 			});
     	}
     });
+    
+    
+	$("#set_loc_contnr").on("click", ".go_login", function() {
+		$("#go_form").attr("action", "loginMain");
+		$("#go_form").submit();
+	});
 });
 
 
@@ -236,25 +242,29 @@ function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
 function drawRecentLocList(recentLocList) {
 	var html = "";
 	
-	for(var data of recentLocList) {
-		html += "<li recent_loc_no=\"" + data.RECENT_LOC_NO + "\">";
-		html += "	<span class=\"recent_zipcd\" zipcd=\"" + data.ZIPCD + "\">" + data.ZIPCD + "</span>";
-		html += "	<div class=\"recent_addrs_contnr\">";
-		html += "		<span class=\"recent_addrs\" addrs=\"" + data.ADDRS + "\" dtl_addrs=\""
-		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
-			html += data.DTL_ADDRS;
-		} else {
-			html += "";
+	if($("#member_no").val()!="") {
+		for(var data of recentLocList) {
+			html += "<li recent_loc_no=\"" + data.RECENT_LOC_NO + "\">";
+			html += "	<span class=\"recent_zipcd\" zipcd=\"" + data.ZIPCD + "\">" + data.ZIPCD + "</span>";
+			html += "	<div class=\"recent_addrs_contnr\">";
+			html += "		<span class=\"recent_addrs\" addrs=\"" + data.ADDRS + "\" dtl_addrs=\""
+			if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
+				html += data.DTL_ADDRS;
+			} else {
+				html += "";
+			}
+			html += "\">";
+			html += data.ADDRS;
+			if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
+				html += ", " + data.DTL_ADDRS;
+			}
+			html += 		"</span>";
+			html += "	</div>";
+			html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">";
+			html += "</li>";
 		}
-		html += "\">";
-		html += data.ADDRS;
-		if(data.DTL_ADDRS!="" && data.DTL_ADDRS!=null) {
-			html += ", " + data.DTL_ADDRS;
-		}
-		html += 		"</span>";
-		html += "	</div>";
-		html += "	<input type=\"button\" class=\"del_recent_loc_btn\" value=\"삭제\">";
-		html += "</li>";
+	} else {
+		html = "<span class=\"go_login\">로그인 후 사용할 수 있는 기능입니다.<span>";
 	}
 	
 	$("#recent_loc_list").html(html);

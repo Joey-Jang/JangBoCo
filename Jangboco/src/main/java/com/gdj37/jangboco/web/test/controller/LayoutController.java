@@ -101,28 +101,30 @@ public class LayoutController {
 	@RequestMapping(value = "/setLocAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String setLocAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String setLocAjax(HttpSession session, @RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		
+		String msg = "SUCCESS";
 		// 회원이 아니면 최근 위치 저장하지 않음 => AOP로 추후에 구현
-		String msg = "FAILED";
-		try {
-			int cnt = 0;
-			if(!"".equals(params.get("latest_loc_no")) && params.get("latest_loc_no")!=null) {
-				cnt = locService.updateRecentLocData(params);
-			} else {
-				cnt = locService.addRecentLocData(params);
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) {
+			try {
+				int cnt = 0;
+				if(!"".equals(params.get("latest_loc_no")) && params.get("latest_loc_no")!=null) {
+					cnt = locService.updateRecentLocData(params);
+				} else {
+					cnt = locService.addRecentLocData(params);
+				}
+				
+				if(cnt > 0) {
+					msg = "FAILED";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				msg = "ERROR";
 			}
-			
-			if(cnt > 0) {
-				msg = "SUCCESS";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-			msg = "ERROR";
 		}
 		
 		modelMap.put("msg", msg);

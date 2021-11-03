@@ -432,3 +432,6 @@ main {
     font-size: 10pt;
     font-weight: 400;
 }
+.go_login:hover {
+	cursor: pointer;
+}
