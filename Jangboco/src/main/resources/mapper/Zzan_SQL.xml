@@ -13,9 +13,6 @@
 				<when test = "searchGbn eq 0">
 					and M.MARKET_NAME like '%' || #{searchTxt} || '%'
 				</when>
-				<!-- <when test = "searchGbn eq 1">
-					and M.M_NM like '%' || #{searchTxt} || '%'
-				</when> -->
 			</choose>
 		</if>
 	</select>

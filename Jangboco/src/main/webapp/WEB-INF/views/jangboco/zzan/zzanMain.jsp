@@ -76,6 +76,7 @@
     height: calc(100% - 50px);
     display: flex;
     overflow: auto;
+    flex-direction:column;
 }
 
 .zzan_map_contnr {
@@ -113,18 +114,65 @@
 	display: inline-block;
 }
 
+.list_title_contnr{
+	display: flex;
+	flex-direction:row;
+	width:99%;
+	height: 50px;
+}
+
 .list_contnr{
+	height: calc(100% - 50px);
 	width:100%;
 	padding : 10px;
+	
 }
 
 .market_list_title{
-	margin-left:20px;
+	border: 1px solid #03A64A;
+	border-right: none ;
+	border-left: none ;
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-item : center;
+	padding-top:10px;
+	background-color: #58DC91;
+	
+}
+
+.item_list_title{
+	border: 1px solid #03A64A;
+	border-right: none ;
+	flex-grow: 1;
+	display: flex;
+	justify-content: center;
+	align-item : center;
+	padding-top:10px;
+}
+
+.market_list_title span{
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.item_list_title span{
+	font-size: 17px;
+	font-weight: bold;
 }
 
 .market_list{
 	list-style: none;
 	padding-inline-start: 0px;
+	margin: 3px;
+	margin-top: 0;
+}
+
+.item_list{
+	list-style: none;
+	padding-inline-start: 0px;
+	margin: 3px;
+	margin-top: 0;
 }
 
 .market_name{
@@ -134,9 +182,21 @@
 	padding-top:10px;
 }
 
+.item_name{
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 15px;
+	padding-top:10px;
+}
+
 .market_list li{
-	border-bottom: 1px solid ;
-	/* display: block; */
+	border-bottom: 1px solid #03A64A;
+	padding-bottom:5px;
+}
+
+.item_list li{
+	border-bottom: 1px solid #03A64A;
+	padding-bottom:5px;
 }
 
 .market_open {
@@ -207,12 +267,13 @@
 	    	</div>
 	    	
 	    	<div class="zzan_list">
-	    		<div class="list_contnr">
-		    		<div class="market_list_title"><h3>마켓</h3></div>
+	    		<div class="list_title_contnr">
+		    		<div class="market_list_title"><span>마켓</span></div>
+		    		<div class="item_list_title"><span>품목</span></div>
+		    	</div>
+		    	<div class="list_contnr">	
 					<ul id="market_list" class="market_list"><li>나와라리스트</li></ul>
-				</div>
-				<div class="paging_wrap">
-
+					<ul id="item_list" class="item_list"><li>나와라리스트</li></ul>
 				</div>
 	   		</div>
 	    </div>
@@ -258,8 +319,13 @@
 		
 		$("#searchBtn").on("click",function() {
 			$("#oldTxt").val($("#searchTxt").val());
+			if($("#searchGbn option:selected").val()==0){
+				reloadMarketList();
+			}
+			if($("#searchGbn option:selected").val()==1){
+				reloadItemList();
+			}
 			
-			reloadMarketList()
 		});
 		
 		$("#searchTxt").on("keypress",function(event){
@@ -269,7 +335,19 @@
 			}
 		});//엔터누를시 주소에 #안뜨게 하기
 	
-	
+		$(".market_list_title").on("click",function() {
+			$(".market_list").css("display", "block");
+			$(".item_list").css("display", "none");
+			$(".item_list_title").css("background-color", "#ffffff");
+			$(".market_list_title").css("background-color", "#58DC91");
+		});
+		
+		$(".item_list_title").on("click",function() {
+			$(".market_list").css("display", "none");
+			$(".item_list").css("display", "block");
+			$(".market_list_title").css("background-color", "#ffffff");
+			$(".item_list_title").css("background-color", "#58DC91");
+		});
 	});
 	
 	
@@ -780,7 +858,7 @@
 	}
 	
 	
-	//검색결과지도그리기
+	//마켓검색결과지도그리기
 	function  drawMarketMap(list){
 		bounds = new kakao.maps.LatLngBounds();
 		map.setBounds(bounds);//지도범위 초기화
@@ -860,6 +938,143 @@
 		});
 		
 	}
+	
+	
+	//품목리스트목록갱신
+	function reloadItemList() {
+		var params = $("#action_form").serialize(); //form의 데이터를 문자열로 변환
+		
+		$.ajax({ //jquery의 ajax함수 호출
+			url: "ItemListAjax", //접속 주소
+			type: "post", //전송 방식
+			dataType: "json", // 받아올 데이터 형태
+			data: params, //보낼 데이터(문자열 형태)
+			success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
+				drawItemList(res.list);
+				drawItemMap(res.list);
+			},
+			error: function(request, status, error) {//실패 시 다음 함수 실행
+				console.log(error);
+			}
+		});
+	}
+	
+	//목록 그리기
+	function  drawMarketList(list){
+		var html ="";  
+		for(var data of list){
+			if(data.MARKET_MEMBER_NO != null){
+				html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ data.MARKET_MEMBER_NO + ">";
+    		}else{
+    			html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ '' + ">";
+    		}
+			html += "	<div class=\"market_name\">" + data.MARKET_NAME + "</div>";
+    		html += "	<div class=\"market_con\">";
+    		html += "		<span class=\"market_addrs\">" + data.MARKET_ADDRS + "</span><br>";
+    		
+    		if(data.PHONE_NUM != null){
+    			html += "		<span class=\"market_phone\">" + data.PHONE_NUM + "</span><br>";
+    		}
+    		
+    		if(data.START_TIME != null && data.END_TIME != null){
+    			html += "		<span class=\"market_time\">" + data.START_TIME + "\~" + data.END_TIME + "</span><br>";
+    			if(timeCheck(data.START_TIME,data.END_TIME)){
+    	    		html += "		<span class=\"market_open\">" + "영업 중" + "</span><br>";
+    	    	      } else {
+    	    	    html += "		<span class=\"market_close\">" + "영업 종료" + "</span><br>";
+    	    	      }
+    		}
+    		
+    		html += "</li>";
+		
+		}
+		
+		$("#market_list").html(html);
+	}
+	
+	
+	//마켓검색결과지도그리기
+	function  drawMarketMap(list){
+		bounds = new kakao.maps.LatLngBounds();
+		map.setBounds(bounds);//지도범위 초기화
+        //기존에 있던 마커들 지우기
+        markers=[];
+        clusterer.clear();
+        var overlayHtml = "";
+
+        for(var data of list){
+	    	
+    		var marker = new kakao.maps.Marker({
+	        	position : new kakao.maps.LatLng(data.LAT, data.LNG),
+	    		image: markerImage,
+	    		title: data.MARKET_NAME
+	   	 	});
+    		
+    		if(data.START_TIME != null && data.END_TIME != null && (timeCheck(data.START_TIME,data.END_TIME))==false){
+    			marker.setImage(markerOffImage);
+    		} //영업종료시 marker_off이미지 사용
+    		       
+    		
+    		// 마커에 표시할 인포윈도우 생성
+			var infowindowMarker = new kakao.maps.InfoWindow({
+		        content: '<div style="width:150px;text-align:center;padding:6px 0;">' + data.MARKET_NAME + '</div>' // 인포윈도우에 표시할 내용
+		    });
+			
+			// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록
+		    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindowMarker));
+		    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindowMarker));
+	    	
+		    kakao.maps.event.addListener(marker, 'click', function() {
+		    	$("#market_no").val(data.MARKET_NO);
+				$("#market_member_no").val(data.MARKET_MEMBER_NO);
+				/* $("#items_choice_no").val($(this).attr("no")); */
+				$("#info_form").submit();
+		        
+		    });
+		    
+    		markers.push(marker);
+    		bounds.extend(new kakao.maps.LatLng(data.LAT, data.LNG));
+	    		
+	   		
+		}
+		clusterer.addMarkers(markers); //클러스터에 마커 추가
+		
+		map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
+     
+
+		var overlayContent = '';//빈 커스텀오버레이 콘텐츠
+	    
+		kakao.maps.event.addListener( clusterer, 'clusterover', function( cluster ) { //클러스터 마우스오버 이벤트
+		    var clusterMarkers =cluster.getMarkers(); //마커배열 담기
+		    overlayContent += '<div class=\"custom_overlay\" style=\'background-color:white; opacity:0.8\'><ul id=\"overlay_market_list\" style=\' list-style: none; padding-inline-start: 0px; \'>';
+		    for(var i=0; i<cluster.getSize(); i++){
+		    	overlayContent +="<li style=\'border-bottom: 1px solid;\'>" + clusterMarkers[i].getTitle() + "</li>"; //각각 마커의 이름 담기
+			}
+		    
+		    overlayContent += '  </ul></div>';
+			
+		    customOverlay.setContent(overlayContent); //콘텐츠 설정
+		    customOverlay.setPosition(cluster.getCenter()); //클러스터 중심으로 좌표 설정
+			customOverlay.setMap(map); //맵에 표시
+		   
+		console.log("몇번이나 되는겨");
+		    
+		});
+		kakao.maps.event.addListener( clusterer, 'clusterout', function( cluster ) {
+			customOverlay.setMap(null);//맵에서 제거
+		    console.log("몇번이나 끝나는겨?");
+		    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+		});
+		
+		kakao.maps.event.addListener( clusterer, 'clusterclick', function( cluster ) {
+			customOverlay.setMap(null);//맵에서 제거
+		    console.log("잘되는겨?");
+		    overlayContent="";//커스텀오버레이 컨텐츠 비우기
+		});
+		
+	}
+	
+	
 	
 	function timeCheck(startTime,endTime){ //시간비교
 		   var now= new Date();
