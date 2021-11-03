@@ -178,28 +178,40 @@ function drawList(list){
 function drawPaging(pb){
 	var html ="";
 	
-	html += "<span page=\"1\">처음</span> ";
-	
-	if ($("#page").val() =="1") {
-		html += "<span page=\"1\">이전</span>  ";
-	}else{
-		html += "<span page=\"" + ($("#page").val()*1-1) + "\">이전</span>  ";
-	}
-	
-	for (var i = pb.startPcount; i <= pb.endPcount; i++) {
-		if ($("#page").val()== i) {
-			html += "<span page=\""+ i + "\"><b>" + i + "</b></span>  ";
+	html += "<div class=\"paging_btn\" id=\"first_btn\">    "
+	html += "	<span page=\"1\">처음</span>    "
+	html += "</div>                  "
+	html += "<div class=\"paging_btn\">                   "
+	if($("#page").val()<=10){		
+		html += "	<span page=\"1\">이전</span>    "
+	} else {
+		html += "	<span page=\"" +(pb.startPcount-1) + "\">이전</span>    "		
+	}	
+	html += "</div>                  "
+	for(var i=pb.startPcount; i<=pb.endPcount; i++){		
+		if($("#page").val()==i){
+			html += "<div class=\"paging_btn\">                   "
+			html += "	<span page=\""+ i + "\"><b>"+i+"</b></span>       "
+			html += "</div>                  "			
 		} else {
-			html += "<span page=\""+ i + "\">" + i + "</span>  ";
+			html += "<div class=\"paging_btn\">                   "
+			html += "	<span page=\""+ i + "\">"+i+"</span>       "
+			html += "</div>                  "						
 		}
 	}
 	
-	if ($("#page").val() == pb.maxPcount) {
-		html += "<span page= \"" + pb.maxPcount + "\" >다음</span>  ";
+	if(pb.endPcount== pb.maxPcount){		
+		html += "<div class=\"paging_btn\">                   "
+		html += "	<span page=\""+pb.maxPcount +"\">다음</span>    "
+		html += "</div>                  "
 	} else {
-		html += "<span page=\"" + ($("#page").val() * 1 + 1) + "\">다음</span>  ";
+		html += "<div class=\"paging_btn\">                   "
+		html += "	<span page=\""+(pb.endPcount+1) +"\">다음</span>    "
+		html += "</div>                  "		
 	}
-		html += "<span page= \"" + pb.maxPcount + "\">마지막</span>  ";
-		
-		$("#paging_wrap").html(html);
+	html += "<div class=\"paging_btn\" id=\"last_btn\">     "
+	html += "	<span page=\""+ pb.maxPcount +"\">마지막</span>  "
+	html += "</div>                  "
+	
+	$(".paging_wrap").html(html);
 }

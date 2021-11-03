@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
-<link rel="stylesheet" href="resources/css/accbk/accbk.css" type="text/css">
+<link rel="stylesheet" href="resources/css/accbk/accbkR.css" type="text/css">
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/jquery/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="resources/script/jquery/jquery.tablesorter.widgets.js"></script>
@@ -31,7 +31,7 @@
     <div class="con_contnr">
         <div class="con">
 			<!--품목 & 구입처로 검색할 수 있게 하기.  -->
-			<input type="button" id="write_btn" value="지출내역추가" >
+			<input type="button" id="write_btn" class="write_btn" value="지출내역추가" >
 			<div>
 			<table id="accbk_r_tbl">
 				<thead>
@@ -59,13 +59,15 @@
 			<div>
 			<form action="#" id="action_form" method="post">
 				<input type="hidden" id="page" name="page" value="${page}">
-				<select id="search_gbn" name="search_gbn">
-					<option hidden="" disabled="disabled" selected="selected">검색</option>
-					<option value="search_items">품목</option>
-					<option value="search_buy_market">구입처</option>
-				</select>
-				<input type="text" id="search_text" name="search_text" value="${param.search_text}">
-				<input type="button" id="search_btn" value="검색">
+				<div id="search_contnr">
+					<select id="search_gbn" name="search_gbn">
+						<option hidden="" disabled="disabled" selected="selected">검색</option>
+						<option value="search_items">품목</option>
+						<option value="search_buy_market">구입처</option>
+					</select>
+					<input type="text" id="search_text" name="search_text" value="${param.search_text}">
+					<input type="button" id="search_btn" value="검색">
+				</div>
 				
 				
 			</form>

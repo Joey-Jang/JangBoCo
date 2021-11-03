@@ -113,6 +113,17 @@ public class accbkDao implements accbkIDao{
 		return sqlsession.selectList("accbk.getFiveItems", params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getSpendSummr(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return sqlsession.selectList("accbk.getSpendSummr", params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getMinMax(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectList("accbk.getMinMax", params);
+	}
+
 
 	
 

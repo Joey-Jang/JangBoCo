@@ -1,5 +1,6 @@
 package com.gdj37.jangboco.web.accbk.controller;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,8 +47,13 @@ public class accbkController {
 		DecimalFormat df = new DecimalFormat("00");
         Calendar currentCalendar = Calendar.getInstance();
         String thisMonth  = df.format(currentCalendar.get(Calendar.MONTH) + 1);
+        String thisYear  = df.format(currentCalendar.get(Calendar.YEAR));
 		
-		params.put("buy_date",thisMonth);
+        
+        String yearNMonth = thisYear+ '-'+thisMonth;
+        
+        
+		params.put("buy_date",yearNMonth);
 		
 		HashMap<String, String> getThisMonthSpend = accbkiService.getThisMonthSpend(params);
 		
@@ -59,20 +65,6 @@ public class accbkController {
 		HashMap<String, String> getMostSpendItems = accbkiService.getMostSpendItems(params);
 		HashMap<String, String> getLeastSpendWeek = accbkiService.getLeastSpendWeek(params);
 		
-		
-		System.out.println("============replace=========="+getMostSpendWeek);
-		
-		
-		
-		
-		System.out.println("============replace=========="+getLeastSpendWeek);
-		
-		
-		getLeastSpendWeek.replace("WEEK", "1", "첫");
-		getLeastSpendWeek.replace("WEEK", "2", "두");
-		getLeastSpendWeek.replace("WEEK", "3", "세");
-		getLeastSpendWeek.replace("WEEK", "4", "네");
-		getLeastSpendWeek.replace("WEEK", "5", "다섯");
 		
 		mav.addObject("getThisMonthSpend", getThisMonthSpend);
 		
@@ -135,7 +127,44 @@ public class accbkController {
 	return mapper.writeValueAsString(modelMap);
 	}
 	
+	//가계부_주별_sum_chart
+		@RequestMapping(value = "/accbkSpendChartAjax", method = RequestMethod.POST,
+				produces = "text/json;charset=UTF-8")
+		@ResponseBody
+		public String accbkSpendChartAjax(@RequestParam HashMap<String, String> params)throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap =  new HashMap<String, Object>();
+		
+		try {
+			List<HashMap<String, String>> spendSummrList = accbkiService.getSpendSummr(params);
+			modelMap.put("getSpendSummr", spendSummrList);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
+		return mapper.writeValueAsString(modelMap);
+		}
 	
+		//가계부_주별_sum_chart
+		@RequestMapping(value = "/accbkMinMaxChartAjax", method = RequestMethod.POST,
+				produces = "text/json;charset=UTF-8")
+		@ResponseBody
+		public String accbkMinMaxChartAjax(@RequestParam HashMap<String, String> params)throws Throwable{
+			ObjectMapper mapper = new ObjectMapper();
+			
+			Map<String, Object> modelMap =  new HashMap<String, Object>();
+			
+			try {
+				List<HashMap<String, String>> getMinMax = accbkiService.getMinMax(params);
+				modelMap.put("getMinMax", getMinMax);
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+			
+			return mapper.writeValueAsString(modelMap);
+		}
+		
 	
 	
 	//기본 페이지를 띄워주기 위한 주소 mapping

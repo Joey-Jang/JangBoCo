@@ -153,7 +153,7 @@ $(document).ready(function(){
 	});
 	
 	
-	//품목_직접입력_선택시_나타나게
+	 //품목_직접입력_선택시_나타나게
 	$("#items").change(function(){
 		$("#items option:selected").each(function(){
 			
@@ -167,9 +167,16 @@ $(document).ready(function(){
 				$("#items_name").val(""); // 그리고 거기 적힌 값을 어찌저찌 해야하는데 어떻게 하지 ?? 
 				
 			}
-		});
+		}); 
 		
-		
+	/* //품목 검색 엔터키 비동기화 
+	$("#search_items_name").on("keypress", function(event) {
+		if(event.keyCode==13) {
+			$("#search_items_btn").click();
+			return false;
+		}
+	}); */
+	
 
 		/* if($("#items").attr('class')=="items_others"){
 		}else if($("#items").attr('class')!="items_others"){
@@ -328,15 +335,15 @@ function drawBranchList(branchList) {
 			</div>
 			<br>
 			품목
-			 <select id="items" name="items_no">
+			<%--  <select id="items" name="items_no">
 				<c:forEach var="dt" items="${itemsList}">
 					<option value="${dt.ITEMS_NO}">${dt.ITEMS_NAME}</option>	
 				</c:forEach>
 				<option class="items_others" value="">직접입력</option>
 			</select>
-			<input type="text" id="items_name" name="items_name"> 
+			<input type="text" id="items_name" name="items_name">  --%>
 			
-			<!-- <div id="buy_items_contnr">
+			 <div id="buy_items_contnr">
 				<input type="hidden" id="items_no" name="items_no">
 				<div id="others_items_name_contnr" class="others_name_contnr">
 					<input type="text" id="items_name" name="items_name" class="items_name" placeholder="품목을 직접 입력해주세요">
@@ -351,7 +358,7 @@ function drawBranchList(branchList) {
 					<ul id="items_list" class="items_list"></ul>
 					<input type="text" id="select_items_name" class="select_items_name" disabled="disabled">
 				</div>
-			</div> -->
+			</div> 
 			
 			<br>
 			구매량

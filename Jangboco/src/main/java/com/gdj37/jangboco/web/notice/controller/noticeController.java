@@ -34,6 +34,15 @@ public class noticeController {
 	@RequestMapping(value = "/noticeR")
 	public ModelAndView accbkR(@RequestParam HashMap<String, String> params,
 								ModelAndView mav) {
+		
+		int homeFlag = 0;
+		int menuIdx = 3;
+		int subMenuIdx = 0;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		
 		String page ="1";
 		
 		if(params.get("page")!=null) {

@@ -114,5 +114,15 @@ public class accbkService implements accbkIService {
 		return accbkiDao.getFiveItems(params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getSpendSummr(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getSpendSummr(params);
+	}
+
+	@Override
+	public List<HashMap<String, String>> getMinMax(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getMinMax(params);
+	}
+
 
 }

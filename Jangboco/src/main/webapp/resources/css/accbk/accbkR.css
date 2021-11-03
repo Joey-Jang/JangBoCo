@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+/* ACCBKR */
+
+
+ main {
+		min-height: 820px;
+		min-width: 1200px;
+	}
+	 
+
+/* .con {
+	display: flex;
+} */
+
+.paging_wrap {
+		display:flex;
+		width : auto;
+		/* height : 30px; */
+		 justify-content: center;
+		/* align-items: center;  */
+		margin: auto;
+		margin-top: 30px;
+	}	
+
+#search_btn {
+	background-color:transparent; 
+    cursor: pointer;
+	border: none;
+	position : absolute;
+	left:208px;
+	top:1px;	
+}	
+
+table{
+	width:90%;
+	min-height:360px;					
+	margin:auto;
+	text-align: center;
+	border-collapse: collapse;
+	table-layout:fixed;
+}
+
+	
+#search_btn{
+	background-color:transparent; 
+    cursor: pointer;
+	border: none;
+	position : absolute;
+	left:208px;
+	top:1px;	
+}	
+
+#search_contnr {
+	position : relative;
+	margin-right: 65px;
+}
+	
+thead{
+	border-bottom: 2px solid #000000;	
+}	
+
+tbody tr {
+	border-bottom: 1px solid #038C3E;
+	height:4vh;
+}
+
+.paging_btn {
+	width: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align:center;
+	border: 1px solid #C4C4C4;
+	border-left:0;
+}
+
+.paging_btn:hover{
+	background-color: #03A64A20;
+	cursor: pointer;
+}
