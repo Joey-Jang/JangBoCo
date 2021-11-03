@@ -201,7 +201,6 @@
 					</select>
 					<input type="text" name="searchTxt" id="searchTxt" value="${param.searchTxt}">
 					<input type="hidden" id="oldTxt"  value="${param.searchTxt}">
-					<input type="hidden" name="page" id="page" value="${page}">
 					<input type="hidden" name="no" id="no">
 					<input type="button" value="검색" id="searchBtn">
 				</form>
@@ -256,6 +255,19 @@
 			/* $("#items_choice_no").val($(this).attr("no")); */
 			$("#info_form").submit();
 		})); 
+		
+		$("#searchBtn").on("click",function() {
+			$("#oldTxt").val($("#searchTxt").val());
+			
+			reloadMarketList()
+		});
+		
+		$("#searchTxt").on("keypress",function(event){
+			if(event.keyCode == 13){
+				$("#searchBtn").click();
+				return false;
+			}
+		});//엔터누를시 주소에 #안뜨게 하기
 	
 	
 	});
@@ -720,13 +732,12 @@
 		var params = $("#action_form").serialize(); //form의 데이터를 문자열로 변환
 		
 		$.ajax({ //jquery의 ajax함수 호출
-			url: "reloadMarketListAjax", //접속 주소
+			url: "MarketListAjax", //접속 주소
 			type: "post", //전송 방식
 			dataType: "json", // 받아올 데이터 형태
 			data: params, //보낼 데이터(문자열 형태)
 			success: function(res){ // 성공(ajax통신 성공) 시 다음 함수 실행
 				drawMarketList(res.list);
-				drawPaging(res.pb);
 			},
 			error: function(request, status, error) {//실패 시 다음 함수 실행
 				console.log(error);
@@ -738,27 +749,32 @@
 	function  drawMarketList(list){
 		var html ="";  
 		for(var data of list){
-			html += "<tr no=\""+data.B_NO + "\">             ";
-			html += "<td>" +data.B_NO + "</td>       ";
-			html += "<td>";
-			html += data.B_TITLE;
-			
-			if(data.B_FILE != null) {
-				html += "<img src=\"resources/images/attFile.png\" />";
-			}
-			
-			html += "</td>";
-			html += "<td>" +data.M_NM + "</td>     ";
-			html += "<td>" +data.B_DT + "</td>    ";
-			html += "<td>" + data.B_HIT + "</td>       ";
-			html += "</tr>            ";
+			html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ data.MARKET_MEMBER_NO + ">";
+    		html += "	<div class=\"market_name\">" + data.MARKET_NAME + "</div>";
+    		html += "	<div class=\"market_con\">";
+    		html += "		<span class=\"market_addrs\">" + data.MARKET_ADDRS + "</span><br>";
+    		
+    		if(data.PHONE_NUM != null){
+    			html += "		<span class=\"market_phone\">" + data.PHONE_NUM + "</span><br>";
+    		}
+    		
+    		if(data.START_TIME != null && data.END_TIME != null){
+    			html += "		<span class=\"market_time\">" + data.START_TIME + "\~" + data.END_TIME + "</span><br>";
+    			if(timeCheck(data.START_TIME,data.END_TIME)){
+    	    		html += "		<span class=\"market_open\">" + "영업 중" + "</span><br>";
+    	    	      } else {
+    	    	    html += "		<span class=\"market_close\">" + "영업 종료" + "</span><br>";
+    	    	      }
+    		}
+    		
+    		html += "</li>";
 		
 		}
 		
-		$("tbody").html(html);
+		$("#market_list").html(html);
 	}
 	
-	//페이징
+	/* //페이징
 	function drawPaging(pb) {
 		var html = "";
 		
@@ -788,7 +804,7 @@
 		
 		$(".paging_wrap").html(html);
 		
-	}
+	} */
 	
 	function timeCheck(startTime,endTime){ //시간비교
 		   var now= new Date();
