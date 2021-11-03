@@ -20,6 +20,8 @@ $(document).ready(function() {
 	// 좋아요 버튼 클릭 이벤트
 	$("#unlike_icon, #like_icon").on("click", function() {
 		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			
 			return false;
 		}
 		
@@ -29,6 +31,8 @@ $(document).ready(function() {
 	// 신고 버튼 클릭 이벤트
 	$("#diary_accuse_btn").on("click", function() {
 		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			
 			return false;
 		}
 		
@@ -94,6 +98,8 @@ $(document).ready(function() {
 	// 팔로우 버튼 클릭 이벤트
 	$("#img_nicnm_folw_btn_contnr").on("click", "#folw_btn", function() {
 		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			
 			return false;
 		}
 		
@@ -208,6 +214,8 @@ $(document).ready(function() {
 	});
 	$("#comnt_list_add_comnt_contnr").on("click", ".add_comnt_btn", function() {
 		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			
 			return false;
 		}
 		
@@ -290,6 +298,8 @@ $(document).ready(function() {
 	// 댓글 좋아요 버튼 클릭 이벤트
 	$("#comnt_list").on("click", ".unlike_icon, .like_icon ", function() {
 		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			
 			return false;
 		}
 		
@@ -301,6 +311,8 @@ $(document).ready(function() {
 	// 댓글 신고 버튼 클릭 이벤트
 	$("#comnt_list").on("click", ".comnt_accuse_btn", function() {
 		if($("#member_no").val()=="") {
+			alert("로그인 후 사용할 수 있는 기능입니다.");
+			
 			return false;
 		}
 		
@@ -313,10 +325,6 @@ $(document).ready(function() {
 	
 	// 댓글 신고 접수 버튼 클릭 이벤트
 	$("#comnt_accuse_submit_btn").on("click", function() {
-		if($("#member_no").val()=="") {
-			return false;
-		}
-		
 		if(checkVal("#comnt_accuse_title")) {
 			alert("신고 제목을 입력하세요.");
 			$("#comnt_accuse_title").focus();
