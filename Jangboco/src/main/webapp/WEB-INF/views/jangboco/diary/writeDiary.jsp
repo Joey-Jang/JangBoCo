@@ -151,7 +151,7 @@
             </div>
             <div class="diary_con_contnr">
             	<div class="diary_con_hastg_contnr">
-	            	<textarea id="diary_con" class="diary_con">일기 내용 어찌구저찌구</textarea>
+	            	<textarea id="diary_con" class="diary_con"></textarea>
 	            	<div class="hastg_list_contnr">
 		            	<ul id="hastg_list" class="hastg_list">
 		            		<li>
