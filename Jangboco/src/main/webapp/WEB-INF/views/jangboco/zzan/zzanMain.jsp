@@ -750,8 +750,12 @@
 	function  drawMarketList(list){
 		var html ="";  
 		for(var data of list){
-			html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ data.MARKET_MEMBER_NO + ">";
-    		html += "	<div class=\"market_name\">" + data.MARKET_NAME + "</div>";
+			if(data.MARKET_MEMBER_NO != null){
+				html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ data.MARKET_MEMBER_NO + ">";
+    		}else{
+    			html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ '' + ">";
+    		}
+			html += "	<div class=\"market_name\">" + data.MARKET_NAME + "</div>";
     		html += "	<div class=\"market_con\">";
     		html += "		<span class=\"market_addrs\">" + data.MARKET_ADDRS + "</span><br>";
     		
