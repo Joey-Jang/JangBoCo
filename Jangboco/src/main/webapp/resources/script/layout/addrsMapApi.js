@@ -16,11 +16,6 @@ $(document).ready(function() {
 	});
 	
 	$("#search_addrs_map_btn").on("click", function() {
-		if($("#member_no").val()=="") {
-			alert("로그인 후 사용할 수 있는 기능입니다.");
-			return false;
-		}
-		
 	    new daum.Postcode({
 	        oncomplete: function(data) {
 				// 우편번호와 주소 정보를 해당 필드에 넣는다.

@@ -1,9 +1,13 @@
 package com.gdj37.jangboco.web.test.controller;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +60,7 @@ public class LayoutController {
 	@RequestMapping(value = "/reloadMainLocAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String reloadMainLocAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+	public String reloadMainLocAjax(HttpServletRequest request, @RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -64,16 +68,19 @@ public class LayoutController {
 		if(!"".equals(params.get("member_no")) && params.get("member_no")!=null) {
 			HashMap<String, Object> memberAddrs = locService.getMemberAddrs(params);
 			modelMap.put("memberAddrs", memberAddrs);
+			
+			int cntRecentLoc = locService.cntRecentLoc(params);
+			modelMap.put("cntRecentLoc", cntRecentLoc);
+			
+			HashMap<String, Object> latestLocData = locService.getLatestLocData(params);
+			modelMap.put("latestLocData", latestLocData);
+			
+			List<HashMap<String, Object>> recentLocList = locService.getRecentLocList(params);
+			modelMap.put("recentLocList", recentLocList);
+		} else {
+			Cookie[] cookies = request.getCookies();
+			modelMap.put("cookies", cookies);
 		}
-		
-		int cntRecentLoc = locService.cntRecentLoc(params);
-		modelMap.put("cntRecentLoc", cntRecentLoc);
-		
-		HashMap<String, Object> latestLocData = locService.getLatestLocData(params);
-		modelMap.put("latestLocData", latestLocData);
-		
-		List<HashMap<String, Object>> recentLocList = locService.getRecentLocList(params);
-		modelMap.put("recentLocList", recentLocList);
 		
 		return mapper.writeValueAsString(modelMap);
 	}
@@ -101,7 +108,7 @@ public class LayoutController {
 	@RequestMapping(value = "/setLocAjax", method = RequestMethod.POST,
 					produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String setLocAjax(HttpSession session, @RequestParam HashMap<String, String> params) throws Throwable {
+	public String setLocAjax(HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam HashMap<String, String> params) throws Throwable {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -120,6 +127,23 @@ public class LayoutController {
 				if(cnt==0) {
 					msg = "FAILED";
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				msg = "ERROR";
+			}
+		} else {
+			try {
+				Cookie zipcdCookie = new Cookie("nonmemberZipcd", URLEncoder.encode(params.get("zipcd"), "UTF-8"));
+				zipcdCookie.setMaxAge(60*60*1);
+				Cookie addrsCookie = new Cookie("nonmemberAddrs", URLEncoder.encode(params.get("addrs"), "UTF-8").replaceAll("\\+", "%20"));
+				addrsCookie.setMaxAge(60*60*1);
+				Cookie dtlAddrsCookie = new Cookie("nonmemberDtlAddrs", URLEncoder.encode(params.get("dtl_addrs"), "UTF-8").replaceAll("\\+", "%20"));
+				dtlAddrsCookie.setMaxAge(60*60*1);
+				
+				response.addCookie(zipcdCookie);
+				response.addCookie(addrsCookie);
+				response.addCookie(dtlAddrsCookie);
 			} catch (Exception e) {
 				e.printStackTrace();
 				

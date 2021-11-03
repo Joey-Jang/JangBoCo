@@ -159,7 +159,7 @@ $(document).ready(function() {
 					console.log(error);
 				}
 			});
-    	}
+		}
     });
     
     
@@ -187,7 +187,7 @@ function reloadMainLoc() {
 		dataType: "json",
 		data: params,
 		success: function(result) {
-			setMainLoc(result.memberNo, result.cntRecentLoc, result.latestLocData, result.memberAddrs);
+			setMainLoc(result.memberAddrs, result.cntRecentLoc, result.latestLocData, result.cookies);
 		},
 		error: function(request, status, error) {
 			console.log(error);
@@ -214,27 +214,48 @@ function reloadRecentLocList() {
 }
 
 // 메인 위치 설정
-function setMainLoc(memberNo, cntRecentLoc, latestLocData, memberAddrs, func) {
+var nonmemberZipcd = "08505";
+var nonmemberAddrs = "서울 금천구 가산디지털2로 115";
+var nonmemberDtlAddrs = "대륭테크노타운3차 1109-1호";
+function setMainLoc(memberAddrs, cntRecentLoc, latestLocData, cookies) {
 	if($("#member_no").val()!="") {
-		if(cntRecentLoc > 0) {
-			$("#main_loc_addrs").text(latestLocData.ADDRS);
-			$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
-	    	$("#zipcd").val(latestLocData.ZIPCD);
-	    	$("#addrs").val(latestLocData.ADDRS);
-	    	$("#dtl_addrs").val(latestLocData.DTL_ADDRS);
-		} else {
+		if(cntRecentLoc==0) {
 			$("#main_loc_addrs").text(memberAddrs.ADDRS);
 			$("#latest_loc_no").val("");
 	    	$("#zipcd").val(memberAddrs.ZIPCD);
 	    	$("#addrs").val(memberAddrs.ADDRS);
 	    	$("#dtl_addrs").val(memberAddrs.DTL_ADDRS);
+		} else {
+			$("#main_loc_addrs").text(latestLocData.ADDRS);
+			$("#latest_loc_no").val(latestLocData.RECENT_LOC_NO);
+	    	$("#zipcd").val(latestLocData.ZIPCD);
+	    	$("#addrs").val(latestLocData.ADDRS);
+	    	$("#dtl_addrs").val(latestLocData.DTL_ADDRS);
 		}
 	} else {
-		$("#main_loc_addrs").text("서울 금천구 가산디지털2로 115");
-		$("#latest_loc_no").val("");
-    	$("#zipcd").val("08505");
-    	$("#addrs").val("서울 금천구 가산디지털2로 115");
-    	$("#dtl_addrs").val("대륭테크노타운3차 1109-1호");
+		if(cookies!=null) {
+			for(var cookie of cookies) {
+				if(cookie.name=="nonmemberZipcd") {
+					var cookieZipcd = cookie.value;
+				}
+				if(cookie.name=="nonmemberAddrs") {
+					var cookieAddrs = decodeURIComponent(cookie.value);
+				}
+				if(cookie.name=="nonmemberDtlAddrs") {
+					var cookieDtlAddrs = decodeURIComponent(cookie.value);
+				}
+			}
+			if(tempZipcd!=null && tempAddrs!=null && tempDtlAddrs!=null) {
+				nonmemberZipcd = cookieZipcd;
+				nonmemberAddrs = cookieAddrs;
+				nonmemberDtlAddrs = cookieDtlAddrs;
+			}
+		}
+		
+		$("#main_loc_addrs").text(nonmemberAddrs);
+    	$("#zipcd").val(nonmemberZipcd);
+    	$("#addrs").val(nonmemberAddrs);
+		$("#dtl_addrs").val(nonmemberDtlAddrs);
 	}
 }
 
