@@ -33,3 +33,5 @@ local.properties
 
 ### Project file ###
 CommonProperties.*
+
+./Jangboco/src/main/webapp/WEB-INF/spring/root-context.xml
