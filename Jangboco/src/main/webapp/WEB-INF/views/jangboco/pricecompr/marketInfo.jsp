@@ -64,6 +64,7 @@
 	
 	.market_info_con>span{
 		display : block;
+		font-size: 25px;
 		margin-bottom: 15px;
 		overflow: hidden;
 		white-space: nowrap;
@@ -75,7 +76,7 @@
 		position: absolute;
 		z-index:1000;
 	    left: 25px;
-	    top: 80px;
+	    top: 110px;
 		border: 5px solid #03A64A20;
 		border-radius: 10px;
 		background-color: #FFFFFF;
@@ -90,14 +91,17 @@
 		font-size: 20px;
 	} */
 	
-	.market_img {
-		border: 1px solid silver;
+	.market_img {		
 		margin-left:15px;
 		margin-right : 15px;
 		width: 200px;
 		height:200px;
 	}
-			
+	
+	#market_img{
+		width: 100%;
+		height: 100%;		
+	}		
 	
 	
 	.items_list{
@@ -1055,7 +1059,15 @@ function deleteEventLike(){
         	<div class="market_info_outer_contnr">
 	            <div class="market_info_title">우리동네 가격 비교</div>
 	            <div class="market_info_contnr">
-	            	<div class="market_img"></div>
+	            	<div class="market_img">
+	            		<c:choose>
+	            			<c:when test="${!empty marketMemberNo}">
+	            			</c:when>
+	            			<c:otherwise>
+	            				<img id="market_img" src="resources/images/itemsInfo/마켓.png">
+	            			</c:otherwise>
+	            		</c:choose>
+	            	</div>
 	            	<div class="market_info_con">
 	            		<div class="market_info_addrs_contnr">
 				        	<c:choose>
