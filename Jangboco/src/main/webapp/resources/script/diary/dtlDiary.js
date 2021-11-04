@@ -498,10 +498,10 @@ function drawDiaryImgItemTag(diaryImgList) {
 			itemTagHtml += " cost=\"" + itemTagData.COST + "\">";
 			itemTagHtml += "	<div class=\"items_img\" ";
 			if(itemTagData.IMG_URL!=undefined) {
-				itemTagHtml += " style=\"background:center / cover no-repeat url('resources/upload/";
+				itemTagHtml += " style=\"background:center / cover no-repeat url('resources/images/itemsInfo/";
 				itemTagHtml += itemTagData.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "');\">";
 			}
-			itemTagHtml += "	></div>";
+			itemTagHtml += "	</div>";
 			itemTagHtml += "</li>";
 		}
 		itemTagHtml += "</ul>";

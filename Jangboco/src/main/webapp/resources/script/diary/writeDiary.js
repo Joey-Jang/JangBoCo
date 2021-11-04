@@ -513,7 +513,7 @@ $(document).ready(function() {
 			
 			if(itemsImgUrl!=undefined) {
 				$(".item_tag_list").eq(diaryImgIdx).find(".items_img").last().css("background", "center / cover no-repeat "
-																									+ " url(\"resources/upload/"
+																									+ " url(\"resources/images/itemsInfo/"
 																									+ itemsImgUrl.replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 																									+ "\")");
 			}

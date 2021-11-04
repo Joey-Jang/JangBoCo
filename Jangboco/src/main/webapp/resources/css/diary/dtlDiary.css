@@ -341,8 +341,8 @@
 	border-radius: 50%;
 }
 .items_img {
-	width: 35px;
-	height: 35px;
+	width: 100%;
+	height: 100%;
 }
 .item_tag_dtl_contnr {
 	position: absolute;
