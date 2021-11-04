@@ -499,7 +499,7 @@ function drawDiaryImgItemTag(diaryImgList) {
 			itemTagHtml += "	<div class=\"items_img\" ";
 			if(itemTagData.IMG_URL!=undefined) {
 				itemTagHtml += " style=\"background:center / cover no-repeat url('resources/images/itemsInfo/";
-				itemTagHtml += itemTagData.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "');\">";
+				itemTagHtml += itemTagData.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "_outlined.png');\">";
 			}
 			itemTagHtml += "	</div>";
 			itemTagHtml += "</li>";
