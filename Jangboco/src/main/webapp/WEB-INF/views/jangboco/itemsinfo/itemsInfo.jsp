@@ -10,13 +10,293 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
+	main {
+	    min-width: 2555px;
+	    min-height: 1280px;
+	}
+	
+	.items_info_title_contnr{
+		margin-left: 20px;
+		margin-bottom: 20px;
+	}
+	
+	.items_choice_popup{
+		display: none;
+		position: absolute;
+		z-index:1000;
+		background-color: #dff4e8;	    
+	    max-width: 540px;
+	    border-radius: 10px;
+	    padding: 10px;
+	}
+	
+	.items_choice_popup_background{
+		background-color: #FFFFFF;
+	    height: 40px;
+	    max-width: 540px;
+	    border-radius: 10px;
+	    padding: 7px;
+	    text-align: center;
+	}
+	
+	#items_choice_dtl , #items_choice_form{
+		display: inline-block;
+	}
+	
+	#items_info_title{
+		font-size: 30px;
+		margin-bottom: 10px;		
+	}
+	
+	#items_info_title:hover{
+		cursor: pointer;
+		border-bottom:2.5px solid #03A64A; 
+		padding-bottom:3px;
+		/* text-decoration: underline;
+		text-decoration-color: #03A64A; */
+		width : 100%;
+	}
+	
+	.items_info_flex_contnr {
+		display: flex;
+		flex-direction: row;
+		margin:15px;
+	    align-items: center;
+	    padding-bottom: 10px;
+	    border-bottom: 2px solid #C4C4C4;
+	}
+	
+	.items_info_contnr{
+		display: flex;
+		flex-direction: row;
+	}
+	
+	.items_img {
+		width: 200px;
+		height:200px;
+		border: 1px solid #C4C4C4;
+		margin-right: 35px;				
+	}
+	
+	#items_img{
+		width:100%;
+		height:100%;
+	}
+	
+	.items_info_con{
+		font-size: 35px;
+		padding: 10px;
+		margin-right: 35px;		
+	}		
+
+	
+	.line_chart_contnr{		
+		background-color: #03A64A20;
+		padding: 25px;
+    	border-radius: 20px;
+    	margin-right: 50px;
+    	width:25%
+	}
+	
+	.disct_chart_contnr{		
+		background-color: #03A64A20;
+		padding: 25px;
+    	border-radius: 20px;
+    	width:25%
+	}
+	
+	
+	/* 다이어리 */
+	.jangbc_diary_contnr{
+  		position: relative;
+  		margin: auto;		
+	}
+	
+	.jangbc_diary_slides{
+		display: flex;
+		width: 1500px;
+    	margin: auto;
+    	display: none;
+	}
+	
+	.jangbc_diary_data_contnr{
+		border: 1px solid black;
+		width:300px;
+		height: 250px;
+	}
+	
+	.full-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	
+	.card-wrapper {
+	  width: 100%;
+	  display: flex;
+	  flex-wrap: wrap;
+	  height: calc(100% - 90px);
+	}
+	.card {
+	  width: 25%;
+	  height: 50%;
+	  padding: 15px;
+	  background: white;
+	}
+	.card-header {
+	  height: 40px;
+	  margin-bottom: 5px;
+	  padding: 0 10px;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	}
+	.card-user {
+	  display: flex;
+	  align-items: center;
+	}
+	.card-user-profile {
+	  width: 32px;
+	  height: 32px;
+	  border-radius: 20px;
+	  overflow: hidden;
+	}
+	.card-like {
+	  display: flex;
+	  align-items: end;
+	}
+	.card-like img {
+	  width: 25px;
+	}
+	.card-like span {
+	  display: block;
+	  margin-left: 5px;
+	}
+	.card-user-name {
+	  margin-left: 5px;
+	  font-weight: bold;
+	}
+	.card-thumbnail {
+	  position: relative;
+	  width: 100%;
+	  height: 70%;
+	  overflow: hidden;
+	  border-radius: 10px;
+	}
+	.card-thumbnail-views {
+	  position: absolute;
+	  right: 10px;
+	  bottom: 10px;
+	  font-size: 14px;
+	  opacity: 0.8;
+	  color: #fff;
+	}
+	.card-contents {
+	  margin-top: 10px;
+	  padding: 0 10px;
+	  line-height: 1.2;
+	  height: 20px;
+	  overflow: hidden;
+	}
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 50%;
+	  width: auto;
+	  margin-top: -22px;
+	  padding: 16px;
+	  color: #03A64A;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  border-radius: 3px 0 0 3px;
+	  user-select: none;
+	}
+	.prev {
+		left:346px;
+	}
+	.next {
+		right:346px;
+	}
+	/* Position the "next button" to the right */
+	.next {
+	  right:346px;
+	  border-radius: 0 3px 3px 0;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: #03A64A;
+	  color:#FFFFFF;
+	}
+	
+	
+	/* 요리 레시피 */
+	.recipe_title {
+		text-align: center;
+		font-size: 20px;
+	}
+	table{
+		width: 1400px;
+		min-height:250px;
+		text-align: center;
+		border-collapse: collapse;
+		table-layout:fixed;
+		margin: auto;		
+	}
+	
+	thead{
+		border-bottom: 2px solid #000000;	
+	}	
+	
+	tbody{
+		height:220px;
+	}
+	
+	tbody tr{
+		border-bottom: 1px solid #D9B88F;
+		height:2vh;
+	}
+	
+	.recipe_name {
+		text-overflow:ellipsis;
+		overflow:hidden;
+		white-space: nowrap;		
+	}
+	
+	tbody .recipe_name:hover{
+		cursor:pointer;
+	}
+	
 	.paging_wrap {
 		display:flex;
-		width : 100%;
-		height : 30px;
-		justify-content: space-between;
-		align-items: center;
-	}	
+		width : auto;
+		/* height : 30px; */
+		 justify-content: center;
+		/* align-items: center;  */
+		margin: auto;
+		margin-top: 20px;
+	}
+	
+	.paging_btn {
+		width: 50px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		text-align:center;
+		border: 1px solid #C4C4C4;
+		border-left:0;
+	}
+	
+	.paging_btn:hover{
+		background-color: #03A64A20;
+		cursor: pointer;
+	}
+	
+	#first_btn {
+		border-left:1px solid #C4C4C4;
+	}
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
@@ -34,7 +314,20 @@ $(document).ready(function(){
 	google.charts.load('current', {'packages':['bar']});
     google.charts.setOnLoadCallback(reloaditemsInfo);
     
-    reloadRecipe();
+    $("#items_info_title").on("click",function(){
+		$(".items_choice_popup").show();
+	});
+    
+    $("#category_choice").on("change", function(){
+    	getItemsChoice();
+	});
+    
+    $("#items_choice_dtl").on("change", function(){
+    	console.log($("#items_choice_dtl").val());
+    	$("#items_no").val($("#items_choice_dtl").val());
+    	$(".items_choice_popup").hide();
+    	reloaditemsInfo();
+	});
     
     $(".paging_wrap").on("click","span",function(){
 		$("#page").val($(this).attr("page"));		
@@ -48,6 +341,7 @@ $(document).ready(function(){
 		$("#cook_recipe_form").attr("action","recipeDtl");
 		$("#cook_recipe_form").submit();
 	});
+        
 });
 
 function reloaditemsInfo(){
@@ -60,8 +354,14 @@ function reloaditemsInfo(){
 		data: params, 
 		success : function(res) {			
 			drawItemsInfo(res.list);
-			drawLineChart(res)
-			drawDisctChart(res)
+			drawLineChart(res);
+			drawDisctChart(res);
+			$("#matrl_name").val(res.matrlName);
+			$(".items_img").html("<img id=\"items_img\" src=\"resources/images/itemsInfo/"+res.matrlName+".jpg\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">")
+			$("#items_info_title").text(res.matrlName + " ▼ ");
+			console.log("레시피리로드 실행")
+			reloadRecipe();
+			
 		},
 		error: function(request, status, error) { 
 			console.log(error);
@@ -72,8 +372,8 @@ function reloaditemsInfo(){
 function drawItemsInfo(list){
 	var html = ""; 
 	
-	html += "<span> "+list.ITEMS_NAME+ "["+list.ITEMS_NO+"]</span><br>  ";
-	html += "<span> 평균가격"+list.AVG_PRICE+ "원</span><br>";
+	html += "<span>"+list.ITEMS_NAME+ "[ 품목번호: "+list.ITEMS_NO+"]</span><br><br>  ";
+	html += "<span> 평균가격: "+list.AVG_PRICE+ "원</span><br>";
 	
 	$(".items_info_con").html(html);	
 }
@@ -115,9 +415,11 @@ function drawLineChart(res) {
 		hAxis: {
 						
 		},
+		height:250,
 		vAxis: {
 					
-		}		
+		},
+		colors:['#03A64A']
 	};
 	
 	var chart = new google.visualization.LineChart(document.getElementById('line_chart_div'));
@@ -141,7 +443,7 @@ function drawDisctChart(res) {
       bars: 'vertical',
       vAxis: {format: 'decimal'},
       height: 250,
-      colors: ['#1b9e77', '#d95f02', '#7570b3']
+      colors: ['#03A64A', '#F2C12E', '#F27405']
     };
 
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
@@ -160,6 +462,7 @@ function reloadRecipe(){
 		success : function(res) {			
 			drawRecipeList(res);
 			drawPaging(res.pb);
+			console.log("레시피리로드 성공")
 		},
 		error: function(request, status, error) { 
 			console.log(error);
@@ -174,10 +477,10 @@ function drawRecipeList(res){
 	var startCnt = pb.startCount -1;
 	var endCnt = pb.endCount -1;	
 	
-	for(var i = startCnt; i < endCnt; i++ ){
+	for(var i = startCnt; i <= endCnt; i++ ){
 		html += "<tr>               ";
 		html += "	<td>"+ list[i].artclNo+ "</td>     ";
-		html += "	<td id =\"go_recipe_dtl\" no = \""+ list[i].RCP_SEQ + "\">"+ list[i].RCP_NM + "</td>";
+		html += "	<td class=\"recipe_name\" id =\"go_recipe_dtl\" no = \""+ list[i].RCP_SEQ + "\">"+ list[i].RCP_NM + "</td>";
 		html += "</tr>              ";		
 	}
 	
@@ -189,10 +492,10 @@ function drawRecipeList(res){
 function drawPaging(pb){
 	var html ="";
 	
-	html += "<div id=\"first_btn\">    "
+	html += "<div class=\"paging_btn\" id=\"first_btn\">    "
 	html += "	<span page=\"1\">처음</span>    "
 	html += "</div>                  "
-	html += "<div>                   "
+	html += "<div class=\"paging_btn\" >                   "
 	if($("#page").val()<=10){		
 		html += "	<span page=\"1\">이전</span>    "
 	} else {
@@ -201,38 +504,76 @@ function drawPaging(pb){
 	html += "</div>                  "
 	for(var i=pb.startPcount; i<=pb.endPcount; i++){		
 		if($("#page").val()==i){
-			html += "<div>                   "
+			html += "<div class=\"paging_btn\" >                   "
 			html += "	<span page=\""+ i + "\"><b>"+i+"</b></span>       "
 			html += "</div>                  "			
 		} else {
-			html += "<div>                   "
+			html += "<div class=\"paging_btn\" >                   "
 			html += "	<span page=\""+ i + "\">"+i+"</span>       "
 			html += "</div>                  "						
 		}
 	}
 	
 	if(pb.endPcount== pb.maxPcount){		
-		html += "<div>                   "
+		html += "<div class=\"paging_btn\" >                   "
 		html += "	<span page=\""+pb.maxPcount +"\">다음</span>    "
 		html += "</div>                  "
 	} else {
-		html += "<div>                   "
+		html += "<div class=\"paging_btn\" >                   "
 		html += "	<span page=\""+(pb.endPcount+1) +"\">다음</span>    "
 		html += "</div>                  "		
 	}
-	html += "<div id=\"last_btn\">     "
+	html += "<div class=\"paging_btn\" id=\"last_btn\">     "
 	html += "	<span page=\""+ pb.maxPcount +"\">마지막</span>  "
 	html += "</div>                  "
 	
 	$(".paging_wrap").html(html);
+}
+
+function getItemsChoice(){
+	var choiceResult = [];
+	if($("#category_choice").val() == "1"){
+		choiceResult = ['달걀','닭고기','돼지고기','쇠고기'];
+	} else if($("#category_choice").val() == "2"){
+		choiceResult = ['갈치','고등어','냉동참조기','동태','명태','오징어','조기'];
+	} else {
+		choiceResult = ['무','배','배추','사과','상추','애호박','양파','오이','호박'];
+	}	
+	
+	$.ajax({
+		url: "itemsChoiceAjax", 
+		type: "post", 
+		dataType: "json", 
+		data: "itemsName=" + choiceResult, 
+		success : function(res) {		
+			drawItemsChoiceDtl(res.list)
+		},
+		error: function(request, status, error) { 
+			console.log(error);
+		}
+	});
+}
+
+function drawItemsChoiceDtl(list){
+	var html = "";
+	html += "<option hidden=\"\" disabled=\"disabled\" selected=\"selected\" value=\"\">세부선택</option>";
+	
+	for(var data of list){
+	html += "<option value="+data.ITEMS_NO+">품목번호: "+ data.ITEMS_NO +" , 품목명: "+ data.ITEMS_NAME +"</option>";		
+	}
+	
+	$("#items_choice_dtl").html(html);
+}
+
+function reloadJangbcList(){
+		
 }
 </script>
 </head>
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
-	<form action="#" id="go_form" method="post">
-      <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+	<form action="#" id="go_form" method="post">      
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -243,27 +584,242 @@ function drawPaging(pb){
         		<input type="hidden" id="items_no" name="itemsNo" value="${itemsNo}">
         	</form>
             <div class = "items_choice_contnr">
-          		<span>육류/돼지고기</span>
-            </div>
-            <div class="items_info_contnr">
-            	<div class="items_img">
+            	<div class="items_info_title_contnr">
+	          		<span id="items_info_title">돼지고기 ▼ </span>
+	          		<div class="items_choice_popup">
+	          			<div class="items_choice_popup_background">
+		          			<form action="#" id="items_choice_form" method="post">
+			          			<select class="category_choice" id="category_choice" name="categoryChoice">
+			          				<option id="hidden_value" hidden="" disabled="disabled" selected="selected" value="">대분류선택</option>
+			          				<option value="1">육류</option>        			
+					        		<option value="2">수산</option>
+					        		<option value="3">과일/채소</option>
+			          			</select>
+		          			</form>
+		          			<select id="items_choice_dtl"> 
+		        				<option hidden="" disabled="disabled" selected="selected" value="">세부선택</option>        				      			 
+		        			</select>
+	          			</div>
+	          		</div>
             	</div>
-            	<div class="items_info_con">            		        		
-            	</div>            	
             </div>
-            <div id="line_chart_div" style="width: 600px; height: 250px;"></div>
-            <div id="disct_chart_div" style="width: 600px; height: 250px;"></div>
+            <div class="items_info_flex_contnr">
+	            <div class="items_info_contnr">
+	            	<div class="items_img">	            		
+	            	</div>
+	            	<div class="items_info_con">            		        		
+	            	</div>            	
+	            </div>
+	            <div class="line_chart_contnr">
+		            <div id="line_chart_div"></div>
+	            </div>
+	            <div class="disct_chart_contnr">
+		            <div id="disct_chart_div"></div>
+	            </div>
+            </div>             
             
             <div class="jangbc_diary_contnr">
+            	<div class="jangbc_diary_slides">
+            		<div class="card-wrapper">
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+              		</div>
+            	</div>
+            	<form action="#" id="jangbc_diary_tag_form" method="post">
+            		<input type="hidden" name="" id="" value=""> 
+            	</form>
+            	<div class="jangbc_diary_slides">
+            		<div class="card-wrapper">
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+	            		<div class="card">            		
+	            			<div class="card-header">
+	            				<div class="card-user">
+	            					<div class="card-user-profile">
+	            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+	            					</div>
+	            					<p class="card-user-name">닉네임</p>
+	            				</div>
+	            				<div class="card-like">
+	            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+	            					<span>0</span>
+	            				</div>
+	            			</div>
+	            			<div class="card-thumbnail">
+	            				<span class="card-thumbnail-views">조회수...</span>
+	            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+	            			</div>
+	            			<div class="card-contetns">다이어리 내용</div>
+	            		</div>
+              		</div>  			
+            	</div>
+            	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  				<a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-            
+            <script type="text/javascript">
+            var slideIndex = 1;
+            showSlides(slideIndex);
+
+            // Next/previous controls
+            function plusSlides(n) {
+              showSlides(slideIndex += n);
+            }
+
+            // Thumbnail image controls
+            function currentSlide(n) {
+              showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+              var i;
+              var slides = document.getElementsByClassName("jangbc_diary_slides");
+              
+              if (n > slides.length) {slideIndex = 1}
+              if (n < 1) {slideIndex = slides.length}
+              for (i = 0; i < slides.length; i++) {
+                  slides[i].style.display = "none";
+              }
+              
+              slides[slideIndex-1].style.display = "block";
+              
+            }
+            </script>
             <div class="cook_recipe_contnr">
             	<form action="#" id="cook_recipe_form" method="post">
             		<input type="hidden" id="matrl_name" name="matrlName" value="${matrlName}">
             		<input type="hidden" id="page" name="page" value="${page}">
             		<input type="hidden" id="recipe_no" name="recipeNo">
             	</form>
-            	<p>요리레시피</p>
+            	<p class="recipe_title">요리레시피</p>
             	<table class="cook_recipe_table">
             		<thead>
             			<tr>

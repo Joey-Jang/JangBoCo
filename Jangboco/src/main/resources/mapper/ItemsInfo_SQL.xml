@@ -11,4 +11,10 @@
 		        GROUP BY UPDATE_DATE, P.ITEMS_NO,ITEMS_NAME
 		        ORDER BY ITEMS_NO
 	</select>
+	
+	<select id="getItemsChoiceList" parameterType="hashmap" resultType="hashmap">
+		SELECT ITEMS_NO, ITEMS_NAME
+		FROM ITEMS
+		WHERE REGEXP_LIKE(ITEMS_NAME ,#{itemsName})
+	</select>
 </mapper>

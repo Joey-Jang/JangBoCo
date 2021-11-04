@@ -21,7 +21,7 @@
 		display: none;
 		position: absolute;
 		z-index:1000;
-		background-color: #E8FAF3;
+		background-color: #dff4e8;
 		border-radius: 10px;
 		width:350px;
 	    padding: 10px;
@@ -76,7 +76,7 @@
 		display: none;
 		position: absolute;
 		z-index:1000;
-		background-color: #E8FAF3;	    
+		background-color: #dff4e8;	    
 	    max-width: 540px;
 	    border-radius: 10px;
 	    padding: 10px;
@@ -129,7 +129,7 @@
 		display: none;
 		position: absolute;
 		z-index:1000;
-		background-color: #E8FAF3;	    
+		background-color: #dff4e8;	    
 	    max-width: 540px;
 	    border-radius: 10px;
 	    padding: 10px;
@@ -411,7 +411,8 @@ function drawLineChart(res) {
 		},
 		vAxis: {
 					
-		}		
+		},
+		colors: ['#03A64A','#F2C12E','#038C3E','#D9B88F','#F27405']
 	};
 	
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -482,7 +483,7 @@ function drawDisctChart(res) {
       bars: 'vertical',
       vAxis: {format: 'decimal'},   
       height: 300,
-      colors: ['#1b9e77', '#d95f02', '#7570b3']
+      colors: ['#03A64A', '#F2C12E', '#F27405']
     };
 
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
@@ -538,7 +539,8 @@ function drawCategoryChart(res) {
       height:300,
       vAxis: {
         
-      }      
+      },
+      colors:['#03A64A']
     };
 
     var chart = new google.visualization.BarChart(document.getElementById('category_chart_div'));
