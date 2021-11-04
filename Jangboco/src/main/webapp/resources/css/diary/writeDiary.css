@@ -502,11 +502,18 @@
 }
 .item_tag_list > li {
 	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 50px;
 	height: 50px;
 	margin: 5px 5px 0px 5px;
 	border: 1px solid black;
 	border-radius: 50%;
+}
+.items_img {
+	width: 35px;
+	height: 35px;
 }
 .del_item_tag_btn {
 	position: absolute;
