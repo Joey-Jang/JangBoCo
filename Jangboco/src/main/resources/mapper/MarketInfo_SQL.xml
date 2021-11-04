@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="getMarketInfoU" parameterType="hashmap" resultType="hashmap">
-		SELECT MARKET_NAME ,BRANCH_NAME ,PHONE_NUM, ADDRS,DTL_ADDRS ,START_TIME, END_TIME
+		SELECT MARKET_NAME ,BRANCH_NAME ,PHONE_NUM, ADDRS,DTL_ADDRS ,START_TIME, END_TIME,IMG_URL
 		FROM MARKET_MEMBER MM JOIN MEMBER M 
 		                        ON(MM.MARKET_MEMBER_NO = M.MEMBER_NO)
 		                      JOIN MARKET MA 
