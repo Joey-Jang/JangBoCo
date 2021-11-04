@@ -38,7 +38,7 @@ $(document).ready(function() {
 						
 						$("#diary_img_list").append("<li><div class=\"diary_img\"></div></li>");
 						$("#diary_img_list > li").last().children(".diary_img").css("background", "center / cover no-repeat "
-																					+ " url(\"resources/upload/"
+																					+ " url(\"https://image.jangboco.ga/"
 																					+ result.fileName[0].replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 																					+ "\")");
 						$("#diary_thunl_list").append("<li>"
@@ -52,7 +52,7 @@ $(document).ready(function() {
 	           											+ "</button>"
 													+ "</li>");
 						$("#diary_thunl_list > li").last().children(".diary_thunl").css("background", "center / cover no-repeat "
-																						+ " url(\"resources/upload/"
+																						+ " url(\"https://image.jangboco.ga/"
 																						+ result.fileName[0].replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 																						+ "\")");
 						$("#item_tag_list_contnr").append("<ul class=\"item_tag_list\"></ul>");
@@ -90,11 +90,11 @@ $(document).ready(function() {
 						$("#att_change_diary_img").val("");
 						
 						$("#diary_img_list > li").eq(diaryImgIdx).children(".diary_img").css("background", "center / cover no-repeat "
-																							+ " url(\"resources/upload/"
+																							+ " url(\"https://image.jangboco.ga/"
 																							+ result.fileName[0].replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 																							+ "\")");
 						$("#diary_thunl_list > li").eq(diaryImgIdx).children(".diary_thunl").css("background", "center / cover no-repeat "
-																								+ " url(\"resources/upload/"
+																								+ " url(\"https://image.jangboco.ga/"
 																								+ result.fileName[0].replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 																								+ "\")");
 						
@@ -513,7 +513,7 @@ $(document).ready(function() {
 			
 			if(itemsImgUrl!=undefined) {
 				$(".item_tag_list").eq(diaryImgIdx).find(".items_img").last().css("background", "center / cover no-repeat "
-																									+ " url(\"resources/upload/"
+																									+ " url(\"https://image.jangboco.ga/"
 																									+ itemsImgUrl.replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 																									+ "\")");
 			}

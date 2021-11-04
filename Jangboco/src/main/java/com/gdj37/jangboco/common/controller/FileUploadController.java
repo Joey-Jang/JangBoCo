@@ -63,9 +63,12 @@ public class FileUploadController {
 						throw new Exception("Not allowded file extension : " + fileExt.toLowerCase());
 					} else {
 						fileFullName = fileTmpName + fileRealName;
-						file.transferTo(new File(new File(uploadPath), fileFullName));
-
+						File file1 = new File(new File(uploadPath), fileFullName);
+						file.transferTo(file1);						
+						//file.transferTo(new File(new File(uploadPath), fileFullName));
 						fileNames.add(fileFullName);
+						Runtime.getRuntime().exec("chmod -R 777 /home/fordevelopers2021/upload/" + fileFullName);
+
 					}
 				}
 			}
@@ -117,8 +120,10 @@ public class FileUploadController {
 						throw new Exception("Not allowded file extension : " + fileExt.toLowerCase());
 					} else {
 						fileFullName = fileTmpName + fileRealName;
-						file.transferTo(new File(new File(uploadPath), fileFullName));
-						
+						File file1 = new File(new File(uploadPath), fileFullName);
+						file.transferTo(file1);
+						Runtime.getRuntime().exec("chmod -R 777 " + file1);
+//						file.transferTo(new File(new File(uploadPath), fileFullName));
 						fileNames.add(fileFullName);
 					}
 				}
@@ -159,6 +164,7 @@ public class FileUploadController {
 					fileFullName = fileTmpName + fileRealName;
 					upload.transferTo(new File(fileDir, fileFullName));
 
+					
 				} else {
 					// 파일 확장자가 틀릴 경우
 					printWriter = response.getWriter();
@@ -195,3 +201,4 @@ public class FileUploadController {
 		}
 	}
 }
+
