@@ -57,6 +57,7 @@
 	}
 	
 	.market_info_con{
+		position:relative;
 		width: 320px;
 		margin-right: 15px;		
 	}
@@ -73,8 +74,8 @@
 		display:none;		
 		position: absolute;
 		z-index:1000;
-		left: 550px;
-		top: 249px;
+	    left: 25px;
+	    top: 80px;
 		border: 5px solid #03A64A20;
 		border-radius: 10px;
 		background-color: #FFFFFF;
@@ -1045,18 +1046,7 @@ function deleteEventLike(){
     <div class="con_contnr">
     	<div class="event_dtl_modal">	       	
 	     </div>  
-        <div class="con">
-        	<div class="market_info_addrs_contnr">
-        	<c:choose>
-           		<c:when test="${!empty marketMemberNo}">
-		           <span>${marketInfo.ADDRS} ${marketInfo.DTL_ADDRS}</span>			            	
-           		</c:when>
-           		<c:otherwise>           			
-           			<span>${marketInfo.MARKET_ADDRS}</span>	            				
-        		</c:otherwise>
-			</c:choose>
-				
-           	</div>
+        <div class="con">        	
         	<div class="back_btn_contnr">
 	        	<button type="button" class="btn" id="back_btn">
 		        	<img class="btn_img" src = "resources/images/intgrevent/back_button.svg">     	
@@ -1067,6 +1057,16 @@ function deleteEventLike(){
 	            <div class="market_info_contnr">
 	            	<div class="market_img"></div>
 	            	<div class="market_info_con">
+	            		<div class="market_info_addrs_contnr">
+				        	<c:choose>
+				           		<c:when test="${!empty marketMemberNo}">
+						           <span>${marketInfo.ADDRS} ${marketInfo.DTL_ADDRS}</span>			            	
+				           		</c:when>
+				           		<c:otherwise>           			
+				           			<span>${marketInfo.MARKET_ADDRS}</span>	            				
+				        		</c:otherwise>
+							</c:choose>				
+			           	</div>
 	            		<c:choose>
 	            			<c:when test="${!empty marketMemberNo}">
 				            	<span>${marketInfo.MARKET_NAME} ${marketInfo.BRANCH_NAME}</span>				            	
