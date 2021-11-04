@@ -81,9 +81,9 @@ public class JoinDao implements IJoinDao{
 	}
 
 	@Override
-	public int getMemberNo(String email) throws Exception {
+	public HashMap<String, Object> getMemberInfo(String email) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("Member.getMemberNo",email);
+		return sqlSession.selectOne("Member.getMemberInfo",email);
 	}
 
 	@Override

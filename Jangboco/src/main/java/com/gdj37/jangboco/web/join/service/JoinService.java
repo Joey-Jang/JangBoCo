@@ -76,9 +76,9 @@ public class JoinService implements IJoinService{
 	}
 
 	@Override
-	public int getMemberNo(String email) throws Exception {
+	public HashMap<String, Object> getMemberInfo(String email) throws Exception {
 		// TODO Auto-generated method stub
-		return iJoinDao.getMemberNo(email);
+		return iJoinDao.getMemberInfo(email);
 	}
 
 	@Override

@@ -650,8 +650,9 @@ public class JoinController {
 			session.setAttribute("memberType", memberType);
 			session.setAttribute("email", params.get("email"));
 		}
-		int member_no = iJoinService.getMemberNo(params.get("email"));
-		session.setAttribute("sMNo", member_no);
+		HashMap<String, Object> member_info = iJoinService.getMemberInfo(params.get("email"));
+		session.setAttribute("sMNo", member_info.get("MEMBER_NO"));
+		session.setAttribute("sNicnm", member_info.get("NICNM"));
 		mav.setViewName(pageUrl);
 		return mav;
 	}
