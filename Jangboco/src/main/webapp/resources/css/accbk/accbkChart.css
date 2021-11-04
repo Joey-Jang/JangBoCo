@@ -33,11 +33,16 @@
 	
 }
 
-#view_period_chart{
+#view_period_btn {
 	display: none;
 }
 #minMax_chart_contnr{
 	display: none;
+}
+
+.accbkChart_btn {
+	background-color: #03A64A20;
+	border: none;
 }
 
  

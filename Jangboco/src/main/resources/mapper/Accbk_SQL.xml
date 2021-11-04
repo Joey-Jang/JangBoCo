@@ -153,7 +153,14 @@
    </select>
    
    <select id="getMostSpendWeek" parameterType="hashmap" resultType="hashmap">
-	   SELECT COST,WK,WEEK
+	   SELECT COST,WK,
+	   		  CASE WEEK
+		            WHEN 1 THEN '첫'
+		            WHEN 2 THEN '두'
+		            WHEN 3 THEN '세'
+		            WHEN 4 THEN '네'
+		            ELSE '다섯'
+		            END AS WEEK
 		FROM (
 		        SELECT  SUM(COST) AS COST, TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW') AS WK ,
 		                ROW_NUMBER() OVER(ORDER BY SUM(COST) DESC) AS ROWN,
@@ -167,7 +174,14 @@
    </select>
    
    <select id="getLeastSpendWeek" parameterType="hashmap" resultType="hashmap">
-	   SELECT COST,WK,WEEK
+	   SELECT COST,WK,
+	   	   		  CASE WEEK
+		            WHEN 1 THEN '첫'
+		            WHEN 2 THEN '두'
+		            WHEN 3 THEN '세'
+		            WHEN 4 THEN '네'
+		            ELSE '다섯'
+		            END AS WEEK
 		FROM (
 		        SELECT  SUM(COST) AS COST, TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW') AS WK ,
 		                ROW_NUMBER() OVER(ORDER BY SUM(COST)) AS ROWN,
@@ -248,5 +262,14 @@
 		        AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'YYYY-MM') IN #{month})
 		        GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'IW')
 		)
+   </select>
+   
+   <select id="getRichDayList" parameterType="hashmap" resultType="hashmap">
+   		SELECT  NVL2(I.ITEMS_NAME,I.ITEMS_NAME,A.ITEMS_NAME) AS ITEMS_NAME, COST || '원' AS COST
+		FROM ACCBK A 
+		LEFT OUTER JOIN ITEMS I
+		ON A.ITEMS_NO = I.ITEMS_NO
+		WHERE (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'YYYY-MM-DD') IN #{ynmnd})
+		AND DEL_FLAG = 0
    </select>
 </mapper>

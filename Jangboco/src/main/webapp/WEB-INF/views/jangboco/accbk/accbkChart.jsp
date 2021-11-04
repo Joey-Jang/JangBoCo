@@ -63,19 +63,19 @@ $(document).ready(function(){
 	});
 	
 	//다시 효과주기 
-	/* //sumChart <->minMaxChart 교체
-	$("#view_minMax_chart").on("click",function(){
+	 //sumChart <->minMaxChart 교체
+	$("#view_minMax_btn").on("click",function(){
 		$("#minMax_chart_contnr").show();
 		$("#period_chart_contnr").hide();
-		$("#view_minMax_chart").hide();
-		$("#view_period_chart").show();
+		$("#view_minMax_btn").hide();
+		$("#view_period_btn").show();
 	});
-	$("##view_period_chart").on("click",function(){
+	$("#view_period_btn").on("click",function(){
 		$("#minMax_chart_contnr").hide();
 		$("#period_chart_contnr").show();
-		$("#view_minMax_chart").show();
-		$("#view_period_chart").hide();
-	}); */
+		$("#view_minMax_btn").show();
+		$("#view_period_btn").hide();
+	}); 
 	
 	
 
@@ -181,7 +181,16 @@ $(document).ready(function(){
 			var temp = [data.WEEK, data.COST]	
 			tempList.push(temp);
 		}
-
+		var moon = tempList.length;
+		console.log("test================="+moon);
+		
+		 if (tempList.length < 6) {
+			for (var i = tempList.length; i <7 ; i++) {
+				var temp = [i, 0]
+				tempList.push(temp);
+			}
+		}
+ 
 		
 	    var data = google.visualization.arrayToDataTable(tempList);
 
@@ -230,6 +239,13 @@ $(document).ready(function(){
 	  	  tempList.push(temp);
 	    };
 	    
+	    if (tempList.length < 6) {
+			for (var i = tempList.length; i <7 ; i++) {
+				var temp = [i, 0, 0]
+				tempList.push(temp);
+			}
+		}
+	    
 	    var data = google.visualization.arrayToDataTable(tempList);
 
 	    var options = {
@@ -271,20 +287,26 @@ $(document).ready(function(){
 							<option value="10">10</option>
 							<option value="09">09</option>
 							<option value="08">08</option>
+							<option value="07">07</option>
+							<option value="06">06</option>
+							<option value="05">05</option>
+							<option value="04">04</option>
+							<option value="03">03</option>
+							<option value="02">02</option>
 						</select>
-						<input type="button" id="prev_month_btn" value="선택">
-						<input type="button" id="prev_cancel_btn" value="취소">
-						<input type="button" id="prev_check_btn" value="확인">
+						<input type="button" class="accbkChart_btn" id="prev_month_btn" value="선택">
+						<input type="button" class="accbkChart_btn" id="prev_cancel_btn" value="취소">
+						<input type="button" class="accbkChart_btn" id="prev_check_btn" value="확인">
 					</div>
 				</form>
 			</div>
 				<div id="accbk_chart_contnr">
-				<input type="button" id="view_minMax_chart" value="최소/최대값">
-				<input type="button" id="view_period_chart" value="sum">
+				<input type="button" class="accbkChart_btn" id="view_minMax_btn" value="최소/최대값">
+				<input type="button" class="accbkChart_btn" id="view_period_btn" value="주별 사용">
 					<div id="chart_div">
+						<div id="items_chart_contnr"></div>
 						<div id="period_chart_contnr"></div>
 						<div id="minMax_chart_contnr"></div>
-						<div id="items_chart_contnr"></div>
 					</div>
 				</div>
 			</div>

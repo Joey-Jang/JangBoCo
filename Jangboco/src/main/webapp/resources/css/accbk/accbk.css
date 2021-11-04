@@ -1,38 +1,17 @@
 @charset "UTF-8";
 
 /*accbkC  */
-#items_name {
-	display: none;
-}
-.chkbx_all {
-	display: none;	
-}
-.chkbx_pernl {
-	display: none;	
-}
-#select_del_btn {
-	display: none;		
-}
-#del_cancel_btn {
-	display: none;		
-}
+/*심미적 효과 X, 기능을 위한 효과 O */
 
-.others_market_name_contnr {
-	display: none;
-	flex-flow: column nowrap;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	height: 55px;
-	margin-bottom: 5px;
-}
-/* .market_name {
-	width: 100%;
-	height: 25px;
-	padding: 0 10px;
-	border: 1px solid #E0E0E0;
-} */
 
+/*----기능을 위한 효과 끝 -------  */
+
+ main {
+	min-height: 820px;
+	min-width: 1200px;
+
+}
+	
 
 /*accbk Main  */
 .accbk_main_notice {
@@ -42,13 +21,22 @@
 	margin: 0 auto;
 }
 
+#spend_of_month {
+	font: bold;
+	color: #03A64A; 
+	
+
+}
+
 .accbk_main_summr_contnr {
-	width: 100%;
+	
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
 }
+
+
 
 #period_set > option {
 	text-align: center;
@@ -56,19 +44,40 @@
 	color: #03A64A;
 }
 
-input.spend_regst {
-	background: url("../images/accbkCBtn.png") no-repeat transparent ;
-	border : none;
-	width: 60px;
-	height: 40px;
+.spend_regst {
+	display:inline-block;
+	padding:0.35em 1.2em;
+	border:0.1em solid #03A64A;
+	margin:0 0.3em 0.3em 0;
+	border-radius:0.12em;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+}
+
+.spend_regst:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
+}
+.main_summr_title {
+	font: bold;
+	font-size: 20px;
 }
 
 .summr_accbk {
-	width : 25%;
-	border: 1px solid #03A64A;
-	border-radius: 10%;
+	width : 200x;
+	height : 25%;
+	border: 10px solid #03A64A20;
+	border-radius: 15%;
 	display: inline-block;
 	margin: 15px;
+	text-align: center;
+	
 }
 
 .main_summr_title {
@@ -76,6 +85,72 @@ input.spend_regst {
 	font-size: 10pt;
     font-weight: 400;
     margin-left: 15px;
+}
+
+.richDay_modal {
+	display: none;
+	position: absolute;
+	width: auto;
+	height: auto;
+	background-color: #FFFFFF95;
+	color : #03A64A90;
+	border: 2px solid #03A64A20;
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 9999;
+}
+
+.richDay_btn {
+	
+	width : 20px;
+	height: 20px;
+	border:1px solid #03A64A;
+	border-radius:25px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+}
+.richDay_btn:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
+}
+
+.savingDay_modal {
+	display: none;
+	position: absolute;
+	width: auto;
+	height: auto;
+	background-color: #FFFFFF95;
+	color : #03A64A90;
+	border: 2px solid #03A64A20;
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 9999;
+}
+
+.savingDay_btn {
+	
+	width : 20px;
+	height: 20px;
+	border:1px solid #03A64A;
+	border-radius:25px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+}
+.savingDay_btn:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
 }
 
 /* ACCBKR */

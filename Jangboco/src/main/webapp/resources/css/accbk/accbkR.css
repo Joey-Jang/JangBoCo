@@ -2,12 +2,27 @@
 
 /* ACCBKR */
 
-
  main {
-		min-height: 820px;
-		min-width: 1200px;
-	}
+	min-height: 820px;
+	min-width: 1200px;
+}
 	 
+
+.chkbx_all {
+	display: none;	
+}
+
+.chkbx_pernl {
+	display: none;	
+}
+#select_del_btn {
+	display: none;		
+}
+#del_cancel_btn {
+	display: none;		
+}
+
+
 
 /* .con {
 	display: flex;

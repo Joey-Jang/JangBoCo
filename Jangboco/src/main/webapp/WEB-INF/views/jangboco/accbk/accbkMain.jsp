@@ -23,10 +23,34 @@ $(document).ready(function(){
 	
 	$("#month_of_today").text(getMth);
 	
+	// 동적으로 생긴 버튼이라 처리해주는 방법이 다름 
+	$("body").on("click", "#richDay_btn", function(){
+		$(this).parent().fadeOut(200, function() {
+			//$(this).remove();
+		});
+	});
+	
+	$("body").on("click", "#savingDay_btn", function(){
+		$(this).parent().fadeOut(200, function() {
+			//$(this).remove();
+		});
+	});
+	
 	//글쓰기 창으로 이동 
 	$("#spend_regst").on("click", function(){
 		location.href = "accbkC";
 	});
+	
+	$("#most_spend_day").on("click", function(){
+		getRichDay();
+		$("#richDay_modal").fadeIn(200);
+	});
+	$("#least_spend_day").on("click", function(){
+		getSavingDay();
+		$("#savingDay_modal").show();
+	});
+		//why 안될까욤 
+		
 	
 });
 // 오늘 날짜 ('YYYY-MM-DD')로 바꾸기
@@ -123,32 +147,92 @@ function getWeekAgo(){
 	
 } 
 
+function getRichDay(){
+	var today = new Date();
+	var richMth = today.getMonth() +1;
+	var richY = today.getFullYear();
+	var richDay = $("#most_spend_day_num").text();
+	
+	var ynmnd = richY + "-" + richMth + "-" + richDay;
+	
+	$.ajax({
+		url: "getRichDayAjax", 
+		type: "post", 
+		dataType: "json", 
+		data: {"ynmnd": ynmnd}, 
+		success : function(result) {	
+			drawRichDay(result.list);
+		},
+		error: function(request, status, error) { 
+			console.log(error);
+		}
+		
+	});
+}
+function drawRichDay(list){
+	var html = "";
+	
+	for(var data of list){
+		html+=	"<a>"+data.ITEMS_NAME +" : " +data.COST+ "</a> ";
+		html+= "<br>";
+	}
+		html+=	"<input type=\"button\" class=\"richDay_btn\"  id=\"richDay_btn\"  value=\"X\" > ";
+	$("#richDay_modal").html(html);
+}
+
+//savingday 
+
+function getSavingDay(){
+	var today = new Date();
+	var mth = today.getMonth() +1;
+	var savingY = today.getFullYear();
+	var sDay = $("#least_spend_day_num").text();
+	
+	var ynmnd = savingY + "-" + mth + "-" + sDay;
+	
+	$.ajax({
+		url: "getRichDayAjax", 
+		type: "post", 
+		dataType: "json", 
+		data: {"ynmnd": ynmnd}, 
+		success : function(result) {	
+			drawSavingDay(result.list);
+		},
+		error: function(request, status, error) { 
+			console.log(error);
+		}
+		
+	});
+
+function drawSavingDay(list){
+	var html = "";
+	
+	for(var data of list){
+		html+=	"<a>"+data.ITEMS_NAME +" : " +data.COST+ "</a> ";
+		html+= "<br>";
+	}
+		html+=	"<input type=\"button\" class=\"savingDay_btn\"  id=\"savingDay_btn\"  value=\"X\" > ";
+	$("#savingDay_modal").html(html);
+}
+}
 </script>
 </head>
 <body>
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	 <form action="#" id="go_form" method="post">
-         <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
    </form>
     <div class="con_contnr">
+    	<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
         <div class="con">
-			<!--기간 설정 select(오른쪽 끝으로 오게 )-->
-			<select id="period_set">
-			<option hidden="" disabled="disabled" selected="selected">기간 선택</option>
-			<option value="">1주</option>
-			<option value="">1개월</option>
-			<option value="">1년</option>
-			<option value="">직접 입력</option>
-			</select>
 			<!--이용자 기간설정 지출금액 나오게  -->
 			<div class="accbk_main_notice">
 				<h3><span>(닉네임)님</span><br>
 				<span id="month_of_today"></span>월 지출 금액은<br>
-				<span id="spend of month">${getThisMonthSpend.SUM}원</span> 입니다.</h3><br>
+				<span id="spend_of_month">${getThisMonthSpend.SUM}원</span> 입니다.</h3><br>
 				<!--  -->
 				<!--css display none으로 설정해주고 그때그때 나오게 해야하나    -->
 				<h6> 더 사용 </h6>
@@ -159,9 +243,11 @@ function getWeekAgo(){
 			<input type="button" class="spend_regst" id="spend_regst" value="지출 등록" ><br>
 			<div class="accbk_main_summr_contnr" id="accbk_main_summr_contnr">
 				<div class="summr_accbk msd" id="most_spend_day">
-					<a class="main_summr_title" id="">가장 많이 쓴 날</a><br>
-					<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE} 일</span><br>
+					<a class="main_summr_title" id="rich_day">가장 많이 쓴 날</a><br>
+					<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE}</span> 일<br>
 					<span id="most_spend_day_cost">${getMostSpendDay.COST} 원</span>
+						<div id="richDay_modal" class="richDay_modal">
+						</div>
 				</div>
 				<div class="summr_accbk msw" id="most_spend_week">
 					<a class="main_summr_title">가장 많이 쓴 주</a><br>
@@ -176,8 +262,9 @@ function getWeekAgo(){
 				<br>
 				<div class="summr_accbk lsd" id="least_spend_day">
 					<a class="main_summr_title">가장 적게 쓴 날</a><br>
-					<span id="least_spend_day_num">${getLeastSpendDay.BUY_DATE} 일</span><br>
+					<span id="least_spend_day_num">${getLeastSpendDay.BUY_DATE}</span> 일<br>
 					<span id="least_spend_day_cost">${getLeastSpendDay.COST} 원</span>
+					<div id="savingDay_modal" class="savingDay_modal"></div>
 				</div>
 				<div class="summr_accbk lsw" id="least_spend_week">
 					<a class="main_summr_title">가장 적게 쓴 주</a><br>

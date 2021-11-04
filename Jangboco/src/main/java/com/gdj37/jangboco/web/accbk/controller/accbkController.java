@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +38,23 @@ public class accbkController {
 	//가계부 메인페이지
 	@RequestMapping(value = "/accbkMain")
 	public ModelAndView accbkMain(@RequestParam HashMap<String, String> params,
-								 ModelAndView mav)throws Throwable {
+								 ModelAndView mav,
+								 HttpSession session)throws Throwable {
 		int homeFlag = 0;
 		int menuIdx = 2;
 		int subMenuIdx = 0;
 		mav.addObject("homeFlag", homeFlag);
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		
+		if(!"".equals(session.getAttribute("sMNo")) &&
+		session.getAttribute("sMNo")!=null) { mav.addObject("page_member_no",
+		session.getAttribute("sMNo"));
+		
+		mav.setViewName("jangboco/diary/writeDiary"); } else {
+		mav.setViewName("redirect:loginMain"); }
+		
 		
 		DecimalFormat df = new DecimalFormat("00");
         Calendar currentCalendar = Calendar.getInstance();
@@ -72,6 +84,8 @@ public class accbkController {
 		mav.addObject("getMostVisitMarket", getMostVisitMarket);
 		mav.addObject("getMostSpendWeek", getMostSpendWeek);
 		
+		
+		
 		mav.addObject("getLeastSpendDay", getLeastSpendDay);
 		mav.addObject("getMostSpendItems", getMostSpendItems);
 		mav.addObject("getLeastSpendWeek", getLeastSpendWeek);
@@ -79,6 +93,24 @@ public class accbkController {
 		mav.setViewName("jangboco/accbk/accbkMain");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value = "/getRichDayAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getRichDayAjax(@RequestParam HashMap<String, String> params)throws Throwable{
+	ObjectMapper mapper = new ObjectMapper();
+	
+	Map<String, Object> modelMap =  new HashMap<String, Object>();
+	
+	try {
+		List<HashMap<String, String>> list = accbkiService.getRichDayList(params);
+		modelMap.put("list", list);
+	} catch (Throwable e) {
+		e.printStackTrace();
+	}
+	
+	return mapper.writeValueAsString(modelMap);
 	}
 	
 	

@@ -124,5 +124,10 @@ public class accbkService implements accbkIService {
 		return accbkiDao.getMinMax(params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getRichDayList(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getRichDayList(params);
+	}
+
 
 }
