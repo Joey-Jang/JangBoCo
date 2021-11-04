@@ -62,6 +62,7 @@
 		flex-direction: row;
 		margin:15px;
 	    align-items: center;
+	    justify-content: center;
 	    padding-bottom: 10px;
 	    border-bottom: 2px solid #C4C4C4;
 	}
@@ -239,7 +240,7 @@
 		font-size: 20px;
 	}
 	table{
-		width: 1400px;
+		width: 2000px;
 		min-height:250px;
 		text-align: center;
 		border-collapse: collapse;
@@ -255,11 +256,13 @@
 		height:220px;
 	}
 	
-	tbody tr{
+	tbody tr{		
 		border-bottom: 1px solid #D9B88F;
 		height:2vh;
 	}
-	
+	.recipe_no{
+		width:30%;
+	}
 	.recipe_name {
 		text-overflow:ellipsis;
 		overflow:hidden;
@@ -823,7 +826,7 @@ function reloadJangbcList(){
             	<table class="cook_recipe_table">
             		<thead>
             			<tr>
-            				<td>#</td>
+            				<td class="recipe_no">#</td>
             				<td>레시피</td>
             			</tr>
             		</thead>
