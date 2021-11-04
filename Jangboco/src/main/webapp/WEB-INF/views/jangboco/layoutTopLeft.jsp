@@ -126,7 +126,7 @@
                 </li>
             </ul>
             <ul class="sub_menu user_center">
-                <li action="">
+                <li action="noticeR">
                     <span class="sub_menu_text">공지</span>
                 </li>
                 <li action="">

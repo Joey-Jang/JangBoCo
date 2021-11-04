@@ -7,4 +7,6 @@ public interface IZzanDao {
 
 	public List<HashMap<String, String>> getMarketList(HashMap<String, String> params) throws Throwable;
 
+	public List<HashMap<String, String>> getItemList(HashMap<String, String> params) throws Throwable;
+
 }

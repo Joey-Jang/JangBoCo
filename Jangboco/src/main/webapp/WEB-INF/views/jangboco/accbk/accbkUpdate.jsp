@@ -185,8 +185,8 @@ $(document).ready(function(){
 	//나중에 DB에 items의 value 값 넣어줄 때, java단?에서 items(othersItems)와 itemsOthers의 값을 체크하여
 	// 올바른 값을 넣고 DB 처리해주면 됨 . 
 	
-	//쓰기버튼
-	   $("#write_btn").on("click", function(){
+	//수정버튼
+	   $("#update_btn").on("click", function(){
 		if(checkVal("#buy_qnt")){
 			alert("구매량을 입력해주세요.");
 			$("#buy_qnt").focus();
@@ -197,10 +197,10 @@ $(document).ready(function(){
 			alert("구입일자를 등록해주세요.");
 		}else{
 			
-			var params = $("#write_form").serialize();
+			var params = $("#update_form").serialize();
 			
 			$.ajax({
-				url : "accbkCAjax",
+				url : "accbkUAjax",
 				type : "post",
 				dataType : "json",
 				data : params,
@@ -219,7 +219,7 @@ $(document).ready(function(){
 				}
 			}); // ajax끝
 		}//else끝
-	}); // writeBtn.on(click) 끝 
+	}); // updateBtn.on(click) 끝 
 	 
 	
 });
@@ -290,7 +290,6 @@ function drawBranchList(branchList) {
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	 <form action="#" id="go_form" method="post">
-         <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -298,9 +297,11 @@ function drawBranchList(branchList) {
     <div class="con_contnr">
         <div class="con">
 	        <div class="accbkC_contnr">
-				<form action="#" id="write_form" method="post">
+				<form action="#" id="update_form" method="post">
+       			<input type="hidden" id="accbk_no" name="accbk_no" value="${data.ACCBK_NO}">
+       			<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
 				<!--품목, 구매량,금액, 비고 +버튼 누르면 추가할 수 있게.  -->
-				구입 일자 <input type="date" id="buy_date" name="buy_date">
+				구입 일자 <input type="date" id="buy_date" name="buy_date" value="${data.BUY_DATE}">
 				<br> 
 				구입처 
 				<%-- <div id="buy_market">
@@ -364,13 +365,13 @@ function drawBranchList(branchList) {
 				
 				<br>
 				구매량
-				<input type="text" id="buy_qnt" name="buy_qnt">	<br>
+				<input type="text" id="buy_qnt" name="buy_qnt" value="${data.BUY_QNT}">	<br>
 				금액
-				<input type="text" id="cost" name="cost">원
+				<input type="text" id="cost" name="cost" value="${data.COST}">원
 				<br>
-				비고 <input type="text" id="note" name="note"><br>
+				비고 <input type="text" id="note" name="note" value="${data.NOTE }"><br>
 			
-				<input type="button" value="작성" id="write_btn" class="accbkC_btn"> 
+				<input type="button" value="수정" id="update_btn" class="accbkC_btn"> 
 				<input type="button" value="취소" id="write_cancel_btn" class="accbkC_btn">
 				</form>
 			</div>

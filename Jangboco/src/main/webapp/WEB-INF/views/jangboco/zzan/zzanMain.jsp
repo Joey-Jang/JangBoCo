@@ -173,6 +173,7 @@
 	padding-inline-start: 0px;
 	margin: 3px;
 	margin-top: 0;
+	display: none;
 }
 
 .market_name{
@@ -217,8 +218,8 @@
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
-		<%-- <input type="hidden" name="searchGbn" value="${param.searchGbn}">
-		<input type="hidden" name="searchTxt" value="${param.searchTxt}"> --%>
+		<input type="hidden" name="searchGbn" value="${param.searchGbn}">
+		<input type="hidden" name="searchTxt" value="${param.searchTxt}">
 		<input type="hidden" name="market_no" id="market_no">
 		<input type="hidden" name="market_member_no" id="market_member_no">
 		<input type="hidden" name="items_choice_no" id="items_choice_no">
@@ -228,11 +229,6 @@
 		<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
 		<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
 		<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
-		<%-- <input type="hidden" name="searchGbn" value="${param.searchGbn}">
-		<input type="hidden" name="searchTxt" value="${param.searchTxt}"> --%>
-		<input type="hidden" name="market_no" id="market_no">
-		<input type="hidden" name="market_member_no" id="market_member_no">
-		<input type="hidden" name="items_choice_no" id="items_choice_no">
 	</form>
     <div class="con_contnr">
     	<div class="con">
@@ -263,6 +259,7 @@
 					<input type="hidden" id="oldTxt"  value="${param.searchTxt}">
 					<input type="hidden" name="no" id="no">
 					<input type="button" value="검색" id="searchBtn">
+					
 				</form>
 	    	</div>
 	    	
@@ -272,8 +269,8 @@
 		    		<div class="item_list_title"><span>품목</span></div>
 		    	</div>
 		    	<div class="list_contnr">	
-					<ul id="market_list" class="market_list"><li>나와라리스트</li></ul>
-					<ul id="item_list" class="item_list"><li>나와라리스트</li></ul>
+					<ul id="market_list" class="market_list"><li></li></ul>
+					<ul id="item_list" class="item_list"><li>검색어를 입력하세요</li></ul>
 				</div>
 	   		</div>
 	    </div>
@@ -959,21 +956,31 @@
 		});
 	}
 	
-	//목록 그리기
-	function  drawMarketList(list){
+	//품목목록 그리기
+	function  drawItemList(list){
 		var html ="";  
 		for(var data of list){
 			if(data.MARKET_MEMBER_NO != null){
-				html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ data.MARKET_MEMBER_NO + ">";
+				html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ data.MARKET_MEMBER_NO + " items_choice_no="+ data.ITEMS_NO + ">";
     		}else{
-    			html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ '' + ">";
+    			html += "<li market_no=" + data.MARKET_NO + " market_member_no="+ '' + " items_choice_no="+ data.ITEMS_NO + ">";
     		}
-			html += "	<div class=\"market_name\">" + data.MARKET_NAME + "</div>";
-    		html += "	<div class=\"market_con\">";
-    		html += "		<span class=\"market_addrs\">" + data.MARKET_ADDRS + "</span><br>";
+			html += "	<div class=\"market_name_contnr\"><span class=\"market_name\">" + data.MARKET_NAME + "</span>";
+			if(true){
+				html += "		<span class=\"best_market\">" + "최저가 매장" + "</span><img src='resources/images/zzan/crown.png' height='20' width='20'></div>";
+			}
+    		html += "	<div class=\"item_con\">";
+    		html += "		<span class=\"item_price\">" + "가격: " + data.PRICE + "원" + "</span><br>";
+    		html += "		<span class=\"update_date\">" + "수정일자: " + data.UPDATE_DATE + "</span><br>";
+    		html += "		<span class=\"items_name\">" + "품목이름: " + data.ITEMS_NAME + "</span><br>";
+    		html += "		<span class=\"sell_std\">" + "판매규격: " + data.SELL_STD + "</span><br>";
     		
-    		if(data.PHONE_NUM != null){
-    			html += "		<span class=\"market_phone\">" + data.PHONE_NUM + "</span><br>";
+    		if(data.NOTE != null){
+    			html += "		<span class=\"note\">" + data.NOTE + "</span><br>";
+    		}
+    		
+    		if(data.SOLDOUT_FLAG != null && data.SOLDOUT_FLAG != 0){
+    			html += "		<span class=\"soldout_flag\">" + 품절 + "</span><br>";
     		}
     		
     		if(data.START_TIME != null && data.END_TIME != null){
@@ -989,12 +996,13 @@
 		
 		}
 		
-		$("#market_list").html(html);
+		$("#item_list").html(html);
+			
 	}
 	
 	
-	//마켓검색결과지도그리기
-	function  drawMarketMap(list){
+	//품목검색결과지도그리기
+	function  drawItemMap(list){
 		bounds = new kakao.maps.LatLngBounds();
 		map.setBounds(bounds);//지도범위 초기화
         //기존에 있던 마커들 지우기
@@ -1027,7 +1035,7 @@
 		    kakao.maps.event.addListener(marker, 'click', function() {
 		    	$("#market_no").val(data.MARKET_NO);
 				$("#market_member_no").val(data.MARKET_MEMBER_NO);
-				/* $("#items_choice_no").val($(this).attr("no")); */
+				$("#items_choice_no").val(data.ITEMS_NO); 
 				$("#info_form").submit();
 		        
 		    });

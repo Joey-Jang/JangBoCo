@@ -102,13 +102,14 @@ $(document).ready(function(){
 	//품목 차트 불러오기 
 	function getAccbkItemsChart(){
 		var month = $("#mthNYear_of_today").text();
-		//console.log("params " + params);
+		var member_no = $("#member_no").val();
 		
 		$.ajax({
 			url: "accbkItemsChartAjax", 
 			type: "post", 
 			dataType: "json", 
-			data: {"month": month}, 
+			data: {"month": month,
+			    	"member_no": member_no}, 
 			success : function(result) {	
 				//console.log("result======="+JSON.stringify(result)); //alert(JSON.stringify(data ));
 				drawAccbkItemsChart(result);
@@ -153,13 +154,15 @@ $(document).ready(function(){
 	  //지출 차트 불러오기 	
 	function getSpendChart(){
 	var month = $("#mthNYear_of_today").text();
+	var member_no = $("#member_no").val();
 	//console.log("params " + params);
 	
 	$.ajax({
 		url: "accbkSpendChartAjax", 
 		type: "post", 
 		dataType: "json", 
-		data: {"month": month}, 
+		data: {"month": month,
+		    	"member_no": member_no}, 
 		success : function(result) {	
 			drawSpendChart(result);
 		},
@@ -212,12 +215,13 @@ $(document).ready(function(){
 	function getMinMaxChart(){
 	var month = $("#mthNYear_of_today").text();
 	//console.log("params " + params);
-	
+	var member_no = $("#member_no").val();
 	$.ajax({
 		url: "accbkMinMaxChartAjax", 
 		type: "post", 
 		dataType: "json", 
-		data: {"month": month}, 
+		data: {"month": month,
+			    "member_no": member_no}, 
 		success : function(result) {	
 			drawMinMaxChart(result);
 		},
@@ -267,15 +271,13 @@ $(document).ready(function(){
 	<c:import url="/layoutTopLeft"></c:import>
 	<main>
 		<form action="#" id="go_form" method="post">
-			<input type="hidden" id="member_no" name="member_no"
-				value="${memberNo}"> <input type="hidden" id="home_flag"
-				name="home_flag" value="${homeFlag}"> <input type="hidden"
-				id="menu_idx" name="menu_idx" value="${menuIdx}"> <input
-				type="hidden" id="sub_menu_idx" name="sub_menu_idx"
-				value="${subMenuIdx}">
+			<input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}"> 
+			<input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}"> 
+			<input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
 		</form>
 		<div class="con_contnr">
 			<div class="con">
+			<input type="hidden" id="member_no" name="member_no"value="${sMNo}">
 			<div class="prev_month_contnr">
 				<form action="#" id="prev_month_form" method="post">
 					<span id="mthNYear_of_today" hidden="" ></span>

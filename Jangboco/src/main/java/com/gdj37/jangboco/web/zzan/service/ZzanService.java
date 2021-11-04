@@ -19,4 +19,10 @@ public class ZzanService implements IZzanService {
 		return iZzanDao.getMarketList(params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getItemList(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return iZzanDao.getItemList(params);
+	}
+
 }

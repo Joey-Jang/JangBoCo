@@ -38,7 +38,7 @@ public class accbkController {
 	//가계부 메인페이지
 	@RequestMapping(value = "/accbkMain")
 	public ModelAndView accbkMain(@RequestParam HashMap<String, String> params,
-								 ModelAndView mav,
+									ModelAndView mav,
 								 HttpSession session)throws Throwable {
 		int homeFlag = 0;
 		int menuIdx = 2;
@@ -47,14 +47,14 @@ public class accbkController {
 		mav.addObject("menuIdx", menuIdx);
 		mav.addObject("subMenuIdx", subMenuIdx);
 		
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) { 
+			mav.addObject("member_no",session.getAttribute("sMNo"));
+			mav.setViewName("jangboco/accbk/accbkMain"); 
+		} else {
+			mav.setViewName("redirect:loginMain"); 
+		}
 		
-		if(!"".equals(session.getAttribute("sMNo")) &&
-		session.getAttribute("sMNo")!=null) { mav.addObject("page_member_no",
-		session.getAttribute("sMNo"));
-		
-		mav.setViewName("jangboco/diary/writeDiary"); } else {
-		mav.setViewName("redirect:loginMain"); }
-		
+		//HashMap<String, String> params = new HashMap<String, String>();
 		
 		DecimalFormat df = new DecimalFormat("00");
         Calendar currentCalendar = Calendar.getInstance();
@@ -64,8 +64,17 @@ public class accbkController {
         
         String yearNMonth = thisYear+ '-'+thisMonth;
         
-        
+		/*
+		 * String memberNo = (String)session.getAttribute("sMNo");
+		 * System.out.println("멤버넘버 어떻게 받는거징 ??? " +memberNo);
+		 */
+		 
+        System.out.println("제발제발 !!!!!!!!!"+session.getAttribute("sMNo"));
+        System.out.println("이거는?????????!"+String.valueOf(session.getAttribute("sMNo")));
 		params.put("buy_date",yearNMonth);
+		params.put("member_no",String.valueOf(session.getAttribute("sMNo")));
+		//params.put("member_no",(String)session.getAttribute("sMNo"));
+		
 		
 		HashMap<String, String> getThisMonthSpend = accbkiService.getThisMonthSpend(params);
 		
@@ -89,8 +98,6 @@ public class accbkController {
 		mav.addObject("getLeastSpendDay", getLeastSpendDay);
 		mav.addObject("getMostSpendItems", getMostSpendItems);
 		mav.addObject("getLeastSpendWeek", getLeastSpendWeek);
-		
-		mav.setViewName("jangboco/accbk/accbkMain");
 		
 		return mav;
 	}
@@ -117,7 +124,15 @@ public class accbkController {
 	//가계부 차트페이지
 	@RequestMapping(value = "/accbkChart")
 	public ModelAndView accbkChart(@RequestParam HashMap<String, String> params,
-								 ModelAndView mav) {
+								 ModelAndView mav,
+								 HttpSession session) {
+		
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) { 
+			mav.addObject("member_no",session.getAttribute("sMNo"));
+			mav.setViewName("jangboco/accbk/accbkChart"); 
+		} else {
+			mav.setViewName("redirect:loginMain"); 
+		}
 		
 		int homeFlag = 0;
 		int menuIdx = 2;
@@ -133,9 +148,6 @@ public class accbkController {
 		
 		params.put("thisMonth",thisMonth);
 		
-		
-		
-		mav.setViewName("jangboco/accbk/accbkChart");
 		
 		return mav;
 	}
@@ -202,7 +214,16 @@ public class accbkController {
 	//기본 페이지를 띄워주기 위한 주소 mapping
 	@RequestMapping(value = "/accbkR")
 	public ModelAndView accbkR(@RequestParam HashMap<String, String> params,
-								ModelAndView mav) {
+								ModelAndView mav,
+								HttpSession session) {
+		
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) { 
+			mav.addObject("member_no",session.getAttribute("sMNo"));
+			mav.setViewName("jangboco/accbk/accbkR"); 
+		} else {
+			mav.setViewName("redirect:loginMain"); 
+		}
+		
 		int homeFlag = 0;
 		int menuIdx = 2;
 		int subMenuIdx = 2;
@@ -218,7 +239,6 @@ public class accbkController {
 		
 		mav.addObject("page",page);
 		
-		mav.setViewName("jangboco/accbk/accbkR");
 		
 		return mav;
 	}
@@ -257,7 +277,16 @@ public class accbkController {
 	
 	
 	@RequestMapping(value = "/accbkC")
-	public ModelAndView accbkC(@RequestParam HashMap<String, String> params, ModelAndView mav) throws Throwable {
+	public ModelAndView accbkC(@RequestParam HashMap<String, String> params, 
+								ModelAndView mav,
+								HttpSession session) throws Throwable {
+		
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) { 
+			mav.addObject("member_no",session.getAttribute("sMNo"));
+			mav.setViewName("jangboco/accbk/accbkC"); 
+		} else {
+			mav.setViewName("redirect:loginMain"); 
+		}
 		
 		//List<HashMap<String, String>> marketList =  accbkiService.getMarketList(params);
 		List<HashMap<String, String>> itemsList = accbkiService.getItemsList(params);
@@ -351,7 +380,7 @@ public class accbkController {
 		
 		if (params.get("update_no")!=null) {
 			
-			mav.setViewName("jangboco/accbk/accbkU");
+			mav.setViewName("jangboco/accbk/accbkUpdate");
 			
 			List<HashMap<String, String>> list =  accbkiService.getMarketList(params);
 			List<HashMap<String, String>> itemsList = accbkiService.getItemsList(params);

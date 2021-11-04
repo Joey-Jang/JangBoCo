@@ -64,6 +64,27 @@ public class ZzanController {
 		
 	}
 	
+	@RequestMapping(value="/ItemListAjax", method = RequestMethod.POST,
+			produces = "text/json;charset=UTF-8")
+	@ResponseBody //Spring에게 돌려주는 내용이 이미 완성된 view임을 제시
+				//(단계를 스킵한다고 생각하면됨, viewresolver랑 view를 거치지않겠다)
+	public String ItemListAjax(@RequestParam HashMap<String,String> params) throws Throwable{
+		//modelandview 필요없음, string보낼거니까
+		ObjectMapper mapper = new ObjectMapper();//jackson 객체 : 여러 형태를 담을 수 있고, 그것을 문자열로 바꿀수있음 
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>(); //데이터를 담을 map
+	
+		//리스트 조회
+		List<HashMap<String,String>> list = iZzanService.getItemList(params);
+		
+		//데이터 담기
+		modelMap.put("list", list);
+		
+		//데이터를 문자열화
+		return mapper.writeValueAsString(modelMap);
+		
+	}
+	
 	@RequestMapping(value = "/zzanDataTest")
 	public ModelAndView testMList(@RequestParam HashMap<String, String> params,
 								ModelAndView mav) throws Throwable {
