@@ -136,7 +136,7 @@ function drawList(list){
       html += "<div class=\"card-thumbnail\">";
       html += "<span class=\"card-thumbnail-views\">"+data.HIT_NUM+"</span>";
       if(data.IMG_URL!=null){
-       	html += "<img class=\"full-img\" src=\"resources/upload/"+ data.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "\" alt=\"썸네일\">";    	  
+       	html += "<img class=\"full-img\" src=\"https://image.jangboco.ga/"+ data.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "\" alt=\"썸네일\">";    	  
       } else {
       	html += "<img class=\"full-img\" src=\"resources/images/diaryImages/1.jpg\" alt=\"썸네일\">";
       }
