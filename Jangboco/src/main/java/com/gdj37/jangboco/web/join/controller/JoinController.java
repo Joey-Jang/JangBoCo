@@ -129,7 +129,7 @@ public class JoinController {
         Random random = new Random();
         int checkNum = random.nextInt(888888) + 111111;
         
-        String subject = "test 메일";
+        String subject = "장보코 인증메일입니다";
         String content = 
         		"홈페이지를 방문해주셔서 감사합니다"+
         		"<br><br>" +
