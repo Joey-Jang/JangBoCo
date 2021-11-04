@@ -951,10 +951,10 @@ function drawDiaryImgItemTag(diaryImgList) {
 			itemTagHtml += " cost=\"" + itemTagData.COST + "\">";
 			itemTagHtml += "	<div class=\"items_img\" ";
 			if(itemTagData.IMG_URL!=undefined) {
-				itemTagHtml += " style=\"background:center / cover no-repeat url('resources/upload/";
+				itemTagHtml += " style=\"background:center / cover no-repeat url('resources/images/itemsInfo/";
 				itemTagHtml += itemTagData.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "');\">";
 			}
-			itemTagHtml += "	></div>";
+			itemTagHtml += "	</div>";
 			itemTagHtml += "	<button type=\"button\" class=\"del_item_tag_btn\" style=\"display:none;\">";
 			itemTagHtml += "	<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"feather feather-x\">";
 			itemTagHtml += "	<line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line>";

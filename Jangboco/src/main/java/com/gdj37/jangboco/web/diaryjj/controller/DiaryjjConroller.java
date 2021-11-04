@@ -689,13 +689,13 @@ public class DiaryjjConroller {
 	
 	@RequestMapping(value = "/updateDiary")
 	public ModelAndView updateDiary(@RequestParam HashMap<String, String> params, ModelAndView mav) {
-		int diaryNo = 86;
 		if(!"".equals(params.get("diary_no")) && params.get("diary_no")!=null) {
-			diaryNo = Integer.parseInt(params.get("diary_no"));
+			int diaryNo = Integer.parseInt(params.get("diary_no"));
+			mav.addObject("diaryNo", diaryNo);
+			mav.setViewName("jangboco/diary/updateDiary");
+		} else {
+			mav.setViewName("redirect:diaryMain");
 		}
-		mav.addObject("diaryNo", diaryNo);
-		
-		mav.setViewName("jangboco/diary/updateDiary");
 		
 		return mav;
 	}
