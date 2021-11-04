@@ -162,7 +162,7 @@ public class DiaryController {
 		return mapper.writeValueAsString(modelMap);
 	}
 	
-	@RequestMapping(value = "/diaryPernlPage")
+	@RequestMapping(value = "/diaryMyPage")
 	public ModelAndView diaryMypage(HttpSession session, @RequestParam HashMap<String,Object> params, ModelAndView mav) {
 		int homeFlag = 0;
 		int menuIdx = 1;
@@ -181,6 +181,23 @@ public class DiaryController {
 			mav.setViewName("redirect:loginMain");
 		}
 		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/diaryPernlPage")
+	public ModelAndView diaryPernlpage(HttpSession session, @RequestParam HashMap<String,Object> params, ModelAndView mav) {
+//		여기 고쳐야함
+		int homeFlag = 0;
+		int menuIdx = 1;
+		int subMenuIdx = 2;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		if(!"".equals(params.get("diary_member_no")) && params.get("diary_member_no")!=null) {
+			mav.addObject("page_member_no", params.get("diary_member_no"));
+			mav.setViewName("jangboco/diary/diaryPernlPage");
+		}
 		return mav;
 	}
 	
