@@ -633,7 +633,7 @@ function reloadItemsList(){
 function drawItemsList(list){
 	var html ="";
 	var i = 0;
-	
+	console.log(list.length);
 	for(var data of list){
 		if(i == 0){
 			html += "<div class = \"items_slide\">";			
@@ -648,7 +648,7 @@ function drawItemsList(list){
 		};
 		
 		html += "<div class=\"item_row\">            "               ;
-		html += "	<div class=\"item_img\"><img id=\"item_img\" src=\"resources/images/itemsInfo/"+data.IMG_URL+".jpg\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\"></div>   "               ;
+		html += "	<div class=\"item_img\"><img id=\"item_img\" src=\"resources/images/itemsInfo/"+data.IMG_URL+"_outlined.png\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\"></div>   "               ;
 		html += "	<div class=\"item_info\">        "               ;
 		html += "		<span>"+data.ITEMS_NAME +"</span><br>        "   ;
 		html += "		<span>판매규격: "+data.SELL_STD +"</span><br>        "   ;
@@ -667,7 +667,7 @@ function drawItemsList(list){
 			html += "</div>";			
 		} else if(i == 15){
 			html += "</div>";			
-		} else if(i == list.length-1){
+		} else if(i == list.length){
 			html += "</div>";			
 		};
 		i++;
@@ -1215,6 +1215,7 @@ function deleteEventLike(){
 				  <span class="dot" onclick="currentSlide(2)"></span>
 				  <span class="dot" onclick="currentSlide(3)"></span>
 				  <span class="dot" onclick="currentSlide(4)"></span>
+				  <span class="dot" onclick="currentSlide(5)"></span>
 				</div>				
 	            
 	            <div class="event_list_wrap">	            	

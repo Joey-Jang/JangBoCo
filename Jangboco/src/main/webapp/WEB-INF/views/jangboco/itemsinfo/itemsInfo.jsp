@@ -300,6 +300,98 @@
 	#first_btn {
 		border-left:1px solid #C4C4C4;
 	}
+	
+	.recipe_modal{
+		display: none;
+		background: #dff4e8;
+		border-radius: 20px;
+    	z-index: 3;
+    	position: absolute;
+	    width: 2305px;
+	    height: 1261px;
+	    font-family: 'Noto Sans KR', sans-serif;
+	    font-size: 11pt;
+	    font-weight: 400;
+	}
+	
+	.recipe_contnr{
+		width: 680px;
+	    background-color: #FFFFFF;
+	    padding: 10px;
+	    border-radius: 10px;
+	    position: relative;
+	    margin: auto;
+	    top: 20%;
+	}
+	
+	.recipe_title{
+		font-size: 35px;
+	    margin-bottom: 10px;
+	    display: block;
+	    text-align: center;
+	}
+	
+	.recipe_info_contnr{
+	    display: flex;
+	    flex-direction: row;
+	    padding: 15px;
+	    border: 1px solid #03A64A;
+	    border-radius: 10px;
+	}
+	
+	.recipe_info_img_contnr{
+		width: 200px;
+    	height: 200px;
+	}
+	
+	#recipe_img{
+		width: 100%;
+	    height: 100%;
+	}
+	
+	.recipe_nuttn_info_contnr{
+		width: auto;
+	    padding: 15px;
+	    font-size: 16px;
+	}
+	
+	.recipe_matrl_contnr{
+		width: 275px;
+	}
+	.recipe_matrl{
+		display: block;
+   		text-align: center;
+	}
+	.recipe_manual_contnr {
+		display: flex;
+	    flex-direction: row;
+	    flex-wrap: wrap;
+	    width: 100%;
+	    border: 1px solid #03A64A;
+	    border-radius: 10px;
+	    margin-top: 10px;		
+	}
+	
+	.recipe_manaul_img_con_contnr{
+	    display: flex;
+	    width: 50%;
+	    padding: 5px;
+	}
+	
+	.recipe_manual_img{
+	    width: 119px;
+    	height: 80px;
+	}
+	.manual_img {
+		width: 119px;
+	    height: 80px;
+	    border-radius: 10px;
+	}
+	.recipe_manual{
+		width: 100%;
+	    height: 80px;
+	    overflow: auto;
+	}	
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
@@ -339,11 +431,14 @@ $(document).ready(function(){
 	});
     
     $("tbody").on("click","#go_recipe_dtl",function(){
-		$("#recipe_no").val($(this).attr("no"));
-		
-		$("#cook_recipe_form").attr("action","recipeDtl");
-		$("#cook_recipe_form").submit();
+		$("#recipe_no").val($(this).attr("no"));		
+		reloadRecipeDtl();
+		$(".recipe_modal").show();
 	});
+    
+    $(".recipe_modal").on("click",function(){
+    	$(".recipe_modal").hide();    	   	
+    });
         
 });
 
@@ -360,7 +455,7 @@ function reloaditemsInfo(){
 			drawLineChart(res);
 			drawDisctChart(res);
 			$("#matrl_name").val(res.matrlName);
-			$(".items_img").html("<img id=\"items_img\" src=\"resources/images/itemsInfo/"+res.matrlName+".jpg\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">")
+			$(".items_img").html("<img id=\"items_img\" src=\"resources/images/itemsInfo/"+res.matrlName+"_outlined.png\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">")
 			$("#items_info_title").text(res.matrlName + " ▼ ");
 			console.log("레시피리로드 실행")
 			reloadRecipe();
@@ -568,6 +663,250 @@ function drawItemsChoiceDtl(list){
 	$("#items_choice_dtl").html(html);
 }
 
+function reloadRecipeDtl(){	
+	var params = $("#cook_recipe_form").serialize();
+	
+	$.ajax({
+		url: "recipeDtlAjax", 
+		type: "post", 
+		dataType: "json", 
+		data: params, 
+		success : function(res) {			
+			drawRecipeDtl(res.recipe);
+		},
+		error: function(request, status, error) { 
+			console.log(error);
+		}
+	});
+}
+
+function drawRecipeDtl(data){
+	var html = "";		
+	
+	html += "<span class=\"recipe_title\">"+ data.RECIPE_NAME +"</span>                           ";
+	html += "<div class=\"recipe_info_contnr\">                                      ";
+	html += "	<div class=\"recipe_info_img_contnr\">                               ";
+	html += "		<img id=\"recipe_img\" alt=\"\" src=\""+ data.ATT_FILE_MAIN +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">               ";
+	html += "	</div>	        		                                           ";
+	html += "	<div class=\"recipe_nuttn_info_contnr\">                             ";
+	html += "		<span>조리방법: "+ data.RECIPE_WAY2 +"</span><br>                         ";
+	html += "		<span>요리종류: "+ data.RECIPE_PAT2 +"</span><br>                         ";
+	html += "		<span>열량: "+ data.INFO_ENG +"</span><br>	        				       ";
+	html += "		<span>탄수화물: "+ data.INFO_CAR +"</span><br>	        				   ";
+	html += "		<span>단백질: "+ data.INFO_PRO +"</span><br>	        				   ";
+	html += "		<span>지방: "+ data.INFO_FAT +"</span><br>	        				       ";
+	html += "		<span>나트륨: "+ data.INFO_NA +"</span><br>	        				   ";
+	html += "	</div>	        		                                           ";
+	html += "	<div class=\"recipe_matrl_contnr\">";
+	html += "		<span class=\"recipe_matrl\">재료정보</span>";
+	html += "		<span>"+ data.RECIPE_PARTS_DTLS +"</span>";
+	html += "	</div>    ";
+	html += "</div>                                                                ";
+	html += "<div class=\"recipe_manual_contnr\">                                    ";
+	if(data.MANUAL1 != null && data.MANUAL1 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG1 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL1 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL2 != null && data.MANUAL2 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG2 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL2 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL3 != null && data.MANUAL3 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG3 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL3 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL4 != null && data.MANUAL4 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG4 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL4 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL5 != null && data.MANUAL5 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG5 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL5 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL6 != null && data.MANUAL6 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG6 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL6 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL7 != null && data.MANUAL7 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG7 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL7 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL8 != null && data.MANUAL8 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG8 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL8 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL9 != null && data.MANUAL9 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG9 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL9 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL10 != null && data.MANUAL10 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG10 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL10 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL11 != null && data.MANUAL11 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG11 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL11 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL12 != null && data.MANUAL12 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG12 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL12 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL13 != null && data.MANUAL13 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG13 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL13 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL14 != null && data.MANUAL14 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG14 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL14 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL15 != null && data.MANUAL15 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG15 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL15 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL16 != null && data.MANUAL16 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG16 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL16 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL17 != null && data.MANUAL17 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG17 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL17 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL18 != null && data.MANUAL18 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG18 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL18 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL19 != null && data.MANUAL19 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG19 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL19 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}
+	if(data.MANUAL20 != null && data.MANUAL20 !=''){
+		html += "	<div class=\"recipe_manaul_img_con_contnr\">                         ";
+		html += "		<div class=\"recipe_manual_img\">                                ";
+		html += "			<img class=\"manual_img\" src=\""+ data.MANUAL_IMG20 +"\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\">                           ";
+		html += "		</div>                                                         ";
+		html += "		<div class=\"recipe_manual\">                                    ";
+		html += "			<span>"+ data.MANUAL20 +"</span>                                        ";
+		html += "		</div>                                                         ";
+		html += "	</div>	        		                                           ";
+	}	
+	html += "</div>                                                                ";		
+	$(".recipe_contnr").html(html);
+}
+
 function reloadJangbcList(){
 		
 }
@@ -581,7 +920,11 @@ function reloadJangbcList(){
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
    </form>
-    <div class="con_contnr">
+   	<div class="recipe_modal">
+	   	<div class="recipe_contnr">	        	
+	    </div>
+	</div>
+    <div class="con_contnr">    	
         <div class="con">
         	<form action="#" id="items_info_form" method="post">
         		<input type="hidden" id="items_no" name="itemsNo" value="${itemsNo}">
