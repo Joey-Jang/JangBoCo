@@ -632,7 +632,7 @@ public class JoinController {
 		
 		System.out.println(params);
 		String memberType = params.get("member_type");
-		String pageUrl = "jangboco/join/";
+//		String pageUrl = "jangboco/join/";
 		if(memberType.equals("0")) {
 			//관리자
 			session.setAttribute("memberType", memberType);
@@ -640,20 +640,21 @@ public class JoinController {
 		} else if (memberType.equals("1")) {
 			//일반
 			System.out.println("일반 로그인성공");
-			pageUrl += "pernlPage";
+//			pageUrl += "pernlPage";
 			session.setAttribute("memberType", memberType);
 			session.setAttribute("email", params.get("email"));
 		} else if (memberType.equals("2")){
 			//마켓
 			System.out.println("마켓 로그인성공");
-			pageUrl += "marketPage";
+//			pageUrl += "marketPage";
 			session.setAttribute("memberType", memberType);
 			session.setAttribute("email", params.get("email"));
 		}
 		HashMap<String, Object> member_info = iJoinService.getMemberInfo(params.get("email"));
 		session.setAttribute("sMNo", member_info.get("MEMBER_NO"));
 		session.setAttribute("sNicnm", member_info.get("NICNM"));
-		mav.setViewName(pageUrl);
+//		mav.setViewName(pageUrl);
+		mav.setViewName("redirect:home");
 		return mav;
 	}
 	
