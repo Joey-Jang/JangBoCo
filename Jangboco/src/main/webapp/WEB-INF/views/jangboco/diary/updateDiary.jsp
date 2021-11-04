@@ -36,7 +36,6 @@
 			<input type="file" accept="image/*" id="att_change_diary_img" name="att_change_diary_img">
 		</form>
 		<form action="#" id="action_form" class="hidden_tag" method="post">
-			<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
 	      	<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">
 		</form>
 		

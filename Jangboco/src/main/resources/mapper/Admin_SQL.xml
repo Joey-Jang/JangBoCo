@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Admin">
+	<select id="cntMember" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_TYPE = 1
+		<if test="search_txt != null and search_txt != ''">
+			<choose>
+				<when test="search_gbn eq 0">
+					AND EMAIL LIKE '%' || #{search_txt} || '%'
+				</when>
+				<when test="search_gbn eq 1">
+					AND NAME LIKE '%' || #{search_txt} || '%'
+				</when>
+				<when test="search_gbn eq 2">
+					AND NICNM LIKE '%' || #{search_txt} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<select id="getMemberList" parameterType="hashmap" resultType="hashmap">
+		SELECT MEMBER_NO, EMAIL, NAME, NICNM, ZIPCD, ADDRS, DTL_ADDRS, REGST_DATE, WITWL_DATE, SOCIAL_TYPE
+		FROM (	SELECT MEMBER_NO, EMAIL, NAME, NICNM, ZIPCD, ADDRS, DTL_ADDRS,
+				TO_CHAR(REGST_DATE, 'YY/MM/DD') AS REGST_DATE, TO_CHAR(WITWL_DATE, 'YY/MM/DD') AS WITWL_DATE, SOCIAL_TYPE,
+				ROW_NUMBER() OVER(ORDER BY MEMBER_NO DESC) AS RNUM
+				FROM MEMBER
+				WHERE MEMBER_TYPE = 1
+				<if test="search_txt != null and search_txt != ''">
+					<choose>
+						<when test="search_gbn eq 0">
+							AND EMAIL LIKE '%' || #{search_txt} || '%'
+						</when>
+						<when test="search_gbn eq 1">
+							AND NAME LIKE '%' || #{search_txt} || '%'
+						</when>
+						<when test="search_gbn eq 2">
+							AND NICNM LIKE '%' || #{search_txt} || '%'
+						</when>
+					</choose>
+				</if>
+			 )
+		WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+</mapper>

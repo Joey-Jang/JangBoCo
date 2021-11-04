@@ -94,7 +94,15 @@ public class ItemsInfoController {
 		
 		try {
 			HashMap<String, String> list = iItemsInfoService.getItemsInfo(params);
-			
+			System.out.println("=========================");
+			System.out.println(list.get("ITEMS_NAME"));
+			System.out.println("=========================");
+			String str = list.get("ITEMS_NAME");
+			String matrlName = str;
+			if(str.indexOf("(") != -1 ) {
+				matrlName = str.substring(0, str.indexOf("("));				
+			}
+			System.out.println(matrlName);
 			// 선형 차트 데이터
 			List<HashMap<String, String>> lineChartlist = iPricesChartService.getLineDataList(params);
 			List<String> dateList = iPricesChartService.getDateList(params);
@@ -107,6 +115,7 @@ public class ItemsInfoController {
 			modelMap.put("dateList", dateList);
 			modelMap.put("itemNameList", itemNameList);
 			modelMap.put("disctChartList", disctChartList);
+			modelMap.put("matrlName", matrlName);
 		} catch (Exception e) {
 			 e.printStackTrace();
 		}
@@ -151,7 +160,7 @@ public class ItemsInfoController {
 			JSONArray recipeList = (JSONArray)cookrcp01.get("row");
 			
 			int page = Integer.parseInt(params.get("page"));
-			PagingBean pb = iPagingService.getPagingBean(page, totalCnt);				
+			PagingBean pb = iPagingService.getPagingBean(page, totalCnt,5,5);				
 			
 			for(int i = 0; i<recipeList.size(); i++) {
 				String artclNo = ""+(recipeList.size()-i);				
@@ -159,8 +168,6 @@ public class ItemsInfoController {
 				JSONObject recipeRow = (JSONObject)recipeList.get(i);
 				
 				recipeRow.put("artclNo", artclNo);
-				
-				System.out.println(recipeRow.get("artclNo")); 
 			}		
 			
 			modelMap.put("pb", pb);			
@@ -177,11 +184,14 @@ public class ItemsInfoController {
 	public ModelAndView recipeDtl(@RequestParam HashMap<String, String> params,
 								ModelAndView mav) {
 		
-		String recipeNo = params.get("recipeNo");
-		System.out.println(recipeNo);
-		mav.addObject("recipeNo", recipeNo);
-		
-		mav.setViewName("jangboco/itemsinfo/recipeDtl");
+		String recipeNo = params.get("recipeNo");		
+		if(recipeNo != null && recipeNo != "") {
+			mav.addObject("recipeNo", recipeNo);
+			
+			mav.setViewName("jangboco/itemsinfo/recipeDtl");			
+		} else {
+			mav.setViewName("redirect:/itemsInfo");
+		}		
 		
 		return mav;
 	}
@@ -199,6 +209,36 @@ public class ItemsInfoController {
 			HashMap<String, String> recipe = iRecipeService.getRecipeDtl(params);
 			
 			modelMap.put("recipe", recipe);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		
+		return mapper.writeValueAsString(modelMap); 
+	}
+	
+	@RequestMapping(value="/itemsChoiceAjax", method= RequestMethod.POST,
+			produces = "text/json;charset=UTF-8" )
+	@ResponseBody
+	public String itemsChoiceAjax(@RequestParam HashMap<String, String> params) 
+				throws Throwable{
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Map<String, Object> modelMap = new HashMap<String, Object>();	
+		System.out.println(params);
+		String itemsName = params.get("itemsName");
+		System.out.println(params.get("itemsName"));
+		
+		if(itemsName != null && itemsName != "") {			
+			itemsName= itemsName.replace(',', '|');
+		}
+		params.put("itemsName", itemsName);
+		
+		try {
+			
+			List<HashMap<String, String>> list = iItemsInfoService.getItemsChoiceList(params);
+			
+			modelMap.put("list", list);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

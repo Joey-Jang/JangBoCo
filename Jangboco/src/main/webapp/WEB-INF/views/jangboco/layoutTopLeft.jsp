@@ -52,7 +52,7 @@
 		            <li action="">
 		                <div class="menu_icon"></div>
 		                <div class="menu_icon_hover"></div>
-		                <span class="menu_text">회원이름</span>
+		                <span class="menu_text">${sNicnm}</span>
 		            </li>
 		            <li action="logout">
 		                <div class="menu_icon"></div>
@@ -126,7 +126,7 @@
                 </li>
             </ul>
             <ul class="sub_menu user_center">
-                <li action="">
+                <li action="noticeR">
                     <span class="sub_menu_text">공지</span>
                 </li>
                 <li action="">

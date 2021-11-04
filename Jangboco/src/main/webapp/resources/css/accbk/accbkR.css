@@ -2,12 +2,27 @@
 
 /* ACCBKR */
 
-
  main {
-		min-height: 820px;
-		min-width: 1200px;
-	}
+	min-height: 820px;
+	min-width: 1200px;
+}
 	 
+
+.chkbx_all {
+	display: none;	
+}
+
+.chkbx_pernl {
+	display: none;	
+}
+#select_del_btn {
+	display: none;		
+}
+#del_cancel_btn {
+	display: none;		
+}
+
+
 
 /* .con {
 	display: flex;
@@ -77,4 +92,38 @@ tbody tr {
 .paging_btn:hover{
 	background-color: #03A64A20;
 	cursor: pointer;
+}
+
+.update_btn {
+	width : 30px;
+	height: 20px;
+	border:1px solid #03A64A;
+	border-radius:10px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+}
+
+.update_btn:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
+}
+.write_btn, .del_btn {
+	width : 50px;
+	height: 30px;
+	border:1px solid #03A64A;
+	border-radius:5px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
 }

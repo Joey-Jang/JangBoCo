@@ -59,8 +59,10 @@
 		GROUP BY MEMBER_TYPE 
 	</select>
 	
-	<select id="getMemberNo" parameterType="String" resultType="Integer">
-		SELECT MEMBER_NO FROM MEMBER WHERE EMAIL = #{0}
+	<select id="getMemberInfo" parameterType="String" resultType="hashmap">
+		SELECT MEMBER_NO, NICNM
+		FROM MEMBER
+		WHERE EMAIL = #{0}
 	</select>
 	
 	<select id="findPw" parameterType="String" resultType="Integer"> 

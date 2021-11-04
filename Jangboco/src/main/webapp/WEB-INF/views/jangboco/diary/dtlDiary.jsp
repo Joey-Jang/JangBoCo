@@ -31,7 +31,6 @@
 	
     <div class="con_contnr">
        	<form action="#" id="action_form" class="action_form" method="post">
-			<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
        		<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">
        		<input type="hidden" id="diary_member_no" name="diary_member_no">
 			<input type="hidden" id="prev_home_flag" name="home_flag">

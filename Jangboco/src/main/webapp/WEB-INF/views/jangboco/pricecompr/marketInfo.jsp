@@ -52,10 +52,12 @@
 		margin-top: 20px;
 		padding-bottom: 20px;
 		border-bottom: 1px solid #C4C4C4;
+		justify-content:center;
 		width: 100%;
 	}
 	
 	.market_info_con{
+		position:relative;
 		width: 320px;
 		margin-right: 15px;		
 	}
@@ -72,8 +74,8 @@
 		display:none;		
 		position: absolute;
 		z-index:1000;
-		left: 550px;
-		top: 249px;
+	    left: 25px;
+	    top: 80px;
 		border: 5px solid #03A64A20;
 		border-radius: 10px;
 		background-color: #FFFFFF;
@@ -95,16 +97,8 @@
 		width: 200px;
 		height:200px;
 	}
+			
 	
-	.blank_contnr{
-		width: calc(100% - 1060px);
-	}
-	
-	.diary_list_contnr{
-		width:410px;
-		border: 1px solid;
-		margin-right: 45px;	
-	}
 	
 	.items_list{
 		padding-top: 20px;
@@ -124,15 +118,23 @@
 	
 	}
 	.item_img{
-		border: 1px solid silver;
+		border-bottom: 1px solid silver;
 		width : 150px;
 		height: 150px;
+		background-color: #dff4e8;
 	}
+	
+	#item_img{
+		width: 100%;
+		height: 100%;		
+	}
+	
 	.item_info{
-		border: 1px solid silver;
+		border-bottom: 1px solid silver;
 		width : 290px;
 		height: 150px;
 		padding: 5px;
+		background-color: #dff4e8;
 	}
 	
 	.item_info>span:nth-child(1){
@@ -213,7 +215,7 @@
 	#search_box {
 		position : relative;
 		margin: auto;
-		width: 225px;
+		width: 240px;
 		margin-top: 10px;
 	}
 	
@@ -245,6 +247,125 @@
 		border-left:1px solid #C4C4C4;
 	}
 	
+	/* *********************************************************** */
+	/* *********************************************************** */
+	/* 다이어리 */
+	/* *********************************************************** */
+	/* *********************************************************** */
+	.jangbc_diary_contnr{
+  		position: relative;    
+    	width: 420px;
+    	margin-right: 45px;
+	}
+	
+	.jangbc_diary_slides{
+	    width: 410px;
+	    margin: auto;
+    	display: none;
+	}	
+	.full-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	
+	.card-wrapper {
+	  width: 100%;
+	  display: flex;
+	  flex-wrap: wrap;
+	  height: calc(100% - 90px);
+	}
+	.card {
+	  width: 50%;
+	  height: 50%;
+	  padding: 15px;
+	  background: white;
+	}
+	.card-header {
+	  height: 40px;
+	  margin-bottom: 5px;
+	  padding: 0 10px;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	}
+	.card-user {
+	  display: flex;
+	  align-items: center;
+	}
+	.card-user-profile {
+	  width: 32px;
+	  height: 32px;
+	  border-radius: 20px;
+	  overflow: hidden;
+	}
+	.card-like {
+	  display: flex;
+	  align-items: end;
+	}
+	.card-like img {
+	  width: 25px;
+	}
+	.card-like span {
+	  display: block;
+	  margin-left: 5px;
+	}
+	.card-user-name {
+	  margin-left: 5px;
+	  font-weight: bold;
+	}
+	.card-thumbnail {
+	  position: relative;
+	  width: 100%;
+	  height: 70%;
+	  overflow: hidden;
+	  border-radius: 10px;
+	}
+	.card-thumbnail-views {
+	  position: absolute;
+	  right: 10px;
+	  bottom: 10px;
+	  font-size: 14px;
+	  opacity: 0.8;
+	  color: #fff;
+	}
+	.card-contents {
+	  margin-top: 10px;
+	  padding: 0 10px;
+	  line-height: 1.2;
+	  height: 20px;
+	  overflow: hidden;
+	}
+	
+	/* Next & previous buttons */
+	.prev, .next {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 50%;
+	  width: auto;
+	  margin-top: -22px;
+	  padding: 16px;
+	  color: #03A64A;
+	  font-weight: bold;
+	  font-size: 18px;
+	  transition: 0.6s ease;
+	  border-radius: 3px 0 0 3px;
+	  user-select: none;
+	}
+	.prev {
+		left:-22px;
+	}	
+	/* Position the "next button" to the right */
+	.next {
+      right: -22px;
+	  border-radius: 0 3px 3px 0;
+	}
+	
+	/* On hover, add a black background color with a little bit see-through */
+	.prev:hover, .next:hover {
+	  background-color: #03A64A;
+	  color:#FFFFFF;
+	}
 	
 	/* *********************************************************** */
 	/* *********************************************************** */
@@ -527,7 +648,7 @@ function drawItemsList(list){
 		};
 		
 		html += "<div class=\"item_row\">            "               ;
-		html += "	<div class=\"item_img\"></div>   "               ;
+		html += "	<div class=\"item_img\"><img id=\"item_img\" src=\"resources/images/itemsInfo/"+data.IMG_URL+".jpg\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\"></div>   "               ;
 		html += "	<div class=\"item_info\">        "               ;
 		html += "		<span>"+data.ITEMS_NAME +"</span><br>        "   ;
 		html += "		<span>판매규격: "+data.SELL_STD +"</span><br>        "   ;
@@ -925,18 +1046,7 @@ function deleteEventLike(){
     <div class="con_contnr">
     	<div class="event_dtl_modal">	       	
 	     </div>  
-        <div class="con">
-        	<div class="market_info_addrs_contnr">
-        	<c:choose>
-           		<c:when test="${!empty marketMemberNo}">
-		           <span>${marketInfo.ADDRS} ${marketInfo.DTL_ADDRS}</span>			            	
-           		</c:when>
-           		<c:otherwise>           			
-           			<span>${marketInfo.MARKET_ADDRS}</span>	            				
-        		</c:otherwise>
-			</c:choose>
-				
-           	</div>
+        <div class="con">        	
         	<div class="back_btn_contnr">
 	        	<button type="button" class="btn" id="back_btn">
 		        	<img class="btn_img" src = "resources/images/intgrevent/back_button.svg">     	
@@ -947,6 +1057,16 @@ function deleteEventLike(){
 	            <div class="market_info_contnr">
 	            	<div class="market_img"></div>
 	            	<div class="market_info_con">
+	            		<div class="market_info_addrs_contnr">
+				        	<c:choose>
+				           		<c:when test="${!empty marketMemberNo}">
+						           <span>${marketInfo.ADDRS} ${marketInfo.DTL_ADDRS}</span>			            	
+				           		</c:when>
+				           		<c:otherwise>           			
+				           			<span>${marketInfo.MARKET_ADDRS}</span>	            				
+				        		</c:otherwise>
+							</c:choose>				
+			           	</div>
 	            		<c:choose>
 	            			<c:when test="${!empty marketMemberNo}">
 				            	<span>${marketInfo.MARKET_NAME} ${marketInfo.BRANCH_NAME}</span>				            	
@@ -961,9 +1081,119 @@ function deleteEventLike(){
 	            			</c:otherwise>
 	            		</c:choose>
 	            	</div>
-	            	<div class="blank_contnr"></div>
-	            	<div class="diary_list_contnr">
+	            	
+	            	<div class="jangbc_diary_contnr">
+	            		<div class="jangbc_diary_slides">
+		            		<div class="card-wrapper">
+			            		<div class="card">            		
+			            			<div class="card-header">
+			            				<div class="card-user">
+			            					<div class="card-user-profile">
+			            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+			            					</div>
+			            					<p class="card-user-name">닉네임</p>
+			            				</div>
+			            				<div class="card-like">
+			            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+			            					<span>0</span>
+			            				</div>
+			            			</div>
+			            			<div class="card-thumbnail">
+			            				<span class="card-thumbnail-views">조회수...</span>
+			            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+			            			</div>
+			            			<div class="card-contetns">다이어리 내용</div>
+			            		</div>
+			            		<div class="card">            		
+			            			<div class="card-header">
+			            				<div class="card-user">
+			            					<div class="card-user-profile">
+			            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+			            					</div>
+			            					<p class="card-user-name">닉네임</p>
+			            				</div>
+			            				<div class="card-like">
+			            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+			            					<span>0</span>
+			            				</div>
+			            			</div>
+			            			<div class="card-thumbnail">
+			            				<span class="card-thumbnail-views">조회수...</span>
+			            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+			            			</div>
+			            			<div class="card-contetns">다이어리 내용</div>
+			            		</div>
+		              		</div>
+		            	</div>
+		            	
+		            	<div class="jangbc_diary_slides">
+		            		<div class="card-wrapper">
+			            		<div class="card">            		
+			            			<div class="card-header">
+			            				<div class="card-user">
+			            					<div class="card-user-profile">
+			            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+			            					</div>
+			            					<p class="card-user-name">닉네임</p>
+			            				</div>
+			            				<div class="card-like">
+			            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+			            					<span>0</span>
+			            				</div>
+			            			</div>
+			            			<div class="card-thumbnail">
+			            				<span class="card-thumbnail-views">조회수...</span>
+			            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+			            			</div>
+			            			<div class="card-contetns">다이어리 내용</div>
+			            		</div>
+			            		<div class="card">            		
+			            			<div class="card-header">
+			            				<div class="card-user">
+			            					<div class="card-user-profile">
+			            						<img class="full-img" alt="프로필" src="resources/images/diaryImages/profile.png">
+			            					</div>
+			            					<p class="card-user-name">닉네임</p>
+			            				</div>
+			            				<div class="card-like">
+			            					<img alt="좋아요" src="resources/images/diaryImages/heart.png">
+			            					<span>0</span>
+			            				</div>
+			            			</div>
+			            			<div class="card-thumbnail">
+			            				<span class="card-thumbnail-views">조회수...</span>
+			            				<img class="full-img" src="resources/images/diaryImages/1.jpg">            				
+			            			</div>
+			            			<div class="card-contetns">다이어리 내용</div>
+			            		</div>
+		              		</div>  			
+		            	</div>
+		            	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  						<a class="next" onclick="plusSlides(1)">&#10095;</a>
 	            	</div>
+	            	<script type="text/javascript">
+			            var slideIndex = 1;
+			            diarySlides(slideIndex);
+			
+			            // Next/previous controls
+			            function plusSlides(n) {
+			            	diarySlides(slideIndex += n);
+			            }			            
+			
+			            function diarySlides(n) {
+			              var i;
+			              var slides = document.getElementsByClassName("jangbc_diary_slides");
+			              
+			              if (n > slides.length) {slideIndex = 1}
+			              if (n < 1) {slideIndex = slides.length}
+			              for (i = 0; i < slides.length; i++) {
+			                  slides[i].style.display = "none";
+			              }
+			              
+			              slides[slideIndex-1].style.display = "block";
+			              
+			            }
+		            </script>
 	            </div>
 	           	<form action="#" id="items_form" method="post">
 	           		<input type="hidden" name="marketNo" value="${marketNo}">

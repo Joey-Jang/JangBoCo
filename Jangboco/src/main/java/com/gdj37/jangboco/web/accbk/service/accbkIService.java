@@ -49,6 +49,8 @@ public interface accbkIService {
 
 	public List<HashMap<String, String>> getMinMax(HashMap<String, String> params)throws Throwable;
 
+	public List<HashMap<String, String>> getRichDayList(HashMap<String, String> params)throws Throwable;
+
 
 	
 

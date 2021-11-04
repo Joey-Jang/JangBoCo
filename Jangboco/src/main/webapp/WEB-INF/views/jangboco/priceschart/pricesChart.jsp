@@ -9,6 +9,174 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
+<style type="text/css">
+	main {
+	    min-width: 2555px;
+	    min-height: 1280px;
+	}
+	
+	/* 지역구별 차트 */
+	
+	#line_chart_items_choice{
+		display: none;
+		position: absolute;
+		z-index:1000;
+		background-color: #dff4e8;
+		border-radius: 10px;
+		width:350px;
+	    padding: 10px;
+        top: 30px;
+    	right: 32px;
+	}
+	
+	#chkbox_list ul {
+		list-style-type: none;
+		padding-inline-start: 0;
+	}
+	.line_chart_items_form_contnr,#chkbox_list,#chkbox_result {
+		background-color: #FFFFFF;
+		border-radius: 5px;
+	}	
+	
+	.line_choice_btn_contnr{		
+		margin-top: 5px;
+		display: flex;
+    	justify-content: center;
+	}
+	.line_choice_btn,#line_chart_btn{
+		margin-right: 5px;
+	    border: 1px solid;
+	    background-color: #03A64A;
+	    cursor: pointer;
+	    border-radius: 5px;
+	    color: #FFFFFF;
+	}
+	
+	#line_chart_btn{
+		position: absolute;
+		z-index: 999;
+		top: 30px;
+    	right: 50px;
+	}
+	
+	#chart_div{
+	 width: 100%;
+	 height: 300px;
+	}
+	
+	.line_chart_contnr{
+		position: relative;
+		background-color: #03A64A20;
+		padding: 25px;
+    	border-radius: 20px;
+	}
+	
+	/* 지역구별 차트 */
+	.disct_chart_items_choice{
+		display: none;
+		position: absolute;
+		z-index:1000;
+		background-color: #dff4e8;	    
+	    max-width: 540px;
+	    border-radius: 10px;
+	    padding: 10px;
+        bottom: 10px;
+	    right: 10px;	    
+	}
+	
+	.disct_chart_items_choice_background{
+		background-color: #FFFFFF;
+	    height: 40px;
+	    max-width: 540px;
+	    border-radius: 10px;
+	    padding: 7px;
+	    text-align: center;
+	}
+	
+	#disct_items_choice_form , .disct_choice_btn_contnr{
+		display: inline-block;
+	}
+	
+	#disct_items_choice_form,#disct_items_choice,#disct_choice_success_btn,#disct_choice_cancel_btn{
+		margin-right: 5px;
+	}
+	
+	#disct_chart_btn,.disct_choice_btn{		
+	    border: 1px solid;
+	    background-color: #03A64A;
+	    cursor: pointer;
+	    border-radius: 5px;
+	    color: #FFFFFF;
+	}
+	#disct_chart_btn{
+		position: absolute;
+		z-index: 999;
+		bottom: 35px;
+	    right: 50px;
+	}
+	
+	.disct_chart_contnr{
+		position: relative;
+		background-color: #03A64A20;
+		padding: 25px;
+    	border-radius: 20px;
+    	margin-top: 15px;
+    	height: 350px;
+	}
+	
+	/* 카테고리 차트  */	
+	.category_chart_choice{
+		display: none;
+		position: absolute;
+		z-index:1000;
+		background-color: #dff4e8;	    
+	    max-width: 540px;
+	    border-radius: 10px;
+	    padding: 10px;
+        bottom: 10px;
+	    right: 10px;	    
+	}
+	
+	.category_chart_choice_background{
+		background-color: #FFFFFF;
+	    height: 40px;
+	    max-width: 540px;
+	    border-radius: 10px;
+	    padding: 7px;
+	    text-align: center;
+	}
+	
+	#category_items_choice_form , .category_choice_btn_contnr{
+		display: inline-block;
+	}
+	
+	/* #disct_items_choice_form,#disct_items_choice,#disct_choice_success_btn,#disct_choice_cancel_btn{
+		margin-right: 5px;
+	}
+	 */
+	#category_chart_btn,.category_choice_btn{		
+	    border: 1px solid;
+	    background-color: #03A64A;
+	    cursor: pointer;
+	    border-radius: 5px;
+	    color: #FFFFFF;
+	}
+	#category_chart_btn{
+		position: absolute;
+		z-index: 999;
+		bottom: 35px;
+	    right: 50px;
+	}
+	
+	.category_chart_contnr{
+		position: relative;
+		background-color: #03A64A20;
+		padding: 25px;
+    	border-radius: 20px;
+    	margin-top: 15px;
+    	height: 350px;
+	}
+</style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
 <script type="text/javascript" src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -32,26 +200,7 @@ $(document).ready(function(){
     
     
 	$("#line_chart_btn").on("click",function(){
-		
-	});
-	
-	// 지역구 차트 품목선택시 세부목록 출력할 ajax함수 호출
-	$("#disct_items_name").on("change", function(){
-		getDisctItemsChoice();
-	});
-	
-	// 지역구 차트 품목선택 완료 버튼 클릭 이벤트
-	$("#disct_choice_success_btn").on("click", function(){
-		$("#disct_items_no").val($("#disct_items_choice").val());
-		getDisctChartData();
-	});
-	
-	// 지역구 차트 품목선택 취소 버튼 클릭 이벤트
-	$("#disct_choice_cancel_btn").on("click",function(){
-		var html = "<option hidden=\"\" disabled=\"disabled\" selected=\"selected\" value=\"\">세부선택</option>"
-		$("#disct_items_choice").html(html);
-		$("#disct_items_name").val($("#hidden_value").val());
-		
+		$("#line_chart_items_choice").show();
 	});
 	
 	// 선형 차트 품목 선택 시 체크박스리스트 아작스 호출
@@ -65,7 +214,7 @@ $(document).ready(function(){
 			if($(this).is(":checked")){
 				
 				var html = "";
-				html += "<span class=\"items_chkbox\" value="+$(this).val()+">"+$(this).next().html()+"</span>";
+				html += "<span class=\"items_chkbox\" value="+$(this).val()+">"+$(this).next().html()+" </span>";
 				
 				$("#chkbox_result").append(html);				
 			} else {
@@ -77,23 +226,59 @@ $(document).ready(function(){
 	
 	// 선형 차트 품목 선택 완료 시 ajax함수 호출
 	$("#line_choice_success_btn").on("click",function(){
+		$("#line_chart_items_choice").hide();
 		getLineChartData();
 	});
 	
-	// 선형 차트 품목 선택 완료 시 ajax함수 호출
+	// 선형 차트 품목 선택 취소 시 초기화
 	$("#line_choice_cancel_btn").on("click",function(){
 		$("#chkbox_list").html('');
 		$("#chkbox_result").html('');
+		$("#start_date").val('');
 		$("#line_items_name").val($("#hidden_value").val());
+		$("#line_chart_items_choice").hide();
 	});
 	
 	
+	
+	$("#disct_chart_btn").on("click",function(){
+		$(".disct_chart_items_choice").show();
+	});
+	
+	// 지역구 차트 품목선택시 세부목록 출력할 ajax함수 호출
+	$("#disct_items_name").on("change", function(){
+		getDisctItemsChoice();
+	});
+	
+	// 지역구 차트 품목선택 완료 버튼 클릭 이벤트
+	$("#disct_choice_success_btn").on("click", function(){
+		$("#disct_items_no").val($("#disct_items_choice").val());
+		$(".disct_chart_items_choice").hide();
+		getDisctChartData();
+	});
+	
+	// 지역구 차트 품목선택 취소 버튼 클릭 이벤트
+	$("#disct_choice_cancel_btn").on("click",function(){
+		var html = "<option hidden=\"\" disabled=\"disabled\" selected=\"selected\" value=\"\">세부선택</option>"
+		$("#disct_items_choice").html(html);
+		$("#disct_items_name").val($("#hidden_value").val());
+		$(".disct_chart_items_choice").hide();
+		
+	});	
+	
+	
+	$("#category_chart_btn").on("click",function(){
+		$(".category_chart_choice").show();
+	});
+	
 	$("#category_choice_success_btn").on("click",function(){
 		getCategoryChartData();
+		$(".category_chart_choice").hide();
 	});
 	
 	$("#category_choice_cancel_btn").on("click",function(){		
 		$("#category_choice").val('0');
+		$(".category_chart_choice").hide();
 	});
 });
 
@@ -226,7 +411,8 @@ function drawLineChart(res) {
 		},
 		vAxis: {
 					
-		}		
+		},
+		colors: ['#03A64A','#F2C12E','#038C3E','#D9B88F','#F27405']
 	};
 	
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -295,9 +481,9 @@ function drawDisctChart(res) {
 
     var options = {      
       bars: 'vertical',
-      vAxis: {format: 'decimal'},
-      height: 400,
-      colors: ['#1b9e77', '#d95f02', '#7570b3']
+      vAxis: {format: 'decimal'},   
+      height: 300,
+      colors: ['#03A64A', '#F2C12E', '#F27405']
     };
 
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
@@ -349,10 +535,12 @@ function drawCategoryChart(res) {
       chartArea: {width: '50%'},
       hAxis: {        
         minValue: 0
-      },      
+      },
+      height:300,
       vAxis: {
         
-      }      
+      },
+      colors:['#03A64A']
     };
 
     var chart = new google.visualization.BarChart(document.getElementById('category_chart_div'));
@@ -391,96 +579,116 @@ function getLatestVarncData(){
         	<div>
         		<form action="#" id="line_chart_form" method="post">
         			<input type="hidden" id="start_date_value" name="startDate">
-        			<input type="hidden" id="end_date_value" name="endDate">        			        			
-        			<input type="date" id="start_date">
-        			<input type="date" id="end_date"><br>
+        			<input type="hidden" id="end_date_value" name="endDate">   			        			
         			<input type="hidden" id="line_items_no" name="itemsNo">        			
-        			<button type="button" id="line_chart_btn">선택</button>
         		</form>
-        		<div id="line_chart_items_choice">
-        			<form action="#" id="line_items_choice_form" method="post">
-	        			<select id="line_items_name" name="itemsName">
-	        				<option hidden="" disabled="disabled" selected="selected" value="">품목선택</option>
-	        				<option value="갈치">갈치</option>
-	        				<option value="고등어">고등어</option>
-	        				<option value="달걀">달걀</option>
-	        				<option value="닭고기">닭고기</option>
-	        				<option value="동태">동태</option>
-	        				<option value="돼지고기">돼지고기</option>
-	        				<option value="명태">명태</option>
-	        				<option value="무">무</option>
-	        				<option value="배">배</option>
-	        				<option value="배추">배추</option>
-	        				<option value="사과">사과</option>
-	        				<option value="상추">상추</option>
-	        				<option value="쇠고기">쇠고기</option>
-	        				<option value="애호박">애호박</option>
-	        				<option value="양파">양파</option>
-	        				<option value="오이">오이</option>
-	        				<option value="오징어">오징어</option>
-	        				<option value="조기">조기</option>
-	        				<option value="호박">호박</option>
-	        			</select>
-        			</form>
-        			<div id="chkbox_list">	        				
-        			</div>
-        			<div id="chkbox_result">	        				
-        			</div>
-        			<button type="button" id="line_choice_success_btn">확인</button>
-        			<button type="button" id="line_choice_cancel_btn">취소</button>			        				     				
+        		<div class="line_chart_contnr">
+	       			<button type="button" id="line_chart_btn">선택</button>
+	        		<div id="line_chart_items_choice">
+	        			<div class="line_chart_items_form_contnr">
+		        			<form action="#" id="line_items_choice_form" method="post">
+		        				<input type="date" id="start_date">
+		        				<input type="date" id="end_date"><br>        			
+			        			<select id="line_items_name" name="itemsName">
+			        				<option hidden="" disabled="disabled" selected="selected" value="">품목선택</option>
+			        				<option value="갈치">갈치</option>
+			        				<option value="고등어">고등어</option>
+			        				<option value="달걀">달걀</option>
+			        				<option value="닭고기">닭고기</option>
+			        				<option value="동태">동태</option>
+			        				<option value="돼지고기">돼지고기</option>
+			        				<option value="명태">명태</option>
+			        				<option value="무">무</option>
+			        				<option value="배">배</option>
+			        				<option value="배추">배추</option>
+			        				<option value="사과">사과</option>
+			        				<option value="상추">상추</option>
+			        				<option value="쇠고기">쇠고기</option>
+			        				<option value="애호박">애호박</option>
+			        				<option value="양파">양파</option>
+			        				<option value="오이">오이</option>
+			        				<option value="오징어">오징어</option>
+			        				<option value="조기">조기</option>
+			        				<option value="호박">호박</option>
+			        			</select>
+		        			</form>
+	        			</div>
+	        			<div id="chkbox_list">	        				
+	        			</div>
+	        			<div id="chkbox_result">	        				
+	        			</div>
+	        			<div class="line_choice_btn_contnr">
+		        			<button type="button" class="line_choice_btn" id="line_choice_success_btn">확인</button>
+		        			<button type="button" class="line_choice_btn" id="line_choice_cancel_btn">취소</button>			        				     				
+	        			</div>
+	        		</div>
+	        		<div id="chart_div"></div>
         		</div>
-        		<div id="chart_div" style="width: 900px; height: 500px;"></div>
         		
         		<form action="#" id="disct_chart_form" method="post">
         			<input type="hidden" id="disct_items_no" name="itemsNo" value="99">        			
         		</form>
-        		<button type="button" id="disct_chart_btn">품목선택</button>
-        		<div class="disct_chart_items_choice">
-        			<form action="#" id="disct_items_choice_form" method="post">
-	        			<select id="disct_items_name" name="itemsName">
-	        				<option id="hidden_value" hidden="" disabled="disabled" selected="selected" value="">품목선택</option>
-	        				<option value="갈치">갈치</option>
-	        				<option value="고등어">고등어</option>
-	        				<option value="달걀">달걀</option>
-	        				<option value="닭고기">닭고기</option>
-	        				<option value="동태">동태</option>
-	        				<option value="돼지고기">돼지고기</option>
-	        				<option value="명태">명태</option>
-	        				<option value="무">무</option>
-	        				<option value="배">배</option>
-	        				<option value="배추">배추</option>
-	        				<option value="사과">사과</option>
-	        				<option value="상추">상추</option>
-	        				<option value="쇠고기">쇠고기</option>
-	        				<option value="애호박">애호박</option>
-	        				<option value="양파">양파</option>
-	        				<option value="오이">오이</option>
-	        				<option value="오징어">오징어</option>
-	        				<option value="조기">조기</option>
-	        				<option value="호박">호박</option>
-	        			</select>        				     				
-        			</form>
-        			<select id="disct_items_choice"> 
-        				<option hidden="" disabled="disabled" selected="selected" value="">세부선택</option>        				      			 
-        			</select>
-        			<button type="button" id="disct_choice_success_btn">확인</button>
-        			<button type="button" id="disct_choice_cancel_btn">취소</button>
-        		</div>        		
-        		<div id="disct_chart_div" style="width: 800px; height: 500px;"></div>
+        		<div class="disct_chart_contnr">
+	        		<button type="button" id="disct_chart_btn">품목선택</button>
+	        		<div class="disct_chart_items_choice">
+	        			<div class="disct_chart_items_choice_background">
+		        			<form action="#" id="disct_items_choice_form" method="post">
+			        			<select id="disct_items_name" name="itemsName">
+			        				<option id="hidden_value" hidden="" disabled="disabled" selected="selected" value="">품목선택</option>
+			        				<option value="갈치">갈치</option>
+			        				<option value="고등어">고등어</option>
+			        				<option value="달걀">달걀</option>
+			        				<option value="닭고기">닭고기</option>
+			        				<option value="동태">동태</option>
+			        				<option value="돼지고기">돼지고기</option>
+			        				<option value="명태">명태</option>
+			        				<option value="무">무</option>
+			        				<option value="배">배</option>
+			        				<option value="배추">배추</option>
+			        				<option value="사과">사과</option>
+			        				<option value="상추">상추</option>
+			        				<option value="쇠고기">쇠고기</option>
+			        				<option value="애호박">애호박</option>
+			        				<option value="양파">양파</option>
+			        				<option value="오이">오이</option>
+			        				<option value="오징어">오징어</option>
+			        				<option value="조기">조기</option>
+			        				<option value="호박">호박</option>
+			        			</select>        				     				
+		        			</form>
+		        			<select id="disct_items_choice"> 
+		        				<option hidden="" disabled="disabled" selected="selected" value="">세부선택</option>        				      			 
+		        			</select>
+			        		<div class="disct_choice_btn_contnr">
+			        			<button type="button" class="disct_choice_btn" id="disct_choice_success_btn">확인</button>
+			        			<button type="button" class="disct_choice_btn" id="disct_choice_cancel_btn">취소</button>
+			        		</div>
+	        			</div>
+	        		</div>        		
+	        		<div id="disct_chart_div"></div>
+        		</div>
         		
         		<form action="#" id="category_chart_form" method="post">
         			<input type="hidden" id="category_items_name" name="itemsName" value="">        			
         		</form>
-        		<button type="button" id="category_chart_btn">품목선택</button>
-        		<select id="category_choice"> 
-        			<option value="0">전체</option>
-        			<option value="1">육류</option>        			
-	        		<option value="2">수산</option>
-	        		<option value="3">과일/채소</option>        				      			 
-        		</select>
-				<button type="button" id="category_choice_success_btn">확인</button>
-        		<button type="button" id="category_choice_cancel_btn">취소</button>
-        		<div id="category_chart_div"></div>        		
+        		<div class="category_chart_contnr">
+	        		<button type="button" id="category_chart_btn">품목선택</button>
+	        		<div class="category_chart_choice">
+	        			<div class="category_chart_choice_background">
+			        		<select id="category_choice"> 
+			        			<option value="0">전체</option>
+			        			<option value="1">육류</option>        			
+				        		<option value="2">수산</option>
+				        		<option value="3">과일/채소</option>        				      			 
+			        		</select>
+			        		<div class="category_choice_btn_contnr">
+								<button type="button" class="category_choice_btn" id="category_choice_success_btn">확인</button>
+				        		<button type="button" class="category_choice_btn" id="category_choice_cancel_btn">취소</button>
+			        		</div>
+	        			</div>
+	        		</div>
+	        		<div id="category_chart_div"></div>        		
+        		</div>
         		       	
         	</div>
         </div>

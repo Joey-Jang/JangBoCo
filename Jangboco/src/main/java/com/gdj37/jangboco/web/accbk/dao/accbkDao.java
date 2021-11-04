@@ -124,6 +124,11 @@ public class accbkDao implements accbkIDao{
 		return sqlsession.selectList("accbk.getMinMax", params);
 	}
 
+	@Override
+	public List<HashMap<String, String>> getRichDayList(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectList("accbk.getRichDayList", params);
+	}
+
 
 	
 

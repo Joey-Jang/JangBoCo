@@ -25,7 +25,7 @@ public interface IJoinService {
 
 	public HashMap<String, Object> loginPernlCheck(HashMap<String, String> params) throws Exception;
 
-	public int getMemberNo(String email) throws Exception;
+	public HashMap<String, Object> getMemberInfo(String email) throws Exception;
 
 	public int findPw(String string) throws Exception;
 

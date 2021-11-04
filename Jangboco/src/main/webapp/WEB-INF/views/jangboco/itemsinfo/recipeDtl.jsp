@@ -45,7 +45,6 @@ function drawRecipeDtl(data){
 	html += "	<div>                     ";
 	html += "		<span>"+ data.RECIPE_WAY2 +"</span>";	        		
 	html += "		<span>"+ data.RECIPE_PAT2 +"</span>";	        		
-	html += "		<span>"+ data.INFO_WGT +"</span>     ";
 	html += "		<span>"+ data.INFO_ENG +"</span>	  ";      		
 	html += "		<span>"+ data.INFO_CAR +"</span>";	        		
 	html += "		<span>"+ data.INFO_PRO +"</span>	  ";      		
@@ -195,9 +194,11 @@ function drawRecipeDtl(data){
     <div class="con_contnr">
         <div class="con">
             <form action="#" id="recipe_dtl_form" method="post">
-            	<input type="hidden" id="recipe_no" name="recipeNo" value="${recipeNo}">
+            	<input type="hidden" id="page" name="page" value="${param.page}">
+            	<input type="hidden" id="recipe_no" name="recipeNo" value="${param.recipeNo}">
             </form>
-	        <div class="recipe_contnr">	        		        	
+	        <div class="recipe_contnr">	        
+       		        		     	
 	        </div>
         </div>
     </div>

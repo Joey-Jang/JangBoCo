@@ -23,13 +23,14 @@
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	 <form action="#" id="go_form" method="post">
-         <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
+	 
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
    </form>
     <div class="con_contnr">
         <div class="con">
+        
 			<!--품목 & 구입처로 검색할 수 있게 하기.  -->
 			<input type="button" id="write_btn" class="write_btn" value="지출내역추가" >
 			<div>
@@ -53,11 +54,12 @@
 				<input type='hidden' id="update_no" name="update_no"/>
 			</form>
 			<input type="button" id="select_del_btn" value="선택 삭제">
-			<input type="button" id="del_btn" value="삭제">
+			<input type="button" id="del_btn" class="del_btn" value="삭제">
 			<input type="button" id="del_cancel_btn" value="취소" >
 			<br>
 			<div>
 			<form action="#" id="action_form" method="post">
+			<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
 				<input type="hidden" id="page" name="page" value="${page}">
 				<div id="search_contnr">
 					<select id="search_gbn" name="search_gbn">
