@@ -168,6 +168,8 @@ $(document).ready(function() {
 			initOthersBtn();
 			
 			$("#search_market_name").val("");
+			// 품목 사진 초기화
+			itemsImgUrl = "";
 			
 			$("#add_to_accbk_active").hide();
 			$("#add_to_accbk_inactive").show();

@@ -966,11 +966,11 @@ function checkComntLike(comnt) {
 		data: params,
 		success: function(result) {
 			if(result.checkComntLike==0) {
-				comnt.children().children().find(".like_icon").hide();
-				comnt.children().children().find(".unlike_icon").show();
+				comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".like_icon").hide();
+				comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".unlike_icon").show();
 			} else {
-				comnt.children().children().find(".unlike_icon").hide();
-				comnt.children().children().find(".like_icon").show();
+				comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".unlike_icon").hide();
+				comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".like_icon").show();
 			}
 		},
 		error: function(request, status, error) {
@@ -1037,8 +1037,8 @@ function comntLike(comnt) {
 		dataType: "json",
 		data: params,
 		success: function(result) {
-			comnt.children().children().find(".unlike_icon").hide();
-			comnt.children().children().find(".like_icon").show();
+			comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".unlike_icon").hide();
+			comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".like_icon").show();
 			cntComntLike(comnt);
 		},
 		error: function(request, status, error) {
@@ -1060,8 +1060,8 @@ function comntUnlike(comnt) {
 		dataType: "json",
 		data: params,
 		success: function(result) {
-			comnt.children().children().find(".like_icon").hide();
-			comnt.children().children().find(".unlike_icon").show();
+			comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".like_icon").hide();
+			comnt.children(".comnt_contnr").children(".nicnm_con_like_accuse_contnr").find(".unlike_icon").show();
 			cntComntLike(comnt);
 		},
 		error: function(request, status, error) {
