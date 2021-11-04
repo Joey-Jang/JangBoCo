@@ -290,7 +290,6 @@ function drawBranchList(branchList) {
 <c:import url="/layoutTopLeft"></c:import>
 <main>
 	 <form action="#" id="go_form" method="post">
-         <input type="hidden" id="member_no" name="member_no" value="${memberNo}">
       <input type="hidden" id="home_flag" name="home_flag" value="${homeFlag}">
       <input type="hidden" id="menu_idx" name="menu_idx" value="${menuIdx}">
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
@@ -299,6 +298,7 @@ function drawBranchList(branchList) {
         <div class="con">
 	        <div class="accbkC_contnr">
 				<form action="#" id="write_form" method="post">
+		         <input type="hidden" id="member_no" name="member_no" value="${sMNo}">
 				<!--품목, 구매량,금액, 비고 +버튼 누르면 추가할 수 있게.  -->
 				구입 일자 <input type="date" id="buy_date" name="buy_date">
 				<br> 

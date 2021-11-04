@@ -45,19 +45,19 @@
 }
 
 .spend_regst {
-	display:inline-block;
-	padding:0.35em 1.2em;
 	border:0.1em solid #03A64A;
-	margin:0 0.3em 0.3em 0;
-	border-radius:0.12em;
+	border-radius:5px;
 	box-sizing: border-box;
 	text-decoration:none;
-	font-family:'Roboto',sans-serif;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: medium;
 	font-weight:300;
 	color:#03A64A;
 	text-align:center;
 	transition: all 0.2s;
 	background-color: #FFFFFF;
+	width: 100px;
+	height: 40px;
 }
 
 .spend_regst:hover {
@@ -70,14 +70,22 @@
 }
 
 .summr_accbk {
-	width : 200x;
-	height : 25%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	width : 160px;
+	/* height : 25%; */
+	height: 160px;
+	padding: 15px;
 	border: 10px solid #03A64A20;
 	border-radius: 15%;
 	display: inline-block;
-	margin: 15px;
+	/* margin: 15px; */
 	text-align: center;
-	
+}
+.summr_accbk a {
+	margin: 0;
 }
 
 .main_summr_title {
@@ -92,7 +100,7 @@
 	position: absolute;
 	width: auto;
 	height: auto;
-	background-color: #FFFFFF95;
+	background-color: #FFFFFF;
 	color : #03A64A90;
 	border: 2px solid #03A64A20;
 	border-radius: 5px;
@@ -153,9 +161,38 @@
 	background-color:#03A64A;
 }
 
+#most_spend_day:hover {
+	color:#03A64A70;
+}
 /* ACCBKR */
 .paging_wrap span:hover {
 	cursor: pointer;
 }
 
+#least_spend_day:hover {
+	color:#03A64A70;
+}
 
+
+
+
+
+
+.con {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.accbk_main_summr_contnr {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 600px;
+	height: 400px;
+}
+.card_info_contnr {
+	margin-top: 20px;
+}

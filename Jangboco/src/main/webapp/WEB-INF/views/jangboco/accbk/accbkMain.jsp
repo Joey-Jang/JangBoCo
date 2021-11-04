@@ -154,12 +154,14 @@ function getRichDay(){
 	var richDay = $("#most_spend_day_num").text();
 	
 	var ynmnd = richY + "-" + richMth + "-" + richDay;
+	var member_no = $("#member_no").val();
 	
 	$.ajax({
 		url: "getRichDayAjax", 
 		type: "post", 
 		dataType: "json", 
-		data: {"ynmnd": ynmnd}, 
+		data: {"ynmnd": ynmnd,
+				"member_no": member_no}, 
 		success : function(result) {	
 			drawRichDay(result.list);
 		},
@@ -189,12 +191,13 @@ function getSavingDay(){
 	var sDay = $("#least_spend_day_num").text();
 	
 	var ynmnd = savingY + "-" + mth + "-" + sDay;
-	
+	var member_no = $("#member_no").val();
 	$.ajax({
 		url: "getRichDayAjax", 
 		type: "post", 
 		dataType: "json", 
-		data: {"ynmnd": ynmnd}, 
+		data: {"ynmnd": ynmnd,
+				"member_no": member_no }, 
 		success : function(result) {	
 			drawSavingDay(result.list);
 		},
@@ -226,11 +229,11 @@ function drawSavingDay(list){
       <input type="hidden" id="sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
    </form>
     <div class="con_contnr">
-    	<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
+		<input type="hidden" id="member_no" name="member_no" value="${sMNo}">
         <div class="con">
 			<!--이용자 기간설정 지출금액 나오게  -->
 			<div class="accbk_main_notice">
-				<h3><span>(닉네임)님</span><br>
+				<h3><span>${sNicnm}님</span><br>
 				<span id="month_of_today"></span>월 지출 금액은<br>
 				<span id="spend_of_month">${getThisMonthSpend.SUM}원</span> 입니다.</h3><br>
 				<!--  -->
@@ -244,37 +247,48 @@ function drawSavingDay(list){
 			<div class="accbk_main_summr_contnr" id="accbk_main_summr_contnr">
 				<div class="summr_accbk msd" id="most_spend_day">
 					<a class="main_summr_title" id="rich_day">가장 많이 쓴 날</a><br>
-					<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE}</span> 일<br>
-					<span id="most_spend_day_cost">${getMostSpendDay.COST} 원</span>
+					<div class="card_info_contnr">
+						<span id="most_spend_day_num">${getMostSpendDay.BUY_DATE}</span> 일<br>
+						<span id="most_spend_day_cost">${getMostSpendDay.COST} 원</span>
+					</div>
 						<div id="richDay_modal" class="richDay_modal">
 						</div>
 				</div>
 				<div class="summr_accbk msw" id="most_spend_week">
 					<a class="main_summr_title">가장 많이 쓴 주</a><br>
-					<span id="most_spend_week_num">${getMostSpendWeek.WEEK}번째 주</span><br>
-					<span id="most_spend_week_cost">${getMostSpendWeek.COST} 원</span>
+					<div class="card_info_contnr">
+						<span id="most_spend_week_num">${getMostSpendWeek.WEEK}번째 주</span><br>
+						<span id="most_spend_week_cost">${getMostSpendWeek.COST} 원</span>
+					</div>
 				</div>
 				<div class="summr_accbk mvm" id="most_visit_market">
 					<a class="main_summr_title">단골 마켓</a><br>
-					<span id="most_visit_market_name">${getMostVisitMarket.MARKET_NAME}</span><br>
-					<span id="most_visit_market_cnt">${getMostVisitMarket.COUNT}회 방문</span>
+					<div class="card_info_contnr">
+						<span id="most_visit_market_name">${getMostVisitMarket.MARKET_NAME}</span><br>
+						<span id="most_visit_market_cnt">${getMostVisitMarket.COUNT}회 방문</span>
+					</div>
 				</div>
-				<br>
 				<div class="summr_accbk lsd" id="least_spend_day">
 					<a class="main_summr_title">가장 적게 쓴 날</a><br>
-					<span id="least_spend_day_num">${getLeastSpendDay.BUY_DATE}</span> 일<br>
-					<span id="least_spend_day_cost">${getLeastSpendDay.COST} 원</span>
+					<div class="card_info_contnr">
+						<span id="least_spend_day_num">${getLeastSpendDay.BUY_DATE}</span> 일<br>
+						<span id="least_spend_day_cost">${getLeastSpendDay.COST} 원</span>
+					</div>
 					<div id="savingDay_modal" class="savingDay_modal"></div>
 				</div>
 				<div class="summr_accbk lsw" id="least_spend_week">
 					<a class="main_summr_title">가장 적게 쓴 주</a><br>
-					<span id="least_spend_week_num">${getLeastSpendWeek.WEEK}번째 주</span><br>
-					<span id="least_spend_week_cost">${getLeastSpendWeek.COST} 원</span>
+					<div class="card_info_contnr">
+						<span id="least_spend_week_num">${getLeastSpendWeek.WEEK}번째 주</span><br>
+						<span id="least_spend_week_cost">${getLeastSpendWeek.COST} 원</span>
+					</div>
 				</div>
 				<div class="summr_accbk msi" id="most_spend_items">
 					<a class="main_summr_title">최고 지출 품목</a><br>
-					<span id="most_spend_items_item">${getMostSpendItems.ITEMS_NAME}</span><br>
-					<span id="most_spend_items_cost">${getMostSpendItems.COST} 원</span>
+					<div class="card_info_contnr">
+						<span id="most_spend_items_item">${getMostSpendItems.ITEMS_NAME}</span><br>
+						<span id="most_spend_items_cost">${getMostSpendItems.COST} 원</span>
+					</div>
 				</div>
 			</div>
         </div>
