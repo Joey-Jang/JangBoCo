@@ -17,4 +17,10 @@ public class ZzanDao implements IZzanDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("zzan.getMarketList", params);
 	}
+
+	@Override
+	public List<HashMap<String, String>> getItemList(HashMap<String, String> params) throws Throwable {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("zzan.getItemList", params);
+	}
 }
