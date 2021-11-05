@@ -321,12 +321,26 @@
 			$(this).css("background", "rgba( 218, 233, 220, 0.4 )");}));
 		$(".market_list").on('mouseout','li',(function(){
 			$(this).css("background", "none");}));
+		
+		//리스트 호버 이벤트
+		$(".item_list").on('mouseover','li',(function(){
+			$(this).css("background", "rgba( 218, 233, 220, 0.4 )");}));
+		$(".item_list").on('mouseout','li',(function(){
+			$(this).css("background", "none");}));
 	
 		//리스트 클릭 이벤트
 		$(".market_list").on('click','li',(function(){
 			$("#market_no").val($(this).attr("market_no"));
 			$("#market_member_no").val($(this).attr("market_member_no"));
 			/* $("#items_choice_no").val($(this).attr("no")); */
+			$("#info_form").submit();
+		})); 
+		
+		//리스트 클릭 이벤트
+		$(".item_list").on('click','li',(function(){
+			$("#market_no").val($(this).attr("market_no"));
+			$("#market_member_no").val($(this).attr("market_member_no"));
+			$("#items_choice_no").val($(this).attr("no")); 
 			$("#info_form").submit();
 		})); 
 		
@@ -381,24 +395,24 @@
 	var listGbn=0;
 	var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
-        level : 9 // 지도의 확대 레벨 
+        level : 10 // 지도의 확대 레벨 
     });
 	var bounds= new kakao.maps.LatLngBounds();//바운드객체
 	
 	var imageSrc =
 		"resources/images/zzan/marker.png",
-		imageSize = new kakao.maps.Size(30, 33),
+		imageSize = new kakao.maps.Size(22, 26),
 		imageOption = {
-		offset: new kakao.maps.Point(15, 33)
+		offset: new kakao.maps.Point(11, 26)
 		};//커스텀 마커 설정
 	var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 	var markers=[];
 	var markerOffImage = new kakao.maps.MarkerImage(
 			'resources/images/zzan/marker_off.png',
-		    new kakao.maps.Size(26, 29), new kakao.maps.Point(13, 29));
+		    new kakao.maps.Size(22, 26), new kakao.maps.Point(11, 26));
 	var markerBestImage = new kakao.maps.MarkerImage(
 			'resources/images/zzan/marker_best.png',
-		    new kakao.maps.Size(36, 39), new kakao.maps.Point(18, 39));
+		    new kakao.maps.Size(28, 34), new kakao.maps.Point(14, 34));
 	
 	
 	<%--시간 정보--%>
@@ -469,9 +483,9 @@
 	
 	var userImgSrc =
 		"resources/images/zzan/user-location.png",
-		userImgSize = new kakao.maps.Size(36, 36),
+		userImgSize = new kakao.maps.Size(30, 30),
 		userImgOption = {
-		offset: new kakao.maps.Point(18, 36) 
+		offset: new kakao.maps.Point(15, 30) 
 		};//사용자 위치 커스텀 마커 이미지 설정
 	
 	var locMarkerImage = new kakao.maps.MarkerImage(userImgSrc, userImgSize, userImgOption)
@@ -594,7 +608,7 @@
 				clusterer.addMarkers(markers); //클러스터에 마커 추가
 				
 				$("#market_list").html(html);
-				map.setBounds(bounds, 90, 30, 10, 30);//지도범위 설정
+				map.setBounds(bounds, 90, 40, 20, 40);//지도범위 설정
 		     
 
 				var overlayContent = '';//빈 커스텀오버레이 콘텐츠
@@ -776,7 +790,7 @@
 	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 	var zoomControl = new kakao.maps.ZoomControl();
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-	map.setMaxLevel(9);
+	map.setMaxLevel(10);
 	
 
 	<%--지도 영역 제한하기--%>
@@ -822,7 +836,7 @@
 		// 지도에 표시할 다각형을 생성합니다
 		var polygon = new kakao.maps.Polygon({
 		    path:path, // 그려질 다각형의 좌표 배열입니다
-		    strokeWeight: 9, // 선의 두께입니다
+		    strokeWeight: 7, // 선의 두께입니다
 		    strokeColor: '#088A4B',//'#004c80', // 선의 색깔입니다
 		    strokeOpacity: 0.6, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
 		    //fillColor: '#fff', // 채우기 색깔입니다
