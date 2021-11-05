@@ -960,10 +960,10 @@ function reloadJangbcList(){
 	            	</div>            	
 	            </div>
 	            <div class="line_chart_contnr">
-		            <div id="line_chart_div"></div>
+		            <div class="chart_div" id="line_chart_div"></div>
 	            </div>
 	            <div class="disct_chart_contnr">
-		            <div id="disct_chart_div"></div>
+		            <div class="chart_div" id="disct_chart_div"></div>
 	            </div>
             </div>             
             
