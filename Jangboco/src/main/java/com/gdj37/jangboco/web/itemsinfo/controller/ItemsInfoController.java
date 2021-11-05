@@ -140,8 +140,9 @@ public class ItemsInfoController {
 		String result = "";
 		
 		try {
-			URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
-								"/COOKRCP01/json/1/1000/RCP_PARTS_DTLS="+ matrlName);
+//			URL url = new URL("http://openapi.foodsafetykorea.go.kr/api/"+ key +
+//								"/COOKRCP01/json/1/1000/RCP_PARTS_DTLS="+ matrlName);
+			URL url = new URL("http://localhost:8090/Jangboco/resources/reciJson/fork_reci.json");
 			
 			BufferedReader bf;
 			bf = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
