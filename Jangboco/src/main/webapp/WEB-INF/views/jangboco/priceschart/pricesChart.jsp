@@ -11,8 +11,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
 	main {
-	    min-width: 2555px;
-	    min-height: 1280px;
+	    min-width: 1110px;
+	    min-height: 660px;
 	}
 	
 	/* 지역구별 차트 */
@@ -61,7 +61,7 @@
 	
 	#chart_div{
 	 width: 100%;
-	 height: 300px;
+	 height: 205px;
 	}
 	
 	.line_chart_contnr{
@@ -121,7 +121,7 @@
 		padding: 25px;
     	border-radius: 20px;
     	margin-top: 15px;
-    	height: 350px;
+    	height: 255px;
 	}
 	
 	/* 카테고리 차트  */	
@@ -174,7 +174,7 @@
 		padding: 25px;
     	border-radius: 20px;
     	margin-top: 15px;
-    	height: 350px;
+    	height: 265px;
 	}
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -279,6 +279,12 @@ $(document).ready(function(){
 	$("#category_choice_cancel_btn").on("click",function(){		
 		$("#category_choice").val('0');
 		$(".category_chart_choice").hide();
+	});
+	
+	$(window).resize(function(){
+		getLineChartData();
+		getDisctChartData();
+		getCategoryChartData();
 	});
 });
 
@@ -416,7 +422,8 @@ function drawLineChart(res) {
 	};
 	
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	chart.draw(data, options);	
+	chart.draw(data, options);
+	window.addEventListener('resize', drawLineChart, false);
 } 
 
 // 지역구 차트 품목선택 그리기 위한 ajax
@@ -482,13 +489,14 @@ function drawDisctChart(res) {
     var options = {      
       bars: 'vertical',
       vAxis: {format: 'decimal'},   
-      height: 300,
+      height: 205,
       colors: ['#03A64A', '#F2C12E', '#F27405']
     };
 
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
+    window.addEventListener('resize', drawDisctChart, false);
   }
   
 // 카테고리 차트 데이터 호출 및 그리기
@@ -536,7 +544,7 @@ function drawCategoryChart(res) {
       hAxis: {        
         minValue: 0
       },
-      height:300,
+      height:205,
       vAxis: {
         
       },
@@ -546,6 +554,7 @@ function drawCategoryChart(res) {
     var chart = new google.visualization.BarChart(document.getElementById('category_chart_div'));
 
     chart.draw(data, options);
+    window.addEventListener('resize', drawCategoryChart, false);
   }
   
 function getLatestVarncData(){
