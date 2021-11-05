@@ -236,7 +236,7 @@
 	}
 	table{
 		width: 100%;
-		min-height:250px;
+		height: 80px;
 		text-align: center;
 		border-collapse: collapse;
 		table-layout:fixed;
@@ -248,12 +248,10 @@
 	}	
 	
 	tbody{
-		height:220px;
 	}
 	
 	tbody tr{		
 		border-bottom: 1px solid #D9B88F;
-		height:2vh;
 	}
 	.recipe_no{
 		width:30%;
@@ -302,8 +300,8 @@
 		border-radius: 20px;
     	z-index: 3;
     	position: absolute;
-	    width: 2305px;
-	    height: 1261px;
+	    width: 500px;
+	    height: 300px;
 	    font-family: 'Noto Sans KR', sans-serif;
 	    font-size: 11pt;
 	    font-weight: 400;
@@ -320,10 +318,10 @@
 	}
 	
 	.recipe_title{
-		font-size: 16pt;
-	    margin-bottom: 10px;
+		font-size: 12pt;
 	    display: block;
 	    text-align: center;
+	    margin: 10px 0 0 0;
 	}
 	
 	.recipe_info_contnr{
