@@ -10,14 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
-	main {
-	    min-width: 1110px;
-	    min-height: 660px;
-	}
-	
 	.items_info_title_contnr{
-		margin-left: 20px;
-		margin-bottom: 20px;
 	}
 	
 	.items_choice_popup{
@@ -44,7 +37,7 @@
 	}
 	
 	#items_info_title{
-		font-size: 30px;
+		font-size: 12pt;
 		margin-bottom: 10px;		
 	}
 	
@@ -60,23 +53,27 @@
 	.items_info_flex_contnr {
 		display: flex;
 		flex-direction: row;
-		margin:15px;
 	    align-items: center;
-	    justify-content: center;
-	    padding-bottom: 10px;
+	    justify-content: space-between;
 	    border-bottom: 2px solid #C4C4C4;
+	    width: 100%;
+	    height: 45%;
+	    padding-bottom: 10px;
 	}
 	
 	.items_info_contnr{
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
+		width: 30%;
+		height: 100%;
 	}
 	
 	.items_img {
-		width: 200px;
-		height:200px;
+		width: 100px;
+		min-width: 100px;
+		height: 100px;
+		min-height:100px;
 		border: 1px solid #C4C4C4;
-		margin-right: 35px;				
 	}
 	
 	#items_img{
@@ -85,39 +82,37 @@
 	}
 	
 	.items_info_con{
-		font-size: 35px;
-		padding: 10px;
-		margin-right: 35px;		
+		flex-grow: 1;
+		padding: 0 10px;
+		font-size: 11pt;
 	}		
 
 	
 	.line_chart_contnr{		
-		background-color: #03A64A20;
-		padding: 25px;
+		border: 10px solid #03A64A20;
     	border-radius: 20px;
-    	margin-right: 50px;
-    	width:25%
+    	width: 25%;
+    	height: 100%;
 	}
 	
 	.disct_chart_contnr{		
-		background-color: #03A64A20;
-		padding: 25px;
+		border: 10px solid #03A64A20;
     	border-radius: 20px;
-    	width:25%
+    	width: 25%;
+    	height: 100%;
 	}
 	
 	
 	/* 다이어리 */
 	.jangbc_diary_contnr{
   		position: relative;
-  		margin: auto;		
+  		width: 100%;
+  		height: 30%;
 	}
 	
 	.jangbc_diary_slides{
-		display: flex;
-		width: 1500px;
-    	margin: auto;
-    	display: none;
+		width: 100%;
+		height: 100%;
 	}
 	
 	.jangbc_diary_data_contnr{
@@ -134,13 +129,14 @@
 	
 	.card-wrapper {
 	  width: 100%;
+	  height: 100%;
 	  display: flex;
-	  flex-wrap: wrap;
-	  height: calc(100% - 90px);
+	  flex-wrap: nowrap;
+	  padding: 0 20px;
 	}
 	.card {
 	  width: 25%;
-	  height: 50%;
+	  height: 100%;
 	  padding: 15px;
 	  background: white;
 	}
@@ -216,14 +212,13 @@
 	  user-select: none;
 	}
 	.prev {
-		left:346px;
+		left: 0;
 	}
 	.next {
-		right:346px;
+		right: 0;
 	}
 	/* Position the "next button" to the right */
 	.next {
-	  right:346px;
 	  border-radius: 0 3px 3px 0;
 	}
 	
@@ -237,10 +232,10 @@
 	/* 요리 레시피 */
 	.recipe_title {
 		text-align: center;
-		font-size: 20px;
+		font-size: 12pt;
 	}
 	table{
-		width: 2000px;
+		width: 100%;
 		min-height:250px;
 		text-align: center;
 		border-collapse: collapse;
@@ -325,7 +320,7 @@
 	}
 	
 	.recipe_title{
-		font-size: 35px;
+		font-size: 16pt;
 	    margin-bottom: 10px;
 	    display: block;
 	    text-align: center;
@@ -352,7 +347,7 @@
 	.recipe_nuttn_info_contnr{
 		width: auto;
 	    padding: 15px;
-	    font-size: 16px;
+	    font-size: 16pt;
 	}
 	
 	.recipe_matrl_contnr{
@@ -391,7 +386,31 @@
 		width: 100%;
 	    height: 80px;
 	    overflow: auto;
-	}	
+	}
+
+	.con {
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+	.cook_recipe_contnr {
+		height: 30%;
+	}
+	.chart_div {
+		width: 100%;
+		height: 100%;
+	}
+	.items_img_info_contnr {
+		display: flex;
+		flex-flow: row;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 10px;
+	}
+	.cook_recipe_table {
+		height: 100%;
+	}
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
@@ -932,32 +951,34 @@ function reloadJangbcList(){
         	<form action="#" id="items_info_form" method="post">
         		<input type="hidden" id="items_no" name="itemsNo" value="${itemsNo}">
         	</form>
-            <div class = "items_choice_contnr">
-            	<div class="items_info_title_contnr">
-	          		<span id="items_info_title">돼지고기 ▼ </span>
-	          		<div class="items_choice_popup">
-	          			<div class="items_choice_popup_background">
-		          			<form action="#" id="items_choice_form" method="post">
-			          			<select class="category_choice" id="category_choice" name="categoryChoice">
-			          				<option id="hidden_value" hidden="" disabled="disabled" selected="selected" value="">대분류선택</option>
-			          				<option value="1">육류</option>        			
-					        		<option value="2">수산</option>
-					        		<option value="3">과일/채소</option>
-			          			</select>
-		          			</form>
-		          			<select id="items_choice_dtl"> 
-		        				<option hidden="" disabled="disabled" selected="selected" value="">세부선택</option>        				      			 
-		        			</select>
-	          			</div>
-	          		</div>
-            	</div>
-            </div>
             <div class="items_info_flex_contnr">
 	            <div class="items_info_contnr">
-	            	<div class="items_img">	            		
-	            	</div>
-	            	<div class="items_info_con">            		        		
-	            	</div>            	
+		            <div class = "items_choice_contnr">
+		            	<div class="items_info_title_contnr">
+			          		<span id="items_info_title">돼지고기 ▼ </span>
+			          		<div class="items_choice_popup">
+			          			<div class="items_choice_popup_background">
+				          			<form action="#" id="items_choice_form" method="post">
+					          			<select class="category_choice" id="category_choice" name="categoryChoice">
+					          				<option id="hidden_value" hidden="" disabled="disabled" selected="selected" value="">대분류선택</option>
+					          				<option value="1">육류</option>        			
+							        		<option value="2">수산</option>
+							        		<option value="3">과일/채소</option>
+					          			</select>
+				          			</form>
+				          			<select id="items_choice_dtl"> 
+				        				<option hidden="" disabled="disabled" selected="selected" value="">세부선택</option>        				      			 
+				        			</select>
+			          			</div>
+			          		</div>
+		            	</div>
+		            </div>
+		            <div class="items_img_info_contnr">
+		            	<div class="items_img">	            		
+		            	</div>
+		            	<div class="items_info_con">            		        		
+		            	</div>            	
+		            </div>
 	            </div>
 	            <div class="line_chart_contnr">
 		            <div class="chart_div" id="line_chart_div"></div>
