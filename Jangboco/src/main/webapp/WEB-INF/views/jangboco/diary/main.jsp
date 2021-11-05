@@ -206,19 +206,19 @@ function drawPaging(pb) {
 	                  <form action="#" id="actionForm" method="post">
 	                     <input type="hidden" id="no" name="no" />
 	                     <input type="hidden" id="page" name="page" value="${page}" />
-	                     <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" />
+	                     <input type="text" id="searchTxt" name="searchTxt" value="${param.searchTxt}" placeholder="해시태그를 입력하세요"/>
 	                     <input type="button" id="searchBtn" value="검색" />
 	                  </form>                    
                     </div>
-                    <a href="#" class="write-button">
+<!--                     <a href="#" class="write-button">
                       <div class="plus-icon">
                         <span></span>
                         <span></span>  
                       </div>
-                    </a>
-                    <a href="#" class="mypage-button">
+                    </a> -->
+<!--                     <a href="#" class="mypage-button">
                       <img src="resources/images/diaryImages/profile.png" alt="마이페이지 바로가기">
-                    </a>
+                    </a> -->
                   </div>
                 </div>
                 <div class="card-wrapper">

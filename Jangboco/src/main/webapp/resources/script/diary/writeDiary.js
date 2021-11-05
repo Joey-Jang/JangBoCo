@@ -167,6 +167,8 @@ $(document).ready(function() {
 			initOthersBtn();
 			
 			$("#search_market_name").val("");
+			// 품목 사진 초기화
+			itemsImgUrl = "";
 			
 			$("#add_to_accbk_active").hide();
 			$("#add_to_accbk_inactive").show();
@@ -511,11 +513,12 @@ $(document).ready(function() {
 			
 			$(".item_tag_list").eq(diaryImgIdx).append(html);
 			
-			if(itemsImgUrl!=undefined) {
+			console.log(itemsImgUrl);
+			if(itemsImgUrl!=undefined && itemsImgUrl!="") {
 				$(".item_tag_list").eq(diaryImgIdx).find(".items_img").last().css("background", "center / cover no-repeat "
 																									+ " url(\"https://image.jangboco.ga/"
 																									+ itemsImgUrl.replace(/\[/g, "%5B").replace(/\]/g, "%5D")
-																									+ "\")");
+																									+ "_outlined.png')");
 			}
 			
 			var itemTag = new Object();

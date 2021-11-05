@@ -21,7 +21,6 @@ joinPernl.jsp
 var apiUrl = "";
 
 function getUrl(){
-   alert(apiUrl);
    location.href = apiUrl;
 }
    $(document).ready(function(){

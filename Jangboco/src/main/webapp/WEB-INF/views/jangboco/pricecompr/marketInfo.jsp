@@ -64,6 +64,7 @@
 	
 	.market_info_con>span{
 		display : block;
+		font-size: 25px;
 		margin-bottom: 15px;
 		overflow: hidden;
 		white-space: nowrap;
@@ -75,7 +76,7 @@
 		position: absolute;
 		z-index:1000;
 	    left: 25px;
-	    top: 80px;
+	    top: 110px;
 		border: 5px solid #03A64A20;
 		border-radius: 10px;
 		background-color: #FFFFFF;
@@ -90,14 +91,17 @@
 		font-size: 20px;
 	} */
 	
-	.market_img {
-		border: 1px solid silver;
+	.market_img {		
 		margin-left:15px;
 		margin-right : 15px;
 		width: 200px;
 		height:200px;
 	}
-			
+	
+	#market_img{
+		width: 100%;
+		height: 100%;		
+	}		
 	
 	
 	.items_list{
@@ -633,7 +637,7 @@ function reloadItemsList(){
 function drawItemsList(list){
 	var html ="";
 	var i = 0;
-	
+	console.log(list.length);
 	for(var data of list){
 		if(i == 0){
 			html += "<div class = \"items_slide\">";			
@@ -648,7 +652,7 @@ function drawItemsList(list){
 		};
 		
 		html += "<div class=\"item_row\">            "               ;
-		html += "	<div class=\"item_img\"><img id=\"item_img\" src=\"resources/images/itemsInfo/"+data.IMG_URL+".jpg\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\"></div>   "               ;
+		html += "	<div class=\"item_img\"><img id=\"item_img\" src=\"resources/images/itemsInfo/"+data.IMG_URL+"_outlined.png\" onerror=\"this.src='resources/images/itemsInfo/noimg.png'\"></div>   "               ;
 		html += "	<div class=\"item_info\">        "               ;
 		html += "		<span>"+data.ITEMS_NAME +"</span><br>        "   ;
 		html += "		<span>판매규격: "+data.SELL_STD +"</span><br>        "   ;
@@ -667,7 +671,7 @@ function drawItemsList(list){
 			html += "</div>";			
 		} else if(i == 15){
 			html += "</div>";			
-		} else if(i == list.length-1){
+		} else if(i == list.length){
 			html += "</div>";			
 		};
 		i++;
@@ -1055,7 +1059,15 @@ function deleteEventLike(){
         	<div class="market_info_outer_contnr">
 	            <div class="market_info_title">우리동네 가격 비교</div>
 	            <div class="market_info_contnr">
-	            	<div class="market_img"></div>
+	            	<div class="market_img">
+	            		<c:choose>
+	            			<c:when test="${!empty marketMemberNo}">
+	            			</c:when>
+	            			<c:otherwise>
+	            				<img id="market_img" src="resources/images/itemsInfo/마켓.png">
+	            			</c:otherwise>
+	            		</c:choose>
+	            	</div>
 	            	<div class="market_info_con">
 	            		<div class="market_info_addrs_contnr">
 				        	<c:choose>
@@ -1215,6 +1227,7 @@ function deleteEventLike(){
 				  <span class="dot" onclick="currentSlide(2)"></span>
 				  <span class="dot" onclick="currentSlide(3)"></span>
 				  <span class="dot" onclick="currentSlide(4)"></span>
+				  <span class="dot" onclick="currentSlide(5)"></span>
 				</div>				
 	            
 	            <div class="event_list_wrap">	            	

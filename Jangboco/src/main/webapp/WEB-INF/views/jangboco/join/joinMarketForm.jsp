@@ -128,9 +128,9 @@ $(document).ready(function(){
       } else if (checkVal("#end_time")){
          alert("영업마감시간을 입력해주세요");
          $("#end_time").focus();
-      }else if ($("#agrnt_box").prop("checked") == false){
+      }/* else if ($("#agrnt_box").prop("checked") == false){
          alert("약관동의를 확인해주세요");
-      } else {
+      } */ else {
          alert("가입완료!");
          $("#market_join_form").submit();
       } 
@@ -722,12 +722,12 @@ function checkRegnum(b_no, start_dt, p_nm){
                       </div>
                       
                                             
-                      <div class="form_input agrnt_input">
+<!--                       <div class="form_input agrnt_input">
                        <input type="checkbox" id="agrnt_box"/>
                          <div class="">
                             약관동의
                          </div>                 
-                      </div>
+                      </div> -->
                  </form>
                  <div class="join_btn">
                     <input type="button" value="가입" id="market_join_btn" >

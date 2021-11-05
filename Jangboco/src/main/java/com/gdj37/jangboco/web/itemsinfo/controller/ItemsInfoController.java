@@ -178,23 +178,7 @@ public class ItemsInfoController {
 		}
 		
 		return mapper.writeValueAsString(modelMap); 
-	}
-	
-	@RequestMapping(value="/recipeDtl")
-	public ModelAndView recipeDtl(@RequestParam HashMap<String, String> params,
-								ModelAndView mav) {
-		
-		String recipeNo = params.get("recipeNo");		
-		if(recipeNo != null && recipeNo != "") {
-			mav.addObject("recipeNo", recipeNo);
-			
-			mav.setViewName("jangboco/itemsinfo/recipeDtl");			
-		} else {
-			mav.setViewName("redirect:/itemsInfo");
-		}		
-		
-		return mav;
-	}
+	}	
 	
 	@RequestMapping(value="/recipeDtlAjax", method= RequestMethod.POST,
 			produces = "text/json;charset=UTF-8" )

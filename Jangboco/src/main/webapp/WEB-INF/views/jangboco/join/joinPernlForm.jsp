@@ -83,9 +83,9 @@ $(document).ready(function(){
          alert("비밀번호 확인이 일치하지 않습니다");
       } else if (emailFlag==false){
          alert("인증번호를 확인해주세요");
-      } else if ($("#agrnt_box").prop("checked") == false){
+      } /* else if ($("#agrnt_box").prop("checked") == false){
          alert("약관동의를 확인해주세요");
-      } else if (checkVal("#zipcds")){
+      }  */else if (checkVal("#zipcds")){
          alert("우편번호를 입력해주세요");
          $("#zipcds").focus();
       } else if (checkVal("#addrs_other")){
@@ -281,13 +281,13 @@ function toDisabled(sel){
                          </div>
              
                       </div>
-                                            
+<!--                                             
                       <div class="form_input agrnt_input">
                        <input type="checkbox" id="agrnt_box"/>
                          <div class="">
                             약관동의
                          </div>                 
-                      </div>
+                      </div> -->
                  </form>
                  <div class="join_btn">
                     <input type="button" value="가입" id="join_btn">
