@@ -30,7 +30,6 @@ $(document).ready(function() {
    });
    
    $(".folwr").on("click",function(){
-	   alert("팔로워");
    });
    
    reloadList();
@@ -200,7 +199,6 @@ function checkFolw(){
 }
 
 function doFolwUnFolw(){
-	alert("Test");
 	var flag = "";
 	if($("#doFolw").val()=="팔로잉"){
 	//unfolw	
