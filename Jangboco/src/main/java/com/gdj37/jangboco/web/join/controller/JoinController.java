@@ -517,7 +517,9 @@ public class JoinController {
     				//세션에 담고 홈으로 이동
     				session.setAttribute("memberType", "1");
     				session.setAttribute("email", email);
-    				System.out.println(session.getAttribute("email"));
+    				HashMap<String, Object> member_info = iJoinService.getMemberInfo(email);
+    				session.setAttribute("sMNo", member_info.get("MEMBER_NO"));
+    				session.setAttribute("sNicnm", member_info.get("NICNM"));
     				mav.setViewName("redirect:/home");
     				return mav;
     			} else {
