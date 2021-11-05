@@ -19,6 +19,11 @@
 <script type="text/javascript" src="resources/script/layout/addrsMapApi.js"></script>
 
 <style>
+
+.con_contnr {
+    padding-top: 12px;
+}
+
 .con {
     width: 100%;
     height: 100%;
@@ -29,7 +34,7 @@
 
 .zzan_head_contnr {
 	width: 100%;
-    height: 80px;
+    height: 40px;
     display: flex;
 }
 
@@ -41,19 +46,19 @@
 }
 
 .zzan_event {
-	width: calc(100% - 220px);
+	width: calc(100% - 200px);
     height: 100%;
     display: flex;
 }
 
 .zzan_main_contnr {
 	width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 30px);
     display: flex;
 }
 
 .zzan_side_contnr {
-	width: 330px;
+	width: 190px;
     height: 100%;
     display: flex;
     border: 2px solid #03A64A;
@@ -63,16 +68,16 @@
 }
 
 .zzan_search {
-	width: 330px;
-    height: 30px;
+	width: 190px;
+    height: 50px;
     display: flex;
     flex-direction:row;
-    margin: 15px;
-    margin-bottom:0px;
+    padding-top: 15px;
+    
 }
 
 .zzan_list {
-	width: 330px;
+	width: 190px;
     height: calc(100% - 50px);
     display: flex;
     overflow: auto;
@@ -80,7 +85,7 @@
 }
 
 .zzan_map_contnr {
-	width: calc(100% - 300px);
+	width: calc(100% - 200px);
     height: 100%;
     border: 2px solid #03A64A;
     border-radius: 20px;
@@ -101,12 +106,12 @@
 	top: 7px; 
 	color: #666666;
 	z-index: 10;
-	font-size: 15px;
+	font-size: 14px;
 	font-weight: bold;
-	background: white;
+	background: #dff4e8;
 	box-shadow: 1px 1px 1px 1px #AAAAAA;
 	padding: 0px 7px;
-	border-radius: 4px;
+	border-radius: 3px; 
 	cursor: pointer;
 }
 
@@ -114,11 +119,15 @@
 	display: inline-block;
 }
 
+#searchTxt{
+	width:50%;
+}
+
 .list_title_contnr{
 	display: flex;
 	flex-direction:row;
-	width:99%;
-	height: 50px;
+	width:98%;
+	height: 25px;
 }
 
 .list_contnr{
@@ -136,8 +145,7 @@
 	display: flex;
 	justify-content: center;
 	align-item : center;
-	padding-top:10px;
-	background-color: #58DC91;
+	background-color: #dff4e8;
 	
 }
 
@@ -148,16 +156,15 @@
 	display: flex;
 	justify-content: center;
 	align-item : center;
-	padding-top:10px;
 }
 
 .market_list_title span{
-	font-size: 17px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
 .item_list_title span{
-	font-size: 17px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
@@ -177,25 +184,27 @@
 }
 
 .market_name{
-	font-size: 18px;
+	font-size: 13px;
 	font-weight: 600;
 	margin-bottom: 15px;
 	padding-top:10px;
 }
 
 .item_name{
-	font-size: 18px;
+	font-size: 13px;
 	font-weight: 600;
 	margin-bottom: 15px;
 	padding-top:10px;
 }
 
 .market_list li{
+	font-size: 10px;
 	border-bottom: 1px solid #03A64A;
 	padding-bottom:5px;
 }
 
 .item_list li{
+	font-size: 10px;
 	border-bottom: 1px solid #03A64A;
 	padding-bottom:5px;
 }
@@ -207,6 +216,13 @@
 .market_close {
 	color : red;
 }
+
+.zzan_title_title{
+	font-size: 20px;
+	font-weight: 600;
+	margin-left: 10px;
+}
+
 
 </style>
 
@@ -237,11 +253,11 @@
     
     <div class="zzan_head_contnr">
     	<div class="zzan_title">
-    		<h2> 우리동네 가격비교 </h2>
+    		<span class="zzan_title_title"> 우리동네 가격비교 </span>
     	</div>
     	
     	<div class="zzan_event">
-    		<p>인기있는 행사 리스트...</p>
+    		<p></p>
    		</div>
     </div>
     
@@ -346,7 +362,7 @@
 			$(".market_list").css("display", "block");
 			$(".item_list").css("display", "none");
 			$(".item_list_title").css("background-color", "#ffffff");
-			$(".market_list_title").css("background-color", "#58DC91");
+			$(".market_list_title").css("background-color", "#dff4e8");
 			
 		});
 		
@@ -354,7 +370,7 @@
 			$(".market_list").css("display", "none");
 			$(".item_list").css("display", "block");
 			$(".market_list_title").css("background-color", "#ffffff");
-			$(".item_list_title").css("background-color", "#58DC91");
+			$(".item_list_title").css("background-color", "#dff4e8");
 			
 		});
 	});
@@ -379,10 +395,10 @@
 	var markers=[];
 	var markerOffImage = new kakao.maps.MarkerImage(
 			'resources/images/zzan/marker_off.png',
-		    new kakao.maps.Size(30, 33), new kakao.maps.Point(15, 33));
+		    new kakao.maps.Size(26, 29), new kakao.maps.Point(13, 29));
 	var markerBestImage = new kakao.maps.MarkerImage(
 			'resources/images/zzan/marker_best.png',
-		    new kakao.maps.Size(40, 43), new kakao.maps.Point(20, 43));
+		    new kakao.maps.Size(36, 39), new kakao.maps.Point(18, 39));
 	
 	
 	<%--시간 정보--%>
@@ -411,18 +427,18 @@
                 lineHeight: '31px'
             },
             {
-                width : '48px', height : '48px',
+                width : '44px', height : '44px',
                 background: 'rgba(255, 137, 85, .5)',
-                borderRadius: '24px',
+                borderRadius: '22px',
                 color: '#000',
                 textAlign: 'center',
                 fontWeight: 'bold',
                 lineHeight: '41px'
             },
             {
-                width : '56px', height : '56px',
+                width : '52px', height : '52px',
                 background: 'rgba(255, 73, 73, .7)',
-                borderRadius: '28px',
+                borderRadius: '26px',
                 color: '#000',
                 textAlign: 'center',
                 fontWeight: 'bold',
@@ -453,9 +469,9 @@
 	
 	var userImgSrc =
 		"resources/images/zzan/user-location.png",
-		userImgSize = new kakao.maps.Size(40, 40),
+		userImgSize = new kakao.maps.Size(36, 36),
 		userImgOption = {
-		offset: new kakao.maps.Point(20, 40) 
+		offset: new kakao.maps.Point(18, 36) 
 		};//사용자 위치 커스텀 마커 이미지 설정
 	
 	var locMarkerImage = new kakao.maps.MarkerImage(userImgSrc, userImgSize, userImgOption)
@@ -540,6 +556,7 @@
 							$("#market_member_no").val(${data.MARKET_MEMBER_NO});
 							/* $("#items_choice_no").val($(this).attr("no")); */
 							$("#info_form").submit();
+							console.log(data.MARKET_NO);
 					        
 					    });
 					    
@@ -1110,6 +1127,7 @@
 							$("#market_member_no").val(data.MARKET_MEMBER_NO);
 							$("#items_choice_no").val(data.ITEMS_NO); 
 							$("#info_form").submit();
+							console.log(data.MARKET_NO);
 					        
 					    });
 					    markers.push(marker); 
