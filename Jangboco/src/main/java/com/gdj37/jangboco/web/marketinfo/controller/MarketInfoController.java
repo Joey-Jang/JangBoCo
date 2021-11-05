@@ -50,7 +50,7 @@ public class MarketInfoController {
 			mav.addObject("marketNo",marketNo);
 			
 			// marketMemberNo 데이터
-			String marketMemberNo = "";
+			String marketMemberNo = "9";
 			marketMemberNo = params.get("market_member_no");
 			System.out.println("=======================");
 			System.out.println(marketMemberNo);
