@@ -161,7 +161,7 @@ public class ItemsInfoController {
 			JSONArray recipeList = (JSONArray)cookrcp01.get("row");
 			
 			int page = Integer.parseInt(params.get("page"));
-			PagingBean pb = iPagingService.getPagingBean(page, totalCnt,5,5);				
+			PagingBean pb = iPagingService.getPagingBean(page, totalCnt,2,5);				
 			
 			for(int i = 0; i<recipeList.size(); i++) {
 				String artclNo = ""+(recipeList.size()-i);				
