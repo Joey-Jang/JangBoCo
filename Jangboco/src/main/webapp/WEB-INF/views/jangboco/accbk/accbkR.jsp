@@ -63,7 +63,7 @@
 				<input type="hidden" id="page" name="page" value="${page}">
 				<div id="search_contnr">
 					<select id="search_gbn" name="search_gbn">
-						<option hidden="" disabled="disabled" selected="selected">검색</option>
+						<option hidden="" disabled="disabled" selected="selected">-검색-</option>
 						<option value="search_items">품목</option>
 						<option value="search_buy_market">구입처</option>
 					</select>

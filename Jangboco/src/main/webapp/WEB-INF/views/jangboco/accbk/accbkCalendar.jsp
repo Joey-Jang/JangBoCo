@@ -140,7 +140,7 @@ function loadSum() {
 		 	url: "getCalendarListAjax",
 		 	type: "post",
 		 	data: {"memberNo": $("#member_no").val(),
-		 			"mNy" : getToday},
+		 			"mthNy" : getToday},
 		 	dataType: "json",
 		 	success: function(result) {
 		 		console.log(result.list.length);

@@ -135,7 +135,7 @@ $(document).ready(function(){
 		}
 		// Set chart options
 		  var options = {'title':'품목 차트',
-		                 'width':500,
+		                 'width':550,
 		                 'height':500,
 		                 'pieHole': 0.4,
 		                 'slices': {
@@ -201,8 +201,8 @@ $(document).ready(function(){
 	      title: '월 차트',
 	      bars: 'vertical',
 	      vAxis: {format: 'decimal'},
-	      width: 400,
-	      height: 300,
+	      width: 600,
+	      height: 400,
 	      colors: ['#038C3E']
 	    };
 
@@ -256,8 +256,8 @@ $(document).ready(function(){
 	      title: '최고/최저',
 	      bars: 'vertical',
 	      vAxis: {format: 'decimal'},
-	      width: 400,
-	      height: 300,
+	      width: 600,
+	      height: 400,
 	      colors: ['#038C3E','F2C12E']
 	    };
 

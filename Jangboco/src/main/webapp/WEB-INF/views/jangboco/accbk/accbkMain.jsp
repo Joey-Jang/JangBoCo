@@ -238,8 +238,8 @@ function drawSavingDay(list){
 				<span id="spend_of_month">${getThisMonthSpend.SUM}원</span> 입니다.</h3><br>
 				<!--  -->
 				<!--css display none으로 설정해주고 그때그때 나오게 해야하나    -->
-				<h6> 더 사용 </h6>
-				<h6> 덜 사용 </h6>
+				<!-- <h6> 더 사용 </h6>
+				<h6> 덜 사용 </h6> -->
 			</div>
 			<!-- 가운데 오게   -->
 			
