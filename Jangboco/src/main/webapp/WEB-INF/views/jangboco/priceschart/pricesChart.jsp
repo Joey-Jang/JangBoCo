@@ -10,26 +10,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
-<<<<<<< HEAD
-	.chart_contnr {
-		display: flex;
-		flex-flow: row wrap;
-		justify-content: space-between;
-		align-content: space-between;
-		align-items: center;
-		height: 100%;
-	}
-	
-	/* 지역구별 차트 */
-	#line_chart_items_choice {
-		display: none;
-		position: absolute;
-		z-index:1000;
-		background-color: #dff4e8;
-		border-radius: 10px;
-		width:350px;
-	    padding: 10px;
-=======
    .chart_contnr {
       display: flex;
       flex-flow: row wrap;
@@ -48,66 +28,7 @@
       border-radius: 10px;
       width:350px;
        padding: 10px;
->>>>>>> branch 'main' of https://github.com/j0ngj0ng/JangBoCo.git
         top: 30px;
-<<<<<<< HEAD
-    	right: 32px;
-	}
-	
-	#chkbox_list ul {
-		list-style-type: none;
-		padding-inline-start: 0;
-	}
-	.line_chart_items_form_contnr,#chkbox_list,#chkbox_result {
-		background-color: #FFFFFF;
-		border-radius: 5px;
-	}	
-	
-	.line_choice_btn_contnr{		
-		margin-top: 5px;
-		display: flex;
-    	justify-content: center;
-	}
-	.line_choice_btn,#line_chart_btn{
-	    border: 1px solid;
-	    background-color: #03A64A;
-	    cursor: pointer;
-	    border-radius: 5px;
-	    color: #FFFFFF;
-	}
-	
-	#line_chart_btn{
-		position: absolute;
-		z-index: 999;
-		top: 10px;
-    	right: 10px;
-	}
-	
-	.chart_div{
-		width: 100%;
-		height: 100%;
-	}
-	
-	.line_chart_contnr{
-		position: relative;
-		padding: 15px;
-		border: 15px solid #03A64A20;
-    	border-radius: 20px;
-    	
-    	width: 100%;
-    	height: 50%;
-	}
-	
-	/* 지역구별 차트 */
-	.disct_chart_items_choice{
-		display: none;
-		position: absolute;
-		z-index:1000;
-		background-color: #dff4e8;	    
-	    max-width: 540px;
-	    border-radius: 10px;
-	    padding: 10px;
-=======
        right: 32px;
    }
    
@@ -164,65 +85,7 @@
        max-width: 540px;
        border-radius: 10px;
        padding: 10px;
->>>>>>> branch 'main' of https://github.com/j0ngj0ng/JangBoCo.git
         bottom: 10px;
-<<<<<<< HEAD
-	    right: 10px;	    
-	}
-	
-	.disct_chart_items_choice_background{
-		background-color: #FFFFFF;
-	    height: 40px;
-	    max-width: 540px;
-	    border-radius: 10px;
-	    padding: 7px;
-	    text-align: center;
-	}
-	
-	#disct_items_choice_form , .disct_choice_btn_contnr{
-		display: inline-block;
-	}
-	
-	#disct_items_choice_form,#disct_items_choice,#disct_choice_success_btn,#disct_choice_cancel_btn{
-		margin-right: 5px;
-	}
-	
-	#disct_chart_btn,.disct_choice_btn{		
-	    border: 1px solid;
-	    background-color: #03A64A;
-	    cursor: pointer;
-	    border-radius: 5px;
-	    color: #FFFFFF;
-	}
-	#disct_chart_btn{
-		position: absolute;
-		z-index: 999;
-		bottom: 10px;
-	    right: 10px;
-	}
-	
-	.disct_chart_contnr{
-		position: relative;
-		padding: 20px 15px 10px 15px;
-		border: 15px solid #03A64A20;
-    	border-radius: 20px;
-    	/* margin-top: 15px; */
-    	/* height: 350px; */
-    	
-    	width: 45%;
-    	height: 45%;
-	}
-	
-	/* 카테고리 차트  */	
-	.category_chart_choice{
-		display: none;
-		position: absolute;
-		z-index:1000;
-		background-color: #dff4e8;	    
-	    max-width: 540px;
-	    border-radius: 10px;
-	    padding: 10px;
-=======
        right: 10px;       
    }
    
@@ -278,55 +141,7 @@
        max-width: 540px;
        border-radius: 10px;
        padding: 10px;
->>>>>>> branch 'main' of https://github.com/j0ngj0ng/JangBoCo.git
         bottom: 10px;
-<<<<<<< HEAD
-	    right: 10px;	    
-	}
-	
-	.category_chart_choice_background{
-		background-color: #FFFFFF;
-	    height: 40px;
-	    max-width: 540px;
-	    border-radius: 10px;
-	    padding: 7px;
-	    text-align: center;
-	}
-	
-	#category_items_choice_form , .category_choice_btn_contnr{
-		display: inline-block;
-	}
-	
-	/* #disct_items_choice_form,#disct_items_choice,#disct_choice_success_btn,#disct_choice_cancel_btn{
-		margin-right: 5px;
-	}
-	 */
-	#category_chart_btn,.category_choice_btn{		
-	    border: 1px solid;
-	    background-color: #03A64A;
-	    cursor: pointer;
-	    border-radius: 5px;
-	    color: #FFFFFF;
-	}
-	#category_chart_btn{
-		position: absolute;
-		z-index: 999;
-		bottom: 10px;
-	    right: 10px;
-	}
-	
-	.category_chart_contnr{
-		position: relative;
-		padding: 0 15px 30px 15px;
-		border: 15px solid #03A64A20;
-    	border-radius: 20px;
-    	/* margin-top: 15px; */
-    	/* height: 350px; */
-    	
-    	width: 45%;
-    	height: 45%;
-	}
-=======
        right: 10px;       
    }
    
@@ -372,7 +187,6 @@
        width: 45%;
        height: 45%;
    }
->>>>>>> branch 'main' of https://github.com/j0ngj0ng/JangBoCo.git
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="resources/script/layout/default.js"></script>
@@ -477,12 +291,6 @@ $(document).ready(function(){
       $("#category_choice").val('0');
       $(".category_chart_choice").hide();
    });
-   
-   $(window).resize(function(){
-	   getLineChartData();		
-	   getDisctChartData();		
-	   getCategoryChartData();		
-	});
 });
 
 // 다중선택한 품목을 배열변수에 담아서 넘기기 위한 함수
@@ -615,13 +423,11 @@ function drawLineChart(res) {
       vAxis: {
                
       },
-      colors: ['#03A64A','#F2C12E','#038C3E','#D9B88F','#F27405'],
-      fontSize: 12
+      colors: ['#03A64A','#F2C12E','#038C3E','#D9B88F','#F27405']
    };
    
    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-   chart.draw(data, options);  
-   window.addEventListener('resize', drawLineChart, false);
+   chart.draw(data, options);   
 } 
 
 // 지역구 차트 품목선택 그리기 위한 ajax
@@ -694,7 +500,6 @@ function drawDisctChart(res) {
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
-    window.addEventListener('resize', drawDisctChart, false);
   }
   
 // 카테고리 차트 데이터 호출 및 그리기
@@ -752,7 +557,6 @@ function drawCategoryChart(res) {
     var chart = new google.visualization.BarChart(document.getElementById('category_chart_div'));
 
     chart.draw(data, options);
-    window.addEventListener('resize', drawCategoryChart, false);
   }
   
 function getLatestVarncData(){
@@ -783,123 +587,6 @@ function getLatestVarncData(){
       </form>
     <div class="con_contnr">
         <div class="con">
-<<<<<<< HEAD
-        	<div class="chart_contnr">
-        		<form action="#" id="line_chart_form" method="post">
-        			<input type="hidden" id="start_date_value" name="startDate">
-        			<input type="hidden" id="end_date_value" name="endDate">   			        			
-        			<input type="hidden" id="line_items_no" name="itemsNo">        			
-        		</form>
-        		<div class="line_chart_contnr">
-	       			<button type="button" id="line_chart_btn">선택</button>
-	        		<div id="line_chart_items_choice">
-	        			<div class="line_chart_items_form_contnr">
-		        			<form action="#" id="line_items_choice_form" method="post">
-		        				<input type="date" id="start_date">
-		        				<input type="date" id="end_date"><br>        			
-			        			<select id="line_items_name" name="itemsName">
-			        				<option hidden="" disabled="disabled" selected="selected" value="">품목선택</option>
-			        				<option value="갈치">갈치</option>
-			        				<option value="고등어">고등어</option>
-			        				<option value="달걀">달걀</option>
-			        				<option value="닭고기">닭고기</option>
-			        				<option value="동태">동태</option>
-			        				<option value="돼지고기">돼지고기</option>
-			        				<option value="명태">명태</option>
-			        				<option value="무">무</option>
-			        				<option value="배">배</option>
-			        				<option value="배추">배추</option>
-			        				<option value="사과">사과</option>
-			        				<option value="상추">상추</option>
-			        				<option value="쇠고기">쇠고기</option>
-			        				<option value="애호박">애호박</option>
-			        				<option value="양파">양파</option>
-			        				<option value="오이">오이</option>
-			        				<option value="오징어">오징어</option>
-			        				<option value="조기">조기</option>
-			        				<option value="호박">호박</option>
-			        			</select>
-		        			</form>
-	        			</div>
-	        			<div id="chkbox_list">	        				
-	        			</div>
-	        			<div id="chkbox_result">	        				
-	        			</div>
-	        			<div class="line_choice_btn_contnr">
-		        			<button type="button" class="line_choice_btn" id="line_choice_success_btn">확인</button>
-		        			<button type="button" class="line_choice_btn" id="line_choice_cancel_btn">취소</button>			        				     				
-	        			</div>
-	        		</div>
-	        		<div class="chart_div" id="chart_div"></div>
-        		</div>
-        		
-        		<form action="#" id="disct_chart_form" method="post">
-        			<input type="hidden" id="disct_items_no" name="itemsNo" value="99">        			
-        		</form>
-        		<div class="disct_chart_contnr">
-	        		<button type="button" id="disct_chart_btn">품목선택</button>
-	        		<div class="disct_chart_items_choice">
-	        			<div class="disct_chart_items_choice_background">
-		        			<form action="#" id="disct_items_choice_form" method="post">
-			        			<select id="disct_items_name" name="itemsName">
-			        				<option id="hidden_value" hidden="" disabled="disabled" selected="selected" value="">품목선택</option>
-			        				<option value="갈치">갈치</option>
-			        				<option value="고등어">고등어</option>
-			        				<option value="달걀">달걀</option>
-			        				<option value="닭고기">닭고기</option>
-			        				<option value="동태">동태</option>
-			        				<option value="돼지고기">돼지고기</option>
-			        				<option value="명태">명태</option>
-			        				<option value="무">무</option>
-			        				<option value="배">배</option>
-			        				<option value="배추">배추</option>
-			        				<option value="사과">사과</option>
-			        				<option value="상추">상추</option>
-			        				<option value="쇠고기">쇠고기</option>
-			        				<option value="애호박">애호박</option>
-			        				<option value="양파">양파</option>
-			        				<option value="오이">오이</option>
-			        				<option value="오징어">오징어</option>
-			        				<option value="조기">조기</option>
-			        				<option value="호박">호박</option>
-			        			</select>        				     				
-		        			</form>
-		        			<select id="disct_items_choice"> 
-		        				<option hidden="" disabled="disabled" selected="selected" value="">세부선택</option>        				      			 
-		        			</select>
-			        		<div class="disct_choice_btn_contnr">
-			        			<button type="button" class="disct_choice_btn" id="disct_choice_success_btn">확인</button>
-			        			<button type="button" class="disct_choice_btn" id="disct_choice_cancel_btn">취소</button>
-			        		</div>
-	        			</div>
-	        		</div>        		
-	        		<div class="chart_div" id="disct_chart_div"></div>
-        		</div>
-        		
-        		<form action="#" id="category_chart_form" method="post">
-        			<input type="hidden" id="category_items_name" name="itemsName" value="">        			
-        		</form>
-        		<div class="category_chart_contnr">
-	        		<button type="button" id="category_chart_btn">품목선택</button>
-	        		<div class="category_chart_choice">
-	        			<div class="category_chart_choice_background">
-			        		<select id="category_choice"> 
-			        			<option value="0">전체</option>
-			        			<option value="1">육류</option>        			
-				        		<option value="2">수산</option>
-				        		<option value="3">과일/채소</option>        				      			 
-			        		</select>
-			        		<div class="category_choice_btn_contnr">
-								<button type="button" class="category_choice_btn" id="category_choice_success_btn">확인</button>
-				        		<button type="button" class="category_choice_btn" id="category_choice_cancel_btn">취소</button>
-			        		</div>
-	        			</div>
-	        		</div>
-	        		<div class="chart_div" id="category_chart_div"></div>        		
-        		</div>
-        		       	
-        	</div>
-=======
            <div class="chart_contnr">
               <form action="#" id="line_chart_form" method="post">
                  <input type="hidden" id="start_date_value" name="startDate">
@@ -1015,7 +702,6 @@ function getLatestVarncData(){
               </div>
                         
            </div>
->>>>>>> branch 'main' of https://github.com/j0ngj0ng/JangBoCo.git
         </div>
     </div>
     <div class="bottom_contnr"></div>
