@@ -10,14 +10,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
-	main {
-	    min-width: 2555px;
-	    min-height: 1280px;
+	.chart_contnr {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-content: space-between;
+		align-items: center;
+		height: 100%;
 	}
 	
 	/* 지역구별 차트 */
-	
-	#line_chart_items_choice{
+	#line_chart_items_choice {
 		display: none;
 		position: absolute;
 		z-index:1000;
@@ -44,7 +47,6 @@
     	justify-content: center;
 	}
 	.line_choice_btn,#line_chart_btn{
-		margin-right: 5px;
 	    border: 1px solid;
 	    background-color: #03A64A;
 	    cursor: pointer;
@@ -55,20 +57,23 @@
 	#line_chart_btn{
 		position: absolute;
 		z-index: 999;
-		top: 30px;
-    	right: 50px;
+		top: 10px;
+    	right: 10px;
 	}
 	
-	#chart_div{
-	 width: 100%;
-	 height: 300px;
+	.chart_div{
+		width: 100%;
+		height: 100%;
 	}
 	
 	.line_chart_contnr{
 		position: relative;
-		background-color: #03A64A20;
-		padding: 25px;
+		padding: 15px;
+		border: 15px solid #03A64A20;
     	border-radius: 20px;
+    	
+    	width: 100%;
+    	height: 50%;
 	}
 	
 	/* 지역구별 차트 */
@@ -111,17 +116,20 @@
 	#disct_chart_btn{
 		position: absolute;
 		z-index: 999;
-		bottom: 35px;
-	    right: 50px;
+		bottom: 10px;
+	    right: 10px;
 	}
 	
 	.disct_chart_contnr{
 		position: relative;
-		background-color: #03A64A20;
-		padding: 25px;
+		padding: 20px 15px 10px 15px;
+		border: 15px solid #03A64A20;
     	border-radius: 20px;
-    	margin-top: 15px;
-    	height: 350px;
+    	/* margin-top: 15px; */
+    	/* height: 350px; */
+    	
+    	width: 45%;
+    	height: 45%;
 	}
 	
 	/* 카테고리 차트  */	
@@ -164,17 +172,20 @@
 	#category_chart_btn{
 		position: absolute;
 		z-index: 999;
-		bottom: 35px;
-	    right: 50px;
+		bottom: 10px;
+	    right: 10px;
 	}
 	
 	.category_chart_contnr{
 		position: relative;
-		background-color: #03A64A20;
-		padding: 25px;
+		padding: 0 15px 30px 15px;
+		border: 15px solid #03A64A20;
     	border-radius: 20px;
-    	margin-top: 15px;
-    	height: 350px;
+    	/* margin-top: 15px; */
+    	/* height: 350px; */
+    	
+    	width: 45%;
+    	height: 45%;
 	}
 </style>
 <script type="text/javascript" src="resources/script/jquery/jquery-1.12.4.min.js"></script>
@@ -482,7 +493,7 @@ function drawDisctChart(res) {
     var options = {      
       bars: 'vertical',
       vAxis: {format: 'decimal'},   
-      height: 300,
+      /* height: 300, */
       colors: ['#03A64A', '#F2C12E', '#F27405']
     };
 
@@ -536,7 +547,7 @@ function drawCategoryChart(res) {
       hAxis: {        
         minValue: 0
       },
-      height:300,
+      /* height:300, */
       vAxis: {
         
       },
@@ -576,7 +587,7 @@ function getLatestVarncData(){
    	</form>
     <div class="con_contnr">
         <div class="con">
-        	<div>
+        	<div class="chart_contnr">
         		<form action="#" id="line_chart_form" method="post">
         			<input type="hidden" id="start_date_value" name="startDate">
         			<input type="hidden" id="end_date_value" name="endDate">   			        			
@@ -622,7 +633,7 @@ function getLatestVarncData(){
 		        			<button type="button" class="line_choice_btn" id="line_choice_cancel_btn">취소</button>			        				     				
 	        			</div>
 	        		</div>
-	        		<div id="chart_div"></div>
+	        		<div class="chart_div" id="chart_div"></div>
         		</div>
         		
         		<form action="#" id="disct_chart_form" method="post">
@@ -665,7 +676,7 @@ function getLatestVarncData(){
 			        		</div>
 	        			</div>
 	        		</div>        		
-	        		<div id="disct_chart_div"></div>
+	        		<div class="chart_div" id="disct_chart_div"></div>
         		</div>
         		
         		<form action="#" id="category_chart_form" method="post">
@@ -687,7 +698,7 @@ function getLatestVarncData(){
 			        		</div>
 	        			</div>
 	        		</div>
-	        		<div id="category_chart_div"></div>        		
+	        		<div class="chart_div" id="category_chart_div"></div>        		
         		</div>
         		       	
         	</div>
