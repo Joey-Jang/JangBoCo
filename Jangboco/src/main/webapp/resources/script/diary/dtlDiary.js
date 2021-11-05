@@ -474,7 +474,7 @@ function drawDiaryImgItemTag(diaryImgList) {
 	
 	for(var diaryImgData of diaryImgList) {
 		diaryImgHtml += "<li>";
-		diaryImgHtml += "	<div class=\"diary_img\" style=\"background:center / cover no-repeat url('resources/upload/";
+		diaryImgHtml += "	<div class=\"diary_img\" style=\"background:center / cover no-repeat url('https://image.jangboco.ga/";
 		diaryImgHtml += 	diaryImgData.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D") + "');\">";
 		diaryImgHtml += "	</div>";
 		diaryImgHtml += "</li>";
@@ -529,7 +529,7 @@ function loadDiaryData() {
 			$("#diary_con").text(result.diaryData.CON);
 			if(result.diaryData.IMG_URL!=undefined) {
 				$("#profile_img").css("background", "center / cover no-repeat "
-													+ " url(\"resources/upload/"
+													+ " url(\"https://image.jangboco.ga/"
 													+ result.diaryData.IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 													+ "\")");
 			}
@@ -783,7 +783,7 @@ function loadProfileDiaryList() {
 			for(var i=0; i<result.profileDiaryList.length; i++) {
 				$("#profile_diary_img_list").append("<li diary_no=\"" + result.profileDiaryList[i].DIARY_NO + "\"><div class=\"profile_diary_img\"></div></li>");
 				$("#profile_diary_img_list > li").last().children(".profile_diary_img").css("background", "center / cover no-repeat "
-															+ " url(\"resources/upload/"
+															+ " url(\"https://image.jangboco.ga/"
 															+ result.profileDiaryList[i].IMG_URL.replace(/\[/g, "%5B").replace(/\]/g, "%5D")
 															+ "\")");
 			}
