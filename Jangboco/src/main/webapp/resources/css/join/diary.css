@@ -48,14 +48,22 @@ a {
 }
 .header-search {
   position: relative;
-  width: 100px;
+  width: 200px;
 }
-.header-search input {
-  width: 100%;
+.header-search input[type="text"] {
+  width: 80%;
   padding: 4px 5px;
   border: 2px solid rgb(13, 160, 35);
   border-radius: 5px;
 }
+
+.header-search input[type="button"] {
+  width: 20%;
+  padding: 4px 5px;
+  border: 2px solid rgb(13, 160, 35);
+  border-radius: 5px;
+}
+
 .header-search input:focus {
   outline: none;
 }
@@ -302,4 +310,10 @@ img.folw_img {
 
 #pagingWrap {
     height: 30px;
+    text-align: center;
+}
+
+#actionForm{
+	display: flex;
+	justify-content: center;
 }

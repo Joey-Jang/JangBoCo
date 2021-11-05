@@ -31,9 +31,9 @@ $(document).ready(function(){
     	} else if (checkVal("#nicnm")){
 			alert("닉네임을 입력해주세요");
 			$("#nicnm").focus();
-    	} else if ($("#agrnt_box").prop("checked") == false){
+    	} /* else if ($("#agrnt_box").prop("checked") == false){
 			alert("약관동의를 확인해주세요");
-		} else if (checkVal("#zipcd_other")){
+		}  */else if (checkVal("#zipcd_other")){
 			alert("우편번호를 입력해주세요");
 			$("#zipcd_other").focus();
 		} else if (checkVal("#addrs_other")){
@@ -177,12 +177,12 @@ function toDisabled(sel){
  				
 		       			</div>
 		       					       			
-		       			<div class="form_input agrnt_input">
+<!-- 		       			<div class="form_input agrnt_input">
 	        				<input type="checkbox" id="agrnt_box"/>
 		       				<div class="">
 		       					약관동의
 		       				</div>        			
-		       			</div>
+		       			</div> -->
         			</form>
         			<div class="join_btn">
 	        			<input type="button" value="가입" id="social_join_btn">

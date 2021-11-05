@@ -109,7 +109,7 @@ function checkVal(sel) {
                             비밀번호
                          </div>
                          <div class="form_input_val">
-                            <input id="pw" name="pw"/>
+                            <input type="password" id="pw" name="pw"/>
                          </div>                    
                       </div>
                       <div class="form_input_val">
