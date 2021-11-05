@@ -219,6 +219,37 @@ public class accbkController {
 		
 		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) { 
 			mav.addObject("member_no",session.getAttribute("sMNo"));
+			mav.setViewName("jangboco/accbk/accbkCalendar"); 
+		} else {
+			mav.setViewName("redirect:loginMain"); 
+		}
+		
+		int homeFlag = 0;
+		int menuIdx = 2;
+		int subMenuIdx = 2;
+		mav.addObject("homeFlag", homeFlag);
+		mav.addObject("menuIdx", menuIdx);
+		mav.addObject("subMenuIdx", subMenuIdx);
+		
+		String page ="1";
+		
+		if(params.get("page")!=null) {
+			page = params.get("page");	
+		}
+		
+		mav.addObject("page",page);
+		
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/accbkDtl")
+	public ModelAndView accbkDtl(@RequestParam HashMap<String, String> params,
+								ModelAndView mav,
+								HttpSession session) {
+		
+		if(!"".equals(session.getAttribute("sMNo")) && session.getAttribute("sMNo")!=null) { 
+			mav.addObject("member_no",session.getAttribute("sMNo"));
 			mav.setViewName("jangboco/accbk/accbkR"); 
 		} else {
 			mav.setViewName("redirect:loginMain"); 
@@ -462,4 +493,32 @@ public class accbkController {
 //	return String.valueOf(params);
 		return mapper.writeValueAsString(modelMap);
 	}
+	
+	//가계부 달력
+	@RequestMapping(value = "/accbkCalender")
+	public ModelAndView accbkCalender(@RequestParam HashMap<String, String> params,
+								 ModelAndView mav) {
+		
+		
+		
+		
+		mav.setViewName("jangboco/accbk/accbkCalendar");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/getCalendarListAjax", method = RequestMethod.POST,
+					produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getCalendarListAjax(@RequestParam HashMap<String, String> params) throws Throwable {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> list = accbkiService.getCalendarList(params);
+		
+		modelMap.put("list", list);
+		
+		return mapper.writeValueAsString(modelMap);
+	}
+			
 }

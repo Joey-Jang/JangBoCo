@@ -32,7 +32,7 @@
         <div class="con">
         
 			<!--품목 & 구입처로 검색할 수 있게 하기.  -->
-			<input type="button" id="write_btn" class="write_btn" value="지출내역추가" >
+			<input type="button" id="write_btn" class="write_btn" value="지출추가" >
 			<div>
 			<table id="accbk_r_tbl">
 				<thead>
