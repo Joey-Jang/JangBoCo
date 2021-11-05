@@ -515,8 +515,7 @@ function drawLineChart(res) {
 	var options = {		
 		hAxis: {
 						
-		},
-		height:250,
+		},		
 		vAxis: {
 					
 		},
@@ -543,8 +542,7 @@ function drawDisctChart(res) {
 
     var options = {      
       bars: 'vertical',
-      vAxis: {format: 'decimal'},
-      height: 250,
+      vAxis: {format: 'decimal'},      
       colors: ['#03A64A', '#F2C12E', '#F27405']
     };
 
