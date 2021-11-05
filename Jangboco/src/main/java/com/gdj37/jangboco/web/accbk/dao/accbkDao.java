@@ -129,6 +129,11 @@ public class accbkDao implements accbkIDao{
 		return sqlsession.selectList("accbk.getRichDayList", params);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getCalendarList(HashMap<String, String> params) throws Throwable {
+		return sqlsession.selectList("accbk.getCalendarList", params);
+	}
+
 
 	
 

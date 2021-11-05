@@ -129,5 +129,10 @@ public class accbkService implements accbkIService {
 		return accbkiDao.getRichDayList(params);
 	}
 
+	@Override
+	public List<HashMap<String, Object>> getCalendarList(HashMap<String, String> params) throws Throwable {
+		return accbkiDao.getCalendarList(params);
+	}
+
 
 }

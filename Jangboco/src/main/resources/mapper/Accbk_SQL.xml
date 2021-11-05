@@ -284,4 +284,14 @@
 		AND DEL_FLAG = 0
 		AND MEMBER_NO = #{member_no}
    </select>
+   
+	<select id="getCalendarList" parameterType="hashmap" resultType="hashmap">
+		SELECT SUM(COST) AS SUM,TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'DD') AS BUY_DATE
+		FROM ACCBK
+		WHERE DEL_FLAG = 0
+		AND MEMBER_NO = #{memberNo}
+		AND (TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'YYYY-MM') IN '2021-11')
+		GROUP BY TO_CHAR(TO_DATE(BUY_DATE,'YY-MM-DD'),'DD')
+		ORDER BY 2
+	</select>
 </mapper>
