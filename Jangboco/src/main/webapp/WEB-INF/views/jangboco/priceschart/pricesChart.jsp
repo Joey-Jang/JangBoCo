@@ -291,6 +291,12 @@ $(document).ready(function(){
       $("#category_choice").val('0');
       $(".category_chart_choice").hide();
    });
+   
+   $(window).resize(function(){
+	   getLineChartData();		
+	   getDisctChartData();		
+	   getCategoryChartData();		
+	});
 });
 
 // 다중선택한 품목을 배열변수에 담아서 넘기기 위한 함수
@@ -423,11 +429,13 @@ function drawLineChart(res) {
       vAxis: {
                
       },
-      colors: ['#03A64A','#F2C12E','#038C3E','#D9B88F','#F27405']
+      colors: ['#03A64A','#F2C12E','#038C3E','#D9B88F','#F27405'],
+      fontSize: 12
    };
    
    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-   chart.draw(data, options);   
+   chart.draw(data, options);  
+   window.addEventListener('resize', drawLineChart, false);
 } 
 
 // 지역구 차트 품목선택 그리기 위한 ajax
@@ -500,6 +508,7 @@ function drawDisctChart(res) {
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
+    window.addEventListener('resize', drawDisctChart, false);
   }
   
 // 카테고리 차트 데이터 호출 및 그리기
@@ -557,6 +566,7 @@ function drawCategoryChart(res) {
     var chart = new google.visualization.BarChart(document.getElementById('category_chart_div'));
 
     chart.draw(data, options);
+    window.addEventListener('resize', drawCategoryChart, false);
   }
   
 function getLatestVarncData(){
