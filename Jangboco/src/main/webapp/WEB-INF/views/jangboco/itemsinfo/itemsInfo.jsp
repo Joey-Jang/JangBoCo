@@ -11,8 +11,8 @@
 <link rel="stylesheet" type="text/css" href="resources/css/layout/default.css">
 <style type="text/css">
 	main {
-	    min-width: 2555px;
-	    min-height: 1280px;
+	    min-width: 1110px;
+	    min-height: 660px;
 	}
 	
 	.items_info_title_contnr{
@@ -439,7 +439,10 @@ $(document).ready(function(){
     $(".recipe_modal").on("click",function(){
     	$(".recipe_modal").hide();    	   	
     });
-        
+    
+    $(window).resize(function(){
+    	reloaditemsInfo();		
+	});        
 });
 
 function reloaditemsInfo(){
@@ -522,6 +525,7 @@ function drawLineChart(res) {
 	
 	var chart = new google.visualization.LineChart(document.getElementById('line_chart_div'));
 	chart.draw(data, options);	
+	window.addEventListener('resize', drawLineChart, false);
 } 
 
 // 지역구별 차트 그리기 
@@ -547,6 +551,7 @@ function drawDisctChart(res) {
     var chart = new google.charts.Bar(document.getElementById('disct_chart_div'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
+    window.addEventListener('resize', drawLineChart, false);
  }
  
 function reloadRecipe(){	
