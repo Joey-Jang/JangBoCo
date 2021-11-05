@@ -37,6 +37,9 @@
 		</form>
 		<form action="#" id="action_form" class="hidden_tag" method="post">
 	      	<input type="hidden" id="diary_no" name="diary_no" value="${diaryNo}">
+	      	<input type="hidden" id="prev_home_flag" name="home_flag" value="${homeFlag}">
+			<input type="hidden" id="prev_menu_idx" name="menu_idx" value="${menuIdx}">
+			<input type="hidden" id="prev_sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
 		</form>
 		
         <div class="con">

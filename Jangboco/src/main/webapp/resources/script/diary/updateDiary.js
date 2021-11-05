@@ -633,8 +633,6 @@ $(document).ready(function() {
 	
 	// 일기 수정하기 버튼 클릭 이벤트
 	$("#update_diary_btn").on("click", function() {
-		console.log("클릭");
-		
 		if($("#diary_img_list li").length==0) {
 			alert("사진을 한 장 이상 올려주세요.");
 		} else if(checkVal("#diary_con")) {
@@ -658,6 +656,7 @@ $(document).ready(function() {
 				success: function(result) {
 					if(result.msg=="SUCCESS") {
 						alert("일기 수정에 성공하였습니다.");
+		
 						$("#action_form").attr("action", "dtlDiary");
 						$("#action_form").submit();
 					} else if(result.msg=="FAILED") {

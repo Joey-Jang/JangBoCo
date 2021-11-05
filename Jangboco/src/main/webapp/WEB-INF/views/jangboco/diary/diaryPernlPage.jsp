@@ -312,9 +312,9 @@ function drawPaging(pb) {
         <div class="con">
              <form action="dtlDiary" id="dtlForm" method="post">
                 <input type="hidden" id="diary_no" name="diary_no"/>
-                <input type="hidden" id="prev_home_flag" name="home_flag">
-				<input type="hidden" id="prev_menu_idx" name="menu_idx">
-				<input type="hidden" id="prev_sub_menu_idx" name="sub_menu_idx">
+                <input type="hidden" id="prev_home_flag" name="home_flag" value="${homeFlag}">
+				<input type="hidden" id="prev_menu_idx" name="menu_idx" value="${menuIdx}">
+				<input type="hidden" id="prev_sub_menu_idx" name="sub_menu_idx" value="${subMenuIdx}">
             </form>
          <div class="mypage_contnr">
             <div class="left_side_contr">
