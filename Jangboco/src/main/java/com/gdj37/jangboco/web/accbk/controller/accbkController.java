@@ -69,7 +69,6 @@ public class accbkController {
 		 * System.out.println("멤버넘버 어떻게 받는거징 ??? " +memberNo);
 		 */
 		 
-        System.out.println("제발제발 !!!!!!!!!"+session.getAttribute("sMNo"));
         System.out.println("이거는?????????!"+String.valueOf(session.getAttribute("sMNo")));
 		params.put("buy_date",yearNMonth);
 		params.put("member_no",String.valueOf(session.getAttribute("sMNo")));
