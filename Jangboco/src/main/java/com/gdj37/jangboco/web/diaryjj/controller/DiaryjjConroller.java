@@ -28,8 +28,13 @@ import com.gdj37.jangboco.web.diaryjj.service.DiaryServiceIF;
 @Controller
 public class DiaryjjConroller {
 
+	private final DiaryServiceIF diaryService;
+	
 	@Autowired
-	public DiaryServiceIF diaryService;
+	public DiaryjjConroller(DiaryServiceIF diaryService) {
+		this.diaryService = diaryService;
+	}
+
 	
 	@RequestMapping(value = "/writeDiary")
 	public ModelAndView writeDiary(HttpSession session, ModelAndView mav) {
