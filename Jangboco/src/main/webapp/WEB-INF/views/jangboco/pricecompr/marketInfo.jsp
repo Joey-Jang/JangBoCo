@@ -637,7 +637,6 @@ function reloadItemsList(){
 function drawItemsList(list){
 	var html ="";
 	var i = 0;
-	console.log(list.length);
 	for(var data of list){
 		if(i == 0){
 			html += "<div class = \"items_slide\">";			
