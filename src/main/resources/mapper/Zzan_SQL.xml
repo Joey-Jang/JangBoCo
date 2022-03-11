@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzan">
+	<select id="getMarketList" parameterType="hashmap" resultType="hashmap">
+		SELECT M.MARKET_NO,M.MARKET_NAME, M.DISCT_NO, D.DISCT_NAME,M.LAT,M.LNG,M.MARKET_ADDRS,MM.PHONE_NUM,MM.START_TIME,MM.END_TIME,MM.MARKET_MEMBER_NO
+		FROM DISCT D JOIN MARKET M
+        ON D.DISCT_NO=M.DISCT_NO
+        LEFT OUTER JOIN MARKET_MEMBER MM
+        ON M.MARKET_NO=MM.MARKET_NO
+		WHERE LAT is not null
+		<if test = "searchTxt != null and searchTxt != ''">
+			<choose>
+				<when test = "searchGbn eq 0">
+					and M.MARKET_NAME like '%' || #{searchTxt} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	
+	<select id="getItemList" parameterType="hashmap" resultType="hashmap">
+		SELECT P.PRICES_NO,P.PRICE,P.UPDATE_DATE,P.SELL_STD,P.ITEMS_NO,I.ITEMS_NAME,P.MARKET_NO,MM.MARKET_MEMBER_NO,MM.START_TIME,MM.END_TIME,K.MARKET_NAME,K.DISCT_NAME,K.LAT,K.LNG,P.NOTE,S.SOLDOUT_FLAG
+		FROM (
+		        SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, SELL_STD, NOTE, PRICE, RANK() OVER(PARTITION BY MARKET_NO ORDER BY UPDATE_DATE DESC) AS RANK
+		        FROM PRICES 
+		     ) P
+		JOIN ITEMS I
+		ON P.ITEMS_NO = I.ITEMS_NO
+		LEFT OUTER JOIN (SELECT M.MARKET_NO,M.DISCT_NO,D.DISCT_NAME,M.MARKET_NAME,M.LAT,M.LNG
+		                FROM MARKET M JOIN DISCT D
+		                ON M.DISCT_NO=D.DISCT_NO)K
+		ON P.MARKET_NO=K.MARKET_NO
+		LEFT OUTER JOIN MARKET_MEMBER MM
+		ON P.MARKET_NO=MM.MARKET_NO
+		LEFT OUTER JOIN STOCK S
+		ON MM.MARKET_MEMBER_NO=S.MARKET_MEMBER_NO AND P.ITEMS_NO=S.ITEMS_NO
+		WHERE K.LAT is not null
+		AND TO_DATE(SYSDATE, 'YYYY-MM-DD') - TO_DATE(P.UPDATE_DATE, 'YYYY-MM-DD') <![CDATA[<=]]> 30
+		AND RANK = 1
+		AND P.PRICE!=0
+		<if test = "searchTxt != null and searchTxt != ''">
+			<choose>
+				<when test = "searchGbn eq 1">
+					and I.ITEMS_NAME like '%' || #{searchTxt} || '%'
+				</when>
+			</choose>
+		</if>
+		ORDER BY P.PRICE ASC
+	</select>
+</mapper>

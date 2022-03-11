@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+/*accbkC  */
+/*심미적 효과 X, 기능을 위한 효과 O */
+
+
+/*----기능을 위한 효과 끝 -------  */
+
+ main {
+	min-height: 820px;
+	min-width: 1200px;
+
+}
+	
+
+/*accbk Main  */
+.accbk_main_notice {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+}
+
+#spend_of_month {
+	font: bold;
+	color: #03A64A; 
+	
+
+}
+
+.accbk_main_summr_contnr {
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+
+
+#period_set > option {
+	text-align: center;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: #03A64A;
+}
+
+.spend_regst {
+	border:0.1em solid #03A64A;
+	border-radius:5px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: medium;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+	width: 100px;
+	height: 40px;
+}
+
+.spend_regst:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
+}
+.main_summr_title {
+	font: bold;
+	font-size: 20px;
+}
+
+.summr_accbk {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	width : 160px;
+	/* height : 25%; */
+	height: 160px;
+	padding: 15px;
+	border: 10px solid #03A64A20;
+	border-radius: 15%;
+	display: inline-block;
+	/* margin: 15px; */
+	text-align: center;
+}
+.summr_accbk a {
+	margin: 0;
+}
+
+.main_summr_title {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 10pt;
+    font-weight: 400;
+    margin-left: 15px;
+}
+
+.richDay_modal {
+	display: none;
+	position: absolute;
+	width: auto;
+	height: auto;
+	background-color: #FFFFFF;
+	color : #03A64A90;
+	border: 2px solid #03A64A20;
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 9999;
+}
+
+.richDay_btn {
+	
+	width : 20px;
+	height: 20px;
+	border:1px solid #03A64A;
+	border-radius:25px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+}
+.richDay_btn:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
+}
+
+.savingDay_modal {
+	display: none;
+	position: absolute;
+	width: auto;
+	height: auto;
+	background-color: #FFFFFF95;
+	color : #03A64A90;
+	border: 2px solid #03A64A20;
+	border-radius: 5px;
+	padding: 10px;
+	z-index: 9999;
+}
+
+.savingDay_btn {
+	
+	width : 20px;
+	height: 20px;
+	border:1px solid #03A64A;
+	border-radius:25px;
+	box-sizing: border-box;
+	text-decoration:none;
+	font-family:'Roboto',sans-serif;
+	font-weight:300;
+	color:#03A64A;
+	text-align:center;
+	transition: all 0.2s;
+	background-color: #FFFFFF;
+}
+.savingDay_btn:hover {
+	color:#FFFFFF;
+	background-color:#03A64A;
+}
+
+#most_spend_day:hover {
+	color:#03A64A70;
+}
+/* ACCBKR */
+.paging_wrap span:hover {
+	cursor: pointer;
+}
+
+#least_spend_day:hover {
+	color:#03A64A70;
+}
+
+
+
+
+
+
+.con {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.accbk_main_summr_contnr {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: center;
+	width: 600px;
+	height: 400px;
+}
+.card_info_contnr {
+	margin-top: 20px;
+}

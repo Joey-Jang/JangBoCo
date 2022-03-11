@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="marketInfo">
+	<select id="getMarketEventCnt" parameterType="hashmap" resultType="Integer">
+		SELECT COUNT(*)
+		FROM EVENT
+		WHERE DEL_FLAG = 0
+		AND MARKET_MEMBER_NO = #{marketMemberNo}
+		<if test="searchText != null and searchText != '' ">
+  	   		AND EVENT_NAME LIKE '%' || #{searchText} || '%'  	   		
+  	   	</if>		
+	</select>
+	
+	<select id="getEventList" parameterType="hashmap" resultType="hashmap">
+		SELECT EVENT_NO, EVENT_NAME, REGST_DATE, START_DATE, END_DATE, HIT_NUM, LIKE_CNT,RNUM
+		FROM (SELECT EVENT_NO, EVENT_NAME, TO_CHAR(REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+					 TO_CHAR(START_DATE,'YY-MM-DD') AS START_DATE,
+					 TO_CHAR(END_DATE,'YY-MM-DD') AS END_DATE, HIT_NUM,
+		            (SELECT COUNT(*) FROM EVENT_LIKE EL WHERE EL.EVENT_NO = E.EVENT_NO) AS LIKE_CNT,
+		            ROW_NUMBER() OVER(ORDER BY EVENT_NO DESC) AS RNUM
+		     FROM EVENT E
+		     WHERE DEL_FLAG = 0
+		     AND MARKET_MEMBER_NO = #{marketMemberNo}
+		     <if test="searchText != null and searchText != '' ">
+  	   			AND EVENT_NAME LIKE '%' || #{searchText} || '%'  	   		
+  	   		 </if>	)
+		WHERE RNUM BETWEEN #{startCnt} AND #{endCnt}
+	</select>
+	
+	<select id="getMarketInfoU" parameterType="hashmap" resultType="hashmap">
+		SELECT MARKET_NAME ,BRANCH_NAME ,PHONE_NUM, ADDRS,DTL_ADDRS ,START_TIME, END_TIME,IMG_URL
+		FROM MARKET_MEMBER MM JOIN MEMBER M 
+		                        ON(MM.MARKET_MEMBER_NO = M.MEMBER_NO)
+		                      JOIN MARKET MA 
+		                        ON(MM.MARKET_NO = MA.MARKET_NO)
+		WHERE MARKET_MEMBER_NO = #{marketMemberNo}    		
+	</select>
+	
+	<select id="getMarketInfoBU" parameterType="hashmap" resultType="hashmap">
+		SELECT MARKET_NAME ,MARKET_ADDRS
+		FROM MARKET
+		WHERE MARKET_NO = #{marketNo}
+	</select>
+	
+	<select id="getItemsList" parameterType="hashmap" resultType="hashmap">
+		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,IMG_URL,SELL_STD,PRICE,
+		        (SELECT ROUND(AVG(PRICE))
+		        FROM PRICES
+		        WHERE UPDATE_DATE = DT.UPDATE_DATE
+		        AND ITEMS_NO = DT.ITEMS_NO
+		        GROUP BY ITEMS_NO) AS AVG_PRICE
+		        ,NOTE,RNUM
+		FROM (SELECT PRICES_NO , TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, MARKET_NO,
+		             P.ITEMS_NO, ITEMS_NAME,I.IMG_URL ,SELL_STD, PRICE, NOTE,
+		             ROW_NUMBER() OVER(ORDER BY PRICES_NO DESC) AS RNUM
+		      FROM PRICES P JOIN ITEMS I 
+		                    ON(P.ITEMS_NO = I.ITEMS_NO)
+		      WHERE MARKET_NO = #{marketNo}
+		      AND TO_CHAR(UPDATE_DATE,'YY-MM-DD') = (SELECT MAX(TO_CHAR(UPDATE_DATE,'YY-MM-DD'))
+		                                           FROM PRICES 
+		                                           WHERE MARKET_NO = #{marketNo})
+		      ORDER BY PRICES_NO DESC, ITEMS_NO) DT
+		WHERE RNUM BETWEEN 1 AND 17
+	</select>
+	
+	<select id="getItemsListChoice" parameterType="hashmap" resultType="hashmap">
+		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME,IMG_URL,SELL_STD,PRICE,
+		       (SELECT ROUND(AVG(PRICE))
+		        FROM PRICES
+		        WHERE UPDATE_DATE = DT.UPDATE_DATE
+		        AND ITEMS_NO = DT.ITEMS_NO
+		        GROUP BY ITEMS_NO) AS AVG_PRICE
+		       ,NOTE,RNUM
+		FROM (SELECT PRICES_NO , TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, MARKET_NO,
+		             P.ITEMS_NO, ITEMS_NAME,I.IMG_URL, SELL_STD, PRICE, NOTE,
+		             ROW_NUMBER() OVER(ORDER BY PRICES_NO DESC) AS RNUM
+		      FROM PRICES P JOIN ITEMS I 
+		                    ON(P.ITEMS_NO = I.ITEMS_NO)
+		      WHERE MARKET_NO = #{marketNo}
+		      AND I.ITEMS_NO = #{itemsChoiceNo}
+		      AND TO_CHAR(UPDATE_DATE,'YY-MM-DD') = (SELECT MAX(TO_CHAR(UPDATE_DATE,'YY-MM-DD'))
+		                                           FROM PRICES WHERE MARKET_NO = #{marketNo})                                            
+		      ORDER BY PRICES_NO DESC, ITEMS_NO) DT
+		WHERE RNUM = 1
+	</select>
+	<select id="getItemsListNoChoice" parameterType="hashmap" resultType="hashmap">
+		SELECT PRICES_NO, UPDATE_DATE, MARKET_NO, ITEMS_NO, ITEMS_NAME, IMG_URL,SELL_STD,PRICE,
+		       (SELECT ROUND(AVG(PRICE))
+		        FROM PRICES
+		        WHERE UPDATE_DATE = DT.UPDATE_DATE
+		        AND ITEMS_NO = DT.ITEMS_NO
+		        GROUP BY ITEMS_NO) AS AVG_PRICE
+		       ,NOTE,RNUM
+		FROM (SELECT PRICES_NO , TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, MARKET_NO,
+		             P.ITEMS_NO, ITEMS_NAME,I.IMG_URL, SELL_STD, PRICE, NOTE,
+		             ROW_NUMBER() OVER(ORDER BY PRICES_NO DESC) AS RNUM
+		      FROM PRICES P JOIN ITEMS I 
+		                    ON(P.ITEMS_NO = I.ITEMS_NO)
+		      WHERE MARKET_NO = #{marketNo}
+		      AND I.ITEMS_NO != #{itemsChoiceNo}
+		      AND TO_CHAR(UPDATE_DATE,'YY-MM-DD') = (SELECT MAX(TO_CHAR(UPDATE_DATE,'YY-MM-DD'))
+		                                           FROM PRICES WHERE MARKET_NO = #{marketNo})                                            
+		      ORDER BY PRICES_NO DESC, ITEMS_NO) DT
+		WHERE RNUM BETWEEN 1 AND 16
+	</select>
+	
+	<select id="getEventData" parameterType="hashmap" resultType="hashmap">
+		SELECT EVENT_NO, MARKET_NAME, EVENT_NAME, REGST_DATE, START_DATE, END_DATE, HIT_NUM,CON,LIKE_CNT,
+			   EVENT_NO_NEXT, EVENT_NO_BEFORE	
+		FROM (SELECT E.EVENT_NO, M.MARKET_NAME,E.EVENT_NAME,TO_CHAR(E.REGST_DATE,'YY-MM-DD') AS REGST_DATE,
+		  	   	     TO_CHAR(E.START_DATE,'YY-MM-DD') AS START_DATE,TO_CHAR(E.END_DATE,'YY-MM-DD') AS END_DATE,
+		  		     E.HIT_NUM,E.CON,(SELECT COUNT(*) FROM EVENT_LIKE EL WHERE EL.EVENT_NO = E.EVENT_NO) AS LIKE_CNT,
+	       		     LAG(EVENT_NO,1,-1) OVER(ORDER BY EVENT_NO DESC ) AS EVENT_NO_NEXT,
+	       		     LEAD(EVENT_NO,1,-1) OVER(ORDER BY EVENT_NO DESC ) AS EVENT_NO_BEFORE
+			  FROM EVENT E JOIN MARKET_MEMBER MM
+				 		 ON( E.MARKET_MEMBER_NO = MM.MARKET_MEMBER_NO)
+				   		 JOIN MARKET M
+				 		 ON( MM.MARKET_NO = M.MARKET_NO)
+			  WHERE DEL_FLAG = 0
+			  AND E.MARKET_MEMBER_NO = #{marketMemberNo} )
+		WHERE EVENT_NO = #{eventNo}
+	</select>
+</mapper>

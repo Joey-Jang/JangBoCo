@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="itemsInfo">
+	<select id="getItemsInfo" parameterType="hashmap" resultType="hashmap">
+		SELECT TO_CHAR(UPDATE_DATE,'YY-MM-DD') AS UPDATE_DATE, P.ITEMS_NO,ITEMS_NAME ,
+		             ROUND(AVG(PRICE)) AS AVG_PRICE
+		        FROM PRICES P INNER JOIN ITEMS I 
+		                              ON P.ITEMS_NO = I.ITEMS_NO
+		        WHERE UPDATE_DATE = (SELECT MAX(UPDATE_DATE) FROM PRICES WHERE ITEMS_NO = #{itemsNo})
+		        AND P.ITEMS_NO = #{itemsNo}
+		        GROUP BY UPDATE_DATE, P.ITEMS_NO,ITEMS_NAME
+		        ORDER BY ITEMS_NO
+	</select>
+	
+	<select id="getItemsChoiceList" parameterType="hashmap" resultType="hashmap">
+		SELECT ITEMS_NO, ITEMS_NAME
+		FROM ITEMS
+		WHERE REGEXP_LIKE(ITEMS_NAME ,#{itemsName})
+	</select>
+</mapper>

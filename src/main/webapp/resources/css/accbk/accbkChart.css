@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+/* accbkChart */
+#period_chart_contnr {
+	display: flex;
+}
+
+#month_of_today {
+	text-decoration: underline;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 20pt;
+}
+
+#month_summr {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 15pt;
+	
+}
+#month_box_contnr {
+	display: none;
+}
+
+#period_chart_contnr {
+	float: left;
+	
+}
+#minMax_chart_contnr {
+	float: left;
+	
+}
+#items_chart_contnr {
+	float: right;
+	
+}
+
+#view_period_btn {
+	display: none;
+}
+#minMax_chart_contnr{
+	display: none;
+}
+
+.accbkChart_btn {
+	background-color: #03A64A20;
+	border: none;
+}
+
+ 
