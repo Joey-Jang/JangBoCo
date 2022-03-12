@@ -3,10 +3,12 @@ package com.gdj37.jangboco.web.recipeapi.service;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.gdj37.jangboco.web.recipeapi.dao.IRecipeDao;
 
+@Primary
 @Service
 public class RecipeService implements IRecipeService {
 	@Autowired

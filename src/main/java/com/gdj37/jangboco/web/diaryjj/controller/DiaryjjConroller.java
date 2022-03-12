@@ -35,7 +35,6 @@ public class DiaryjjConroller {
 		this.diaryService = diaryService;
 	}
 
-	
 	@RequestMapping(value = "/writeDiary")
 	public ModelAndView writeDiary(HttpSession session, ModelAndView mav) {
 		int homeFlag = 0;

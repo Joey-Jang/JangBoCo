@@ -1,8 +1,8 @@
-package com.gdj37.jangboco.web.dbapi.dao;
+package com.gdj37.jangboco.web.dbapi.service;
 
 import java.util.HashMap;
 
-public interface DBApiDaoIF {
+public interface DBApiServiceIF {
 	
 	public int disctDuplctCheck(HashMap<String, Object> params) throws Throwable;
 

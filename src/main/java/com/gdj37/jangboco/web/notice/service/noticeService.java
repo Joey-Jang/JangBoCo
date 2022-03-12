@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.gdj37.jangboco.web.notice.dao.noticeIDao;
 
+@Primary
 @Service
 public class noticeService implements noticeIService {
 

@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
+@Primary
 @Repository
 public class accbkDao implements accbkIDao{
-	
+
 	@Autowired
 	SqlSession sqlsession;
 

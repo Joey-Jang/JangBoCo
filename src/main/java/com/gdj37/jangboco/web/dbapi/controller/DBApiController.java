@@ -1,6 +1,7 @@
 package com.gdj37.jangboco.web.dbapi.controller;
 
 import com.gdj37.jangboco.web.dbapi.service.DBApiServiceCls;
+import com.gdj37.jangboco.web.dbapi.service.DBApiServiceIF;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Controller;
 public class DBApiController {
 	
 	@Autowired
-	public DBApiServiceCls DBApiService;
+	public DBApiServiceIF DBApiService;
 	
 	// Presetting API data complete 21.10.14
 //	@RequestMapping(value = "/presetApiData")

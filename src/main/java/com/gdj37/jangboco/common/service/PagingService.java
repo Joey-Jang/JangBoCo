@@ -1,10 +1,12 @@
 package com.gdj37.jangboco.common.service;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.gdj37.jangboco.common.CommonProperties;
 import com.gdj37.jangboco.common.bean.PagingBean;
 
+@Primary
 @Service
 public class PagingService implements IPagingService{
 	/*

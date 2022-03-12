@@ -4,10 +4,12 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import com.gdj37.jangboco.web.recipeapi.service.IRecipeService;
 
+@Primary
 @Repository
 public class RecipeDao implements IRecipeDao {
 	@Autowired

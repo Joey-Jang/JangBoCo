@@ -1,7 +1,9 @@
 package com.gdj37.jangboco.common.service;
 
 import com.gdj37.jangboco.common.bean.PagingBean;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface IPagingService {
 	// 테이블 시작row
 	public int getStartCount(int page);
