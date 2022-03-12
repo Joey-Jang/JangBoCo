@@ -37,10 +37,4 @@ public class HomeController {
 		
 		return "jangboco/home";
 	}
-
-	@RequestMapping("/test")
-	public String test() {
-		return "test";
-	}
-	
 }
